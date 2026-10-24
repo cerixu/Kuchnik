@@ -5,6 +5,14 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '1.5.9': Object.freeze({
+    intro: 'Kuchnik 1.5.9 — dokładniejsze rozpoznawanie składników.',
+    items: [
+      'Magazyn rozróżnia teraz składniki o różnych cechach, np. paprykę świeżą i mieloną, nie gubiąc odmian fleksyjnych.',
+      'Konwersje sztuk na masę uwzględniają znaną masę pojedynczego produktu; nieznane przeliczenia pozostają zablokowane.',
+      'Test kopii zapasowej i konwersji jednostek jest częścią walidacji przed wydaniem.'
+    ]
+  }),
   '1.5.8': Object.freeze({
     intro: 'Kuchnik 1.5.8 — bezpieczniejsze dopasowanie produktów i przeliczanie jednostek.',
     items: [
