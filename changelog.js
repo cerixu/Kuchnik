@@ -5,6 +5,15 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '1.5.5': Object.freeze({
+    intro: 'Kuchnik 1.5.5 — spójne stany magazynu podczas całego gotowania.',
+    items: [
+      'Magazyn ładuje się już przy starcie, więc automatyczne zużycie działa także bez wcześniejszego otwierania zakładki Magazyn.',
+      'Skaner EAN ma podgląd kamery, animowaną linię i przełącznik latarki.',
+      'Dodawanie produktów, alerty terminów, niski stan i rejestrowanie strat działają w jednym ekranie.',
+      'Zachowano działanie offline i lokalny zapis danych.'
+    ]
+  }),
   '1.5.4': Object.freeze({
     intro: 'Kuchnik 1.5.4 — szybsza praca z magazynem i kodami EAN.',
     items: [
