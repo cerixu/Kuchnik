@@ -100,7 +100,7 @@ const cases = [
 for (const test of cases) {
   const frame = makeCameraFrame(test.bits, test);
   const result = frame.decode();
-  if (result !== test.expected) throw new Error(test.label + ': expected ' + test.expected + ', got ' + result);
+  if (result?.code !== test.expected) throw new Error(test.label + ': expected ' + test.expected + ', got ' + JSON.stringify(result));
   if (frame.dimensions()[0] !== 960 || frame.dimensions()[1] !== 720) {
     throw new Error(test.label + ': incorrect camera-frame dimensions: ' + frame.dimensions().join('x'));
   }
