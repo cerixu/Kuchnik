@@ -24,7 +24,7 @@ export function inventoryView() {
   let query = '';
   const summaryEl = h('div', { class: 'inventory-summary grid-3' });
   const search = textInput({ label: 'Szukaj w magazynie', placeholder: 'Produkt, kategoria lub kod EAN…', onInput: (v) => { query = v; paint(); } });
-  const listEl = h('div', { class: 'inventory-list stack' });
+  const listEl = h('div', { class: 'inventory-items' });
   const alertsEl = h('div', { class: 'inventory-alerts stack' });
   const wasteEl = h('div', { class: 'inventory-waste card stack' });
   const alertSwitch = switchEl(getSetting('invAlerts') !== false, async (value) => {
@@ -149,9 +149,9 @@ export function inventoryView() {
     const filtered = all.filter((item) => !query || norm([item.name, item.category, item.barcode, item.note].join(' ')).includes(norm(query)));
     const summary = inventorySummary();
     summaryEl.replaceChildren(
-      h('div', { class: 'card stat-card' }, h('span', { class: 'muted small' }, 'Produkty'), h('strong', null, String(summary.count))),
-      h('div', { class: 'card stat-card' }, h('span', { class: 'muted small' }, 'Wartość'), h('strong', null, money(summary.value))),
-      h('div', { class: 'card stat-card' }, h('span', { class: 'muted small' }, 'Straty · 7 dni'), h('strong', null, money(summary.waste7.cost))),
+      h('div', { class: 'inventory-summary-card' }, h('span', { class: 'muted small' }, 'Produkty'), h('strong', null, String(summary.count))),
+      h('div', { class: 'inventory-summary-card' }, h('span', { class: 'muted small' }, 'Wartość'), h('strong', null, money(summary.value))),
+      h('div', { class: 'inventory-summary-card' }, h('span', { class: 'muted small' }, 'Straty · 7 dni'), h('strong', null, money(summary.waste7.cost))),
     );
     const expired = all.filter(isExpired), soon = all.filter(isSoon), low = all.filter(isLow);
     alertsEl.replaceChildren();
@@ -171,19 +171,19 @@ export function inventoryView() {
     } else {
       filtered.forEach((item) => {
         const statusClass = isExpired(item) ? ' is-expired' : isSoon(item) ? ' is-expiring' : isLow(item) ? ' is-low' : isOut(item) ? ' is-out' : '';
-        listEl.append(h('article', { class: 'inventory-item card stack' + statusClass },
-          h('div', { class: 'row between inventory-item-head' },
-            h('div', { class: 'stack inventory-item-title' },
+        listEl.append(h('article', { class: 'inventory-item' + statusClass },
+          h('div', { class: 'inventory-item-main' },
+            h('div', { class: 'inventory-item-title' },
               h('strong', null, item.name),
-              h('span', { class: 'muted small' }, item.category + ' · ' + locName(item.location))),
-            h('strong', { class: 'inventory-stock num' }, fmtStock(item))),
-          item.minStock > 0 ? h('p', { class: 'muted small' }, 'Próg: ' + fmtStock(item, item.minStock)) : null,
-          isExpired(item) ? h('span', { class: 'status-pill danger' }, 'Po terminie') : isSoon(item) ? h('span', { class: 'status-pill warning' }, 'Termin blisko') : isLow(item) ? h('span', { class: 'status-pill warning' }, 'Niski stan') : null,
-          h('div', { class: 'row wrap inventory-item-actions' },
+              isExpired(item) ? h('span', { class: 'status-pill danger' }, 'Po terminie') : isSoon(item) ? h('span', { class: 'status-pill warning' }, 'Termin blisko') : isLow(item) ? h('span', { class: 'status-pill warning' }, 'Niski stan') : null),
+            h('p', { class: 'muted small' }, item.category + ' · ' + locName(item.location)),
+            item.minStock > 0 ? h('p', { class: 'muted small' }, 'Próg: ' + fmtStock(item, item.minStock)) : null),
+          h('div', { class: 'inventory-stock' }, h('strong', { class: 'num' }, fmtStock(item)), h('span', { class: 'muted small' }, money(stockValue(item)))),
+          h('div', { class: 'inventory-item-actions' },
             button('Edytuj', { icon: 'edit', onClick: () => openItemSheet(item) }),
             button('− Stan', { icon: 'minus', onClick: () => openStockChange(item, -1) }),
             button('+ Stan', { icon: 'plus', onClick: () => openStockChange(item, 1) }),
-            button('Strata', { icon: 'trash', onClick: () => openWaste(item) }),
+            button('Zarejestruj stratę: ' + item.name, { icon: 'trash', onClick: () => openWaste(item), aria: 'Zarejestruj stratę: ' + item.name }),
             button('Usuń', { icon: 'x', kind: 'ghost', onClick: async () => {
               const sh = openSheet({ title: 'Usunąć produkt?', body: h('p', null, item.name), actions: [
                 { label: 'Anuluj', kind: 'ghost' },
