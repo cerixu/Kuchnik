@@ -101,7 +101,7 @@ function pizzaCalculator() {
         button('Zapisz jako recepturę', { icon: 'plus', kind: 'primary', onClick: () => saveAsRecipe(r) }),
         button('Do zakupów', { icon: 'cart', onClick: async () => {
           await addItems([
-            { name: 'Mąka pszenna', amount: Math.round(r.flour), unit: 'g' }, { name: 'Sól', amount: Math.round(r.salt * 10) / 10, unit: 'g' },
+            { name: 'Mąka pszenna', amount: Math.round(st.leavenType === 'starter' ? r.doughFlour : r.flour), unit: 'g' }, { name: 'Sól', amount: Math.round(r.salt * 10) / 10, unit: 'g' },
             ...(st.leavenType === 'starter' ? [{ name: 'Zakwas macierzysty', amount: Math.round(r.starterSeed * 10) / 10, unit: 'g' }, { name: 'Mąka pszenna do zakwasu', amount: Math.round(r.starterFlour * 10) / 10, unit: 'g' }, { name: 'Woda do zakwasu', amount: Math.round(r.starterWater * 10) / 10, unit: 'g' }] : [{ name: `Drożdże ${yl}`, amount: Math.round(r.yeast * 100) / 100, unit: 'g' }]),
             ...(r.oil > 0 ? [{ name: 'Oliwa', amount: Math.round(r.oil), unit: 'g' }] : []),
           ]);
