@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Kucharzyna — service worker
+   Żarłok — service worker
    Strategia: network-first z krótkim limitem czasu i cache jako zapasem.
    Dzięki temu online zawsze dostajesz świeże pliki (brak „starej wersji
    przez kilka dni”), a offline aplikacja otwiera się z pamięci podręcznej.
@@ -9,19 +9,20 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.0';
+const VERSION = 'zaruok-2.1.9';
 const NETWORK_TIMEOUT = 3500;
 
 const CORE = [
   './',
   'index.html',
-  'styles.css',
+  'styles.css', 'start-final.css', 'visual-system.css', 'visual-redesign.css', 'generated-art.css', 'zarlok-v2.css', 'design-overhaul.css', 'mobile-polish.css', 'art-direction.css', 'food-photos.js', 'claude-completion.css', 'kucharzyna-visual.css',
   'manifest.webmanifest',
-  'app.js', 'router.js', 'pwa.js', 'ui.js', 'util.js', 'db.js', 'recipes.js', 'calculator.js', 'importer.js', 'backup.js',
-  'components.js', 'shopping.js', 'art.js', 'inventory.js', 'barcode.js', 'ingredient-icons.js', 'art-kit.js', 'art-extra.js', 'nutrition.js', 'seeds.js', 'seeds-pl.js', 'seeds-world.js', 'seeds-more.js', 'timers.js', 'kitchen.js', 'tools-data.js', 'calc-kit.js', 'search.js',
-  'views-start.js', 'views-recipes.js', 'views-detail.js', 'views-editor.js', 'views-cook.js', 'views-calc.js', 'views-tools.js', 'views-guide.js', 'views-search.js', 'views-import.js', 'views-settings.js',
+  'app.js', 'changelog.js', 'router.js', 'start-final.css', 'inventory.js', 'barcode.js', 'pwa.js', 'ui.js', 'util.js', 'db.js', 'recipes.js', 'calculator.js', 'importer.js', 'backup.js',
+  'components.js', 'shopping.js', 'art.js', 'art-kit.js', 'art-extra.js', 'nutrition.js', 'seeds.js', 'seeds-pl.js', 'seeds-world.js', 'seeds-more.js', 'seeds-curated.js', 'timers.js', 'kitchen.js', 'tools-data.js', 'calc-kit.js', 'search.js',
+  'views-start.js', 'views-recipes.js', 'views-detail.js', 'views-editor.js', 'views-cook.js', 'views-cook-home.js', 'views-more.js', 'views-calc.js', 'views-tools.js', 'views-guide.js', 'views-search.js', 'views-import.js', 'views-settings.js',
   'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png',
-  'bg-texture.png', 'poppins-300.woff', 'poppins-400.woff', 'poppins-500.woff', 'poppins-700.woff',
+  'assets/food/pizza-margherita.jpg', 'assets/food/tagliatelle-carbonara.jpg', 'assets/food/mushroom-risotto.jpg', 'assets/food/salmon-lemon-butter.jpg', 'assets/brand/mark.jpg', 'food-aperol.jpg.b64', 'food-asian-noodles.jpg.b64', 'food-baba-ganoush.jpg.b64', 'food-babka-piaskowa.jpg.b64', 'food-bagel.jpg.b64', 'food-barszcz.jpg.b64', 'food-bbq-ribs.jpg.b64', 'food-beef-stew.jpg.b64', 'food-bibimbap.jpg.b64', 'food-bigos.jpg.b64', 'food-brownie.jpg.b64', 'food-bruschetta.jpg.b64', 'food-burger.jpg.b64', 'food-cake.jpg.b64', 'food-carbonara.jpg.b64', 'food-chicken-curry.jpg.b64', 'food-cocktail.jpg.b64', 'food-creme-brulee.jpg.b64', 'food-crepes.jpg.b64', 'food-curry-chickpea.jpg.b64', 'food-dessert.jpg.b64', 'food-focaccia.jpg.b64', 'food-fried-rice.jpg.b64', 'food-lasagna.jpg.b64', 'food-pasta-tomato.jpg.b64', 'food-pierogi.jpg.b64', 'food-pizza.jpg.b64', 'food-risotto.jpg.b64', 'food-salad.jpg.b64', 'food-sauce.jpg.b64', 'food-salmon.jpg.b64', 'food-schnitzel.jpg.b64', 'food-seafood.jpg.b64', 'food-soup-clear.jpg.b64', 'food-soup-pumpkin.jpg.b64', 'food-soup-tomato.jpg.b64', 'food-soup.jpg.b64', 'food-sourdough.jpg.b64', 'food-baguette.jpg.b64', 'food-steak.jpg.b64',
+  'poppins-300.woff', 'poppins-400.woff', 'poppins-500.woff', 'poppins-700.woff',
 ];
 
 const scopeUrl = (p) => new URL(p, self.registration.scope).href;
@@ -30,15 +31,27 @@ const INDEX = () => scopeUrl('index.html');
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(VERSION);
-    // cache:'reload' omija pamięć HTTP przeglądarki — w cache lądują świeże pliki.
-    await cache.addAll(CORE.map((p) => new Request(scopeUrl(p), { cache: 'reload' })));
+    // Pliki aplikacji są wymagane: jeśli któregoś brakuje, aktualizacja nie może
+    // udawać gotowej. Pojedynczy brak zdjęcia/fontu nie może jednak zablokować
+    // instalacji całego Service Workera (Cache.addAll jest operacją atomową).
+    const uniqueCore = [...new Set(CORE)];
+    const optionalAsset = (p) => /\.(?:png|jpe?g|webp|avif|woff2?|b64)$/i.test(p);
+    const required = uniqueCore.filter((p) => !optionalAsset(p));
+    const optional = uniqueCore.filter(optionalAsset);
+    await cache.addAll(required.map((p) => new Request(scopeUrl(p), { cache: 'reload' })));
+    await Promise.allSettled(optional.map((p) =>
+      cache.add(new Request(scopeUrl(p), { cache: 'reload' }))
+    ));
+    // Pierwsza instalacja może aktywować się od razu; aktualizacje czekają,
+    // aż użytkownik wybierze „Odśwież” w powiadomieniu.
+    if (!self.registration.active) await self.skipWaiting();
   })());
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter((k) => k.startsWith('kucharzyna-') && k !== VERSION).map((k) => caches.delete(k)));
+    await Promise.all(keys.filter((k) => k.startsWith('zaruok-') && k !== VERSION).map((k) => caches.delete(k)));
     await self.clients.claim();
   })());
 });
