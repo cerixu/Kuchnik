@@ -1,8 +1,9 @@
 import { chromium } from 'playwright';
 
 const base = process.env.BASE_URL || 'http://127.0.0.1:4173/';
-const browser = await chromium.launch();
+const browser = await chromium.launch({ args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] });
 const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+await page.context().grantPermissions(['camera'], { origin: new URL(base).origin });
 await page.addInitScript(() => {
   const media = navigator.mediaDevices;
   if (media && media.getUserMedia) {
