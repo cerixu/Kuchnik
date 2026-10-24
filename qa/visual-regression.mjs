@@ -120,8 +120,9 @@ try {
   await link.click();
   await page.waitForSelector('.detail-hero', { state: 'visible', timeout: 5000 });
   assert(await page.locator('.detail-title').count(), 'Ekran szczegółów nie ma tytułu receptury.');
-  assert(await page.locator('.ing-list .ing').count() > 0, 'Szczegóły receptury nie pokazują składników.');
-  assert(await page.locator('.steps li').count() > 0, 'Szczegóły receptury nie pokazują kroków przygotowania.');
+  assert(await page.locator('.orbit .orb-dot').count() > 0, 'Szczegóły receptury nie pokazują składników na łuku.');
+  assert(await page.locator('.more-toggle').count() > 0, 'Brak przycisku otwierającego pełny przepis.');
+  await page.waitForFunction(() => { const img = document.querySelector('.detail-hero img'); return !!(img && img.complete && img.naturalWidth > 0); }, null, { timeout: 5000 });
   const detailImage = await page.locator('.detail-hero img').first().evaluate((img) => ({
     source: img.dataset.photoSource || '', naturalWidth: img.naturalWidth,
   }));
