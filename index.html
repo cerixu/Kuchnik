@@ -2,9 +2,9 @@
 <html lang="pl" data-theme="dark">
 <head>
   <meta charset="utf-8">
-  <title>Żarłok</title>
+  <title>Kuchnik</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Żarłok — prywatny notatnik szefa kuchni: receptury, przeliczanie, procenty piekarskie, food cost, zakupy. Działa offline.">
+  <meta name="description" content="Kuchnik — prywatny notatnik szefa kuchni: receptury, przeliczanie, procenty piekarskie, food cost, zakupy. Działa offline.">
 
   <!-- Kolor paska systemowego (jasny / ciemny) -->
   <meta name="theme-color" content="#0b0d0f">
@@ -14,17 +14,17 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Żarłok">
+  <meta name="apple-mobile-web-app-title" content="Kuchnik">
   <meta name="format-detection" content="telephone=no">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="manifest" href="manifest.webmanifest">
 
-  <link rel="stylesheet" href="styles.css?v=2.1.9">
-  <link rel="stylesheet" href="start-final.css?v=2.1.9">
-  <link rel="stylesheet" href="visual-system.css?v=2.1.9">
-  <link rel="stylesheet" href="kucharzyna-visual.css?v=2.1.9">
-  <link rel="stylesheet" href="claude-completion.css?v=2.1.9">
+  <link rel="stylesheet" href="styles.css?v=0.1.0">
+  <link rel="stylesheet" href="start-final.css?v=0.1.0">
+  <link rel="stylesheet" href="visual-system.css?v=0.1.0">
+  <link rel="stylesheet" href="kucharzyna-visual.css?v=0.1.0">
+  <link rel="stylesheet" href="claude-completion.css?v=0.1.0">
 
   <!-- Motyw ustawiany zanim pojawi się cokolwiek (brak błysku). Źródłem prawdy jest IndexedDB. -->
   <script>
@@ -76,19 +76,19 @@
       font: 500 .68rem -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
     }
   </style>
-  <link rel="stylesheet" href="visual-redesign.css?v=2.1.9">
-  <link rel="stylesheet" href="generated-art.css?v=2.1.9">
-  <link rel="stylesheet" href="zarlok-v2.css?v=2.1.9">
-  <link rel="stylesheet" href="design-overhaul.css?v=2.1.9">
-  <link rel="stylesheet" href="mobile-polish.css?v=2.1.9">
-  <link rel="stylesheet" href="art-direction.css?v=2.1.9">
+  <link rel="stylesheet" href="visual-redesign.css?v=0.1.0">
+  <link rel="stylesheet" href="generated-art.css?v=0.1.0">
+  <link rel="stylesheet" href="zarlok-v2.css?v=0.1.0">
+  <link rel="stylesheet" href="design-overhaul.css?v=0.1.0">
+  <link rel="stylesheet" href="mobile-polish.css?v=0.1.0">
+  <link rel="stylesheet" href="art-direction.css?v=0.1.0">
 </head>
 <body>
   <div id="app">
     <main id="view" class="boot-shell" aria-live="polite">
     <div class="boot-shell-inner">
       <div class="boot-shell-mark" aria-hidden="true">👨‍🍳</div>
-      <div class="boot-shell-name">Żarłok</div>
+      <div class="boot-shell-name">Kuchnik</div>
       <div class="boot-shell-note">Przygotowuję Twój notatnik…</div>
     </div>
   </main>
@@ -96,7 +96,7 @@
   </div>
   <div id="toasts" aria-live="polite"></div>
   <div id="overlays"></div>
-  <noscript><p style="padding:24px;font:16px system-ui">Żarłok wymaga włączonego JavaScriptu.</p></noscript>
+  <noscript><p style="padding:24px;font:16px system-ui">Kuchnik wymaga włączonego JavaScriptu.</p></noscript>
   <script>
     (function () {
       var shown = false;
@@ -110,7 +110,7 @@
           '<div style="min-height:100%;display:grid;place-items:center;padding:28px;text-align:center;color:#f7f7f4">' +
             '<div style="max-width:330px">' +
               '<div style="font-size:40px;margin-bottom:16px">⚠️</div>' +
-              '<h2 style="margin:0 0 10px;font:600 24px system-ui">Żarłok nie wystartował</h2>' +
+              '<h2 style="margin:0 0 10px;font:600 24px system-ui">Kuchnik nie wystartował</h2>' +
               '<p style="margin:0 0 16px;color:rgba(247,247,244,.55);font:14px/1.5 system-ui">Wystąpił błąd podczas ładowania aplikacji.</p>' +
               '<pre style="margin:0 0 18px;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:14px;white-space:pre-wrap;overflow:auto;max-height:150px;color:rgba(247,247,244,.7);font:11px/1.45 ui-monospace">' +
                 String(message || 'Nieznany błąd').replace(/[<>&]/g, function (x) {
@@ -146,6 +146,6 @@
       }, 8000);
     }());
   </script>
-  <script type="module" src="app.js?v=2.1.9"></script>
+  <script type="module" src="app.js?v=0.1.0"></script>
 </body>
 </html>
