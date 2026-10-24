@@ -33,9 +33,9 @@ try {
   const tabs = [
     ['start', '/'],
     ['recipes', '/recipes'],
-    ['calc', '/calc'],
-    ['shopping', '/shopping'],
-    ['settings', '/settings'],
+    ['cook', '/cook'],
+    ['inventory', '/inventory'],
+    ['more', '/more'],
   ];
   for (const [id, path] of tabs) {
     const tab = page.locator('.tab[data-tab="' + id + '"]').first();
