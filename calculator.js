@@ -129,12 +129,13 @@ export const YEAST_TYPES = { fresh: { label: 'świeże', f: 1 }, dry: { label: '
 /** Obliczenia pizzy od ilości mąki; zakwas aktywny w proporcji 1:1:2, seed ograniczony do 1% mąki. */
 export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, yeast = 0, starter = 0, ballWeight = 250 }) {
   const f = Math.max(0, Number(flour) || 0);
-  const pctSum = 100 + hydration + salt + oil + yeast;
+  const seedPct = Math.min(1, Math.max(0, Number(starter) || 0));
+  const pctSum = 100 + hydration + salt + oil + yeast + seedPct;
   const water = f * hydration / 100;
   const saltAmount = f * salt / 100;
   const oilAmount = f * oil / 100;
   const yeastAmount = f * yeast / 100;
-  const starterSeed = f * Math.min(1, Math.max(0, Number(starter) || 0)) / 100;
+  const starterSeed = f * seedPct / 100;
   const starterFlour = starterSeed;
   const starterWater = starterSeed * 2;
   const starterTotal = starterSeed * 4;
