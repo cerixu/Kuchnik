@@ -5,6 +5,14 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '1.5.7': Object.freeze({
+    intro: 'Kuchnik 1.5.7 — gotowanie naprawdę aktualizuje magazyn.',
+    items: [
+      'Tryb Prowadź mnie i klasyczna lista GOTUJĘ odejmują zużyte składniki po zakończeniu gotowania.',
+      'Nowa receptura w trybie gotowania domyślnie startuje od jednej porcji.',
+      'Zużycie jest zapisywane w historii magazynu, a stany aktualizują się bez ręcznego odświeżania.'
+    ]
+  }),
   '1.5.6': Object.freeze({
     intro: 'Kuchnik 1.5.6 — pewniejszy odczyt kodów kreskowych.',
     items: [
