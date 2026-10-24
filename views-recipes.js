@@ -7,7 +7,7 @@ import {
 } from './ui.js';
 import { navigate } from './router.js';
 import {
-  state, subscribe, listRecipes, searchText, allTags, saveCategory, deleteCategory, reorderCategories, getSetting, setSetting, catIcon, ORIGINS,
+  state, subscribe, listRecipes, searchText, allTags, saveCategory, deleteCategory, reorderCategories, getSetting, setSetting, catIcon,
 } from './recipes.js';
 import { norm, debounce, uid } from './util.js';
 import { recipeCard, recipeTile } from './components.js';
@@ -17,11 +17,11 @@ const SORTS = [
 ];
 
 // Stan widoku zostaje w pamięci, więc po powrocie z receptury lista wygląda tak samo.
-const vs = { q: '', chip: 'all', tag: '', origin: '', maxTime: 0, favOnly: false, shown: 40 };
+const vs = { q: '', chip: 'all', tag: '', maxTime: 0, favOnly: false, shown: 40 };
 const PAGE = 40;
 
 /** Czyści filtry listy (wywoływane przy stuknięciu zakładki „Receptury”). */
-export function resetRecipeFilters() { Object.assign(vs, { q: '', chip: 'all', tag: '', origin: '', maxTime: 0, favOnly: false, shown: PAGE }); }
+export function resetRecipeFilters() { Object.assign(vs, { q: '', chip: 'all', tag: '', maxTime: 0, favOnly: false, shown: PAGE }); }
 
 const activeTime = (r) => (r.prepTime || 0) + (r.cookTime || 0);
 
@@ -37,18 +37,17 @@ function sorter(kind) {
 
 export function recipesView(query) {
   const f = query && query.get && query.get('f');
+  const pCat = query && query.get && query.get('cat'), pTag = query && query.get && query.get('tag'), pQ = query && query.get && query.get('q');
+  // Jawny deep-link zaczyna się od czystych filtrów; zwykły powrót do /recipes zachowuje stan listy.
+  if (f || pCat || pTag || pQ) Object.assign(vs, { q: '', chip: 'all', tag: '', maxTime: 0, favOnly: false, shown: PAGE });
   if (f === 'fav') { vs.chip = 'fav'; vs.q = ''; }
   else if (f === 'recent') { vs.chip = 'recent'; vs.q = ''; }
   else if (f === 'trad') { vs.chip = 'trad'; vs.q = ''; }
-  const pCat = query && query.get && query.get('cat'), pTag = query && query.get && query.get('tag'), pQ = query && query.get && query.get('q');
-  const pOrigin = query && query.get && query.get('origin');
-  if (pOrigin) { vs.origin = pOrigin; vs.chip = 'all'; vs.q = ''; vs.tag = ''; }
-  if (pCat) { vs.chip = pCat; vs.q = ''; vs.tag = ''; vs.origin = ''; }
+  if (pCat) { vs.chip = pCat; vs.q = ''; vs.tag = ''; }
   if (pTag) { vs.tag = pTag; vs.chip = 'all'; vs.q = ''; }
   if (pQ) { vs.q = pQ; vs.chip = 'all'; vs.tag = ''; }
-  if (f || pCat || pTag || pQ || pOrigin) vs.shown = PAGE;
 
-  const search = h('input', { class: 'input search-input', type: 'search', placeholder: 'Szukaj receptury, składnika, tagu…', value: vs.q,
+  const search = h('input', { class: 'input search-input', type: 'search', placeholder: 'Szukaj…', value: vs.q,
     'aria-label': 'Szukaj', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', enterkeyhint: 'search' });
   const clear = iconBtn('x', 'Wyczyść wyszukiwanie', () => { search.value = ''; vs.q = ''; search.focus(); paint(); }, 'quiet clear');
   const searchWrap = h('div', { class: 'searchbox' }, icon('search', 20), search, clear);
@@ -61,7 +60,7 @@ export function recipesView(query) {
 
   const s = screen({
     title: 'Receptury',
-    right: h('div', { class: 'row' }, iconBtn('upload', 'Importuj recepturę', () => navigate('/import')), iconBtn('plus', 'Nowa receptura', () => navigate('/new'), 'primary')),
+    right: h('div', { class: 'row' }, iconBtn('grid', 'Otwórz kategorie', () => navigate('/categories')), iconBtn('upload', 'Importuj recepturę', () => navigate('/import')), iconBtn('plus', 'Nowa receptura', () => navigate('/new'), 'primary')),
     sub, cls: 'recipes',
   });
 
@@ -78,7 +77,6 @@ export function recipesView(query) {
     else if (vs.chip !== 'all') list = list.filter((r) => r.category === vs.chip);
     if (vs.favOnly) list = list.filter((r) => r.favorite);
     if (vs.tag) list = list.filter((r) => r.tags.includes(vs.tag));
-    if (vs.origin) list = list.filter((r) => r.origin === vs.origin);
     if (vs.maxTime) list = list.filter((r) => { const t = activeTime(r); return t > 0 && t <= vs.maxTime; });
     if (words.length) list = list.filter((r) => { const t = searchText(r); return words.every((w) => t.includes(w)); });
     const sortKey = vs.chip === 'recent' ? 'recent' : getSetting('sort') || 'name';
@@ -95,9 +93,7 @@ export function recipesView(query) {
     const used = new Set(all.map((r) => r.category));
     const mk = (id, label, n) => h('button', { type: 'button', class: 'chip' + (vs.chip === id ? ' on' : ''), 'aria-pressed': vs.chip === id,
       onClick: () => { vs.chip = id; vs.shown = PAGE; paint(); } }, label, n != null ? h('span', { class: 'chip-n' }, String(n)) : null);
-    const oInfo = vs.origin ? ORIGINS.find((o) => o.code === vs.origin) : null;
     const kids = [
-      ...(oInfo ? [h('button', { type: 'button', class: 'chip on', 'aria-label': `Usuń filtr: ${oInfo.name}`, onClick: () => { vs.origin = ''; vs.shown = PAGE; paint(); } }, `${oInfo.flag} ${oInfo.name}`, icon('x', 14))] : []),
       mk('all', 'Wszystkie', all.length),
       mk('fav', '★ Ulubione', all.filter((r) => r.favorite).length),
       mk('recent', 'Ostatnie', all.filter((r) => r.lastOpenedAt).length),
@@ -110,7 +106,7 @@ export function recipesView(query) {
     if (on && on.scrollIntoView) { try { on.scrollIntoView({ inline: 'center', block: 'nearest' }); } catch (_) { /* */ } }
   }
 
-  const filterActive = () => !!(vs.tag || vs.origin || vs.maxTime || vs.favOnly);
+  const filterActive = () => !!(vs.tag || vs.maxTime || vs.favOnly);
 
   function paint() {
     clear.hidden = !search.value;
@@ -124,7 +120,7 @@ export function recipesView(query) {
         button('Importuj', { icon: 'upload', onClick: () => navigate('/import') })));
     } else if (!total) {
       kids.push(emptyState('🔎', 'Nic nie znaleziono', vs.q ? `Brak wyników dla „${vs.q}”.` : 'Zmień filtry lub wyszukiwanie.',
-        button('Wyczyść filtry', { onClick: () => { Object.assign(vs, { q: '', chip: 'all', tag: '', origin: '', maxTime: 0, favOnly: false }); search.value = ''; paint(); } }),
+        button('Wyczyść filtry', { onClick: () => { Object.assign(vs, { q: '', chip: 'all', tag: '', maxTime: 0, favOnly: false }); search.value = ''; paint(); } }),
         button('Szukaj w internecie', { icon: 'globe', onClick: () => navigate('/search?q=' + encodeURIComponent(vs.q || '')) })));
     } else {
       kids.push(h('p', { class: 'muted counter' }, `${total} ${total === 1 ? 'receptura' : total % 10 >= 2 && total % 10 <= 4 && (total % 100 < 10 || total % 100 >= 20) ? 'receptury' : 'receptur'}`));
@@ -163,26 +159,23 @@ export function recipesView(query) {
   }
 
   function openFilters() {
-    let tag = vs.tag, maxTime = vs.maxTime, favOnly = vs.favOnly, origin = vs.origin;
-    const counts = new Map(); listRecipes().forEach((r) => { if (r.origin) counts.set(r.origin, (counts.get(r.origin) || 0) + 1); });
-    const origins = ORIGINS.filter((o) => counts.has(o.code)).sort((a, b) => counts.get(b.code) - counts.get(a.code));
+    let tag = vs.tag, maxTime = vs.maxTime, favOnly = vs.favOnly;
     const tags = allTags();
     openSheet({
       title: 'Filtry', variant: 'sheet',
       body: h('div', { class: 'stack' },
         switchEl(favOnly, (v) => { favOnly = v; }, 'Tylko ulubione'),
-        field('Kraj pochodzenia', selectEl([['', 'Dowolny'], ...origins.map((o) => [o.code, `${o.flag} ${o.name} (${counts.get(o.code)})`])], origin, (v) => { origin = v; })),
         field('Tag', selectEl([['', 'Dowolny'], ...tags.map((t) => [t, t])], tag, (v) => { tag = v; })),
         field('Czas czynny (przygotowanie + gotowanie)', selectEl([[0, 'Dowolny'], [15, 'do 15 min'], [30, 'do 30 min'], [60, 'do 1 h'], [120, 'do 2 h']], maxTime, (v) => { maxTime = +v; }))),
       actions: [
-        { label: 'Wyczyść', kind: 'ghost', onClick: () => { Object.assign(vs, { tag: '', origin: '', maxTime: 0, favOnly: false }); paint(); } },
-        { label: 'Zastosuj', kind: 'primary', onClick: () => { Object.assign(vs, { tag, origin, maxTime, favOnly, shown: PAGE }); paint(); } },
+        { label: 'Wyczyść', kind: 'ghost', onClick: () => { Object.assign(vs, { tag: '', maxTime: 0, favOnly: false }); paint(); } },
+        { label: 'Zastosuj', kind: 'primary', onClick: () => { Object.assign(vs, { tag, maxTime, favOnly }); paint(); } },
       ],
     });
   }
 
   paint();
-  const unsub = subscribe((t) => { if (t === 'recipes' || t === 'categories' || t === 'settings') paint(); });
+  const unsub = subscribe((t) => { if (t === 'hydrated' || t === 'recipes' || t === 'categories' || t === 'settings') paint(); });
   return { el: s.el, destroy: () => { unsub(); onSearch.cancel(); } };
 }
 
@@ -249,4 +242,77 @@ export function openCategoryManager() {
     body: h('div', { class: 'stack' }, h('p', { class: 'muted' }, 'Stuknij nazwę, aby zmienić. Kategoria „Inne” jest stała — trafiają do niej receptury usuniętych kategorii.'), list),
     actions: [{ label: 'Gotowe', kind: 'ghost' }, { label: 'Nowa kategoria', kind: 'primary', icon: 'plus', close: false, onClick: () => { editCat(null); return false; } }],
   });
+}
+
+
+/* Liczba receptur — poprawna polska odmiana w widokach mobilnych. */
+function recipeCountLabel(n) {
+  const mod10 = n % 10, mod100 = n % 100;
+  if (n === 1) return '1 receptura';
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return n + ' receptury';
+  return n + ' receptur';
+}
+
+/* ---------- Osobny ekran kategorii: duże, łatwe do trafienia kafelki ---------- */
+export function categoriesView() {
+  const count = (id) => listRecipes().filter((r) => r.category === id).length;
+  const search = h('input', {
+    class: 'input search-input category-search', type: 'search',
+    placeholder: 'Szukaj kategorii…', 'aria-label': 'Szukaj kategorii',
+    autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false',
+  });
+  const searchWrap = h('div', { class: 'searchbox category-searchbox' }, icon('search', 20), search);
+  const sub = h('div', { class: 'subbar category-subbar' }, searchWrap);
+  const s = screen({
+    title: 'Kategorie',
+    right: h('div', { class: 'row' },
+      iconBtn('sliders', 'Zarządzaj kategoriami', () => openCategoryManager()),
+      iconBtn('arrow-left', 'Wróć do receptur', () => navigate('/recipes'))),
+    sub, cls: 'category-browser',
+  });
+  const grid = h('div', { class: 'category-tile-grid', role: 'list', 'aria-label': 'Kategorie receptur' });
+  function paint() {
+    const q = norm(search.value.trim());
+    const all = listRecipes();
+    const specials = [
+      { id: 'all', label: 'Wszystkie receptury', icon: 'book', count: all.length, path: '/recipes' },
+      { id: 'fav', label: 'Ulubione', icon: 'heart', count: all.filter((r) => r.favorite).length, path: '/recipes?f=fav' },
+      { id: 'recent', label: 'Ostatnio otwierane', icon: 'clock', count: all.filter((r) => r.lastOpenedAt).length, path: '/recipes?f=recent' },
+      { id: 'trad', label: 'Tradycyjne', icon: 'star', count: all.filter((r) => r.traditional).length, path: '/recipes?f=trad' },
+    ];
+    const categoryGlyphs = {
+      'cat-pizza': 'pizza', 'cat-pasta': 'pasta', 'cat-sosy': 'sauce', 'cat-sosy-bazowe': 'sauce',
+      'cat-mieso': 'meat', 'cat-ryby': 'fish', 'cat-owoce-morza': 'shrimp', 'cat-warzywa': 'carrot',
+      'cat-desery': 'cake', 'cat-pieczywo': 'bread', 'cat-zupy': 'pot', 'cat-salatki': 'salad',
+      'cat-cocktaile': 'cocktail', 'cat-prep': 'knife', 'cat-inne': 'utensils',
+    };
+    const tiles = [
+      ...specials.map((c) => ({ ...c, special: true })),
+      ...state.categories.map((c) => ({
+        id: c.id, label: c.name, icon: categoryGlyphs[c.id] || 'grid',
+        count: count(c.id), path: '/recipes?cat=' + encodeURIComponent(c.id),
+      })),
+    ].filter((c) => !q || norm(c.label).includes(q));
+    grid.replaceChildren(...tiles.map((c) => {
+      const btn = h('button', {
+        type: 'button', class: 'category-tile' + (c.special ? ' category-tile-special' : ''),
+        'aria-label': c.label + ', ' + recipeCountLabel(c.count),
+        onClick: () => {
+          if (c.id === 'all') resetRecipeFilters();
+          navigate(c.path);
+        },
+      },
+        h('span', { class: 'category-tile-icon', 'aria-hidden': 'true' }, icon(c.icon, 28)),
+        h('span', { class: 'category-tile-name' }, c.label),
+        h('span', { class: 'category-tile-count' }, recipeCountLabel(c.count)),
+        h('span', { class: 'category-tile-arrow', 'aria-hidden': 'true' }, icon('chevron-right', 17)));
+      return h('div', { class: 'category-tile-item', role: 'listitem' }, btn);
+    }));
+    if (!tiles.length) grid.replaceChildren(emptyState('🔎', 'Brak takiej kategorii', 'Spróbuj wpisać krótszą nazwę.'));
+  }
+  search.addEventListener('input', paint);
+  paint();
+  const unsub = subscribe((t) => { if (t === 'hydrated' || t === 'recipes' || t === 'categories') paint(); });
+  s.content.append(grid);
+  return { el: s.el, destroy: () => unsub() };
 }
