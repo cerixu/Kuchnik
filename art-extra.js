@@ -172,8 +172,59 @@ const omelette = () => `${plate(76)}<path d="M42 104 C42 66 158 66 158 104 C158 
 const sandwich = () => `${shadow(100, 158, 70, 8)}${rect(44, 124, 112, 26, '#e3b46c', 12)}${rect(44, 124, 112, 8, '#c98a3f', 6)}<path d="M40 122 C52 108 62 130 74 116 C86 130 96 110 108 120 C120 130 130 110 142 118 C148 122 154 118 160 116 L160 126 L40 126Z" fill="#6fbf4a"/>${rect(46, 106, 108, 12, '#f08a8a', 4)}${[[64, 98], [96, 98], [128, 98]].map(([x, y]) => `${ell(x, y, 15, 7, '#e5483a')}${ell(x - 2, y - 1, 6, 2, '#f0847a')}`).join('')}<path d="M44 94 L156 94 L150 104 L50 104Z" fill="#f6c744"/>${rect(44, 66, 112, 28, '#e3b46c', 12)}${rect(44, 66, 112, 8, '#f0cc8a', 6)}`;
 const focaccia = () => `${shadow(100, 150, 76, 8)}<g transform="rotate(-6 100 100)">${rect(34, 58, 132, 84, '#c98a3a', 14)}${rect(38, 62, 124, 76, '#e6ae52', 11)}${Array.from({ length: 18 }, (_, i) => circ(54 + (i % 6) * 21, 78 + Math.floor(i / 6) * 22, 5, '#c9852f')).join('')}${[[62, 74], [112, 96], [138, 76], [80, 122]].map(([x, y]) => `${circ(x, y, 9, '#d9342a')}${circ(x - 2, y - 2, 3, '#fff', 0.5)}`).join('')}${[[96, 80, 20], [60, 100, -30], [126, 118, 10]].map(([x, y, a]) => `<path d="M${x} ${y} l18 6" stroke="#4a8b3a" stroke-width="2.4" transform="rotate(${a} ${x} ${y})"/>`).join('')}${dots([[70, 90], [100, 110], [120, 80], [140, 100], [86, 66], [110, 128]], 1.6, '#fff', 0.9)}</g>`;
 
+/* ---------- Dipy i pasty warzywne ---------- */
+const dip = (v = 'eggplant') => {
+  const isHummus = v === 'hummus';
+  const isGuac = v === 'guacamole';
+  const cream = isHummus ? '#d9b66d' : isGuac ? '#78a84d' : '#d9c7a2';
+  const garnish = isHummus
+    ? dots([[82, 94], [110, 86], [124, 106], [94, 116]], 3.5, '#b66b2b') + leaf(102, 94, 20, .7)
+    : isGuac
+      ? dots([[82, 92], [112, 106], [124, 88]], 5, '#d9342a') + leaf(98, 98, -20, .8) + leaf(116, 114, 35, .65)
+      : `<g transform="rotate(-18 136 82)"><ellipse cx="136" cy="82" rx="15" ry="27" fill="#51304f"/><ellipse cx="132" cy="75" rx="8" ry="17" fill="#795070"/><path d="M126 58 l-9 -9 l14 3 l7 -10 l2 14 l12 1 l-11 7Z" fill="#4e8b45"/></g>` + leaf(88, 90, -20, .75);
+  return `${bowl(72, '#9699a5', '#272a31')}${ell(100, 100, 55, 34, '#eee5d4')}${ell(100, 98, 48, 27, cream)}<path d="M66 98 C78 82 100 84 115 94 C126 101 118 111 104 110 C90 109 88 96 99 92" stroke="${isGuac ? '#4d8138' : '#b58e5b'}" stroke-width="4" fill="none" stroke-linecap="round"/>${garnish}${dots([[74, 112], [122, 116], [100, 78]], 2.2, '#fff5df')}`;
+};
+
+/* ---------- Motywy: tofu i kaczka ---------- */
+const tofu = () => `${bowl(74, '#9699a5', '#272a31')}${circ(100, 100, 54, '#e3d9b9')}${rect(65, 76, 24, 19, '#f7f0dd', 4, -8)}${rect(93, 70, 24, 20, '#fff8e8', 4, 7)}${rect(103, 101, 24, 19, '#f4ead4', 4, -6)}${rect(72, 105, 23, 18, '#fff8e8', 4, 8)}${dots([[82, 82], [108, 79], [114, 109]], 1.8, '#d4c6a8')}${dots([[82, 99], [124, 91], [92, 119]], 4, '#5fa347')}${dots([[88, 91], [132, 112]], 3.6, '#e98b39')}${leaf(130, 77, 20, 0.55)}`;
+const duck = () => `${plate(76)}${shadow(100, 150, 60, 8)}<path d="M50 103 C47 84 64 67 86 73 C99 62 121 69 135 87 C149 104 141 123 122 133 C100 144 64 132 50 103Z" fill="#6f2b1e"/><path d="M55 102 C52 86 67 73 87 78 C100 68 118 75 130 89 C142 104 135 119 119 128 C99 137 68 127 55 102Z" fill="#b75b36"/><path d="M66 86 C78 77 90 80 98 87 M73 98 C84 90 98 94 105 101 M86 111 C96 103 110 108 116 115" stroke="#efc18a" stroke-width="4" fill="none" stroke-linecap="round"/>${ell(143, 113, 19, 12, '#f4a341', -28)}${ell(143, 113, 12, 7, '#f5d16a', -28)}${leaf(52, 135, -25, 0.65)}${leaf(64, 140, 15, 0.6)}`;
+
+/* ---------- Dodatki i białka z audytu ilustracji ---------- */
+const pork = () => `${plate(76)}${shadow(100, 151, 64, 8)}
+  <path d="M48 104 C48 82 64 68 87 71 C109 61 137 76 146 97 C153 115 137 135 113 137 L73 132 C57 128 48 119 48 104Z" fill="#6d3023"/>
+  <path d="M54 103 C54 85 68 75 89 77 C109 69 132 81 139 99 C145 114 132 127 111 130 L75 125 C61 122 54 114 54 103Z" fill="#c77b64"/>
+  <path d="M63 91 C78 81 93 84 104 91 M62 106 C80 96 96 101 110 109 M76 119 C91 112 105 116 116 122" stroke="#f4c4a7" stroke-width="4" fill="none" stroke-linecap="round"/>
+  ${ell(143, 118, 17, 12, '#f0d7b6', -18)}${ell(151, 118, 7, 5, '#fff1dd', -18)}`;
+
+const potato = (v = 'roasted') => {
+  if (v === 'mash') return `${bowl(72, '#9699a5', '#272a31')}${circ(100, 100, 55, '#e8deca')}${circ(100, 98, 48, '#f2e6ca')}${ell(100, 98, 32, 18, '#f5ebd6', -8)}<path d="M73 102 C80 81 101 82 116 93 C126 101 119 112 106 111 C91 110 91 96 101 92" stroke="#d2bf98" stroke-width="4" fill="none" stroke-linecap="round"/>${dots([[83, 87], [116, 113], [125, 94]], 2.2, '#5b853e')}`;
+  return `${plate(76)}${shadow(100, 148, 61, 7)}
+    ${[[66,85,-14],[100,78,12],[126,93,-20],[78,113,18],[111,119,-8],[137,119,22],[96,100,34]].map(([x,y,a])=>`<g transform="rotate(${a} ${x} ${y})">${rect(x-13,y-10,26,20,'#bf843b',4)}${rect(x-10,y-7,20,4,'#e7ba71',2)}<path d="M${x-5} ${y+2} L${x+7} ${y+2}" stroke="#8a5628" stroke-width="2.6" stroke-linecap="round"/></g>`).join('')}${dots([[70,102],[119,72],[133,104]],2.2,'#5d8d3c')}`;
+};
+
+const grain = (v = 'buckwheat') => {
+  const millet = v === 'millet';
+  const fill = millet ? '#e2c36b' : '#756047';
+  const shine = millet ? '#f6df91' : '#a18a68';
+  const seeds = Array.from({ length: 54 }, (_, i) => {
+    const x = 59 + ((i * 29) % 82);
+    const y = 76 + ((i * 17) % 48);
+    return ell(x, y, millet ? 2.4 : 3.2, millet ? 1.5 : 2.2, i % 3 === 0 ? shine : fill, (i * 23) % 80 - 40);
+  }).join('');
+  return `${bowl(72, '#9699a5', '#272a31')}${circ(100, 100, 54, millet ? '#dfc27d' : '#76614c')}${circ(100, 97, 47, millet ? '#f2e0a8' : '#9c8362')}${seeds}${leaf(133, 79, 20, .45)}`;
+};
+
+const risotto = () => `${bowl(72, '#9699a5', '#272a31')}${circ(100, 100, 54, '#f0dfba')}${circ(100, 100, 48, '#e7cf9c')}
+  ${Array.from({ length: 35 }, (_, i) => ell(62 + ((i * 31) % 75), 76 + ((i * 19) % 48), 3.8, 2.2, i % 3 ? '#f7e8c6' : '#d9bd7e', (i * 17) % 60 - 30)).join('')}
+  ${[[78,89,-25],[115,84,12],[124,108,-20],[90,119,8]].map(([x,y,a])=>`${ell(x,y,12,7,'#876447',a)}${ell(x,y-2,8,3,'#b99a76',a)}`).join('')}
+  ${dots([[101, 89], [107, 113], [83, 104]], 2.3, '#5d8d3c')}${leaf(132, 78, 18, .55)}`;
+
+const beans = () => `${plate(76)}${shadow(100, 148, 63, 8)}
+  ${[[70,82,28],[96,77,-18],[124,86,40],[81,101,-34],[109,105,18],[135,111,-26],[76,123,14],[105,127,-32],[126,130,25]].map(([x,y,a],i)=>`<path d="M${x-16} ${y+8} Q${x-5} ${y-10} ${x+17} ${y-6}" stroke="${i%2?'#3c853c':'#63ac4f'}" stroke-width="6" fill="none" stroke-linecap="round" transform="rotate(${a} ${x} ${y})"/><path d="M${x-8} ${y+3} Q${x+1} ${y-2} ${x+9} ${y-4}" stroke="#b5d987" stroke-width="1.6" fill="none" transform="rotate(${a} ${x} ${y})"/>`).join('')}
+  ${[[88,92,-20],[118,98,18],[95,118,40],[133,91,-32]].map(([x,y,a])=>ell(x,y,9,3,'#f1e2bd',a)).join('')}${leaf(61, 132, -20, .55)}`;
+
 /* ---------- Eksport ---------- */
-export const EXTRA = { soup, pasta, pizza, salad, sauce, bread, cake, cocktail, pancakes, tart, pudding, cookies, cupcake, icecream, smoothie, jar, fries, skewers, chicken, cutlet, stew, rolls, meatballs, ribs, sausage, lasagne, ramen, curry, taco, sushi, paella, omelette, sandwich, focaccia };
+export const EXTRA = { soup, pasta, pizza, salad, sauce, dip, bread, cake, cocktail, pancakes, tart, pudding, cookies, cupcake, icecream, smoothie, jar, fries, skewers, chicken, cutlet, stew, rolls, meatballs, ribs, sausage, lasagne, ramen, curry, taco, sushi, paella, omelette, sandwich, focaccia, tofu, duck, pork, potato, grain, risotto, beans };
 
 /** Wszystkie dozwolone specyfikacje „rodzaj:wariant” (do testów i podglądu). */
 export const VARIANT_SPECS = [
@@ -181,5 +232,5 @@ export const VARIANT_SPECS = [
   'pizza', 'pizza:pepperoni', 'pizza:white', 'pizza:veg', 'salad', 'salad:greek', 'salad:caesar', 'salad:caprese', 'salad:potato', 'salad:slaw',
   ...Object.keys(SAUCE).map((v) => (v ? 'sauce:' + v : 'sauce')), 'bread', 'bread:round', 'bread:rolls', 'cake', 'cake:cheese', 'cake:choc', 'cake:tiramisu',
   ...Object.keys(COCK).map((v) => (v ? 'cocktail:' + v : 'cocktail')), 'pancakes', 'pancakes:potato', 'tart', 'tart:apple', 'tart:lemon', 'pudding', 'pudding:brulee', 'cookies', 'cookies:brownie',
-  'cupcake', 'icecream', 'smoothie', 'jar', 'fries', 'skewers', 'chicken', 'cutlet', 'stew', 'rolls', 'meatballs', 'ribs', 'sausage', 'lasagne', 'ramen', 'curry', 'taco', 'sushi', 'paella', 'omelette', 'sandwich', 'focaccia',
+  'cupcake', 'icecream', 'smoothie', 'jar', 'dip', 'dip:eggplant', 'dip:hummus', 'dip:guacamole', 'fries', 'skewers', 'chicken', 'cutlet', 'stew', 'rolls', 'meatballs', 'ribs', 'sausage', 'lasagne', 'ramen', 'curry', 'taco', 'sushi', 'paella', 'omelette', 'sandwich', 'focaccia', 'tofu', 'duck', 'pork', 'potato:roasted', 'potato:mash', 'grain:buckwheat', 'grain:millet', 'risotto', 'beans',
 ];
