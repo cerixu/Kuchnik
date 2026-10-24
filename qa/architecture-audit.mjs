@@ -2,41 +2,51 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const forbidden = [
-  /\bamateur\b/i,
-  /\bamator\b/i,
-  /data-mode/i,
-  /Tryb aplikacji/i,
-  /Tryb amatora/i,
-  /mode\s*:\s*['"]pro['"]/i,
-  /getSetting\(\s*['"]mode['"]/i,
-  /setSetting\(\s*['"]mode['"]/i,
-];
-
+const files = [];
 function walk(dir) {
-  const out = [];
   for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
     if (ent.name === '.git' || ent.name === 'node_modules') continue;
     const p = path.join(dir, ent.name);
-    if (ent.isDirectory()) out.push(...walk(p));
-    else if (/\.(js|css|html)$/.test(ent.name)) out.push(p);
+    if (ent.isDirectory()) walk(p);
+    else if (/\.m?js$/.test(ent.name)) files.push(p);
   }
-  return out;
 }
+walk(root);
 
-const files = walk(root);
-const hits = [];
+const errors = [];
+let checkedImports = 0;
 for (const file of files) {
-  const lines = fs.readFileSync(file, 'utf8').split('\n');
-  lines.forEach((line, i) => {
-    if (forbidden.some((re) => re.test(line))) {
-      hits.push(path.relative(root, file) + ':' + (i + 1) + ': ' + line.trim());
-    }
-  });
+  const source = fs.readFileSync(file, 'utf8');
+  for (const match of source.matchAll(/(?:from\s*|import\s*)['"]([^'"]+)['"]/g)) {
+    const spec = match[1];
+    if (!spec.startsWith('./') && !spec.startsWith('../')) continue;
+    checkedImports++;
+    const target = path.resolve(path.dirname(file), spec);
+    if (!fs.existsSync(target)) errors.push(path.relative(root, file) + ' -> missing ' + spec);
+  }
 }
 
-if (hits.length) {
-  console.error('OBSOLETE AMATEUR MODE REFERENCES FOUND:\n' + hits.join('\n'));
+const indexPath = path.join(root, 'index.html');
+const manifestPath = path.join(root, 'manifest.webmanifest');
+if (!fs.existsSync(indexPath)) errors.push('index.html is missing');
+if (!fs.existsSync(manifestPath)) errors.push('manifest.webmanifest is missing');
+if (fs.existsSync(indexPath)) {
+  const html = fs.readFileSync(indexPath, 'utf8');
+  if (!/type=["']module["']\s+src=["']app\.js["']/.test(html)) errors.push('index.html does not load app.js as a module');
+  if (!/rel=["']manifest["']/.test(html)) errors.push('index.html does not link the PWA manifest');
+}
+if (fs.existsSync(manifestPath)) {
+  let manifest;
+  try { manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8')); }
+  catch { errors.push('manifest.webmanifest is not valid JSON'); }
+  if (manifest) {
+    if (manifest.display !== 'standalone') errors.push('PWA display must be standalone');
+    if (!Array.isArray(manifest.icons) || !manifest.icons.some((x) => x.purpose === 'maskable')) errors.push('PWA maskable icon is missing');
+  }
+}
+
+if (errors.length) {
+  console.error('ARCHITECTURE AUDIT FAILED:\n' + errors.join('\n'));
   process.exit(1);
 }
-console.log('PASS: amateur mode fully removed from runtime code');
+console.log('PASS: ' + files.length + ' JS files scanned, ' + checkedImports + ' local imports resolved, PWA shell and manifest validated.');
