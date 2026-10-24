@@ -136,7 +136,7 @@ function splitInstructions(text) {
   let parts = String(text || '').replace(/\r/g, '').split(/\n+/).map((l) => l.trim()).filter(Boolean);
   parts = parts.filter((l) => !/^(step\s*)?\d+\.?$/i.test(l));
   if (parts.length <= 2 && text.length > 300) {
-    const sentences = String(text).replace(/\s+/g, ' ').replace(/([.!?])\s+(?=[A-Z0-9])/g, '$1\u0001').split('\u0001');
+    const sentences = String(text).replace(/\s+/g, ' ').split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
     parts = []; let cur = '';
     for (const s of sentences) { if ((cur + ' ' + s).length > 240 && cur) { parts.push(cur.trim()); cur = s; } else cur += ' ' + s; }
     if (cur.trim()) parts.push(cur.trim());
@@ -237,7 +237,7 @@ export function detectLang(text) {
 function chunk(text, max = 450) {
   const out = [];
   let cur = '';
-  for (const piece of String(text).replace(/([.!?;:])\s+/g, '$1\u0001').split('\u0001')) {
+  for (const piece of String(text).split(/(?<=[.!?;:])\s+/)) {
     if (piece.length > max) { if (cur) { out.push(cur); cur = ''; } for (let i = 0; i < piece.length; i += max) out.push(piece.slice(i, i + max)); continue; }
     if ((cur + ' ' + piece).trim().length > max) { out.push(cur.trim()); cur = piece; } else cur = (cur + ' ' + piece).trim();
   }
