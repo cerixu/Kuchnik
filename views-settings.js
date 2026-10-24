@@ -1,5 +1,5 @@
 /* ==========================================================================
-   views-settings.js — Ustawienia: wygląd i tryb, kategorie, kopia zapasowa,
+   views-settings.js — Ustawienia: wygląd, kategorie, kopia zapasowa,
    pamięć i PWA, aktualizacje, strefa ryzyka, prywatność.
    ========================================================================== */
 import {
@@ -13,7 +13,6 @@ import { checkForUpdate, swVersion, storageInfo, requestPersist, isStandalone, i
 import { searchGoogle, googleConfigured } from './search.js';
 import { textInput } from './ui.js';
 import { APP_VERSION, fmtDateTime } from './util.js';
-import { storageStatus } from './db.js';
 
 const mb = (b) => (b == null ? '—' : b < 1048576 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1).replace('.', ',') + ' MB');
 
@@ -38,9 +37,6 @@ export function settingsView() {
   const appearance = group('Wygląd',
     h('div', null, h('div', { class: 'field-label' }, 'Motyw'),
       segmented([['auto', 'Auto'], ['light', 'Jasny'], ['dark', 'Ciemny']], getSetting('theme'), set('theme'), { label: 'Motyw' })),
-    h('div', null, h('div', { class: 'field-label' }, 'Tryb'),
-      segmented([['pro', 'Pro'], ['amateur', 'Amator']], getSetting('mode'), async (v) => { await setSetting('mode', v); rerender(); }, { label: 'Tryb aplikacji' }),
-      h('p', { class: 'muted small' }, 'Pro: procenty piekarskie, food cost, historia zmian, ciemna stal i szafran. Amator: zielony, zaokrąglony, prostszy wygląd — bez zaawansowanych funkcji.')),
     h('div', null, h('div', { class: 'field-label' }, 'Wielkość przycisków'),
       segmented([['normal', 'Normalne'], ['large', 'Duże'], ['xl', 'Bardzo duże']], getSetting('tapSize'), set('tapSize'), { label: 'Wielkość przycisków' }),
       h('p', { class: 'muted small' }, 'Większe przyciski są wygodniejsze przy mokrych rękach.')),
@@ -117,6 +113,8 @@ export function settingsView() {
           h('div', { class: 'kv-row' }, h('span', null, 'Kategorie'), h('span', { class: 'num' }, String(summary.categories))),
           h('div', { class: 'kv-row' }, h('span', null, 'Pozycje zakupów'), h('span', { class: 'num' }, String(summary.shopping))),
           h('div', { class: 'kv-row' }, h('span', null, 'Wpisy historii'), h('span', { class: 'num' }, String(summary.history))),
+          h('div', { class: 'kv-row' }, h('span', null, 'Produkty w magazynie'), h('span', { class: 'num' }, String(summary.inventoryItems || 0))),
+          h('div', { class: 'kv-row' }, h('span', null, 'Ruchy magazynowe'), h('span', { class: 'num' }, String(summary.inventoryMovements || 0))),
           summary.exportedAt ? h('div', { class: 'kv-row' }, h('span', null, 'Zrobiona'), h('span', { class: 'num' }, fmtDateTime(summary.exportedAt))) : null),
         h('p', { class: 'muted small' }, '„Połącz” dodaje brakujące receptury i zostawia nowszą wersję każdej z nich. „Zastąp” usuwa obecne dane i wczytuje tylko kopię.')),
       actions: [
@@ -159,7 +157,6 @@ export function settingsView() {
     storageBox.replaceChildren(
       h('div', { class: 'kv-row' }, h('span', null, 'Receptur'), h('span', { class: 'num' }, String(cnt))),
       h('div', { class: 'kv-row' }, h('span', null, 'Zajęte miejsce'), h('span', { class: 'num' }, mb(si.usage))),
-      h('div', { class: 'kv-row' }, h('span', null, 'Magazyn danych'), h('span', { class: 'num' }, { idb: 'IndexedDB', local: 'awaryjny (localStorage)', memory: 'tylko pamięć karty' }[storageStatus().mode])),
       h('div', { class: 'kv-row' }, h('span', null, 'Trwały magazyn'), h('span', { class: 'num' }, si.persisted ? 'tak' : 'nie (kopia JSON chroni dane)')),
       h('div', { class: 'kv-row' }, h('span', null, 'Połączenie'), h('span', { class: 'num' }, navigator.onLine ? 'online' : 'offline')),
       h('div', { class: 'kv-row' }, h('span', null, 'Tryb'), h('span', { class: 'num' }, isStandalone() ? 'aplikacja (ekran początkowy)' : 'karta przeglądarki')));
@@ -171,8 +168,6 @@ export function settingsView() {
   const app = group('Aplikacja i pamięć',
     storageBox,
     h('div', { class: 'kv' }, h('div', { class: 'kv-row' }, h('span', null, 'Wersja aplikacji'), h('span', { class: 'num' }, APP_VERSION)), h('div', { class: 'kv-row' }, h('span', null, 'Service worker'), swRow)),
-    storageStatus().mode !== 'idb' ? h('div', { class: 'banner warn' }, h('div', { class: 'banner-text' }, h('strong', null, 'Tryb awaryjny'), h('span', { class: 'muted small' }, storageStatus().reason || 'IndexedDB niedostępne.')),
-      button('Spróbuj IndexedDB ponownie', { sm: true, onClick: () => { try { sessionStorage.removeItem('k:forceFallback'); } catch (_) { /* */ } location.reload(); } })) : null,
     button('Poproś o trwały magazyn', { icon: 'info', block: true, kind: 'ghost', onClick: async () => { const ok = await requestPersist(); toast(ok ? 'Magazyn oznaczony jako trwały' : 'Przeglądarka nie nadała trwałości — rób kopie JSON'); paintStorage(); } }),
     button('Sprawdź aktualizacje', { icon: 'refresh', block: true, onClick: async () => {
       const r = await checkForUpdate();
@@ -199,7 +194,7 @@ export function settingsView() {
     } }));
 
   const about = group('Prywatność',
-    h('p', { class: 'muted' }, 'Kucharzyna nie ma konta, reklam, śledzenia ani analityki. Wszystkie dane są w pamięci tego urządzenia (IndexedDB) i nigdzie nie są wysyłane. Internet jest używany tylko wtedy, gdy sam otworzysz wyszukiwarkę Google lub Google Tłumacz.'));
+    h('p', { class: 'muted' }, 'Żarłok nie ma konta, reklam, śledzenia ani analityki. Wszystkie dane są w pamięci tego urządzenia (IndexedDB) i nigdzie nie są wysyłane. Internet jest używany tylko wtedy, gdy sam otworzysz wyszukiwarkę Google lub Google Tłumacz.'));
 
   c.append(appearance, recipes, cooking, search, backup, app, install, danger, about);
   void state;
