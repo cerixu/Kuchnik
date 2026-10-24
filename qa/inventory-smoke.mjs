@@ -51,6 +51,14 @@ async function inventory() {
   await dismiss();
   await page.waitForSelector('.inventory-screen', { state: 'visible', timeout: 5000 });
 }
+async function clearTransientOverlays() {
+  const overlays = page.locator('#overlays .overlay');
+  if (await overlays.count()) {
+    console.log('Transient overlays before inventory action:', (await overlays.allInnerTexts()).join(' | '));
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelectorAll('#overlays .overlay').length === 0, null, { timeout: 3000 });
+  }
+}
 async function expectText(text, label) {
   if (!(await page.getByText(text, { exact: false }).count())) throw new Error(label || ('Brak tekstu: ' + text));
 }
@@ -122,6 +130,7 @@ try {
   await expectText('Mąka testowa', 'Braki magazynowe nie trafiły na listę zakupów.');
 
   await inventory();
+  await clearTransientOverlays();
   await page.locator('.inventory-item').filter({ hasText: 'Mąka testowa' }).getByRole('button', { name: 'Zarejestruj stratę: Mąka testowa' }).click();
   await page.getByLabel('Ilość straty').fill('0.5');
   await page.getByLabel('Jednostka straty').selectOption('kg');
