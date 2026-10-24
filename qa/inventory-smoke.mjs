@@ -131,7 +131,8 @@ try {
 
   await inventory();
   await clearTransientOverlays();
-  await page.locator('.inventory-item').filter({ hasText: 'Mąka testowa' }).getByRole('button', { name: 'Zarejestruj stratę: Mąka testowa' }).click();
+  await page.locator('.inventory-item').filter({ hasText: 'Mąka testowa' }).getByRole('button', { name: 'Zarejestruj stratę: Mąka testowa' }).click({ force: true });
+  await page.getByLabel('Ilość straty').waitFor({ state: 'visible', timeout: 3000 });
   await page.getByLabel('Ilość straty').fill('0.5');
   await page.getByLabel('Jednostka straty').selectOption('kg');
   await page.getByLabel('Powód').selectOption('Zepsute');
