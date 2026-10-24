@@ -18,6 +18,9 @@ import { detailView } from './views-detail.js';
 import { editorView } from './views-editor.js';
 import { cookView } from './views-cook.js';
 import { calcView } from './views-calc.js';
+import { cookEntryView } from './views-cook-home.js';
+import { moreView } from './views-more.js';
+import { inventoryView } from './views-inventory.js';
 import { shoppingView, pendingCount } from './shopping.js';
 import { importView } from './views-import.js';
 import { settingsView } from './views-settings.js';
@@ -55,9 +58,9 @@ dark.addEventListener && dark.addEventListener('change', () => { if (getSetting(
 const TABS = [
   ['start', 'Start', 'home2', '/'],
   ['recipes', 'Receptury', 'pot', '/recipes'],
-  ['calc', 'Kalkulatory', 'calc', '/calc'],
-  ['shopping', 'Zakupy', 'basket', '/shopping'],
-  ['settings', 'Ustawienia', 'gear', '/settings'],
+  ['cook', 'Gotuję', 'chef', '/cook'],
+  ['inventory', 'Magazyn', 'fridge', '/inventory'],
+  ['more', 'Więcej', 'grid', '/more'],
 ];
 
 function buildTabbar() {
@@ -138,14 +141,17 @@ route('/recipes', (p, q) => recipesView(q), { tab: 'recipes' });
 route('/recipe/:id', (p) => detailView(p), { tab: 'recipes' });
 route('/edit/:id', (p) => editorView(p), { tab: 'recipes', tabs: false });
 route('/new', (p, q) => editorView({ id: null }, q), { tab: 'recipes', tabs: false });
-route('/cook/:id', (p) => cookView(p), { tab: 'recipes', tabs: false });
-route('/guide/:id', (p) => guideView(p), { tab: 'recipes', tabs: false });
-route('/search', (p, q) => searchView(q), { tab: 'recipes' });
-route('/import', (p, q) => importView(q), { tab: 'recipes' });
-route('/calc', () => calcView({}), { tab: 'calc' });
-route('/calc/:kind', (p, q) => calcView(p, q), { tab: 'calc' });
-route('/shopping', () => shoppingView(), { tab: 'shopping' });
-route('/settings', () => settingsView(), { tab: 'settings' });
+route('/cook', () => cookEntryView(), { tab: 'cook' });
+route('/cook/:id', (p) => cookView(p), { tab: 'cook', tabs: false });
+route('/guide/:id', (p) => guideView(p), { tab: 'cook', tabs: false });
+route('/inventory', () => inventoryView(), { tab: 'inventory' });
+route('/more', () => moreView(), { tab: 'more' });
+route('/search', (p, q) => searchView(q), { tab: 'more' });
+route('/import', (p, q) => importView(q), { tab: 'more' });
+route('/calc', () => calcView({}), { tab: 'more' });
+route('/calc/:kind', (p, q) => calcView(p, q), { tab: 'more' });
+route('/shopping', () => shoppingView(), { tab: 'more' });
+route('/settings', () => settingsView(), { tab: 'more' });
 
 /* ---------- Start ---------- */
 
