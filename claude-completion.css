@@ -1136,3 +1136,16 @@ body.kb-open #tabbar { display: none; }
 .inventory-edit-sheet .panel-body { overflow-y:auto; overscroll-behavior:contain; }
 .inventory-waste { margin-top:8px; padding:14px; border-radius:18px; }
 @media(max-width:360px) { .inventory-form .grid-2 { grid-template-columns:1fr; } .inventory-item-actions .btn { padding:7px 8px; font-size:.73rem; } }
+
+
+/* Barcode scanner — camera-first, with a high-contrast scan line and torch control */
+.barcode-scanner { gap:14px; }
+.barcode-frame { position:relative; overflow:hidden; width:100%; aspect-ratio:4/3; max-height:42dvh; border-radius:22px; background:#090909; border:1px solid var(--line); }
+.barcode-video { display:block; width:100%; height:100%; object-fit:cover; }
+.barcode-scan-line { position:absolute; left:8%; right:8%; top:50%; height:2px; background:linear-gradient(90deg,transparent,#ff655e 12%,#ffb1a9 50%,#ff655e 88%,transparent); box-shadow:0 0 12px rgba(255,82,74,.8); animation:barcode-sweep 1.8s ease-in-out infinite alternate; pointer-events:none; }
+.barcode-frame::after { content:""; position:absolute; inset:18% 8%; border:1px solid rgba(255,255,255,.18); border-radius:14px; pointer-events:none; }
+.barcode-status { min-height:1.3em; margin:0; }
+.barcode-sheet .panel { max-height:min(92dvh,900px); }
+.barcode-sheet .panel-body { overflow-y:auto; }
+@keyframes barcode-sweep { from { transform:translateY(-95px); } to { transform:translateY(95px); } }
+@media(prefers-reduced-motion:reduce) { .barcode-scan-line { animation:none; } }
