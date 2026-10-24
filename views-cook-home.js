@@ -3,7 +3,7 @@ import { h, icon, screen, iconBtn, textInput, emptyState } from './ui.js';
 import { listRecipes, searchText, catName } from './recipes.js';
 import { navigate } from './router.js';
 import { openTimersSheet } from './timers.js';
-import { recipeArtUrl, recipeArtFallbackUrl } from './art.js';
+import { recipeArtUrl, artUrl } from './art.js';
 import { attachRecipePhoto } from './food-photos.js';
 import { norm } from './util.js';
 
@@ -58,7 +58,7 @@ export function cookEntryView() {
             if (el.dataset.artFallback) return;
             el.dataset.artFallback = '1';
             el.classList.add('art');
-            el.src = recipeArtFallbackUrl(r);
+            el.src = artUrl('plate', r.name || r.id || '');
           },
         });
         if (!custom) attachRecipePhoto(img, r);
