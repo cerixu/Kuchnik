@@ -68,6 +68,8 @@ try {
   await page.waitForSelector('.inventory-edit-sheet', { state: 'visible', timeout: 5000 });
   if ((await page.locator('.inventory-edit-sheet').getByLabel('Kod EAN').inputValue()) !== '5901234123457') throw new Error('Skaner nie wpisał odczytanego kodu EAN.');
   await page.getByRole('button', { name: 'Anuluj' }).click();
+  await page.waitForSelector('.inventory-edit-sheet', { state: 'detached', timeout: 3000 });
+  await page.waitForSelector('.barcode-sheet', { state: 'detached', timeout: 3000 });
 
   await page.getByRole('button', { name: 'Dodaj produkt do magazynu' }).first().click();
   await page.getByLabel('Nazwa produktu').fill('Mąka testowa');
