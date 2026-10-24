@@ -78,7 +78,7 @@ try {
   await expectText('Mąka testowa', 'Braki magazynowe nie trafiły na listę zakupów.');
 
   await inventory();
-  await page.getByRole('button', { name: 'Zarejestruj stratę: Mąka testowa' }).click();
+  await page.locator('.inventory-item').filter({ hasText: 'Mąka testowa' }).getByRole('button', { name: 'Zarejestruj stratę: Mąka testowa' }).click();
   await page.getByLabel('Ilość straty').fill('0.5');
   await page.getByLabel('Jednostka straty').selectOption('kg');
   await page.getByLabel('Powód').selectOption('Zepsute');
