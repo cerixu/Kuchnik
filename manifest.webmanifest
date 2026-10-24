@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Kucharzyna",
-  "short_name": "Kucharzyna",
-  "description": "Prywatny notatnik szefa kuchni: receptury, przeliczanie, procenty piekarskie, food cost, zakupy. Działa offline.",
+  "name": "Kuchnik",
+  "short_name": "Kuchnik",
+  "description": "Prywatny notatnik szefa kuchni: receptury, kalkulatory, food cost, magazyn i zakupy. Działa offline.",
   "lang": "pl",
   "dir": "ltr",
   "start_url": "./",
