@@ -1,0 +1,398 @@
+/* ==========================================================================
+   ŻARŁOK 2.1.2 · Mobile polish
+   Ostatnia, kontrolowana warstwa UI. Bez ingerencji w logikę i dane.
+   ========================================================================== */
+
+:root {
+  --zp-copper: #d99a68;
+  --zp-copper-bright: #efbd8e;
+  --zp-line: rgba(255,255,255,.095);
+  --zp-ease: cubic-bezier(.2,.75,.25,1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body { min-height: 100%; }
+body { text-rendering: optimizeLegibility; }
+button, input, textarea, select { font: inherit; }
+button, a, input, select, textarea { touch-action: manipulation; }
+button { -webkit-appearance: none; appearance: none; }
+::selection { background: rgba(217,154,104,.28); color: inherit; }
+
+/* Nagłówek: czytelna hierarchia i stabilna wysokość na iPhonie. */
+.topbar-title {
+  font-size: clamp(1.8rem, 7.4vw, 2.35rem);
+  line-height: 1.04;
+  letter-spacing: -.055em;
+  font-weight: 780;
+}
+.topbar-mini { font-weight: 680; letter-spacing: -.025em; }
+.topbar .iconbtn {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+}
+.topbar .iconbtn.primary {
+  color: #20140c !important;
+  background: linear-gradient(145deg, #f0bd8b, #cf8957) !important;
+  border-color: rgba(255,255,255,.2) !important;
+}
+
+/* Receptury: równa siatka, stabilne proporcje i czytelne etykiety. */
+.recipes .content { gap: 16px; }
+.recipes .subbar { gap: 11px; }
+.recipes .searchbar { gap: 8px; }
+.recipes .searchbox {
+  min-height: 48px;
+  border: 1px solid var(--zp-line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface, #191b1f) 88%, transparent);
+  overflow: hidden;
+}
+.recipes .searchbox:focus-within {
+  border-color: color-mix(in srgb, var(--zp-copper) 62%, transparent);
+  box-shadow: 0 0 0 3px rgba(217,154,104,.09);
+}
+.recipes .searchbox .search-input {
+  min-width: 0;
+  min-height: 46px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.recipes .searchbox .search-input:focus { outline: none; box-shadow: none; }
+.recipes .searchbar > .iconbtn {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+}
+.recipes .chips {
+  gap: 7px;
+  padding-block: 2px 7px;
+  scrollbar-width: none;
+}
+.recipes .chips::-webkit-scrollbar { display: none; }
+.recipes .chip {
+  min-height: 36px;
+  padding: 0 13px;
+  gap: 6px;
+  white-space: nowrap;
+  font-size: .79rem;
+  font-weight: 580;
+  border-radius: 999px;
+  transition: background .18s var(--zp-ease), border-color .18s ease, transform .18s var(--zp-ease);
+}
+.recipes .chip.on {
+  color: var(--zp-copper-bright);
+  border-color: rgba(217,154,104,.4);
+  background: linear-gradient(135deg, rgba(217,154,104,.19), rgba(217,154,104,.075));
+}
+.recipes .chip-n {
+  font-size: .68rem;
+  font-variant-numeric: tabular-nums;
+  opacity: .72;
+}
+.recipes .counter {
+  margin: 1px 2px 0;
+  font-size: .76rem;
+  font-weight: 570;
+  letter-spacing: .015em;
+}
+.recipes .rgrid {
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+}
+.recipes .rtile, .recipes .rcard {
+  min-width: 0;
+  border-radius: 21px;
+  border-color: var(--zp-line);
+}
+.recipes .rtile-img {
+  aspect-ratio: 1.14 / 1;
+  background-color: var(--surface-2, #22252a);
+}
+.recipes .rtile-img img { object-fit: cover; }
+.recipes .rtile-name, .recipes .rname {
+  line-height: 1.24;
+  letter-spacing: -.025em;
+  overflow-wrap: anywhere;
+}
+.recipes .rtile-meta, .recipes .rmeta { font-size: .73rem; }
+.recipes .group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 2px 2px;
+  font-size: .72rem;
+  letter-spacing: .105em;
+  text-transform: uppercase;
+  font-weight: 750;
+  color: var(--text-soft);
+}
+.recipes .group-title svg { color: var(--zp-copper-bright); }
+.recipes .list { gap: 9px; }
+.recipes .rcard { padding: 13px; }
+
+/* Wspólny język kart i pól: cienka krawędź, spokojny cień, bez ciężkich ramek. */
+.card, .rcard, .rtile, .tile, .bigcard, .shop-list, .result, .sr-card,
+.cook-row, .ing-edit, .step-edit, .sec-card, .guide-card, .stat {
+  border-color: var(--zp-line);
+}
+.card { border-radius: 21px; }
+.card-title { line-height: 1.25; }
+.input, input.input, textarea.input, select.input {
+  min-width: 0;
+  border-radius: 14px;
+}
+.input::placeholder { opacity: .67; }
+.input:focus, .input:focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--zp-copper) 66%, transparent);
+  box-shadow: 0 0 0 3px rgba(217,154,104,.1);
+}
+.btn { font-weight: 640; }
+.btn.primary {
+  color: #20140c;
+  background: linear-gradient(145deg, #f0bd8b, #cf8957);
+  border-color: rgba(255,255,255,.15);
+}
+.iconbtn { flex-shrink: 0; }
+.iconbtn.primary {
+  color: #20140c;
+  background: linear-gradient(145deg, #f0bd8b, #cf8957);
+  border-color: rgba(255,255,255,.18);
+}
+.chip, .pill { font-variant-numeric: tabular-nums; }
+.empty-state { text-wrap: balance; }
+
+/* Magazyn: czytelne wyszukiwanie i szybkie filtrowanie dotykiem. */
+.inventory .inventory-search {
+  min-height: 50px;
+  border-radius: 16px;
+}
+.inventory .inventory-filters { gap: 7px; padding-block: 3px 7px; }
+.inventory .inventory-filters .btn {
+  min-height: 38px;
+  height: 38px;
+  padding-inline: 14px;
+}
+.inventory .inventory-filters .btn.on {
+  color: var(--zp-copper-bright);
+  background: rgba(217,154,104,.13);
+  border-color: rgba(217,154,104,.3);
+}
+.inventory .inventory-item { border-radius: 17px; }
+.inventory .inventory-stock strong { letter-spacing: -.035em; }
+
+/* Dolny dock: aktywna pozycja ma być widoczna bez agresywnego blasku. */
+#tabbar {
+  padding: 6px !important;
+  gap: 4px !important;
+  border-radius: 23px !important;
+}
+#tabbar .tab {
+  min-width: 0;
+  min-height: 48px;
+  padding: 4px 2px;
+  border-radius: 17px !important;
+}
+#tabbar .tab .tab-ico {
+  transition: transform .2s var(--zp-ease), color .2s ease;
+}
+#tabbar .tab.on .tab-ico { transform: translateY(-1px); }
+#tabbar .tab.on .tab-label { font-weight: 700; }
+#tabbar .tab:focus-visible, .topbar .iconbtn:focus-visible {
+  outline: 2px solid var(--zp-copper-bright);
+  outline-offset: 2px;
+}
+
+/* Jasny motyw ma własny kontrast, nie tylko odwrócone kolory. */
+:root[data-theme="light"] {
+  --zp-line: rgba(48,38,29,.11);
+}
+:root[data-theme="light"] .recipes .searchbox {
+  background: rgba(255,255,255,.84);
+  border-color: rgba(48,38,29,.13);
+}
+:root[data-theme="light"] .recipes .chip.on {
+  color: #814a29;
+  background: rgba(196,126,78,.12);
+  border-color: rgba(164,94,49,.28);
+}
+:root[data-theme="light"] .recipes .group-title svg { color: #a96537; }
+:root[data-theme="light"] .inventory .inventory-filters .btn.on {
+  color: #814a29;
+  background: rgba(196,126,78,.12);
+  border-color: rgba(164,94,49,.25);
+}
+
+/* Większe telefony i małe ekrany. */
+@media (min-width: 560px) {
+  .recipes .rgrid { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+}
+@media (max-width: 360px) {
+  .recipes .rgrid { gap: 9px; }
+  .recipes .rtile, .recipes .rcard { border-radius: 17px; }
+  .recipes .searchbar > .iconbtn { width: 40px; height: 40px; flex-basis: 40px; }
+  .topbar-title { font-size: 1.8rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .recipes .rtile, .recipes .rcard, .inventory .inventory-item {
+    transition: border-color .18s ease, transform .18s var(--zp-ease);
+  }
+  .recipes .rtile:active, .recipes .rcard:active { transform: scale(.988); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
+
+
+/* ==========================================================================
+   ŻARŁOK 2.1.4 · dopięcie ekranu iPhone
+   Jedne proporcje zdjęć, brak rozmywania podczas ładowania, treść poniżej docka.
+   ========================================================================== */
+
+/* Karty receptur: wspólny kadr i spokojniejsza obróbka niezależnie od zdjęcia. */
+.recipes .rtile-img {
+  aspect-ratio: 4 / 3 !important;
+  height: auto !important;
+  overflow: hidden;
+  background: #191a1b;
+  border-radius: 0 !important;
+}
+.recipes .rtile-img img,
+.recipes .rtile-img img:not(.art) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+  object-position: center 48%;
+}
+.recipes .rtile-img img:not(.art) {
+  filter: saturate(.88) contrast(1.045) brightness(.95) !important;
+  animation: none !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+.recipes .rtile-img img.art {
+  filter: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+/* Pływający dock: mniejszy, czytelny i nie może przykrywać ostatniej receptury. */
+#tabbar {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 62px !important;
+  height: auto !important;
+  padding: 5px max(10px, env(safe-area-inset-left, 0px)) calc(5px + env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-right, 0px)) !important;
+  gap: 3px !important;
+  border: 1px solid rgba(255,255,255,.11) !important;
+  border-bottom: 0 !important;
+  border-radius: 22px 22px 0 0 !important;
+  background: rgba(18,20,21,.97) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.3) !important;
+  backdrop-filter: blur(24px) saturate(1.3) !important;
+  box-shadow: 0 -12px 34px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.07) !important;
+}
+#tabbar .tab {
+  min-width: 0 !important;
+  min-height: 54px !important;
+  height: 54px !important;
+  padding: 3px 1px !important;
+  gap: 1px !important;
+  justify-content: center !important;
+  border-radius: 17px !important;
+  transform: none !important;
+}
+#tabbar .tab .tab-ico {
+  width: 32px !important;
+  height: 28px !important;
+  flex: 0 0 28px !important;
+  background: transparent !important;
+  transform: none !important;
+}
+#tabbar .tab .tab-ico svg {
+  width: 21px !important;
+  height: 21px !important;
+}
+#tabbar .tab .tab-label {
+  max-width: 100% !important;
+  font-size: 9.5px !important;
+  line-height: 1.15 !important;
+  letter-spacing: -.025em !important;
+  font-weight: 600 !important;
+}
+#tabbar .tab.on {
+  color: var(--zp-copper-bright) !important;
+  background: rgba(217,154,104,.105) !important;
+}
+#tabbar .tab.on .tab-ico {
+  color: var(--zp-copper-bright) !important;
+  background: transparent !important;
+}
+#tabbar .tab.on .tab-label { font-weight: 750 !important; }
+#tabbar .tab:active .tab-ico {
+  transform: scale(.92) !important;
+}
+
+/* Odstęp odpowiada rzeczywistej wysokości docka + strefie bezpiecznej iPhone'a. */
+body:not(.no-tabs):not(.kb-open) .screen .scroll {
+  padding-bottom: 18px !important;
+}
+body.kb-open .screen .scroll {
+  padding-bottom: 16px !important;
+}
+.recipes .content { padding-bottom: 8px !important; }
+
+/* Jasny motyw zachowuje tę samą geometrię, bez ciemnej plamy pod ikoną. */
+:root[data-theme="light"] #tabbar {
+  background: rgba(255,250,244,.97) !important;
+  border-color: rgba(51,37,25,.13) !important;
+  box-shadow: 0 -10px 28px rgba(50,35,20,.08), inset 0 1px rgba(255,255,255,.9) !important;
+}
+:root[data-theme="light"] #tabbar .tab.on {
+  color: #814a29 !important;
+  background: rgba(196,126,78,.12) !important;
+}
+:root[data-theme="light"] #tabbar .tab.on .tab-ico { color: #814a29 !important; }
+
+/* Powiadomienia aktualizacji nie powinny trafiać nad wyszukiwarkę przy błędnym stanie klawiatury. */
+body.kb-open #toasts {
+  top: calc(var(--vv-top, 0px) + env(safe-area-inset-top, 0px) + 8px);
+  bottom: auto;
+}
+@media (max-width: 360px) {
+  #tabbar { width: 100% !important; padding-inline: 6px !important; }
+  #tabbar .tab .tab-label { font-size: 8.8px !important; }
+  .recipes .rgrid { gap: 9px !important; }
+}
+
+
+/* Wersja update ma własne miejsce — baner nie nachodzi na wyszukiwarkę i filtry. */
+body.has-update-notice .screen .topbar {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 68px) !important;
+}
+.toast.toast-update-notice {
+  max-width: min(calc(100% - 8px), 520px);
+  padding: 10px 14px;
+  gap: 10px;
+  border-radius: 22px;
+  font-size: .86rem;
+  line-height: 1.25;
+  box-shadow: 0 10px 32px rgba(0,0,0,.32), inset 0 1px rgba(255,255,255,.08);
+}
+.toast.toast-update-notice .toast-msg { min-width: 0; }
+.toast.toast-update-notice .toast-act {
+  min-height: 40px;
+  padding-inline: 8px;
+  font-size: .86rem;
+  white-space: nowrap;
+}
