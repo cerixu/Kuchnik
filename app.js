@@ -6,6 +6,7 @@ import { openDB, storageStatus } from './db.js';
 import { loadAll, state, subscribe, getSetting } from './recipes.js';
 import { h, icon, toast, $, openSheet } from './ui.js';
 import { APP_VERSION } from './util.js';
+import { CHANGELOG } from './changelog.js';
 import { setSetting } from './recipes.js';
 import { route, startRouter, navigate } from './router.js';
 import { registerSW, requestPersist } from './pwa.js';
@@ -167,16 +168,19 @@ function fatal(err) {
 
 function whatsNew() {
   if (getSetting('seenVersion') === APP_VERSION || document.querySelector('.overlay')) return;
-  const li = (t) => h('li', null, t);
+  const release = CHANGELOG[APP_VERSION];
+  const items = Array.isArray(release?.items) ? release.items : [
+    'Ulepszono wygląd i obsługę aplikacji na iPhonie.',
+    'Zachowano działanie offline oraz lokalny zapis danych.',
+    'Twoje zapisane receptury i ustawienia pozostają bez zmian.',
+  ];
+  const li = (text) => h('li', null, text);
   openSheet({
     title: `Co nowego w ${APP_VERSION}`, variant: 'sheet',
     body: h('div', { class: 'stack' },
-      h('ul', { class: 'whatsnew' },
-        li('Naprawione otwieranie w Safari: aplikacja ponawia połączenie z pamięcią, a gdy iOS ją blokuje, działa w trybie awaryjnym zamiast pokazywać błąd.'),
-        li('Nowe menu główne (karuzela kart, okrągłe przyciski, kuchnie świata) i pływający dok na dole.'),
-        li('Każda karta ma krótki opis, kraj pochodzenia i źródło przepisu.'),
-        li('Ilustracje dań z cieniowaniem 3D, szacunek kalorii, składniki na łuku.')),
-      h('p', { class: 'muted small' }, 'Podpisy pod ikonami paska włączysz w Ustawieniach. Poprzedni wygląd: Ustawienia → Motyw.')),
+      release?.intro ? h('p', { class: 'whatsnew-intro' }, release.intro) : null,
+      h('ul', { class: 'whatsnew' }, items.map(li)),
+      h('p', { class: 'muted small' }, 'Podpisy pod ikonami paska włączysz w Ustawieniach.')),
     actions: [{ label: 'Zaczynamy', kind: 'primary' }],
     onClose: () => setSetting('seenVersion', APP_VERSION),
   });
