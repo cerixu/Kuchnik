@@ -126,6 +126,45 @@ export function bakersRecalc(r, o = {}) {
 
 export const YEAST_TYPES = { fresh: { label: 'świeże', f: 1 }, dry: { label: 'suche aktywne', f: 0.4 }, instant: { label: 'instant', f: 0.33 } };
 
+/** Liczy ciasto od zadanej masy mąki, z procentami piekarskimi. */
+export function pizzaCalcFromFlour({ flour, hydration, salt, oil, yeast, starter = 0 }) {
+  const f = Number(flour);
+  const h = Number(hydration) || 0;
+  const sa = Number(salt) || 0;
+  const o = Number(oil) || 0;
+  const y = Number(yeast) || 0;
+  // „starter” to procent zakwasu macierzystego względem całej mąki; maksimum 1%.
+  const stPct = Math.min(1, Math.max(0, Number(starter) || 0));
+  const part = (p) => (f * p) / 100;
+  const starterSeed = part(stPct);
+
+  // Budowanie aktywnego zakwasu w proporcji wagowej 1:1:2.
+  // Mąka i woda z dokarmienia wliczają się do całkowitych wartości ciasta.
+  const starterMass = starterSeed * 4;
+  const starterFlour = starterSeed;
+  const starterWater = starterSeed * 2;
+  const doughFlour = f - starterFlour;
+  const doughWater = part(h) - starterWater;
+  // Zakwas macierzysty jest dodatkową masą; mąka i woda zaczynu są już w f/h.
+  const pctSum = 100 + h + sa + o + y + stPct;
+
+  return {
+    flour: f,
+    water: part(h),
+    doughFlour,
+    doughWater,
+    salt: part(sa),
+    oil: part(o),
+    yeast: part(y),
+    starter: starterMass,
+    starterSeed,
+    starterFlour,
+    starterWater,
+    total: f * (pctSum / 100),
+    pctSum,
+  };
+}
+
 /** total = kulki × masa; mąka = total / (1 + suma procentów). */
 export function pizzaCalc({ balls, ballWeight, hydration, salt, oil, yeast }) {
   const total = balls * ballWeight;
