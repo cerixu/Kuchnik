@@ -101,6 +101,7 @@ export function inventoryView() {
           button('Zapisz', { kind: 'primary', onClick: save }),
           button('Anuluj', { kind: 'ghost', onClick: () => sheet && sheet.close() }))),
     });
+    return { sheet, name, barcode, note };
   }
 
   async function openScanner() {
@@ -139,11 +140,12 @@ export function inventoryView() {
       status.textContent = 'Kod odczytany: ' + code;
       if (sheet) sheet.close();
       stop();
-      const product = await lookupProduct(code);
-      openItemSheet(null, {
-        name: product?.name || '', barcode: code,
-        unit: product?.unit || 'g', stock: product?.amount || 0,
-        note: product?.brand ? 'Marka: ' + product.brand : '',
+      const form = openItemSheet(null, { barcode: code });
+      // Kod zapisujemy od razu; wyszukiwanie nazwy nie blokuje pracy skanera.
+      void lookupProduct(code).then((product) => {
+        if (!product) return;
+        if (form.name && !form.name.value.trim()) form.name.value = product.name || '';
+        if (form.note && !form.note.value.trim() && product.brand) form.note.value = 'Marka: ' + product.brand;
       });
       return true;
     };
