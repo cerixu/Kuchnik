@@ -1118,3 +1118,21 @@ body.kb-open #tabbar { display: none; }
   color: #21150d !important;
   background: linear-gradient(135deg, #f4c77d, #d99761 70%, #c47c4b) !important;
 }
+
+
+/* Kuchnik inventory screen */
+.inventory-intro { padding: 2px 2px 0; }
+.inventory-alert-card { padding: 14px; gap: 10px; border: 1px solid var(--line); border-radius: 20px; }
+.inventory-alert { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 10px; border-radius:12px; background:rgba(255,255,255,.035); font-size:.86rem; }
+.inventory-alert span { font-size:.78rem; color:var(--muted); text-align:right; }
+.inventory-alert.is-expired { background:rgba(255,85,85,.09); color:var(--danger-solid); }
+.inventory-alert.is-expiring { background:rgba(255,184,68,.08); }
+.inventory-alert.is-low { background:rgba(255,146,125,.08); }
+.inventory-alert .subhead { margin:7px 0 0; }
+.inventory-item.is-out { border-color:rgba(255,104,104,.3); }
+.inventory-item-actions .btn { min-height:36px; padding:7px 10px; font-size:.78rem; }
+.inventory-form .grid-2 { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; }
+.inventory-edit-sheet .panel { max-height:min(90dvh,900px); }
+.inventory-edit-sheet .panel-body { overflow-y:auto; overscroll-behavior:contain; }
+.inventory-waste { margin-top:8px; padding:14px; border-radius:18px; }
+@media(max-width:360px) { .inventory-form .grid-2 { grid-template-columns:1fr; } .inventory-item-actions .btn { padding:7px 8px; font-size:.73rem; } }
