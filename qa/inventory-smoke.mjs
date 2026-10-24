@@ -60,9 +60,9 @@ try {
   // The EAN camera screen exposes a scan line and torch toggle, then opens a product form on detection.
   await page.getByRole('button', { name: 'Skanuj kod EAN' }).click();
   await page.waitForSelector('.barcode-scan-line', { state: 'visible', timeout: 5000 });
+  await page.waitForFunction(() => window.__barcodeDetectStarted === true, null, { timeout: 5000 });
   await page.getByRole('button', { name: 'Latarka' }).click();
   await page.waitForFunction(() => !!window.__torchConstraints, null, { timeout: 3000 });
-  await page.waitForFunction(() => window.__barcodeDetectStarted === true, null, { timeout: 5000 });
   await page.evaluate(() => { window.__releaseBarcodeDetect = true; });
   await page.waitForSelector('.inventory-edit-sheet', { state: 'visible', timeout: 5000 });
   if ((await page.getByLabel('Kod EAN').inputValue()) !== '5901234123457') throw new Error('Skaner nie wpisał odczytanego kodu EAN.');
