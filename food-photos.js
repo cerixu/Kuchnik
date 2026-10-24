@@ -154,7 +154,7 @@ function attach(img, key) {
   if (!img || !key) return;
   img.dataset.photoRequested = key;
   loadPhoto(key).then((src) => {
-    if (!src || !img.isConnected || img.dataset.photoRequested !== key) return;
+    if (!src || img.dataset.photoRequested !== key) return;
     img.classList.remove('art');
     img.dataset.photoSource = key;
     img.src = src;
