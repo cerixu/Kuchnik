@@ -21,8 +21,12 @@ export const isIOS = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navi
 function promptUpdate(worker) {
   if (updateShown) return;
   updateShown = true;
-  toast('Nowa wersja Kucharzyny jest dostępna', {
+  // Zarezerwuj miejsce w nagłówku, by przypięte powiadomienie nie zasłaniało wyszukiwarki.
+  document.body.classList.add('has-update-notice');
+  toast('Nowa wersja Żarłoka jest dostępna', {
     sticky: true,
+    className: 'toast-update-notice',
+    onDismiss: () => document.body.classList.remove('has-update-notice'),
     action: {
       label: 'Odśwież',
       fn: () => { userAskedForUpdate = true; worker.postMessage({ type: 'SKIP_WAITING' }); },
@@ -36,7 +40,7 @@ export const updateWaiting = () => updateShown;
 export async function registerSW() {
   if (!swSupported()) return null;
   try {
-    registration = await navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' });
+    registration = await navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' });
   } catch (e) {
     console.warn('Service worker nie został zarejestrowany:', e);
     return null;
@@ -54,7 +58,11 @@ export async function registerSW() {
 
   // Przeładuj tylko wtedy, gdy użytkownik sam kliknął „Odśwież”.
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (userAskedForUpdate) { userAskedForUpdate = false; location.reload(); }
+    // Initial control by a newly installed worker is not a user-requested update.
+    // Reload only after the user tapped the explicit “Odśwież” action.
+    if (!userAskedForUpdate) return;
+    userAskedForUpdate = false;
+    location.reload();
   });
 
   // Regularne sprawdzanie: po powrocie do aplikacji i co ~30 min.
