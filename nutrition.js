@@ -14,11 +14,11 @@ const T = [
   [/mielon|wieprzow/, 250], [/jagnie/, 280], [/cielec/, 120], [/kaczk/, 337], [/piers/, 120], [/kurczak|udk|skrzydel|drob|indyk/, 190], [/watrob/, 135],
   [/losos/, 208], [/dorsz|morszczuk|mintaj|sandacz|pstrag/, 100], [/sledz/, 200], [/karp/, 127], [/tunczyk/, 130], [/anchois/, 210], [/krewetk/, 85], [/malz/, 80], [/kalmar/, 90],
   [/maka|mąka|panko|bulka tarta|platki owsiane|sucharki/, 370], [/skrobia/, 350], [/makaron|spaghetti|penne|lasagne|tagliatelle|fettuccine|ditalini|lazanki|kolanka|ramen|tonnarelli/, 360], [/gnocchi/, 130],
-  [/ryz|komosa|kasza|bulgur|pszenica|peczak/, 350], [/(^|[^a-z])(chleb|bulk|bagiet|ciabatt|tortill|pita|grzank|biszkopt|savoiardi|herbatnik|chipsy|kromk)/, 270, 50], [/ciasto francuskie|ciasto filo|filo/, 400],
+  [/ryz|komosa|kasza|bulgur|pszenica|peczak/, 350], [/chleb|bulk|bagiet|ciabatt|tortill|pita|grzank|biszkopt|savoiardi|herbatnik|chipsy/, 270, 50], [/ciasto francuskie|ciasto filo|filo/, 400],
   [/cukier|syrop cukrowy/, 400], [/miod|syrop/, 310], [/czekolad/, 540], [/kakao/, 230], [/orzech|migdal|pistacj|ziemne|piniow/, 620], [/mak\b/, 525], [/rodzynk|zurawina suszona/, 300], [/morele suszone|sliwki suszone/, 240],
   [/ziemniak|puree/, 77, 150], [/marchew/, 41, 80], [/pietruszka \(korzen|seler|por\b/, 35], [/cebul|szalot/, 40, 110], [/czosnek/, 149, 4], [/pomidor|passata|pelati|sos pomidorowy|sos enchilada/, 22, 120], [/koncentrat/, 80], [/keczup|sos bbq/, 110],
   [/papryk/, 31, 180], [/ogorek|ogorki/, 15, 150], [/cukini/, 17, 250], [/baklazan/, 25, 300], [/kapust|szpinak|salat|szczaw|botwin|brokul|jarmuz|fasolka|grosz?ek zielony|buraki|buraczk|dyni|dynia/, 30], [/awokado/, 160, 170], [/pieczark|grzyb(?!y suszone)|borowik/, 25],
-  [/grzyby suszone/, 280], [/jablk/, 52, 180], [/cytryn|limonk/, 29, 70], [/pomarancz/, 47, 150], [/truskawk|malin|jagod|zurawin|porzeczk|owoce/, 45], [/banan/, 89, 120], [/ananas/, 50], [/(^|[^a-z])(mus|dzem)([^a-z]|$)/, 250],
+  [/grzyby suszone/, 280], [/jablk/, 52, 180], [/cytryn|limonk/, 29, 70], [/pomarancz/, 47, 150], [/truskawk|malin|jagod|zurawin|porzeczk|owoce/, 45], [/banan/, 89, 120], [/ananas/, 50], [/mus|dzem/, 250],
   [/fasol|ciecierzyc|soczewic/, 110], [/groszek|kukurydz/, 80], [/tofu/, 76], [/oliwki/, 115], [/kapary/, 23], [/ogorek kiszony|kapusta kiszona/, 18], [/musztard/, 66], [/sos sojowy|sos rybny/, 55], [/ocet|tonik|woda|bulion|rosol|lod\b|sol\b|pieprz|przypraw|piwo imbirowe/, 0],
   [/wino/, 83], [/prosecco/, 80], [/piwo/, 43], [/wodka|rum|gin\b|tequil|whisk|bourbon|cachaca|vermouth|campari|aperol|triple|likier|sherry|marsala/, 230], [/espresso|kawa/, 2], [/sok /, 45],
   [/droz|proszek|soda|zelatyn|agar|wanili|cynamon|kmin|papryka mielona|papryka slodka|kurkuma|garam|curry|oregano|tymianek|bazyli|natka|koper|mieta|kolendr|szafran|galka|gozdzik|anyz|rozmaryn|szalwi|lisc|chili/, -1],
@@ -26,8 +26,13 @@ const T = [
 const FREE = /(woda|bulion|rosol|lod\b|\bsol\b|pieprz|ocet|tonik|przypraw|ziola)/;
 const SPOON = { 'łyżka': 15, 'łyżeczka': 5, szczypta: 0.4 };
 
-/** Typowa masa jednej sztuki produktu (g) albo null. */
-export function pieceGrams(name) { const n = norm(name); const row = T.find(([re]) => re.test(n)); return row && row[2] ? row[2] : null; }
+/** Szacunkowa masa jednej całej sztuki w gramach albo null, gdy brak wiarygodnego dopasowania. */
+export function pieceGrams(name) {
+  const n = norm(name);
+  if (!n || /mielon|proszek|suszon|koncentrat|passata|sos|przypraw|w kostce|w plastr|posiek|start/.test(n)) return null;
+  const row = T.find(([re, , grams]) => Number.isFinite(grams) && grams > 0 && re.test(n));
+  return row ? row[2] : null;
+}
 
 export function ingredientGrams(ing, pieceG) {
   if (ing.amount == null || !Number.isFinite(ing.amount)) return null;
@@ -46,19 +51,12 @@ export function estimateKcal(recipe) {
   for (const sec of recipe.sections) for (const ing of sec.ingredients) {
     if (!ing.name) continue;
     const name = norm(ing.name);
-    if (/^(bulion|rosol|woda|lod|wywar)\b/.test(name)) continue;          // płyny bez kalorii (bulion zajmuje miejsce, ale nie liczy się do pokrycia)
     const row = T.find(([re]) => re.test(name));
     const g = ingredientGrams(ing, row && row[2]);
     if (g == null) continue;
     if (row ? row[1] <= 0 : FREE.test(name)) continue;               // woda, sól, przyprawy: nie liczą się do pokrycia
     // Część tłuszczu do smażenia i mięso z wywaru praktycznie nie trafia na talerz.
-    let share = /do smazenia/.test(name) ? 0.2 : /rosolow|na rosol|do bulionu|szkielet|koscie|fond/.test(name) ? 0.12 : 1;
-    // Mięso z kością: jadalna część to tylko ok. połowa–dwie trzecie masy.
-    if (!/bez kosci|filet|piers|mielon/.test(name)) {
-      if (/zebr/.test(name)) share *= 0.5; else if (/kaczk|tuszk|caly|cala|caly/.test(name)) share *= 0.55; else if (/udk|podudzi|skrzydel/.test(name)) share *= 0.65;
-    }
-    // Alkohol w daniach częściowo wyparowuje (drinki liczymy w całości).
-    if (recipe.category !== 'cat-cocktaile' && /wino|piwo|wodka|rum|whisk|bourbon|sherry|marsala|likier|prosecco/.test(name)) share *= 0.35;
+    const share = /do smazenia/.test(name) ? 0.2 : /rosolow|na rosol|do bulionu|szkielet|koscie|fond/.test(name) ? 0.12 : 1;
     known += g;
     if (row) { total += g * row[1] / 100 * share; covered += g; n++; }
   }
