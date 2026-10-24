@@ -10,6 +10,7 @@ import { scaleRecipe, factorFromServings } from './calculator.js';
 import { qtyParts } from './components.js';
 import { fmtNum, debounce, parseNum } from './util.js';
 import { startTimer, openTimersSheet } from './timers.js';
+import { deductRecipe } from './inventory.js';
 
 /* ---------- Widok ---------- */
 
@@ -38,7 +39,7 @@ export function cookView({ id }) {
     return { el: s.el };
   }
 
-  let prog = { ing: {}, steps: {}, factor: 1, tab: 'ing', ts: 1.15 };
+  let prog = { ing: {}, steps: {}, factor: r0.servings ? 1 / r0.servings : 1, tab: 'ing', ts: 1.15 };
   let loaded = false;
   const base = () => getRecipe(id) || r0;
   const view = () => scaleRecipe(base(), prog.factor || 1);
@@ -196,14 +197,23 @@ export function cookView({ id }) {
     });
   }
 
+  let finishing = false;
   async function finish() {
+    if (finishing) return;
     const c = counts();
     const all = c.di === c.ni && c.ds === c.ns;
     if (!all) {
       const ok = await confirmDialog({ title: 'Zakończyć gotowanie?', message: 'Nie wszystko jest odhaczone. Postęp zostanie zapamiętany, więc możesz wrócić do tego miejsca.', confirmText: 'Zakończ' });
       if (!ok) return;
     }
-    if (all) { prog.ing = {}; prog.steps = {}; prog.tab = 'ing'; saveProg.flush(); toast('Smacznego! 👨‍🍳'); }
+    finishing = true;
+    if (all) {
+      let inventoryResult = { used: [] };
+      try { inventoryResult = await deductRecipe(base(), prog.factor || 1); }
+      catch (error) { console.error('Nie udało się odjąć składników z magazynu:', error); }
+      prog.ing = {}; prog.steps = {}; prog.tab = 'ing'; saveProg.flush();
+      toast(inventoryResult.used?.length ? `Smacznego! Odjęto z magazynu ${inventoryResult.used.length} składników.` : 'Smacznego! 👨‍🍳');
+    }
     goBack('/recipe/' + id);
   }
 
@@ -223,7 +233,7 @@ export function cookView({ id }) {
   paint();
   kv.get('cook:' + id).then((p) => {
     if (p && typeof p === 'object') {
-      prog = { ing: {}, steps: {}, factor: 1, tab: 'ing', ts: 1.15, ...p };
+      prog = { ing: {}, steps: {}, factor: r0.servings ? 1 / r0.servings : 1, tab: 'ing', ts: 1.15, ...p };
       s.el.style.setProperty('--cook-ts', String(prog.ts));
       const c = counts();
       if (p.tab === undefined && c.ni && c.di === c.ni) prog.tab = 'steps';
