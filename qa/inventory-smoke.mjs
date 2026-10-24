@@ -65,7 +65,7 @@ try {
   await page.waitForFunction(() => !!window.__torchConstraints, null, { timeout: 3000 });
   await page.evaluate(() => { window.__releaseBarcodeDetect = true; });
   await page.waitForSelector('.inventory-edit-sheet', { state: 'visible', timeout: 5000 });
-  if ((await page.getByLabel('Kod EAN').inputValue()) !== '5901234123457') throw new Error('Skaner nie wpisał odczytanego kodu EAN.');
+  if ((await page.locator('.inventory-edit-sheet').getByLabel('Kod EAN').inputValue()) !== '5901234123457') throw new Error('Skaner nie wpisał odczytanego kodu EAN.');
   await page.getByRole('button', { name: 'Anuluj' }).click();
 
   await page.getByRole('button', { name: 'Dodaj produkt do magazynu' }).first().click();
