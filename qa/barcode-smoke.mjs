@@ -107,4 +107,4 @@ for (const test of cases) {
   if (frame.imageReads() !== 1) throw new Error(test.label + ': frame should be read from Canvas once per scan');
 }
 
-console.log('PASS: EAN checksum/profile and camera-frame decoding at 0°, 90°, 180°, diagonal, off-centre and EAN-8');
+console.log('PASS: EAN checksum/profile and camera-frame decoding at 0°, 30°, 180°, diagonal, off-centre and EAN-8');
