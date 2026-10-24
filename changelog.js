@@ -5,6 +5,15 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '1.5.3': Object.freeze({
+    intro: 'Kuchnik 1.5.3 — osobne ekrany gotowania i magazynu.',
+    items: [
+      'Dodano dedykowany ekran Gotuję z wyszukiwaniem receptur i szybkim dostępem do minutników.',
+      'Dodano Magazyn: stany produktów, progi niskiego stanu, terminy, koszty strat i braki do zakupów.',
+      'Przeniesiono kalkulatory, zakupy, wyszukiwanie i ustawienia do menu Więcej.',
+      'Zachowano lokalny zapis danych i działanie offline.'
+    ]
+  }),
   '1.5.2': Object.freeze({
     intro: 'Kuchnik 1.5.2 — dopracowane zdjęcia potraw i aktualizacje offline.',
     items: [
