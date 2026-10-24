@@ -199,6 +199,53 @@ function matchScore(ingName, item) {
   return best;
 }
 
+/** Ścisłe dopasowanie nazwy magazynowej: warianty fleksyjne tak, dopiski rozróżniające produkt nie. */
+export function inventoryNamesMatch(item, name) {
+  if (!item || !name) return false;
+  const target = nameStems(name);
+  if (!target.length) return false;
+  return [item.name, ...(item.aliases || [])].some((candidate) => {
+    const parts = nameStems(candidate);
+    if (!parts.length || parts[0] !== target[0]) return false;
+    // Jeśli jedna nazwa ma dodatkowy człon (np. „mielona”), nie dopasowuj
+    // jej do ogólnej nazwy „papryka”.
+    if (parts.length > target.length) return false;
+    if (target.length > parts.length) return false;
+    return parts.every((part, i) => part === target[i]);
+  });
+}
+
+/** Konwersja ilości między jednostkami zgodnymi wymiarowo; null przy braku danych. */
+export function convertInventoryAmount(amount, fromUnit, toUnit, name = '') {
+  const value = Number(amount);
+  if (!Number.isFinite(value) || value < 0) return null;
+  if (fromUnit === toUnit) return value;
+  const mass = new Set(['g', 'kg']);
+  const volume = new Set(['ml', 'l']);
+  const counts = fromUnit === 'szt.' || toUnit === 'szt.';
+  if (mass.has(fromUnit) && mass.has(toUnit)) {
+    const grams = fromUnit === 'kg' ? value * 1000 : value;
+    return toUnit === 'kg' ? grams / 1000 : grams;
+  }
+  if (volume.has(fromUnit) && volume.has(toUnit)) {
+    const ml = fromUnit === 'l' ? value * 1000 : value;
+    return toUnit === 'l' ? ml / 1000 : ml;
+  }
+  if (counts) {
+    const grams = pieceGrams(name);
+    if (!grams) return null;
+    if (fromUnit === 'szt.' && mass.has(toUnit)) {
+      const total = value * grams;
+      return toUnit === 'kg' ? total / 1000 : total;
+    }
+    if (mass.has(fromUnit) && toUnit === 'szt.') {
+      const total = fromUnit === 'kg' ? value * 1000 : value;
+      return total / grams;
+    }
+  }
+  return null;
+}
+
 export function findItemFor(ingName) {
   let best = null, bestScore = 1;
   for (const it of store.items.values()) {
