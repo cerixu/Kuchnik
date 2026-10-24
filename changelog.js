@@ -10,7 +10,7 @@ export const CHANGELOG = Object.freeze({
     items: [
       'Możesz wpisać posiadaną ilość mąki, a kalkulator wyliczy wodę, sól, drożdże, oliwę i całkowitą masę ciasta.',
       'Pokazuje orientacyjną liczbę kulek według wybranej gramatury oraz ewentualną resztę ciasta.',
-      'Dotychczasowy tryb liczenia od liczby i wagi kulek pozostaje dostępny.'
+      'Dotychczasowy tryb liczenia od liczby i wagi kulek pozostaje dostępny; tryb mąki obsługuje też aktywny zakwas 1:1:2 z limitem zakwasu macierzystego do 1% mąki.'
     ]
   }),
   '1.5.9': Object.freeze({
