@@ -128,12 +128,22 @@ function pizzaCalculator() {
     toast('Zapisano recepturę', { action: { label: 'Otwórz', fn: () => navigate('/recipe/' + saved.id) } });
   }
 
+  let suggestionHost = null;
+  function paintSuggestion() {
+    if (!suggestionHost) return;
+    const sug = yeastSuggestion(st.temp, st.hours);
+    if (sug == null || st.leavenType === 'starter') { suggestionHost.replaceChildren(); return; }
+    const factor = YEAST_TYPES[st.yeastType].f;
+    suggestionHost.replaceChildren(h('div', { class: 'suggest' },
+      h('span', null, `Orientacyjnie dla ${fmtNum(st.temp, 1)} °C i ${fmtNum(st.hours, 1)} h: `, h('strong', { class: 'num' }, fmtNum(sug * factor, 2) + '%'), ` (${YEAST_TYPES[st.yeastType].label})`),
+      button('Użyj', { sm: true, onClick: () => { st.yeast = Math.round(sug * factor * 100) / 100; save(); build(); paintOut(); } })));
+  }
+
   function build() {
     const upd = (k) => (v) => { st[k] = v; save(); paintOut(); };
     const chips = (key, vals, suffix = '') => h('div', { class: 'chips wrap' }, vals.map((v) => h('button', { type: 'button', class: 'chip' + (st[key] === v ? ' on' : ''),
       onClick: () => { st[key] = v; save(); build(); paintOut(); } }, String(v).replace('.', ',') + suffix)));
-    const sug = yeastSuggestion(st.temp, st.hours);
-    const factor = YEAST_TYPES[st.yeastType].f;
+    suggestionHost = h('div', { class: 'suggestion-host' });
     form.replaceChildren(
       h('section', { class: 'card stack' },
         h('h2', { class: 'card-title' }, icon('scale', 20), 'Od czego zaczynamy?'),
@@ -148,17 +158,16 @@ function pizzaCalculator() {
         field('Oliwa % (opcjonalnie)', numInput({ value: st.oil, label: 'Oliwa', dec: 2, onInput: upd('oil') }))),
       h('section', { class: 'card stack' },
         h('h2', { class: 'card-title' }, icon('thermo', 20), 'Drożdże i fermentacja'),
-        h('div', { class: 'row gap' }, col(field('Temperatura (°C)', numInput({ value: st.temp, label: 'Temperatura fermentacji', dec: 1, onInput: (v) => { st.temp = v; save(); build(); paintOut(); } }))),
-          col(field('Czas (godz.)', numInput({ value: st.hours, label: 'Czas fermentacji w godzinach', dec: 1, onInput: (v) => { st.hours = v; save(); build(); paintOut(); } })))),
+        h('div', { class: 'row gap' }, col(field('Temperatura (°C)', numInput({ value: st.temp, label: 'Temperatura fermentacji', dec: 1, onInput: (v) => { st.temp = v; save(); paintOut(); paintSuggestion(); } }))),
+          col(field('Czas (godz.)', numInput({ value: st.hours, label: 'Czas fermentacji w godzinach', dec: 1, onInput: (v) => { st.hours = v; save(); paintOut(); paintSuggestion(); } })))),
         field('Rodzaj zaczynu', selectEl([['yeast', 'Drożdże'], ['starter', 'Aktywny zakwas']], st.leavenType, (v) => { st.leavenType = v; save(); build(); paintOut(); })),
-        st.leavenType === 'starter' ? field('Zakwas macierzysty procent mąki', numInput({ value: st.starterPct, label: 'Zakwas macierzysty procent mąki', dec: 3, onInput: (v) => { st.starterPct = Math.min(1, Math.max(0, Number(v) || 0)); save(); build(); paintOut(); } })) :
+        st.leavenType === 'starter' ? field('Zakwas macierzysty procent mąki', numInput({ value: st.starterPct, label: 'Zakwas macierzysty procent mąki', dec: 3, onInput: (v) => { st.starterPct = Math.min(1, Math.max(0, Number(v) || 0)); save(); if (Number(v) > 1) build(); paintOut(); } })) :
           h('div', { class: 'row gap' },
             col(field('Rodzaj drożdży', selectEl(Object.entries(YEAST_TYPES).map(([k, v]) => [k, v.label]), st.yeastType, (v) => { st.yeastType = v; save(); build(); paintOut(); }))),
             col(field('Drożdże %', numInput({ value: st.yeast, label: 'Drożdże procent', dec: 2, onInput: upd('yeast') })))),
-        sug != null && st.leavenType !== 'starter' ? h('div', { class: 'suggest' },
-          h('span', null, `Orientacyjnie dla ${fmtNum(st.temp, 1)} °C i ${fmtNum(st.hours, 1)} h: `, h('strong', { class: 'num' }, fmtNum(sug * factor, 2) + '%'), ` (${YEAST_TYPES[st.yeastType].label})`),
-          button('Użyj', { sm: true, onClick: () => { st.yeast = Math.round(sug * factor * 100) / 100; save(); build(); paintOut(); } })) : null,
+        suggestionHost,
         h('p', { class: 'muted small' }, 'To tylko wskazówka — mąka, woda i temperatura ciasta zmieniają tempo fermentacji. Dostosuj do swojego procesu.')));
+    paintSuggestion();
   }
 
   ready.then(() => { build(); paintOut(); });
