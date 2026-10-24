@@ -21,6 +21,7 @@ import { calcView } from './views-calc.js';
 import { cookEntryView } from './views-cook-home.js';
 import { moreView } from './views-more.js';
 import { inventoryView } from './views-inventory.js';
+import { loadInventory } from './inventory.js';
 import { shoppingView, pendingCount } from './shopping.js';
 import { importView } from './views-import.js';
 import { settingsView } from './views-settings.js';
@@ -196,6 +197,7 @@ async function boot() {
   try {
     await openDB();
     await loadAll();
+    await loadInventory();
   } catch (e) { fatal(e); return; }
 
   const stg = storageStatus();
