@@ -1,0 +1,142 @@
+/* ==========================================================================
+   Żarłok 2.1.5 — art direction
+   iOS-inspired layered glass, graphite surfaces and restrained copper accents.
+   Deliberately CSS-only: no external font/image requests, safe for offline PWA.
+   ========================================================================== */
+:root {
+  --zarlok-ink: #101113;
+  --zarlok-panel: rgba(31, 32, 35, .76);
+  --zarlok-panel-solid: #202124;
+  --zarlok-copper: #d69a69;
+  --zarlok-copper-bright: #f0bd8d;
+  --zarlok-copper-muted: rgba(214, 154, 105, .16);
+  --zarlok-line: rgba(255,255,255,.09);
+  --zarlok-line-hot: rgba(214,154,105,.25);
+  --zarlok-shadow: 0 18px 48px rgba(0,0,0,.22);
+  --zarlok-radius-xl: 26px;
+  --zarlok-radius-lg: 20px;
+}
+html { color-scheme: dark; }
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+button, input, textarea, select { font: inherit; }
+button, [role="button"], a, input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+:where(.rtile, .recipe-tile, .category-tile, .zf-feature, .recipe-card) {
+  isolation: isolate;
+  border: 1px solid var(--zarlok-line);
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+:where(.rtile, .recipe-tile, .category-tile, .zf-feature, .recipe-card):active {
+  transform: scale(.985);
+  border-color: var(--zarlok-line-hot);
+}
+:where(.rtile-img, .recipe-image, .zf-feature-img) {
+  background: linear-gradient(145deg, #303033, #18191b);
+}
+:where(.rtile-img, .recipe-image, .zf-feature-img) img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: auto;
+}
+:where(.search-wrap, .search-box, .search-field, .searchbar) {
+  border: 1px solid var(--zarlok-line);
+  background: rgba(255,255,255,.045);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+}
+:where(input, textarea, select) {
+  accent-color: var(--zarlok-copper);
+}
+:where(input, textarea, select):focus-visible {
+  outline: 2px solid rgba(214,154,105,.7);
+  outline-offset: 2px;
+}
+:where(.chip, .filter-chip, .filter-pill, .category-chip) {
+  border: 1px solid var(--zarlok-line);
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+:where(.chip, .filter-chip, .filter-pill, .category-chip).active,
+:where(.chip, .filter-chip, .filter-pill, .category-chip)[aria-pressed="true"] {
+  border-color: var(--zarlok-line-hot);
+  background: var(--zarlok-copper-muted);
+  color: var(--zarlok-copper-bright);
+}
+:where(.btn-primary, .primary-btn, button.primary, .button-primary) {
+  background: linear-gradient(145deg, #e5b184, #c88956);
+  color: #20150e;
+  border: 1px solid rgba(255,231,207,.35);
+  box-shadow: 0 6px 18px rgba(180,111,61,.18), inset 0 1px 0 rgba(255,255,255,.24);
+  font-weight: 650;
+}
+:where(.btn-primary, .primary-btn, button.primary, .button-primary):active {
+  filter: brightness(.96);
+  transform: scale(.985);
+}
+:where(.bottom-nav, .bottom-dock, .tab-bar, .app-nav) {
+  border-top: 1px solid rgba(255,255,255,.10);
+  background: rgba(20,21,23,.78);
+  -webkit-backdrop-filter: saturate(155%) blur(28px);
+  backdrop-filter: saturate(155%) blur(28px);
+  box-shadow: 0 -12px 36px rgba(0,0,0,.14);
+}
+:where(.bottom-nav, .bottom-dock, .tab-bar, .app-nav) :where(.active, [aria-current="page"]) {
+  color: var(--zarlok-copper-bright);
+}
+:where(.modal, .sheet, .dialog, .drawer, .popover-panel) {
+  border: 1px solid var(--zarlok-line);
+  box-shadow: var(--zarlok-shadow);
+}
+@supports (background: color-mix(in srgb, black, white)) {
+  :where(.modal, .sheet, .dialog, .drawer, .popover-panel) {
+    background: color-mix(in srgb, var(--zarlok-panel-solid) 88%, transparent);
+  }
+}
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  :where(.modal, .sheet, .dialog, .drawer, .popover-panel) {
+    -webkit-backdrop-filter: saturate(145%) blur(24px);
+    backdrop-filter: saturate(145%) blur(24px);
+  }
+}
+:where(.section-title, .view-title, .page-title) {
+  letter-spacing: -.035em;
+}
+:where(.eyebrow, .section-kicker, .muted-label) {
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+:where(.icon-button, .btn-icon, .round-button) {
+  border: 1px solid var(--zarlok-line);
+  background: rgba(255,255,255,.045);
+}
+:where(.icon-button, .btn-icon, .round-button):focus-visible,
+:where(button, a, [role="button"]):focus-visible {
+  outline: 2px solid rgba(214,154,105,.78);
+  outline-offset: 3px;
+}
+@media (prefers-color-scheme: light) {
+  html:not([data-theme="dark"]) {
+    --zarlok-panel: rgba(255,255,255,.82);
+    --zarlok-panel-solid: #fffaf6;
+    --zarlok-line: rgba(47,35,27,.12);
+    --zarlok-shadow: 0 18px 48px rgba(51,36,23,.10);
+  }
+  html:not([data-theme="dark"]) :where(.bottom-nav, .bottom-dock, .tab-bar, .app-nav) {
+    background: rgba(250,247,243,.84);
+    border-top-color: rgba(47,35,27,.12);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
