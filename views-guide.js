@@ -13,6 +13,7 @@ import { qtyParts } from './components.js';
 import { ingredientsInText } from './kitchen.js';
 import { findTimes } from './views-cook.js';
 import { startTimer, openTimersSheet } from './timers.js';
+import { deductRecipe } from './inventory.js';
 import { fmtNum, fmtMinutes, debounce } from './util.js';
 
 /* ---------- Czytanie na głos ---------- */
@@ -47,7 +48,7 @@ export function guideView({ id }) {
     return { el: s.el };
   }
 
-  let st = { page: 0, factor: 1, have: {}, rating: 0 };
+  let st = { page: 0, factor: r0.servings ? 1 / r0.servings : 1, have: {}, rating: 0 };
   let dir = 1;
   let loaded = false;
   const base = () => getRecipe(id) || r0;
@@ -182,14 +183,20 @@ export function guideView({ id }) {
     if (animate && getSetting('guideSpeak')) speakStep();
   }
 
+  let finishing = false;
   async function finish() {
+    if (finishing) return;
+    finishing = true;
     stopSpeaking();
     saveNotes.flush(notes);
     const b = base();
+    let inventoryResult = { used: [] };
+    try { inventoryResult = await deductRecipe(b, st.factor || 1); }
+    catch (error) { console.error('Nie udało się odjąć składników z magazynu:', error); }
     await patchRecipe(id, { cookCount: (b.cookCount || 0) + 1, lastCookedAt: Date.now(), rating: st.rating || b.rating || 0 });
     await kv.del('guide:' + id).catch(() => {});
-    st = { page: 0, factor: 1, have: {}, rating: 0 };
-    toast('Zapisano. Smacznego! 👨‍🍳');
+    st = { page: 0, factor: b.servings ? 1 / b.servings : 1, have: {}, rating: 0 };
+    toast(inventoryResult.used?.length ? `Zapisano. Odjęto z magazynu ${inventoryResult.used.length} składników.` : 'Zapisano. Smacznego! 👨‍🍳');
     goBack('/recipe/' + id);
   }
 
@@ -222,7 +229,7 @@ export function guideView({ id }) {
   kv.get('guide:' + id).then((p) => {
     loaded = true;
     if (p && typeof p === 'object') {
-      st = { page: 0, factor: 1, have: {}, rating: 0, ...p };
+      st = { page: 0, factor: r0.servings ? 1 / r0.servings : 1, have: {}, rating: 0, ...p };
       st.page = Math.min(st.page, lastPage());
       paint(false);
       if (st.page > 0 && st.page <= stepsCount()) {
