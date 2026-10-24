@@ -5,6 +5,14 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '0.1.0': Object.freeze({
+    intro: 'Kuchnik — przeniesienie rdzenia aplikacji i warstwy wizualnej z Żarłoka.',
+    items: [
+      'Przeniesiono moduły receptur, magazynu, kalkulatorów, zakupów, gotowania i wyszukiwania.',
+      'Dodano warstwy stylów mobilnych oraz lokalne fotografie dań działające bez zewnętrznych API.',
+      'Dodano testy statyczne i wizualne do kontroli migracji.',
+    ],
+  }),
   '2.1.9': Object.freeze({
     intro: 'Żarłok 2.1.9 — nowy, autorski zestaw fotografii dań przygotowany w Adobe Firefly.',
     items: [
