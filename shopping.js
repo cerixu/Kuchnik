@@ -8,7 +8,6 @@ import {
   h, icon, screen, button, iconBtn, toast, openSheet, confirmDialog, emptyState, field, textInput, numInput, selectEl, segmented,
 } from './ui.js';
 import { navigate } from './router.js';
-import { aisleOf, AISLE_LABELS } from './kitchen.js';
 
 /* ---------- Logika ---------- */
 
@@ -50,8 +49,22 @@ export async function deleteItem(item) { state.shopping = state.shopping.filter(
 export async function clearDone() { const gone = state.shopping.filter((x) => x.done); state.shopping = state.shopping.filter((x) => !x.done); await persist([], gone); return gone.length; }
 export async function clearAllItems() { const gone = state.shopping; state.shopping = []; await persist([], gone); }
 
-/* ---------- Alejki sklepowe (zgadywane po nazwie) — wspólne z magazynem, patrz kitchen.js ---------- */
-const AISLE_ORDER = [...AISLE_LABELS, 'Inne'];
+/* ---------- Alejki sklepowe (zgadywane po nazwie) ---------- */
+
+const AISLES = [
+  ['Warzywa i owoce', /pomidor|cebul|czosnek|ziemniak|marchew|papryk|cukini|bakłażan|sałat|rukola|szpinak|ogórek|cytryn|limonk|pomarańcz|jabłk|banan|bazyli|pietruszk|kolendr|tymianek|rozmaryn|mięta|natka|szczypior|por\b|seler|pieczark|grzyb|awokado|imbir|chili|ziele|liście|liscie|pelati/],
+  ['Nabiał i jaja', /mleko|śmietan|masło|ser\b|serek|mozzarell|parmezan|pecorino|ricotta|mascarpone|jogurt|jaj|żółtk|białk|kefir|twaróg|feta|gorgonzola/],
+  ['Mięso i ryby', /mięso|mięs|wołow|wieprz|kurczak|indyk|boczek|guanciale|pancetta|szynk|kiełbas|salami|łosoś|losos|dorsz|tuńczyk|krewetk|ryb|małże|kałamarnic|mielon|schab|żeber|kaczk|jagni/],
+  ['Sypkie i pieczywo', /mąk|cukier|makaron|spaghetti|penne|ryż|kasza|płatki|chleb|bułk|drożdż|proszek|soda|skrobia|bułka tart|semolin|grys|fasol|soczewic|ciecierzyc|orzech|migdał/],
+  ['Przyprawy, oleje, sosy', /sól|pieprz|oliw|olej|ocet|przypraw|papryka mielona|oregano|curry|kmin|cynamon|wanili|musztard|ketchup|koncentrat|passata|sos\b|sojow|miód|tahini|bulion/],
+  ['Napoje', /woda|wino|piwo|sok|cola|tonik|rum|wódk|whisk|gin\b|likier|prosecco|kawa|herbata/],
+];
+export function aisleOf(name) {
+  const n = norm(name);
+  for (const [label, rx] of AISLES) if (rx.test(n) || rx.test(name.toLowerCase())) return label;
+  return 'Inne';
+}
+const AISLE_ORDER = [...AISLES.map((a) => a[0]), 'Inne'];
 
 export const qtyText = (i) => (i.amount != null ? `${fmtAmount(i.amount)}${i.unit ? '\u00a0' + i.unit : ''}` : i.unit && !UNITS.includes(i.unit) ? i.unit : '');
 
