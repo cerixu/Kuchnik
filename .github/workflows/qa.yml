@@ -1,0 +1,54 @@
+name: Kuchnik QA
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in *.js; do
+            node --input-type=module --check < "$file"
+          done
+      - name: Check local module imports and offline cache
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          root = pathlib.Path('.')
+          errors = []
+          for source in root.glob('*.js'):
+              text = source.read_text(encoding='utf-8')
+              for spec in re.findall(r'''(?:from\s*|import\s*)['"]([^'"]+)['"]''', text):
+                  if not spec.startswith('./'):
+                      continue
+                  target = spec[2:].split('?', 1)[0].split('#', 1)[0]
+                  if not (root / target).is_file():
+                      errors.append(f'{source}: missing import {spec}')
+          sw = (root / 'sw.js').read_text(encoding='utf-8')
+          match = re.search(r'const CORE\s*=\s*\[(.*?)\];', sw, re.S)
+          if not match:
+              errors.append('sw.js: CORE list not found')
+          else:
+              for path in re.findall(r'''['"]([^'"]+)['"]''', match.group(1)):
+                  if path in ('./', 'index.html'):
+                      continue
+                  if not (root / path).is_file():
+                      errors.append(f'sw.js: missing offline asset {path}')
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('OK: JavaScript imports and offline cache paths are present.')
+          PY
