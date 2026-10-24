@@ -200,17 +200,21 @@ function matchScore(ingName, item) {
 }
 
 /** Ścisłe dopasowanie nazwy magazynowej: warianty fleksyjne tak, dopiski rozróżniające produkt nie. */
+const NAME_QUALIFIERS = new Set(['swieze', 'swiezy', 'swieza', 'mielony', 'mielona', 'mielone', 'suszone', 'suszony', 'suszona', 'wedzony', 'wedzona', 'wedzone', 'wędzony', 'wędzona', 'wędzone', 'ostry', 'ostra', 'ostre', 'slodki', 'slodka', 'slodkie', 'konserwowy', 'konserwowa', 'konserwowe', 'marynowany', 'marynowana', 'marynowane']);
+const nameQualifiers = (name) => norm(String(name).replace(/\([^)]*\)/g, ' ')).split(/[^a-z0-9]+/).filter((w) => NAME_QUALIFIERS.has(w)).sort().join('|');
+
 export function inventoryNamesMatch(item, name) {
   if (!item || !name) return false;
   const target = nameStems(name);
   if (!target.length) return false;
+  const targetQualifiers = nameQualifiers(name);
   return [item.name, ...(item.aliases || [])].some((candidate) => {
     const parts = nameStems(candidate);
     if (!parts.length || !parts[0].startsWith(target[0]) && !target[0].startsWith(parts[0])) return false;
-    // Jeśli jedna nazwa ma dodatkowy człon (np. „mielona”), nie dopasowuj
-    // jej do ogólnej nazwy „papryka”.
     if (parts.length !== target.length) return false;
-    return parts.every((part, i) => part.startsWith(target[i]) || target[i].startsWith(part));
+    if (parts.some((part, i) => !part.startsWith(target[i]) && !target[i].startsWith(part))) return false;
+    // Cechy zmieniające rodzaj produktu (np. papryka świeża/mielona) muszą się zgadzać.
+    return nameQualifiers(candidate) === targetQualifiers;
   });
 }
 
