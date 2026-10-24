@@ -3,6 +3,36 @@ import { chromium } from 'playwright';
 const base = process.env.BASE_URL || 'http://127.0.0.1:4173/';
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+await page.addInitScript(() => {
+  const media = navigator.mediaDevices;
+  if (media && media.getUserMedia) {
+    const originalGetUserMedia = media.getUserMedia.bind(media);
+    media.getUserMedia = async (...args) => {
+      const stream = await originalGetUserMedia(...args);
+      const track = stream.getVideoTracks()[0];
+      if (track) {
+        const originalCapabilities = track.getCapabilities?.bind(track);
+        track.getCapabilities = () => ({ ...(originalCapabilities ? originalCapabilities() : {}), torch: true });
+        track.applyConstraints = async (constraints) => { window.__torchConstraints = constraints; };
+      }
+      return stream;
+    };
+  }
+  window.__barcodeDetectStarted = false;
+  window.__releaseBarcodeDetect = false;
+  class TestBarcodeDetector {
+    static async getSupportedFormats() { return ['ean_13']; }
+    async detect() {
+      window.__barcodeDetectStarted = true;
+      await new Promise((resolve) => {
+        const poll = () => window.__releaseBarcodeDetect ? resolve() : setTimeout(poll, 10);
+        poll();
+      });
+      return [{ rawValue: '5901234123457', format: 'ean_13' }];
+    }
+  }
+  Object.defineProperty(window, 'BarcodeDetector', { configurable: true, writable: true, value: TestBarcodeDetector });
+});
 const errors = [];
 page.on('pageerror', (e) => errors.push(String(e)));
 page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -26,6 +56,17 @@ async function expectText(text, label) {
 
 try {
   await inventory();
+
+  // The EAN camera screen exposes a scan line and torch toggle, then opens a product form on detection.
+  await page.getByRole('button', { name: 'Skanuj kod EAN' }).click();
+  await page.waitForSelector('.barcode-scan-line', { state: 'visible', timeout: 5000 });
+  await page.getByRole('button', { name: 'Latarka' }).click();
+  await page.waitForFunction(() => !!window.__torchConstraints, null, { timeout: 3000 });
+  await page.waitForFunction(() => window.__barcodeDetectStarted === true, null, { timeout: 5000 });
+  await page.evaluate(() => { window.__releaseBarcodeDetect = true; });
+  await page.waitForSelector('.inventory-edit-sheet', { state: 'visible', timeout: 5000 });
+  if ((await page.getByLabel('Kod EAN').inputValue()) !== '5901234123457') throw new Error('Skaner nie wpisał odczytanego kodu EAN.');
+  await page.getByRole('button', { name: 'Anuluj' }).click();
 
   await page.getByRole('button', { name: 'Dodaj produkt do magazynu' }).first().click();
   await page.getByLabel('Nazwa produktu').fill('Mąka testowa');
