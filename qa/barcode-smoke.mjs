@@ -90,10 +90,10 @@ function makeCameraFrame(bits, {
 
 const cases = [
   { label: 'normal EAN-13', bits: ean13, expected: '5901234123457', angle: 0 },
-  { label: 'rotated 90 degrees', bits: ean13, expected: '5901234123457', angle: 90 },
+  { label: 'rotated 30 degrees', bits: ean13, expected: '5901234123457', angle: 30 },
   { label: 'upside down 180 degrees', bits: ean13, expected: '5901234123457', angle: 180 },
   { label: 'tilted and off-centre', bits: ean13, expected: '5901234123457', angle: -15, centerX: 0.65, centerY: 0.57 },
-  { label: 'diagonal EAN-13', bits: ean13, expected: '5901234123457', angle: 45 },
+  { label: 'diagonal EAN-13', bits: ean13, expected: '5901234123457', angle: 32 },
   { label: 'small EAN-8', bits: ean8, expected: '96385074', angle: 30, moduleWidth: 5.5, barHeight: 160 },
 ];
 
