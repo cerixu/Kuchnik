@@ -150,6 +150,7 @@ export function decodeImageData(img) {
   const { width: W, height: H } = img;
   const g = toGray(img);
   const diag = Math.hypot(W, H);
+  let ean8Fallback = null;
   for (const step of [1, 0.5]) {
     if (step === 0.5 && W > 900) break;
     for (const ang of ANGLES) {
@@ -158,11 +159,14 @@ export function decodeImageData(img) {
         // linia przechodzi przez (cx, cy) — pod kątem obejmuje większość obrazu
         const prof = sampleLine(g, W, H, cx, cy, ang, diag, step);
         const r = decodeProfile(prof);
-        if (r) return r;
+        if (r?.format === 'ean_13') return r;
+        // EAN-8 może być fałszywym dopasowaniem fragmentu EAN-13.
+        // Zachowujemy go jako rezerwę i kończymy skanowanie wszystkich kątów.
+        if (r?.format === 'ean_8' && !ean8Fallback) ean8Fallback = r;
       }
     }
   }
-  return null;
+  return ean8Fallback;
 }
 
 /* ---------- Kamera: klatka → kod ---------- */
