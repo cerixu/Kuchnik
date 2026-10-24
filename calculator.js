@@ -147,11 +147,12 @@ export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, ye
 }
 
 /** Zachowuje dotychczasowy tryb liczenia od kulek i dodaje zgodne wyniki trybu „Mam mąkę”. */
-export function pizzaCalc({ balls, ballWeight, hydration, salt, oil, yeast }) {
-  const pctSum = 100 + hydration + salt + oil + yeast;
+export function pizzaCalc({ balls, ballWeight, hydration, salt, oil, yeast, starter = 0 }) {
+  const seedPct = Math.min(1, Math.max(0, Number(starter) || 0));
+  const pctSum = 100 + hydration + salt + oil + yeast + seedPct;
   const total = Math.max(0, Number(balls) || 0) * Math.max(0, Number(ballWeight) || 0);
   const flour = total / (pctSum / 100);
-  const r = pizzaCalcFromFlour({ flour, hydration, salt, oil, yeast, ballWeight });
+  const r = pizzaCalcFromFlour({ flour, hydration, salt, oil, yeast, starter: seedPct, ballWeight });
   return { ...r, flour, total, pctSum, ballCount: Math.max(0, Math.floor(Number(balls) || 0)), remainder: 0 };
 }
 
