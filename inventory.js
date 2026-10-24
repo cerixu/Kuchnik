@@ -206,12 +206,11 @@ export function inventoryNamesMatch(item, name) {
   if (!target.length) return false;
   return [item.name, ...(item.aliases || [])].some((candidate) => {
     const parts = nameStems(candidate);
-    if (!parts.length || parts[0] !== target[0]) return false;
+    if (!parts.length || !parts[0].startsWith(target[0]) && !target[0].startsWith(parts[0])) return false;
     // Jeśli jedna nazwa ma dodatkowy człon (np. „mielona”), nie dopasowuj
     // jej do ogólnej nazwy „papryka”.
-    if (parts.length > target.length) return false;
-    if (target.length > parts.length) return false;
-    return parts.every((part, i) => part === target[i]);
+    if (parts.length !== target.length) return false;
+    return parts.every((part, i) => part.startsWith(target[i]) || target[i].startsWith(part));
   });
 }
 
