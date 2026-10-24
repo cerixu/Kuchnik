@@ -5,6 +5,14 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '1.6.0': Object.freeze({
+    intro: 'Kuchnik 1.6.0 — kalkulator pizzy „Mam mąkę”.',
+    items: [
+      'Możesz wpisać posiadaną ilość mąki, a kalkulator wyliczy wodę, sól, drożdże, oliwę i całkowitą masę ciasta.',
+      'Pokazuje orientacyjną liczbę kulek według wybranej gramatury oraz ewentualną resztę ciasta.',
+      'Dotychczasowy tryb liczenia od liczby i wagi kulek pozostaje dostępny.'
+    ]
+  }),
   '1.5.9': Object.freeze({
     intro: 'Kuchnik 1.5.9 — dokładniejsze rozpoznawanie składników.',
     items: [
