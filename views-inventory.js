@@ -9,6 +9,7 @@ import {
 } from './inventory.js';
 import { addItems } from './shopping.js';
 import { fmtNum, norm } from './util.js';
+import { detectFrame, nativeSupported, normalizeEAN, checkDigitOK, lookupProduct } from './barcode.js';
 
 const money = (v) => fmtNum(v || 0, 2) + ' zł';
 const unitOptions = [['g','g'], ['kg','kg'], ['ml','ml'], ['l','l'], ['szt.','szt.']];
@@ -33,6 +34,7 @@ export function inventoryView() {
   }, 'Alerty magazynu', 'Niski stan i terminy przydatności');
   const actions = h('div', { class: 'row wrap inventory-head-actions' },
     button('Dodaj produkt do magazynu', { icon: 'plus', kind: 'primary', onClick: () => openItemSheet() }),
+    button('Skanuj kod EAN', { icon: 'image', onClick: openScanner }),
     button('Dodaj braki do zakupów', { icon: 'cart', onClick: addShortages }));
   const top = h('div', { class: 'inventory-top stack' },
     h('div', { class: 'inventory-intro' },
@@ -51,8 +53,9 @@ export function inventoryView() {
     toast(`Dodano do zakupów: ${result.count}`, { action: { label: 'Pokaż', fn: () => navigate('/shopping') } });
   }
 
-  function openItemSheet(existing = null) {
-    const item = existing ? { ...existing, aliases: [...(existing.aliases || [])] } : newItem();
+  function openItemSheet(existing = null, initial = {}) {
+    const isExisting = !!existing?.id;
+    const item = isExisting ? { ...existing, aliases: [...(existing.aliases || [])] } : newItem(initial);
     let unit = item.unit === 'g' ? (item.stock >= 1000 ? 'kg' : 'g') : item.unit === 'ml' ? (item.stock >= 1000 ? 'l' : 'ml') : 'szt.';
     const shown = (amount) => unit === 'kg' || unit === 'l' ? amount / 1000 : amount;
     const name = textInput({ value: item.name, label: 'Nazwa produktu', placeholder: 'Np. mąka pszenna' });
@@ -80,12 +83,12 @@ export function inventoryView() {
       try {
         await saveItem(next);
         if (sheet) sheet.close();
-        toast(existing ? 'Zapisano zmiany' : 'Dodano produkt do magazynu');
+        toast(isExisting ? 'Zapisano zmiany' : 'Dodano produkt do magazynu');
         paint();
       } catch (error) { toast(error.message || 'Nie udało się zapisać produktu', { type: 'error' }); }
     };
     sheet = openSheet({
-      title: existing ? 'Edytuj produkt' : 'Dodaj produkt do magazynu',
+      title: isExisting ? 'Edytuj produkt' : 'Dodaj produkt do magazynu',
       variant: 'sheet', cls: 'inventory-edit-sheet',
       body: h('div', { class: 'inventory-form stack' },
         field('Nazwa produktu', name),
@@ -98,6 +101,88 @@ export function inventoryView() {
           button('Zapisz', { kind: 'primary', onClick: save }),
           button('Anuluj', { kind: 'ghost', onClick: () => sheet && sheet.close() }))),
     });
+  }
+
+  async function openScanner() {
+    let stream = null, active = true, busy = false, torchOn = false, scanTimer = null;
+    const video = h('video', { class: 'barcode-video', autoplay: true, playsinline: true, muted: true, 'aria-label': 'Podgląd kamery do skanowania kodu EAN' });
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    const canvas = document.createElement('canvas');
+    canvas.width = 640; canvas.height = 360;
+    const status = h('p', { class: 'muted small barcode-status', role: 'status' }, 'Ustaw kod kreskowy w poziomej linii.');
+    const torch = button('Latarka', { icon: 'sun', onClick: async () => {
+      const track = stream?.getVideoTracks?.()[0];
+      if (!track) { status.textContent = 'Latarka jest niedostępna na tym urządzeniu.'; return; }
+      try {
+        const caps = track.getCapabilities?.() || {};
+        if (!caps.torch) { status.textContent = 'Ta kamera nie udostępnia latarki.'; return; }
+        torchOn = !torchOn;
+        await track.applyConstraints({ advanced: [{ torch: torchOn }] });
+        torch.setAttribute('aria-pressed', String(torchOn));
+        torch.classList.toggle('on', torchOn);
+      } catch (_) { status.textContent = 'Nie udało się przełączyć latarki.'; }
+    } });
+    const manual = textInput({ label: 'Kod EAN', placeholder: 'Wpisz kod ręcznie', inputmode: 'numeric', capitalize: 'off' });
+    let sheet;
+    const stop = () => {
+      active = false;
+      if (scanTimer) clearTimeout(scanTimer);
+      if (stream) stream.getTracks().forEach((track) => { try { track.stop(); } catch (_) {} });
+      video.srcObject = null;
+    };
+    const useCode = async (raw) => {
+      const code = normalizeEAN(raw);
+      if (!checkDigitOK(code)) { status.textContent = 'Kod EAN jest nieprawidłowy — sprawdź cyfry.'; return false; }
+      active = false;
+      if (scanTimer) clearTimeout(scanTimer);
+      status.textContent = 'Kod odczytany: ' + code;
+      if (sheet) sheet.close();
+      stop();
+      const product = await lookupProduct(code);
+      openItemSheet(null, {
+        name: product?.name || '', barcode: code,
+        unit: product?.unit || 'g', stock: product?.amount || 0,
+        note: product?.brand ? 'Marka: ' + product.brand : '',
+      });
+      return true;
+    };
+    sheet = openSheet({
+      title: 'Skanuj kod EAN', variant: 'sheet', cls: 'barcode-sheet',
+      body: h('div', { class: 'barcode-scanner stack' },
+        h('div', { class: 'barcode-frame' }, video, h('div', { class: 'barcode-scan-line' })),
+        status,
+        h('div', { class: 'row wrap' }, torch, button('Użyj kodu', { kind: 'primary', onClick: () => useCode(manual.value) })),
+        field('Kod EAN', manual),
+        h('p', { class: 'muted small' }, 'Skanowanie działa lokalnie; wyszukiwanie nazwy po kodzie jest opcjonalne.')),
+      actions: [{ label: 'Zamknij', kind: 'ghost', onClick: () => { stop(); } }],
+      onClose: stop,
+    });
+    try {
+      if (!navigator.mediaDevices?.getUserMedia) throw new Error('Ta przeglądarka nie udostępnia kamery.');
+      stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } });
+      if (!active) { stream.getTracks().forEach((track) => track.stop()); return; }
+      video.srcObject = stream;
+      await video.play();
+      await nativeSupported();
+      const scan = async () => {
+        if (!active || busy) return;
+        busy = true;
+        try {
+          const result = await detectFrame(video, canvas);
+          if (result?.code) {
+            const code = normalizeEAN(result.code);
+            if (checkDigitOK(code)) { await useCode(code); return; }
+          }
+        } catch (_) { /* następną klatkę spróbujemy ponownie */ }
+        finally { busy = false; }
+        if (active) scanTimer = setTimeout(scan, 100);
+      };
+      status.textContent = 'Kamera aktywna — wyrównaj kreski w linii.';
+      scanTimer = setTimeout(scan, 100);
+    } catch (error) {
+      status.textContent = (error?.name === 'NotAllowedError' ? 'Brak zgody na kamerę. Możesz wpisać kod ręcznie.' : (error.message || 'Nie udało się uruchomić kamery.'));
+    }
   }
 
   function openWaste(item) {
