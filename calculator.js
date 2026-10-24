@@ -126,15 +126,33 @@ export function bakersRecalc(r, o = {}) {
 
 export const YEAST_TYPES = { fresh: { label: 'świeże', f: 1 }, dry: { label: 'suche aktywne', f: 0.4 }, instant: { label: 'instant', f: 0.33 } };
 
-/** Kalkulator pizzy działa od liczby kulek albo od ilości mąki, którą użytkownik ma. */
-export function pizzaCalc({ mode = 'balls', flourAmount = 0, balls, ballWeight, hydration, salt, oil, yeast }) {
+/** Obliczenia pizzy od ilości mąki; zakwas aktywny w proporcji 1:1:2, seed ograniczony do 1% mąki. */
+export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, yeast = 0, starter = 0, ballWeight = 250 }) {
+  const f = Math.max(0, Number(flour) || 0);
   const pctSum = 100 + hydration + salt + oil + yeast;
-  const flour = mode === 'flour' ? Math.max(0, Number(flourAmount) || 0) : (Math.max(0, Number(balls) || 0) * Math.max(0, Number(ballWeight) || 0)) / (pctSum / 100);
-  const part = (p) => (flour * p) / 100;
-  const total = flour * (pctSum / 100);
+  const water = f * hydration / 100;
+  const saltAmount = f * salt / 100;
+  const oilAmount = f * oil / 100;
+  const yeastAmount = f * yeast / 100;
+  const starterSeed = f * Math.min(1, Math.max(0, Number(starter) || 0)) / 100;
+  const starterFlour = starterSeed;
+  const starterWater = starterSeed * 2;
+  const starterTotal = starterSeed * 4;
+  const doughFlour = f - starterFlour;
+  const doughWater = water - starterWater;
+  const total = doughFlour + doughWater + saltAmount + oilAmount + yeastAmount + starterTotal;
   const ballCount = ballWeight > 0 ? Math.floor((total + 1e-8) / ballWeight) : 0;
   const remainder = ballWeight > 0 ? Math.max(0, total - ballCount * ballWeight) : total;
-  return { flour, water: part(hydration), salt: part(salt), oil: part(oil), yeast: part(yeast), total, pctSum, ballCount, remainder };
+  return { flour: f, water, salt: saltAmount, oil: oilAmount, yeast: yeastAmount, total, pctSum, ballCount, remainder, starterSeed, starterFlour, starterWater, starter: starterTotal, doughFlour, doughWater };
+}
+
+/** Zachowuje dotychczasowy tryb liczenia od kulek i dodaje zgodne wyniki trybu „Mam mąkę”. */
+export function pizzaCalc({ balls, ballWeight, hydration, salt, oil, yeast }) {
+  const pctSum = 100 + hydration + salt + oil + yeast;
+  const total = Math.max(0, Number(balls) || 0) * Math.max(0, Number(ballWeight) || 0);
+  const flour = total / (pctSum / 100);
+  const r = pizzaCalcFromFlour({ flour, hydration, salt, oil, yeast, ballWeight });
+  return { ...r, flour, total, pctSum, ballCount: Math.max(0, Math.floor(Number(balls) || 0)), remainder: 0 };
 }
 
 /**
