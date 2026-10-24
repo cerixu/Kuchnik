@@ -5,6 +5,14 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '1.5.6': Object.freeze({
+    intro: 'Kuchnik 1.5.6 — pewniejszy odczyt kodów kreskowych.',
+    items: [
+      'Skaner sprawdza kolejne kąty przed zaakceptowaniem EAN-8, ograniczając błędne odczyty fragmentów EAN-13.',
+      'Zachowano odczyt kodów pod kątem, kontrolę cyfry EAN i opcjonalne wyszukiwanie nazwy produktu.',
+      'Magazyn i automatyczne zużycie składników pozostają dostępne offline.'
+    ]
+  }),
   '1.5.5': Object.freeze({
     intro: 'Kuchnik 1.5.5 — spójne stany magazynu podczas całego gotowania.',
     items: [
