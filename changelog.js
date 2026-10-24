@@ -5,6 +5,16 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '1.5.1': Object.freeze({
+    intro: 'Kuchnik 1.5.1 — większa biblioteka zdjęć i pewniejsze działanie offline.',
+    items: [
+      'Dodano 40 lokalnych fotografii dopasowanych do konkretnych potraw.',
+      'Zdjęcia są ładowane na kartach receptur i na ekranie szczegółów bez zewnętrznych API.',
+      'Wszystkie zdjęcia używane przez moduł fotografii trafiają do pamięci offline.',
+      'Poprawiono ładowanie zdjęć podczas pierwszego renderowania na iPhonie.',
+      'Zachowano tryb profesjonalny i amatorski oraz istniejące dane użytkownika.'
+    ]
+  }),
   '1.5.0': Object.freeze({
     intro: 'Kuchnik 1.5.0 — dopracowany wygląd i więcej lokalnych receptur.',
     items: [
