@@ -126,13 +126,15 @@ export function bakersRecalc(r, o = {}) {
 
 export const YEAST_TYPES = { fresh: { label: 'świeże', f: 1 }, dry: { label: 'suche aktywne', f: 0.4 }, instant: { label: 'instant', f: 0.33 } };
 
-/** total = kulki × masa; mąka = total / (1 + suma procentów). */
-export function pizzaCalc({ balls, ballWeight, hydration, salt, oil, yeast }) {
-  const total = balls * ballWeight;
+/** Kalkulator pizzy działa od liczby kulek albo od ilości mąki, którą użytkownik ma. */
+export function pizzaCalc({ mode = 'balls', flourAmount = 0, balls, ballWeight, hydration, salt, oil, yeast }) {
   const pctSum = 100 + hydration + salt + oil + yeast;
-  const flour = total / (pctSum / 100);
+  const flour = mode === 'flour' ? Math.max(0, Number(flourAmount) || 0) : (Math.max(0, Number(balls) || 0) * Math.max(0, Number(ballWeight) || 0)) / (pctSum / 100);
   const part = (p) => (flour * p) / 100;
-  return { flour, water: part(hydration), salt: part(salt), oil: part(oil), yeast: part(yeast), total, pctSum };
+  const total = flour * (pctSum / 100);
+  const ballCount = ballWeight > 0 ? Math.floor((total + 1e-8) / ballWeight) : 0;
+  const remainder = ballWeight > 0 ? Math.max(0, total - ballCount * ballWeight) : total;
+  return { flour, water: part(hydration), salt: part(salt), oil: part(oil), yeast: part(yeast), total, pctSum, ballCount, remainder };
 }
 
 /**
