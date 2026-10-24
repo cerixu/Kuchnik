@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Żarłok 2.0 — prawdziwe zdjęcia dań.
+   Kuchnik — prawdziwe zdjęcia dań.
    Fotografie są wersjonowane lokalnie w repozytorium jako base64/JPEG, dzięki
    czemu działają również offline. Własne zdjęcie użytkownika ma pierwszeństwo;
    gdy zdjęcie nie istnieje albo się nie załaduje, zostaje ilustracja SVG.
@@ -143,7 +143,7 @@ function loadPhoto(key) {
       })
       .catch((error) => {
         photoPromises.delete(key);
-        console.warn('[Żarłok 2.0] Zdjęcie niedostępne, używam ilustracji:', key, error);
+        console.warn('[Kuchnik] Zdjęcie niedostępne, używam ilustracji:', key, error);
         return null;
       }));
   }
