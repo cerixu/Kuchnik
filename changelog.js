@@ -5,6 +5,15 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '1.5.0': Object.freeze({
+    intro: 'Kuchnik 1.5.0 — dopracowany wygląd i więcej lokalnych receptur.',
+    items: [
+      'Dodano kolejną wyselekcjonowaną porcję receptur z opisami i instrukcjami po polsku.',
+      'Dopasowane fotografie potraw działają lokalnie i mogą być używane bez internetu.',
+      'Odświeżono wygląd aplikacji i pamięć podręczną dla trybu offline.',
+      'Zachowano ilustracje zastępcze, gdy nie ma pewnego zdjęcia konkretnego dania.'
+    ]
+  }),
   '2.1.9': Object.freeze({
     intro: 'Żarłok 2.1.9 — nowy, autorski zestaw fotografii dań przygotowany w Adobe Firefly.',
     items: [
