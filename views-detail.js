@@ -22,6 +22,7 @@ import { estimateKcal } from './nutrition.js';
 import { openAddToShopping, addItems } from './shopping.js';
 import { hostOf } from './importer.js';
 import { recipeArtUrl } from './art.js';
+import { attachRecipePhoto } from './food-photos.js';
 
 const KIND_LABEL = { flour: 'mąka', water: 'woda', salt: 'sól', yeast: 'drożdże', fat: 'tłuszcz', other: '' };
 
@@ -389,8 +390,9 @@ export function detailView({ id }) {
     heartSlot.replaceChildren(heartBtn(base()));
     const kids = [];
     const rr = base();
-    kids.push(h('div', { class: 'detail-hero' }, h('div', { class: 'hero-circle' },
-      h('img', { class: rr.photo ? '' : 'art', src: rr.photo || recipeArtUrl(rr), alt: rr.photo ? `Zdjęcie: ${r.name}` : '' }))));
+    const heroImg = h('img', { class: rr.photo ? '' : 'art', src: rr.photo || recipeArtUrl(rr), alt: rr.photo ? `Zdjęcie: ${r.name}` : '', loading: 'eager', decoding: 'async' });
+    if (!rr.photo) attachRecipePhoto(heroImg, rr);
+    kids.push(h('div', { class: 'detail-hero' }, h('div', { class: 'hero-circle' }, heroImg)));
     kids.push(h('div', { class: 'detail-title-row' },
       h('h1', { class: 'detail-title' }, r.name || 'Receptura'),
       sideInfo({ ...rr, servings: r.servings, sections: r.sections })));
