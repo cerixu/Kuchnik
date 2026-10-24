@@ -4,10 +4,10 @@
 import { h, icon, toast } from './ui.js';
 import { navigate } from './router.js';
 import { catName, catIcon, ORIGINS, toggleFavorite } from './recipes.js';
-import { fmtMinutes, fmtAmount, fmtNum } from './util.js';
-import { recipeArtUrl, categoryArtUrl } from './art.js';
+import { fmtMinutes, fmtAmount, fmtKitchenAmount, fmtNum, fmtUnit } from './util.js';
+import { recipeArtUrl, recipeArtFallbackUrl, categoryArtUrl } from './art.js';
+import { attachRecipePhoto, attachCategoryPhoto } from './food-photos.js';
 import { estimateKcal } from './nutrition.js';
-import { hostOf } from './importer.js';
 
 export const originOf = (code) => ORIGINS.find((o) => o.code === code);
 
@@ -26,26 +26,6 @@ export function metaLine(r) {
   const t = timeText(r);
   if (t) parts.push(t);
   return parts.join(' · ');
-}
-
-/** „🇮🇹 Włochy” — skąd pochodzi potrawa (albo null, gdy nie wiadomo). */
-export function originLabel(r) { const o = originOf(r.origin); return o ? `${o.flag} ${o.name}` : null; }
-
-/** Skąd jest sam przepis: strona, książka, „Kucharzyna” (przykład) albo „Własny”. */
-export function sourceLabel(r) {
-  if (r.sourceUrl) return hostOf(r.sourceUrl) || r.source || 'Internet';
-  const s = String(r.source || '').split(' — ')[0].replace(/\s*\(.*\)\s*$/, '').trim();
-  return s || 'Własny';
-}
-
-/** Krótki opis do przeglądania: własny albo złożony ze składników. */
-export function shortDesc(r) {
-  if (r.description && r.description.trim()) return r.description.trim();
-  const names = [];
-  for (const sec of r.sections || []) for (const i of sec.ingredients) { const n = String(i.name || '').replace(/\s*\(.*\)\s*/, '').trim(); if (n && !names.includes(n)) names.push(n.toLowerCase()); if (names.length >= 4) break; if (names.length >= 4) break; }
-  const t = (r.prepTime || 0) + (r.cookTime || 0);
-  const head = names.length ? `${catName(r.category)}: ${names.join(', ')}.` : `${catName(r.category)}.`;
-  return t ? `${head} ${fmtMinutes(t)}.` : head;
 }
 
 /** Gwiazdka + flaga dla receptur tradycyjnych. */
@@ -68,9 +48,28 @@ export function heartBtn(r, onToggle) {
   return b;
 }
 
-/** Miniatura: własne zdjęcie, a gdy go brak — ilustracja potrawy rysowana w kodzie. */
+/** Zdjęcie własne ma pierwszeństwo, potem lokalna fotografia potrawy, a na końcu SVG. */
+function recipeImageEl(r, alt = '') {
+  const custom = r.thumb || r.photo;
+  const img = h('img', {
+    class: custom ? '' : 'art',
+    src: custom || recipeArtUrl(r),
+    alt: alt || (r.name ? 'Zdjęcie: ' + r.name : ''),
+    loading: 'lazy',
+    decoding: 'async',
+    onError: (e) => {
+      const el = e.currentTarget;
+      if (el.dataset.artFallback) return;
+      el.dataset.artFallback = '1';
+      el.classList.add('art');
+      el.src = recipeArtFallbackUrl(r);
+    },
+  });
+  if (!custom) attachRecipePhoto(img, r);
+  return img;
+}
 export function thumbEl(r, cls = '') {
-  return h('div', { class: 'rthumb ' + cls }, h('img', { class: r.thumb ? '' : 'art', src: r.thumb || recipeArtUrl(r), alt: '', loading: 'lazy', decoding: 'async' }));
+  return h('div', { class: 'rthumb ' + cls }, recipeImageEl(r));
 }
 
 /** Prawa kolumna karty (jak „4.8 ★ / 350 kcal” na makiecie): ocena albo czas, pod spodem kalorie. */
@@ -83,40 +82,36 @@ export function sideInfo(r) {
   return h('div', { class: 'rt-side' }, top, sub);
 }
 
-/** Duża karta receptury z okrągłym zdjęciem (Start, siatka) — styl z makiety: zdjęcie, tytuł, ocena/kalorie, krótki opis i pochodzenie. */
+/** Duża karta receptury z okrągłym zdjęciem (Start, siatka receptur) — styl z makiety. */
 export function recipeTile(r, { onFav } = {}) {
   const href = '/recipe/' + encodeURIComponent(r.id);
-  const org = originLabel(r);
   return h('div', { class: 'rtile' + (r.traditional ? ' trad-tile' : '') },
     h('a', { class: 'rtile-link', href: '#' + href, 'aria-label': r.name, onClick: (e) => { e.preventDefault(); navigate(href); } },
-      h('div', { class: 'rtile-img' }, h('img', { class: r.thumb ? '' : 'art', src: r.thumb || recipeArtUrl(r), alt: '', loading: 'lazy', decoding: 'async' })),
+      h('div', { class: 'rtile-img' }, recipeImageEl(r)),
       h('div', { class: 'rtile-row' },
-        h('div', { class: 'rtile-name' }, r.traditional ? h('span', { class: 'rtile-trad' }, h('span', { class: 'trad-star' }, icon('star', 14))) : null, r.name || 'Bez nazwy'),
-        sideInfo(r)),
-      h('p', { class: 'rtile-desc' }, shortDesc(r)),
-      h('div', { class: 'rtile-from' }, org ? h('span', { class: 'from-origin' }, org) : h('span', { class: 'from-origin' }, `${catIcon(r.category)} ${catName(r.category)}`), h('span', { class: 'from-src' }, sourceLabel(r)))),
+        h('div', { class: 'rtile-name' }, r.traditional ? h('span', { class: 'rtile-trad' }, tradMark(r)) : null, r.name || 'Bez nazwy'),
+        sideInfo(r))),
     h('div', { class: 'rtile-heart' }, heartBtn(r, onFav)));
 }
 
 /** Okrągła kafelka kategorii (ilustracja + nazwa + liczba). */
 export function catTile(cat, count, onClick) {
+  const img = h('img', { class: 'art', src: categoryArtUrl(cat.id), alt: '', loading: 'lazy', decoding: 'async' });
+  attachCategoryPhoto(img, cat.id);
   return h('button', { type: 'button', class: 'ctile', onClick, 'aria-label': `${cat.name}: ${count}` },
-    h('span', { class: 'ctile-img' }, h('img', { class: 'art', src: categoryArtUrl(cat.id), alt: '', loading: 'lazy', decoding: 'async' })),
+    h('span', { class: 'ctile-img' }, img),
     h('span', { class: 'ctile-name' }, cat.name), h('span', { class: 'ctile-n' }, String(count)));
 }
 
-/** Wiersz receptury (widok listy): miniatura, tytuł, opis, kraj i źródło. */
+/** Karta receptury (lista, ekran startowy). */
 export function recipeCard(r, { onFav } = {}) {
-  const org = originLabel(r);
   return h('div', { class: 'rcard' + (r.traditional ? ' trad-card' : '') },
     h('a', { class: 'rcard-main', href: '#/recipe/' + encodeURIComponent(r.id), 'aria-label': r.name,
       onClick: (e) => { e.preventDefault(); navigate('/recipe/' + encodeURIComponent(r.id)); } },
       thumbEl(r),
       h('div', { class: 'rbody' },
-        h('div', { class: 'rtitle' }, r.traditional ? h('span', { class: 'trad-star' }, icon('star', 14)) : null, h('span', { class: 'rname' }, r.name || 'Bez nazwy')),
-        h('div', { class: 'rdesc' }, shortDesc(r)),
-        h('div', { class: 'rmeta' }, h('span', { class: 'from-origin' }, org || `${catIcon(r.category)} ${catName(r.category)}`), h('span', { class: 'from-src' }, sourceLabel(r)), h('span', null, metaLine(r).split(' · ').slice(1).join(' · ')))),
-    ),
+        h('div', { class: 'rtitle' }, tradMark(r), h('span', { class: 'rname' }, r.name || 'Bez nazwy')),
+        h('div', { class: 'rmeta' }, metaLine(r)))),
     heartBtn(r, onFav));
 }
 
@@ -129,7 +124,7 @@ export function sectionHead(title, { action, onAction, count } = {}) {
 /** Ilość składnika do wyświetlenia: { num: '1000', unit: 'g' } albo { num: '', unit: 'do smaku' }. */
 export function qtyParts(ing) {
   if (ing.amount == null || !Number.isFinite(ing.amount)) return { num: '', unit: 'do smaku' };
-  return { num: fmtAmount(ing.amount), unit: ing.unit === 'szt.' ? 'szt.' : ing.unit || '' };
+  return { num: fmtKitchenAmount(ing.amount, ing.unit || ''), unit: ing.unit === 'szt.' ? 'szt.' : fmtUnit(ing.amount, ing.unit || '') };
 }
 
 /** Receptura jako czysty tekst (kopiowanie, udostępnianie). */
