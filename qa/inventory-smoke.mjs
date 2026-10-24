@@ -152,8 +152,9 @@ try {
   await page.goto(base + '#/recipes', { waitUntil: 'domcontentloaded' });
   await ready();
   await dismiss();
-  const searchRecipes = page.getByLabel('Szukaj receptury, składnika, tagu…');
-  if (await searchRecipes.count()) await searchRecipes.fill('Kotlet schabowy');
+  const searchRecipes = page.locator('.searchbox .search-input').first();
+  await searchRecipes.fill('Kotlet schabowy');
+  await page.waitForTimeout(250);
   const recipe = page.locator('a[href^="#/recipe/"]').filter({ hasText: 'Kotlet schabowy' }).first();
   await recipe.waitFor({ state: 'visible', timeout: 8000 });
   await recipe.click();
