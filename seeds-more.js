@@ -102,7 +102,7 @@ export const SEED_MORE = `
 400 g | Pomidory pelati
 1 szt. | Cebula
 3 szt. | Czosnek (ząbki)
-2 łyżka | Pasta curry lub garam masala
+2 łyżki | Pasta curry lub garam masala
  | Ryż, sól
 > Cebulę i czosnek zeszklij, dodaj pastę. Dodaj pomidory, mleko i ciecierzycę, gotuj 15 minut.
 > Dodaj szpinak na 3 minuty. Dopraw.
@@ -114,7 +114,7 @@ export const SEED_MORE = `
 100 g | Kasza jaglana (ugotowana)
 1 szt. | Cebula
 2 szt. | Czosnek (ząbki)
-3 łyżka | Bułka tarta
+3 łyżki | Bułka tarta
 1 łyżeczka | Kmin rzymski
  | Sól, pieprz, olej
 > Wszystko wymieszaj do lepkiej masy, odstaw na 10 minut.
@@ -127,7 +127,7 @@ export const SEED_MORE = `
 100 g | Komosa ryżowa (ugotowana)
 1 szt. | Cebula
 2 szt. | Czosnek (ząbki)
-2 łyżka | Bułka tarta
+2 łyżki | Bułka tarta
 1 łyżeczka | Papryka wędzona
 4 szt. | Bułki do burgerów
  | Sałata, pomidor, sos
@@ -141,7 +141,7 @@ export const SEED_MORE = `
 1 szt. | Papryka
 100 g | Brokuł
 1 szt. | Marchew
-3 łyżka | Sos sojowy
+3 łyżki | Sos sojowy
 1 łyżka | Olej sezamowy
 2 szt. | Czosnek (ząbki)
 > Tofu osusz, pokrój, zrumień na patelni. Odłóż.
@@ -178,7 +178,7 @@ export const SEED_MORE = `
 250 g | Mąka pszenna
 100 g | Cukier
 30 g | Kakao
-2 łyżeczka | Proszek do pieczenia
+2 łyżeczki | Proszek do pieczenia
 2 szt. | Jajka
 200 ml | Mleko
 80 ml | Olej
@@ -295,8 +295,8 @@ export const SEED_MORE = `
 @ cat=sosy-bazowe origin=US servings=8 prep=10 cook=25 art=sauce:brown yield=350_ml tags=sos bazowy,grill,wegańskie
 : Słodko-dymny sos do żeberek i burgerów.
 200 ml | Keczup
-3 łyżka | Cukier brązowy
-2 łyżka | Ocet jabłkowy
+3 łyżki | Cukier brązowy
+2 łyżki | Ocet jabłkowy
 1 łyżka | Sos sojowy
 1 łyżeczka | Papryka wędzona
 1 łyżeczka | Czosnek granulowany
@@ -336,7 +336,7 @@ export const SEED_MORE = `
 : Elastyczne ciasto, które się nie rwie.
 500 g | Mąka pszenna
 250 ml | Woda ciepła
-2 łyżka | Olej
+2 łyżki | Olej
 1 łyżeczka | Sól
 > Z mąki, wody, oleju i soli zagnieć gładkie ciasto (7 minut). Odstaw na 20 minut pod miską.
 
@@ -351,8 +351,8 @@ export const SEED_MORE = `
 # Marynata do kurczaka
 @ cat=prep servings=4 prep=5 art=jar yield=200_ml tags=baza,marynata,grill
 : Uniwersalna marynata cytrynowo-ziołowa.
-4 łyżka | Oliwa
-2 łyżka | Sok z cytryny
+4 łyżki | Oliwa
+2 łyżki | Sok z cytryny
 3 szt. | Czosnek (ząbki)
 1 łyżeczka | Papryka słodka
 1 łyżeczka | Oregano
@@ -374,7 +374,7 @@ export const SEED_MORE = `
 @ cat=warzywa servings=4 prep=15 cook=40 temp=220_°C art=fries tags=dodatek,wegańskie,piekarnik
 : Chrupiące frytki bez głębokiego smażenia.
 800 g | Ziemniaki
-3 łyżka | Olej
+3 łyżki | Olej
 1 łyżka | Skrobia ziemniaczana
 1 łyżeczka | Papryka słodka
  | Sól
@@ -389,7 +389,7 @@ export const SEED_MORE = `
 4 szt. | Plastry boczku
 1 szt. | Pomidor
 2 szt. | Liście sałaty
-2 łyżka | Majonez
+2 łyżki | Majonez
 > Tosty opiecz. Smaruj majonezem, układaj: kurczak, sałata, tost, boczek, pomidor, tost.
 > Przekrój na trójkąty.
 
@@ -453,7 +453,7 @@ export const SEED_MORE = `
 : Brazylijski drink z limonką i cukrem trzcinowym.
 50 ml | Cachaça
 1 szt. | Limonka
-2 łyżeczka | Cukier trzcinowy
+2 łyżeczki | Cukier trzcinowy
  | Lód kruszony
 > Limonkę pokrój w ósemki, rozgnieć z cukrem. Dodaj lód i cachaçę, wymieszaj.
 
@@ -481,7 +481,7 @@ export const SEED_MORE = `
 @ cat=cocktaile origin=DE servings=4 prep=5 cook=15 art=soup:mushroom tags=cocktail,zima,wino
 : Rozgrzewające grzane wino z korzennymi przyprawami.
 750 ml | Wino czerwone
-2 łyżka | Miód
+2 łyżki | Miód
 1 szt. | Pomarańcza
 3 szt. | Goździki
 1 szt. | Cynamon (laska)
