@@ -10,6 +10,7 @@ import { scaleRecipe, factorFromServings } from './calculator.js';
 import { qtyParts } from './components.js';
 import { fmtNum, debounce, parseNum } from './util.js';
 import { startTimer, openTimersSheet } from './timers.js';
+import { deductRecipeIngredients } from './inventory.js';
 
 /* ---------- Widok ---------- */
 
@@ -38,8 +39,10 @@ export function cookView({ id }) {
     return { el: s.el };
   }
 
-  let prog = { ing: {}, steps: {}, factor: 1, tab: 'ing', ts: 1.15 };
+  const defaultFactor = Number(r0.servings) > 1 ? 1 / Number(r0.servings) : 1;
+  let prog = { ing: {}, steps: {}, factor: defaultFactor, tab: 'ing', ts: 1.15 };
   let loaded = false;
+  let finishing = false;
   const base = () => getRecipe(id) || r0;
   const view = () => scaleRecipe(base(), prog.factor || 1);
   const saveProg = debounce(() => { kv.set('cook:' + id, prog).catch(() => {}); }, 300);
@@ -159,7 +162,7 @@ export function cookView({ id }) {
     else if (prog.tab === 'notes') body = notesTab();
     else body = ingTab(r);
     const kids = [];
-    if ((prog.factor || 1) !== 1) kids.push(h('div', { class: 'banner info small', role: 'status' }, h('strong', null, `Przeliczone ×${fmtNum(prog.factor, 3)}`), h('button', { type: 'button', class: 'linkbtn', onClick: () => { prog.factor = 1; saveProg(); paint(); } }, 'Reset')));
+    if (Math.abs((prog.factor || defaultFactor) - defaultFactor) > 0.0001) kids.push(h('div', { class: 'banner info small', role: 'status' }, h('strong', null, `Przeliczone ×${fmtNum(prog.factor, 3)}`), h('button', { type: 'button', class: 'linkbtn', onClick: () => { prog.factor = defaultFactor; saveProg(); paint(); } }, 'Reset do 1 porcji')));
     kids.push(body);
     s.content.replaceChildren(...kids);
     if (prog.tab === 'steps') markCurrent();
@@ -197,13 +200,43 @@ export function cookView({ id }) {
   }
 
   async function finish() {
+    if (finishing) return;
     const c = counts();
     const all = c.di === c.ni && c.ds === c.ns;
     if (!all) {
       const ok = await confirmDialog({ title: 'Zakończyć gotowanie?', message: 'Nie wszystko jest odhaczone. Postęp zostanie zapamiętany, więc możesz wrócić do tego miejsca.', confirmText: 'Zakończ' });
       if (!ok) return;
+      goBack('/recipe/' + id);
+      return;
     }
-    if (all) { prog.ing = {}; prog.steps = {}; prog.tab = 'ing'; saveProg.flush(); toast('Smacznego! 👨‍🍳'); }
+
+    // Zamknięcie może zostać stuknięte dwukrotnie; blokada chroni magazyn przed podwójnym odjęciem.
+    finishing = true;
+    const completedRecipe = base();
+    let stockResult;
+    try {
+      stockResult = await deductRecipeIngredients(completedRecipe, prog.factor || defaultFactor);
+    } catch (error) {
+      console.warn('Nie udało się odjąć składników z magazynu:', error);
+      finishing = false;
+      toast('Nie udało się zaktualizować magazynu. Postęp gotowania został zachowany.', { type: 'error' });
+      return;
+    }
+
+    await patchRecipe(id, {
+      cookCount: (completedRecipe.cookCount || 0) + 1,
+      lastCookedAt: Date.now(),
+    });
+    prog.ing = {}; prog.steps = {}; prog.tab = 'ing'; saveProg.flush();
+
+    if (stockResult.deducted) toast('Zapisano. Odjęto z magazynu: ' + stockResult.deducted + ' pozycji.');
+    else if (!stockResult.missing.length) toast('Zapisano. Smacznego! 👨‍🍳');
+    if (stockResult.missing.length) {
+      toast((stockResult.deducted ? 'Nie znaleziono w magazynie: ' : 'Gotowe, ale brak dopasowania w magazynie: ') + stockResult.missing.slice(0, 3).join(', '), { type: 'error' });
+    }
+    if (stockResult.low.length && getSetting('inventoryLowAlerts') !== false) {
+      toast('Niski stan: ' + stockResult.low.slice(0, 3).join(', '), { type: 'error' });
+    }
     goBack('/recipe/' + id);
   }
 
@@ -223,7 +256,7 @@ export function cookView({ id }) {
   paint();
   kv.get('cook:' + id).then((p) => {
     if (p && typeof p === 'object') {
-      prog = { ing: {}, steps: {}, factor: 1, tab: 'ing', ts: 1.15, ...p };
+      prog = { ing: {}, steps: {}, factor: defaultFactor, tab: 'ing', ts: 1.15, ...p };
       s.el.style.setProperty('--cook-ts', String(prog.ts));
       const c = counts();
       if (p.tab === undefined && c.ni && c.di === c.ni) prog.tab = 'steps';

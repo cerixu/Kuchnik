@@ -1,0 +1,195 @@
+/* ==========================================================================
+   ŻARŁOK 2.0 — photo-first visual system
+   Mobile-first redesign: real food photography, editorial cards, warm copper,
+   dark graphite surfaces, iPhone safe areas. No app logic is changed here.
+   ========================================================================== */
+:root{
+  --bg:#0d0f10;--surface:#17191a;--surface-2:#202223;--surface-3:#292b2c;
+  --line:rgba(255,255,255,.09);--line-soft:rgba(255,255,255,.055);
+  --text:#f5f1e9;--muted:#a9a39a;--text-soft:rgba(245,241,233,.72);
+  --accent:#d99a68;--accent-strong:#f0b985;--accent-text:#e6ad7e;
+  --accent-soft:rgba(217,154,104,.14);--accent-glow:rgba(217,154,104,.22);
+  --glass-bg:rgba(23,25,26,.78);--glass-strong:rgba(18,20,21,.91);
+  --glass-line:rgba(255,255,255,.105);--glass-hi:rgba(255,255,255,.065);
+  --r:22px;--shadow-soft:0 12px 34px rgba(0,0,0,.22);
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#f2eee8;--surface:#fffdf9;--surface-2:#f0e9e0;--surface-3:#e9dfd4;
+  --line:rgba(44,34,25,.12);--line-soft:rgba(44,34,25,.07);
+  --text:#28231f;--muted:#786f65;--text-soft:rgba(40,35,31,.72);
+  --accent:#a95f31;--accent-strong:#8f4b24;--accent-text:#985328;
+  --accent-soft:rgba(169,95,49,.11);--accent-glow:rgba(169,95,49,.15);
+  --glass-bg:rgba(255,253,249,.82);--glass-strong:rgba(255,253,249,.94);
+  --glass-line:rgba(44,34,25,.12);--glass-hi:rgba(255,255,255,.8);
+  --shadow-soft:0 12px 30px rgba(65,45,25,.09);
+  color-scheme:light;
+}
+html,body{background:var(--bg);color:var(--text)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,system-ui,sans-serif;letter-spacing:-.012em}
+#app{background:var(--bg)}
+#app::before{background:
+  radial-gradient(80% 36% at 50% -8%,rgba(217,154,104,.12),transparent 75%),
+  radial-gradient(45% 30% at 100% 45%,rgba(112,85,61,.08),transparent 75%)}
+#view{background:transparent}
+.screen{background:transparent}
+.topbar{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right));background:transparent;border-bottom:1px solid transparent}
+.topbar.scrolled,.topbar.compact{background:var(--glass-bg);border-bottom-color:var(--line-soft);-webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%)}
+.topbar-title{font-weight:650;letter-spacing:-.035em}
+.topbar .iconbtn{border-radius:15px;transition:background .18s,transform .18s}
+.topbar .iconbtn:active{transform:scale(.94)}
+.content{width:100%;max-width:780px;padding:12px 18px calc(36px + env(safe-area-inset-bottom));gap:20px}
+@media(min-width:600px){.content{padding-left:24px;padding-right:24px}}
+.btn{min-height:46px;border-radius:15px;font-weight:650;letter-spacing:-.01em;transition:transform .16s,background .18s,border-color .18s}
+.btn.primary{background:linear-gradient(135deg,#efbd8d,#cb8853);color:#21150e;box-shadow:0 8px 22px rgba(217,154,104,.18)}
+.card,.rcard,.tile,.bigcard,.shop-list,.result,.sr-card,.cook-row,.ing-edit,.step-edit,.sec-card,.stat{
+  border:1px solid var(--line);background:linear-gradient(150deg,var(--surface),color-mix(in srgb,var(--surface) 88%,#000));
+  border-radius:22px;box-shadow:var(--shadow-soft)
+}
+input,textarea,select,.field input,.field textarea,.field select{border-radius:14px!important}
+.section-head,.sechead{align-items:center}
+.sechead h2,.section-head h2{font-size:1.08rem;font-weight:680;letter-spacing:-.035em}
+.linkbtn{color:var(--accent-text);font-weight:650}
+.pill{border:1px solid var(--line);border-radius:999px}
+.muted,.small{color:var(--muted)}
+/* Start screen — photographic feature card */
+.start-final .content{gap:22px}
+.start-final .zf-head{padding:12px 2px 4px;margin-bottom:0;background:transparent;border:0;box-shadow:none}
+.start-final .zf-head h1{font-size:clamp(2.4rem,10vw,3.35rem);line-height:.98;font-weight:780;letter-spacing:-.075em}
+.start-final .zf-head p{font-size:1.02rem;color:var(--text-soft);margin-top:9px}
+.start-final .zf-head-meta{color:var(--muted);font-size:.72rem;letter-spacing:.01em}
+.start-final .zf-head-mark{border:1px solid var(--line);background:var(--surface);color:var(--accent-text);border-radius:999px;padding:8px 10px;font-size:.7rem;letter-spacing:.12em}
+.start-final .zf-feature-wrap{margin:0}
+.start-final .zf-feature{
+  position:relative;display:block;min-height:320px;max-height:none;padding:0;overflow:hidden;
+  border-radius:28px;border:1px solid rgba(255,255,255,.13);
+  background:#20201e;box-shadow:0 22px 46px rgba(0,0,0,.26);isolation:isolate
+}
+.start-final .zf-feature::before{display:none!important}
+.start-final .zf-feature::after{display:none}
+.start-final .zf-feature-ring{display:block!important;position:absolute!important;top:0!important;right:0!important;bottom:0!important;left:0!important;width:100%!important;height:100%!important;max-width:none;z-index:0;transform:none!important;border:0;border-radius:0;padding:0;background:transparent;box-shadow:none}
+.start-final .zf-feature-img{display:block!important;position:absolute!important;top:0!important;right:0!important;bottom:0!important;left:0!important;width:100%!important;height:100%!important;transform:none!important;border:0;border-radius:0;background:#242322}
+.start-final .zf-feature-img img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center;border-radius:0!important;padding:0!important;opacity:1!important;visibility:visible!important;transform:none!important;filter:saturate(.98) contrast(1.03)}
+.start-final .zf-feature-img img.art{object-fit:cover!important;border-radius:0!important;padding:0!important;transform:none!important}
+.start-final .zf-feature-copy{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:24px 22px 22px;color:#fff;display:flex;align-items:flex-start;flex-direction:column;gap:8px;background:linear-gradient(180deg,transparent,rgba(8,9,9,.88))}
+.start-final .zf-feature-copy .zf-kicker{color:#f1c49a;letter-spacing:.17em;font-size:.68rem;font-weight:750}
+.start-final .zf-feature-copy h2{font-size:clamp(1.55rem,6vw,2.15rem);line-height:1.06;letter-spacing:-.05em;font-weight:730;color:#fff;margin:0;max-width:100%}
+.start-final .zf-feature-copy p{font-size:.83rem;line-height:1.4;color:rgba(255,255,255,.76);margin:0}
+.start-final .zf-feature-open{margin-top:5px;display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);padding:9px 13px;color:#fff;font-size:.78rem;font-weight:650;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.start-final .zf-status-row{gap:10px}
+.start-final .zf-status-card{min-height:76px;border-radius:20px;border:1px solid var(--line);background:var(--surface);box-shadow:0 8px 24px rgba(0,0,0,.12);padding:14px}
+.start-final .zf-status-icon{background:var(--accent-soft);color:var(--accent-text);border-radius:14px}
+.start-final .zf-status-copy strong{font-size:.91rem;font-weight:680}
+.start-final .zf-status-copy small{font-size:.7rem;color:var(--muted)}
+.start-final .zf-section-title{margin:2px 0 0;letter-spacing:.14em;font-size:.68rem;color:var(--muted)}
+.start-final .zf-section-index{color:var(--accent-text)}
+.start-final .zf-section-line{background:var(--line)}
+.start-final .zf-actions{gap:8px;padding:0;background:transparent;border:0;box-shadow:none}
+.start-final .zf-action{min-height:68px;padding:12px 14px;border:1px solid var(--line);border-radius:19px;background:var(--surface);box-shadow:0 7px 20px rgba(0,0,0,.09)}
+.start-final .zf-action::before,.start-final .zf-action::after{display:none}
+.start-final .zf-action-icon{width:42px;height:42px;border-radius:14px;background:var(--surface-2);color:var(--accent-text)}
+.start-final .zf-action.is-primary .zf-action-icon{background:var(--accent-soft);color:var(--accent-text)}
+.start-final .zf-action-copy strong{font-size:.91rem;font-weight:680}
+.start-final .zf-action-copy small{font-size:.7rem;color:var(--muted)}
+.start-final .zf-action-go{color:var(--muted);background:transparent}
+.start-final .zf-more-cta{border-radius:18px;background:var(--surface);border:1px solid var(--line);padding:15px;box-shadow:none}
+.start-final .zf-backup{border-radius:16px}
+/* Actual food photos: landscape crop, not round placeholder illustrations */
+.rgrid{gap:12px}
+.rtile{width:auto!important;min-width:0;padding:0 0 14px!important;border:1px solid var(--line);border-radius:22px!important;background:var(--surface)!important;box-shadow:0 12px 28px rgba(0,0,0,.16)!important;overflow:hidden}
+.rtile-link{gap:11px!important}
+.rtile-img{width:100%;aspect-ratio:4/3!important;height:auto!important;border-radius:0!important;background:var(--surface-2);box-shadow:none!important;overflow:hidden}
+.rtile-img img{display:block;width:100%;height:100%;object-fit:cover;transform:none!important;filter:none!important}
+.rtile-img img.art{transform:none!important}
+.rtile-row{padding:0 12px;align-items:flex-start}
+.rtile-name{font-size:.9rem;line-height:1.25;font-weight:670;letter-spacing:-.025em;-webkit-line-clamp:2}
+.rtile-heart{top:10px!important;right:10px!important}
+.rtile-heart .heart{background:rgba(15,16,16,.6)!important;border:1px solid rgba(255,255,255,.22)!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:#fff!important}
+.rt-rate,.rt-sub{font-size:.7rem}
+.rthumb{width:84px!important;height:84px!important;border-radius:17px!important;box-shadow:none!important;background:var(--surface-2)}
+.rthumb img{width:100%;height:100%;object-fit:cover;transform:none!important}
+.rthumb img.art{transform:none!important}
+.rcard{padding:10px;border-radius:20px}
+.rcard-main{gap:13px;align-items:center}
+.rbody{min-width:0}
+.rtitle{font-size:.94rem;font-weight:650;letter-spacing:-.025em}
+.rmeta{font-size:.73rem;color:var(--muted)}
+/* Categories remain clear and tactile */
+.ctile{border:1px solid var(--line);border-radius:20px;background:linear-gradient(155deg,rgba(255,255,255,.035),rgba(255,255,255,.012)),var(--surface);padding:10px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.035)}
+.ctile-img{display:block;position:relative;isolation:isolate;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:16px;background:radial-gradient(ellipse at 50% 44%,rgba(217,154,104,.09),transparent 68%),linear-gradient(145deg,#242526,#191a1b);border:1px solid rgba(255,255,255,.055);box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
+.ctile-img img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;border:0!important;border-radius:inherit!important;padding:0!important;margin:0!important;background:transparent!important;box-shadow:none!important;filter:none!important;transform:none!important;mix-blend-mode:normal}
+.ctile-img img.art{object-fit:cover!important;object-position:center!important;border-radius:inherit!important;padding:0!important;background:transparent!important;box-shadow:none!important;filter:none!important;transform:none!important}
+:root[data-theme="light"] .ctile-img{background:radial-gradient(ellipse at 50% 44%,rgba(169,95,49,.08),transparent 68%),linear-gradient(145deg,#f4eee7,#e9e1d8);border-color:rgba(44,34,25,.07)}
+
+.ctile-name{font-size:.79rem;font-weight:650}
+.ctile-n{color:var(--muted)}
+/* Recipe detail — hero image becomes a wide editorial photo */
+.detail-hero{padding:0 0 4px}
+.hero-circle{width:100%;max-width:680px;aspect-ratio:4/3;height:auto;border-radius:26px;box-shadow:0 20px 40px rgba(0,0,0,.25),0 0 0 1px var(--line);background:var(--surface-2)}
+.hero-circle img{width:100%;height:100%;object-fit:cover;transform:none!important}
+.hero-circle img.art{transform:none!important}
+.detail-title-row{align-items:flex-start;gap:12px}
+.detail-title{font-size:clamp(1.75rem,7vw,2.5rem);line-height:1.03;letter-spacing:-.06em;font-weight:760}
+.recipe-modal-photo-wrap{border-radius:22px;overflow:hidden;background:var(--surface-2)}
+.recipe-modal-photo{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.recipe-modal-photo.art{transform:none!important}
+.recipe-modal-title{letter-spacing:-.045em}
+.recipe-modal-section{border-top:1px solid var(--line-soft)}
+/* Glass dock, spacing and interaction polish */
+#tabbar{background:rgba(20,22,23,.95)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 14px 42px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.07)!important;-webkit-backdrop-filter:blur(28px) saturate(150%)!important;backdrop-filter:blur(28px) saturate(150%)!important}
+:root[data-theme="light"] #tabbar{background:rgba(255,253,249,.95)!important;border-color:rgba(44,34,25,.12)!important;box-shadow:0 14px 36px rgba(50,35,20,.12),inset 0 1px 0 rgba(255,255,255,.9)!important}
+#tabbar .tab{border-radius:15px!important}
+#tabbar .tab.active{background:var(--accent-soft)!important;color:var(--accent-text)!important}
+#tabbar .tab.active .tab-ico{color:var(--accent-text)!important}
+button,a{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
+@media(max-width:380px){
+ .content{padding-left:14px;padding-right:14px}
+ .start-final .zf-feature{min-height:285px}
+ .start-final .zf-feature-copy{padding:20px 18px}
+ .rtile{border-radius:18px!important}
+ .rtile-name{font-size:.84rem}
+ .rthumb{width:72px!important;height:72px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+
+
+/* Żarłok 2.1.8 — spójne zdjęcia i karty, bez ciemnych „kwadratów” w środku zdjęć. */
+:root{
+  --food-frame: color-mix(in srgb,var(--surface) 86%,transparent);
+  --food-frame-line: color-mix(in srgb,var(--line) 82%,transparent);
+}
+.ctile,.rtile,.rcard{
+  -webkit-tap-highlight-color:transparent;
+  background:linear-gradient(155deg,color-mix(in srgb,var(--surface) 96%,white 4%),var(--surface));
+  border-color:var(--food-frame-line);
+  box-shadow:0 9px 25px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.025);
+}
+.ctile-img,.rtile-img,.rthumb{
+  background:var(--food-frame);
+  overflow:hidden;
+  isolation:isolate;
+}
+.ctile-img img,.rtile-img img,.rthumb img,.zf-feature-img img{
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.ctile-img img.art,.rtile-img img.art,.rthumb img.art{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover!important;
+  object-position:center!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:inherit!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  mix-blend-mode:normal!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .ctile,.rtile,.rcard,.ctile-img img,.rtile-img img,.rthumb img{transition:none!important;animation:none!important}
+}

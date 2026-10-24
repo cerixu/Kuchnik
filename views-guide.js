@@ -14,6 +14,7 @@ import { ingredientsInText } from './kitchen.js';
 import { findTimes } from './views-cook.js';
 import { startTimer, openTimersSheet } from './timers.js';
 import { fmtNum, fmtMinutes, debounce } from './util.js';
+import { deductRecipeIngredients } from './inventory.js';
 
 /* ---------- Czytanie na głos ---------- */
 
@@ -39,6 +40,14 @@ const stopSpeaking = () => { try { if (speechSupported()) speechSynthesis.cancel
 
 /* ---------- Widok ---------- */
 
+function portionUnit(value) {
+  const n = Number(value);
+  if (Math.abs(n - 1) < 0.0001) return 'porcja';
+  const integer = Math.round(n), last = integer % 10, lastTwo = integer % 100;
+  if (Math.abs(n - integer) < 0.0001 && last >= 2 && last <= 4 && !(lastTwo >= 12 && lastTwo <= 14)) return 'porcje';
+  return 'porcji';
+}
+
 export function guideView({ id }) {
   const r0 = getRecipe(id);
   if (!r0) {
@@ -47,7 +56,8 @@ export function guideView({ id }) {
     return { el: s.el };
   }
 
-  let st = { page: 0, factor: 1, have: {}, rating: 0 };
+  let st = { page: 0, factor: r0.servings > 1 ? 1 / r0.servings : 1, have: {}, rating: 0 };
+  let finishing = false;
   let dir = 1;
   let loaded = false;
   const base = () => getRecipe(id) || r0;
@@ -56,7 +66,10 @@ export function guideView({ id }) {
   const lastPage = () => stepsCount() + 1;
   const saveSt = debounce(() => { kv.set('guide:' + id, st).catch(() => {}); }, 250);
 
-  const speakBtn = iconBtn(getSetting('guideSpeak') ? 'volume' : 'mute', 'Czytaj kroki na głos', () => toggleSpeak(), getSetting('guideSpeak') ? 'active' : '');
+  const speakOnAtStart = !!getSetting('guideSpeak');
+  const speakBtn = iconBtn(speakOnAtStart ? 'volume' : 'mute',
+    speakOnAtStart ? 'Zatrzymaj czytanie kroków na głos' : 'Włącz czytanie kroków na głos',
+    () => toggleSpeak(), speakOnAtStart ? 'active' : '');
   const s = screen({
     title: r0.name, large: false, cls: 'guide',
     left: iconBtn('x', 'Zamknij tryb prowadzenia', () => close()),
@@ -71,13 +84,27 @@ export function guideView({ id }) {
   const bar = h('div', { class: 'guidebar' }, back, next);
   s.el.append(bar);
 
+  function syncSpeakButton(on) {
+    speakBtn.replaceChildren(icon(on ? 'volume' : 'mute', 22));
+    speakBtn.classList.toggle('active', on);
+    const label = on ? 'Zatrzymaj czytanie kroków na głos' : 'Włącz czytanie kroków na głos';
+    speakBtn.setAttribute('aria-label', label);
+    speakBtn.title = label;
+  }
+
   function toggleSpeak() {
     const on = !getSetting('guideSpeak');
     setSetting('guideSpeak', on);
-    speakBtn.replaceChildren(icon(on ? 'volume' : 'mute', 22));
-    speakBtn.classList.toggle('active', on);
+    syncSpeakButton(on);
     if (on) speakStep(); else stopSpeaking();
     toast(on ? 'Czytam kroki na głos' : 'Czytanie wyłączone');
+  }
+
+  function stopGuideReading() {
+    stopSpeaking();
+    if (getSetting('guideSpeak')) setSetting('guideSpeak', false);
+    syncSpeakButton(false);
+    toast('Zatrzymano czytanie kroków');
   }
 
   const stepText = () => { const n = st.page - 1; return view().steps[n] ? view().steps[n].text : ''; };
@@ -112,7 +139,7 @@ export function guideView({ id }) {
     const sv = base().servings ? Math.round(base().servings * st.factor * 10) / 10 : null;
     const stepper = base().servings ? h('div', { class: 'stepper', role: 'group', 'aria-label': 'Liczba porcji' },
       iconBtn('minus', 'Mniej porcji', () => { setFactor(Math.max(0.1, (sv - (sv > 1 ? 1 : 0.5)) / base().servings)); }, 'glassy'),
-      h('div', { class: 'stepper-val' }, h('strong', { class: 'num' }, fmtNum(sv, 1)), h('span', { class: 'muted small' }, 'porcji')),
+      h('div', { class: 'stepper-val' }, h('strong', { class: 'num' }, fmtNum(sv, 1)), h('span', { class: 'muted small' }, portionUnit(sv))),
       iconBtn('plus', 'Więcej porcji', () => { setFactor((sv + 1) / base().servings); }, 'glassy')) : null;
     const total = (base().prepTime || 0) + (base().cookTime || 0);
     return h('div', { class: 'guide-card' },
@@ -152,7 +179,9 @@ export function guideView({ id }) {
         h('div', { class: 'guide-chips' }, ings.map((i) => { const q = qtyParts(i); return h('span', { class: 'gchip' }, h('span', null, i.name.replace(/\s*\(.*\)\s*/, '')), h('strong', { class: 'num' }, [q.num, q.unit].filter(Boolean).join('\u00a0'))); }))) : null,
       times.length ? h('div', { class: 'guide-timers' }, times.map((t) => button(`Minutnik: ${t.label}`, { icon: 'timer', kind: 'primary', block: true,
         onClick: () => { startTimer(t.sec, `krok ${st.page} · ${base().name}`); toast(`Minutnik: ${t.label}`); } }))) : null,
-      speechSupported() ? button('Czytaj ten krok', { icon: 'volume', kind: 'ghost', onClick: () => speak(`Krok ${st.page}. ${step.text}`) }) : null);
+      speechSupported() ? h('div', { class: 'guide-speech-actions' },
+        button('Czytaj ten krok', { icon: 'volume', kind: 'ghost', onClick: () => speak(`Krok ${st.page}. ${step.text}`) }),
+        button('Zatrzymaj czytanie', { kind: 'ghost', onClick: stopGuideReading })) : null);
   }
 
   let notes = base().notes || '';
@@ -183,13 +212,22 @@ export function guideView({ id }) {
   }
 
   async function finish() {
+    if (finishing) return;
+    finishing = true;
     stopSpeaking();
     saveNotes.flush(notes);
     const b = base();
+    let stockResult = null;
+    try { stockResult = await deductRecipeIngredients(b, st.factor || 1); }
+    catch (e) { console.warn('Nie udało się odjąć składników z magazynu:', e); }
     await patchRecipe(id, { cookCount: (b.cookCount || 0) + 1, lastCookedAt: Date.now(), rating: st.rating || b.rating || 0 });
     await kv.del('guide:' + id).catch(() => {});
-    st = { page: 0, factor: 1, have: {}, rating: 0 };
-    toast('Zapisano. Smacznego! 👨‍🍳');
+    st = { page: 0, factor: r0.servings > 1 ? 1 / r0.servings : 1, have: {}, rating: 0 };
+    if (stockResult && stockResult.deducted) {
+      toast('Zapisano. Odjęto z magazynu: ' + stockResult.deducted + ' pozycji.');
+      if (stockResult.missing.length) toast('Nie znaleziono w magazynie: ' + stockResult.missing.slice(0, 3).join(', '), { type: 'error' });
+      if (stockResult.low.length && getSetting('inventoryLowAlerts') !== false) toast('Niski stan: ' + stockResult.low.slice(0, 3).join(', '), { type: 'error' });
+    } else toast('Zapisano. Smacznego! 👨‍🍳');
     goBack('/recipe/' + id);
   }
 
@@ -222,7 +260,7 @@ export function guideView({ id }) {
   kv.get('guide:' + id).then((p) => {
     loaded = true;
     if (p && typeof p === 'object') {
-      st = { page: 0, factor: 1, have: {}, rating: 0, ...p };
+      st = { page: 0, factor: r0.servings > 1 ? 1 / r0.servings : 1, have: {}, rating: 0, ...p };
       st.page = Math.min(st.page, lastPage());
       paint(false);
       if (st.page > 0 && st.page <= stepsCount()) {

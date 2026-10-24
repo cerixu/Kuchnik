@@ -1,0 +1,164 @@
+name: Visual QA
+
+concurrency:
+  group: visual-qa-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [main, qa-visual-icons, stage-6-visual-system, stage-7-recipe-data]
+  pull_request:
+    branches: [main]
+
+jobs:
+  visual-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Start static server
+        run: python3 -m http.server 4173 >/tmp/zaruok-http.log 2>&1 &
+      - name: Architecture audit
+        run: node qa/architecture-audit.mjs
+      - name: JS compatibility audit
+        run: node qa/js-compat.mjs
+      - name: Mobile visual regression smoke
+        run: node qa/visual-regression.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zaruok-visual-regression
+          path: qa-shots/
+          if-no-files-found: ignore
+
+  interaction-smoke:
+    needs: visual-regression
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Start static server
+        run: python3 -m http.server 4173 >/tmp/zaruok-http.log 2>&1 &
+      - name: Run interaction smoke
+        run: node qa/interaction-smoke.mjs
+      - name: Upload interaction screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zaruok-interaction-qa
+          path: qa-shots/
+          if-no-files-found: ignore
+
+  inventory-smoke:
+    needs: interaction-smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Start static server
+        run: python3 -m http.server 4173 >/tmp/zaruok-http.log 2>&1 &
+      - name: Run inventory and EAN smoke
+        run: node qa/barcode-smoke.mjs && node qa/inventory-smoke.mjs
+
+  persistence-smoke:
+    needs: inventory-smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Start static server
+        run: python3 -m http.server 4173 >/tmp/zaruok-http.log 2>&1 &
+      - name: Run persistence smoke
+        run: node qa/persistence-smoke.mjs
+      - name: Run backup and inventory conversion smoke
+        run: node qa/backup-smoke.mjs
+
+  indexeddb-recovery:
+    needs: persistence-smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Start static server
+        run: python3 -m http.server 4173 >/tmp/zaruok-http.log 2>&1 &
+      - name: Simulate IndexedDB startup failure
+        run: node qa/indexeddb-recovery.mjs
+
+  offline-smoke:
+    needs: indexeddb-recovery
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Start static server
+        run: python3 -m http.server 4173 >/tmp/zaruok-http.log 2>&1 &
+      - name: Run offline smoke
+        run: node qa/offline-smoke.mjs
+
+  recipe-data-audit:
+    needs: offline-smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run recipe data audit
+        run: node qa/recipe-data-audit.mjs
+      - name: Run food photo mapping and JPEG audit
+        run: node qa/food-photo-audit.mjs
+
+  unit-grammar-smoke:
+    needs: recipe-data-audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Start static server
+        run: python3 -m http.server 4173 >/tmp/zaruok-http.log 2>&1 &
+      - name: Run unit grammar smoke
+        run: node qa/unit-grammar-smoke.mjs
+
+  pizza-flour-smoke:
+    needs: unit-grammar-smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Start static server
+        run: python3 -m http.server 4173 >/tmp/zaruok-http.log 2>&1 &
+      - name: Run pizza flour smoke
+        run: node qa/pizza-flour-smoke.mjs

@@ -11,14 +11,15 @@ import { SEED_TEXT, parseSeeds } from './seeds.js';
 import { SEED_PL } from './seeds-pl.js';
 import { SEED_WORLD } from './seeds-world.js';
 import { SEED_MORE } from './seeds-more.js';
+import { SEED_CURATED } from './seeds-curated.js';
 
 /* ---------- Kategorie i kraje ---------- */
 
 export const DEFAULT_CATEGORIES = [
-  ['cat-pizza', 'Pizza', '🍕'], ['cat-pasta', 'Pasta', '🍝'], ['cat-sosy', 'Sosy', '🥫'],
+  ['cat-pizza', 'Pizza', '🍕'], ['cat-pasta', 'Makarony', '🍝'], ['cat-sosy', 'Sosy', '🥫'],
   ['cat-mieso', 'Mięso', '🥩'], ['cat-ryby', 'Ryby', '🐟'], ['cat-owoce-morza', 'Owoce morza', '🦐'],
   ['cat-warzywa', 'Warzywa', '🥕'], ['cat-desery', 'Desery', '🍰'], ['cat-pieczywo', 'Pieczywo', '🥖'],
-  ['cat-zupy', 'Zupy', '🍲'], ['cat-salatki', 'Sałatki', '🥗'], ['cat-cocktaile', 'Cocktaile', '🍸'],
+  ['cat-zupy', 'Zupy', '🍲'], ['cat-salatki', 'Sałatki', '🥗'], ['cat-cocktaile', 'Koktajle', '🍸'],
   ['cat-prep', 'Prep', '🔪'], ['cat-sosy-bazowe', 'Sosy bazowe', '🍅'], ['cat-inne', 'Inne', '🍽️'],
 ].map(([id, name, icon], order) => ({ id, name, icon, builtin: true, order }));
 
@@ -36,7 +37,6 @@ export const ORIGINS = [
 
 export const DEFAULT_SETTINGS = {
   theme: 'dark',          // auto | light | dark (domyślnie ciemny grafit jak na makiecie)
-  mode: 'pro',            // pro | amateur
   tapSize: 'large',       // normal | large | xl
   textScale: 100,         // 90–130 (%)
   pinTraditional: true,
@@ -51,11 +51,6 @@ export const DEFAULT_SETTINGS = {
   tabLabels: false,       // podpisy pod ikonami paska kart
   listView: 'grid',       // grid | list — widok listy receptur
   detailOpen: false,      // czy szczegóły receptury są rozwinięte
-  defaultServings: 0,     // 0 = otwieraj receptury na ich porcjach; N = przelicz od razu na N porcji
-  invAlerts: true,        // alerty magazynu (niski stan, krótkie terminy)
-  invAutoDeduct: true,    // odejmuj składniki z magazynu po ugotowaniu
-  invSoonDays: 3,         // ile dni przed terminem ostrzegać
-  offLookup: true,        // po zeskanowaniu kodu szukaj nazwy produktu w Open Food Facts (wysyłany jest tylko kod EAN)
   glass: 70,              // przezroczystość „szkła” (0 = pełne krycie, 100 = najbardziej przezroczyste)
   guideSpeak: false,      // czytanie kroków na głos w trybie „Prowadź mnie”
   googleKey: '',          // opcjonalny klucz Google Programmable Search (wyszukiwanie w aplikacji)
@@ -133,7 +128,7 @@ const searchCache = new WeakMap();
 export function searchText(r) {
   let t = searchCache.get(r);
   if (t == null) {
-    t = norm([r.name, catName(r.category), r.description, r.tags.join(' '), r.notes, r.source, (ORIGINS.find((o) => o.code === r.origin) || {}).name || '',
+    t = norm([r.name, catName(r.category), r.description, r.tags.join(' '), r.notes, r.source,
       allIngredients(r).map((i) => i.name).join(' ')].join(' '));
     searchCache.set(r, t);
   }
@@ -146,21 +141,55 @@ export async function loadAll() {
   const [recipes, cats, shop, sets, ings] = await Promise.all([
     db.getAll('recipes'), db.getAll('categories'), db.getAll('shoppingItems'), db.getAll('settings'), db.getAll('ingredients'),
   ]);
+
   state.recipes.clear();
   recipes.forEach((r) => state.recipes.set(r.id, normalizeRecipe(r)));
   state.shopping = shop.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+
   state.settings = {};
   sets.forEach((s) => { if (!String(s.key).includes(':')) state.settings[s.key] = s.value; });
+
   state.catalog = new Map(ings.map((i) => [i.id, i]));
-  if (!cats.length) { await db.putMany('categories', DEFAULT_CATEGORIES); state.categories = [...DEFAULT_CATEGORIES]; }
-  else state.categories = cats.sort((a, b) => a.order - b.order);
-  if (!getSetting('seeded')) {
-    if (!state.recipes.size) await restoreSeeds();
-    await setSetting('seeded', true);
+
+  if (!cats.length) {
+    await db.putMany('categories', DEFAULT_CATEGORIES);
+    state.categories = [...DEFAULT_CATEGORIES];
   } else {
-    await addNewSeeds();
+    state.categories = cats.sort((a, b) => a.order - b.order);
+    // Popraw tylko stare etykiety wbudowanych kategorii; ID pozostają niezmienione,
+    // więc przypisania receptur i zapisane filtry użytkownika nadal działają.
+    const legacyLabels = new Map([
+      ['cat-pasta', ['Pasta', 'Makarony']],
+      ['cat-cocktaile', ['Cocktaile', 'Koktajle']],
+    ]);
+    for (const cat of state.categories) {
+      const legacy = legacyLabels.get(cat.id);
+      if (legacy && cat.name === legacy[0]) {
+        cat.name = legacy[1];
+        await db.put('categories', cat);
+      }
+    }
   }
+
+  // Krytyczna zmiana: hydratacja danych jest zakończona zanim aplikacja ruszy.
+  // Duży seed nie może jednak blokować pierwszego renderu.
   state.ready = true;
+  emit('hydrated');
+
+  void (async () => {
+    try {
+      if (!getSetting('seeded')) {
+        if (!state.recipes.size) await restoreSeeds();
+        await setSetting('seeded', true);
+      } else {
+        await addNewSeeds();
+      }
+    } catch (e) {
+      console.error('Seed danych nie został dokończony:', e);
+    }
+  })();
+
+  return state;
 }
 
 /* ---------- Kategorie ---------- */
@@ -391,7 +420,7 @@ const LEGACY_SEED_IDS = ['rcp_seed_pizza', 'rcp_seed_carbonara', 'rcp_seed_sos']
 
 export function seedRecipes() {
   const f = { blankRecipe, blankIngredient, blankSection, blankStep };
-  const all = [...handSeeds(), ...parseSeeds(SEED_TEXT, f), ...parseSeeds(SEED_PL, f, { origin: 'PL' }), ...parseSeeds(SEED_WORLD, f), ...parseSeeds(SEED_MORE, f)];
+  const all = [...handSeeds(), ...[SEED_TEXT, SEED_PL, SEED_WORLD, SEED_MORE, SEED_CURATED].flatMap((t) => parseSeeds(t, f))];
   const seen = new Set();
   return all.filter((r) => (seen.has(r.id) ? false : (seen.add(r.id), true)));   // unikalne id
 }
@@ -472,19 +501,57 @@ export async function restoreSeeds() {
   return seeds.length;
 }
 
-/** Po aktualizacji aplikacji dokłada TYLKO nowe przykłady (usunięte przez użytkownika nie wracają). */
+/** Po aktualizacji dokłada nowe przykłady i odświeża tylko nieedytowane receptury wbudowane. */
+function seedContentSignature(r) {
+  return JSON.stringify({
+    name: r.name, category: r.category, description: r.description, servings: r.servings,
+    yieldAmount: r.yieldAmount, yieldUnit: r.yieldUnit, prepTime: r.prepTime, cookTime: r.cookTime,
+    fermentTime: r.fermentTime, temperature: r.temperature, bakers: r.bakers,
+    traditional: r.traditional, origin: r.origin, art: r.art, tags: r.tags,
+    sections: (r.sections || []).map((s) => ({
+      name: s.name,
+      ingredients: (s.ingredients || []).map((i) => [i.name, i.amount, i.unit]),
+    })),
+    steps: (r.steps || []).map((s) => s.text || ''),
+  });
+}
+
 async function addNewSeeds() {
   let added = getSetting('seedsAdded');
   if (!Array.isArray(added)) added = [...LEGACY_SEED_IDS];       // wersja 1.0 miała tylko te trzy
   const have = new Set(added);
   const all = seedRecipes();
-  const fresh = all.filter((r) => !have.has(r.id) && !state.recipes.has(r.id));
+  const contentFields = [
+    'name', 'category', 'description', 'servings', 'yieldAmount', 'yieldUnit', 'prepTime', 'cookTime',
+    'fermentTime', 'temperature', 'bakers', 'traditional', 'origin', 'art', 'tags', 'sections', 'steps', 'source', 'sourceUrl',
+  ];
+  const migrations = [];
+  for (const seed of all) {
+    const existing = state.recipes.get(seed.id);
+    if (!existing || existing.source !== 'Przepis przykładowy — edytuj lub usuń') continue;
+    // SaveRecipe aktualizuje updatedAt; taki przepis traktujemy jako zmieniony przez użytkownika i nie nadpisujemy go.
+    if (existing.updatedAt !== existing.createdAt) continue;
+    if (seedContentSignature(existing) === seedContentSignature(seed)) continue;
+    const next = { ...seed, ...existing };
+    contentFields.forEach((field) => { next[field] = seed[field]; });
+    next.createdAt = existing.createdAt;
+    next.updatedAt = Date.now();
+    migrations.push(next);
+  }
+  if (migrations.length) {
+    await db.putMany('recipes', migrations);
+    migrations.forEach((r) => state.recipes.set(r.id, r));
+  }
+
+  const existingNames = new Set([...state.recipes.values()].map((r) => norm(r.name)));
+  const fresh = all.filter((r) => !have.has(r.id) && !state.recipes.has(r.id) && !existingNames.has(norm(r.name)));
   if (fresh.length) {
     await db.putMany('recipes', fresh);
     fresh.forEach((r) => state.recipes.set(r.id, r));
   }
   const ids = all.map((r) => r.id);
-  if (fresh.length || !Array.isArray(getSetting('seedsAdded')) || ids.length !== added.length) await setSetting('seedsAdded', ids);
+  if (fresh.length || migrations.length || !Array.isArray(getSetting('seedsAdded')) || ids.length !== added.length) await setSetting('seedsAdded', ids);
+  if (fresh.length || migrations.length) emit('recipes');
 }
 
 export { kv };

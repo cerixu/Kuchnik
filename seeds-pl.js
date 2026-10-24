@@ -27,7 +27,7 @@ export const SEED_PL = `
 2 szt. | Marchew
 200 g | Ziemniaki
 150 ml | Śmietana 18%
-2 łyżka | Masło
+2 łyżki | Masło
  | Sól, pieprz, natka pietruszki
 > Suszone grzyby zalej 500 ml gorącej wody i namocz na 2 godziny; odcedź, wodę zachowaj. Pokrój grzyby.
 > Cebulę zeszklij na maśle, dodaj świeże grzyby i smaż 8 minut. Dodaj marchew, ziemniaki, bulion i suszone grzyby z wodą.
@@ -87,9 +87,9 @@ export const SEED_PL = `
 2 szt. | Marchew
 1 szt. | Pietruszka (korzeń)
 1 szt. | Cebula
-2 łyżka | Masło
+2 łyżki | Masło
 1 łyżka | Papryka słodka mielona
-2 łyżeczka | Majeranek
+2 łyżeczki | Majeranek
 1 łyżeczka | Imbir mielony
  | Gałka muszkatołowa, sól, pieprz
 > Flaki pokrój w cienkie paski i gotuj 2 godziny w bulionie z warzywami do miękkości.
@@ -153,7 +153,7 @@ export const SEED_PL = `
 2 szt. | Marchew
 2 szt. | Ziemniaki
 1 szt. | Cebula
-2 łyżka | Koncentrat pomidorowy
+2 łyżki | Koncentrat pomidorowy
 2 szt. | Liść laurowy
  | Majeranek, sól, pieprz
 > Fasolę gotuj 50 minut z liściem laurowym.
@@ -183,7 +183,7 @@ export const SEED_PL = `
 1 szt. | Cebula
 2 szt. | Jajka (surowe)
 3 szt. | Jajka ugotowane na twardo
-2 łyżka | Bułka tarta
+2 łyżki | Bułka tarta
 200 ml | Bulion
  | Sól, pieprz, majeranek, olej
 > Bułki namocz i odciśnij. Wymieszaj mięso z bułką, cebulą, surowymi jajkami i przyprawami.
@@ -197,10 +197,10 @@ export const SEED_PL = `
 4 szt. | Ogórek kiszony
 100 g | Boczek wędzony
 1 szt. | Cebula
-2 łyżka | Musztarda
+2 łyżki | Musztarda
 1 łyżka | Mąka pszenna
 400 ml | Bulion wołowy
-3 łyżka | Olej
+3 łyżki | Olej
  | Sól i pieprz
 > Mięso rozbij, posmaruj musztardą, posól. Połóż paski boczku, cebulę i ogórka i zwiń, spnij nitką.
 > Zrazy obtocz w mące i zrumień z wszystkich stron na oleju.
@@ -211,8 +211,8 @@ export const SEED_PL = `
 : Soczysta karkówka w marynacie z czosnku i musztardy.
 1200 g | Karkówka wieprzowa (kawałek)
 4 szt. | Czosnek (ząbki)
-3 łyżka | Musztarda
-2 łyżka | Olej
+3 łyżki | Musztarda
+2 łyżki | Olej
 1 łyżka | Papryka słodka mielona
 1 łyżeczka | Majeranek
  | Sól i pieprz
@@ -225,7 +225,7 @@ export const SEED_PL = `
 : Chrupiąca kaczka nadziewana jabłkami i majerankiem.
 2000 g | Kaczka cała
 3 szt. | Jabłka kwaśne
-2 łyżeczka | Majeranek
+2 łyżeczki | Majeranek
 1 łyżka | Sól
 1 łyżeczka | Pieprz
 1 łyżka | Miód
@@ -238,7 +238,7 @@ export const SEED_PL = `
 @ cat=mieso origin=PL trad servings=5 prep=15 cook=80 temp=200_°C art=chicken tags=obiad,polskie,niedziela,piekarnik
 : Złocisty, soczysty kurczak z papryką i czosnkiem.
 1600 g | Kurczak cały
-3 łyżka | Masło
+3 łyżki | Masło
 1 łyżka | Papryka słodka mielona
 1 łyżeczka | Majeranek
 4 szt. | Czosnek (ząbki)
@@ -258,7 +258,7 @@ export const SEED_PL = `
 500 ml | Bulion
 1 łyżka | Mąka pszenna
 150 ml | Śmietana 18%
-2 łyżka | Koperek
+2 łyżki | Koperek
  | Sól i pieprz
 > Wymieszaj mięso z namoczoną bułką, jajkiem, cebulą i przyprawami. Formuj kulki.
 > Gotuj pulpety w bulionie 15 minut, wyjmij.
@@ -269,8 +269,8 @@ export const SEED_PL = `
 : Wątróbka drobiowa smażona z karmelizowaną cebulą.
 500 g | Wątróbka drobiowa
 2 szt. | Cebula
-2 łyżka | Mąka pszenna
-3 łyżka | Masło
+2 łyżki | Mąka pszenna
+3 łyżki | Masło
  | Sól i pieprz
 > Wątróbkę osusz, obtocz w mące. Cebulę pokrój w piórka i zeszklij na maśle.
 > Wątróbkę smaż 3 minuty z każdej strony. Dodaj cebulę.
@@ -280,9 +280,9 @@ export const SEED_PL = `
 @ cat=mieso servings=4 prep=15 cook=120 temp=160_°C art=ribs tags=obiad,piekarnik,miód
 : Żeberka wieprzowe pieczone na miękko w glazurze miodowo-sojowej.
 1500 g | Żeberka wieprzowe
-3 łyżka | Miód
-3 łyżka | Sos sojowy
-2 łyżka | Keczup
+3 łyżki | Miód
+3 łyżki | Sos sojowy
+2 łyżki | Keczup
 3 szt. | Czosnek (ząbki)
 1 łyżeczka | Papryka wędzona
  | Sól i pieprz
@@ -297,7 +297,7 @@ export const SEED_PL = `
 4 szt. | Czosnek (ząbki)
 10 szt. | Śliwki suszone
 1 łyżka | Majeranek
-2 łyżka | Olej
+2 łyżki | Olej
 300 ml | Woda lub bulion
 1 łyżka | Mąka pszenna
  | Sól i pieprz
@@ -333,13 +333,13 @@ export const SEED_PL = `
 ## CIASTO
 500 g | Mąka pszenna
 250 ml | Woda ciepła
-2 łyżka | Olej
+2 łyżki | Olej
 1 łyżeczka | Sól
 ## FARSZ
 500 g | Kapusta kiszona
 20 g | Grzyby suszone
 1 szt. | Cebula
-2 łyżka | Olej
+2 łyżki | Olej
  | Sól i pieprz
 > Kapustę ugotuj w niewielkiej ilości wody z grzybami do miękkości (30 minut), odciśnij i posiekaj.
 > Cebulę zeszklij, połącz z kapustą i grzybami, dopraw i ostudź.
@@ -356,7 +356,7 @@ export const SEED_PL = `
 1 szczypta | Sól
 ## NADZIENIE
 500 g | Jagody
-3 łyżka | Cukier
+3 łyżki | Cukier
 1 łyżka | Skrobia ziemniaczana
 > Z mąki, wody, jajka i soli zagnieć ciasto, odpocznij 20 minut.
 > Jagody wymieszaj z cukrem i skrobią. Wykrawaj kółka, nakładaj jagody, mocno sklejaj.
@@ -368,7 +368,7 @@ export const SEED_PL = `
 500 g | Twaróg półtłusty
 2 szt. | Jajka
 150 g | Mąka pszenna
-2 łyżka | Cukier
+2 łyżki | Cukier
 1 szczypta | Sól
  | Masło i bułka tarta do podania
 > Twaróg rozgnieć z jajkami, cukrem i solą. Dodaj mąkę i zamieszaj.
@@ -385,7 +385,7 @@ export const SEED_PL = `
 1 łyżka | Olej
 ## FARSZ
 500 g | Twaróg
-2 łyżka | Cukier puder
+2 łyżki | Cukier puder
 1 łyżka | Cukier waniliowy
 1 szt. | Żółtko
 > Zmiksuj ciasto, odpocznij 20 minut, usmaż cienkie naleśniki.
@@ -399,7 +399,7 @@ export const SEED_PL = `
 250 ml | Mleko
 10 g | Drożdże świeże
 1 szt. | Jajko
-2 łyżka | Cukier
+2 łyżki | Cukier
 3 szt. | Jabłka
 100 ml | Olej do smażenia
  | Cukier puder do podania
@@ -415,7 +415,7 @@ export const SEED_PL = `
 1 szt. | Jajko
 12 szt. | Śliwki węgierki
 12 szt. | Kostka cukru
-2 łyżka | Masło
+2 łyżki | Masło
  | Cynamon, cukier, bułka tarta
 > Z ziemniaków, mąki i jajka zagnieć ciasto. Wyjmij pestki ze śliwek, włóż kostkę cukru.
 > Owiń śliwki ciastem, formuj kulki. Gotuj 8–10 minut od wypłynięcia.
@@ -428,7 +428,7 @@ export const SEED_PL = `
 400 g | Kapusta kiszona
 150 g | Boczek wędzony
 1 szt. | Cebula
-2 łyżka | Olej
+2 łyżki | Olej
 1 łyżeczka | Kmin
  | Sól i pieprz
 > Kapustę gotuj 30 minut w niewielkiej ilości wody. Makaron ugotuj osobno.
@@ -457,9 +457,9 @@ export const SEED_PL = `
 3 szt. | Marchew
 150 g | Seler
 1 szt. | Cebula
-3 łyżka | Koncentrat pomidorowy
+3 łyżki | Koncentrat pomidorowy
 200 ml | Woda
-2 łyżka | Olej
+2 łyżki | Olej
  | Sól, pieprz, liść laurowy
 > Rybę oprósz solą i mąką, usmaż na złoto z obu stron.
 > Warzywa zetrzyj, podduś z cebulą na oleju, dodaj koncentrat i wodę, gotuj 15 minut.
@@ -497,7 +497,7 @@ export const SEED_PL = `
 : Domowy dodatek do kotletów i mielonych.
 500 g | Kapusta biała
 1 szt. | Cebula
-2 łyżka | Masło
+2 łyżki | Masło
 1 łyżka | Mąka pszenna
 1 łyżka | Koncentrat pomidorowy
  | Sól, pieprz, cukier
@@ -511,7 +511,7 @@ export const SEED_PL = `
 400 g | Marchew
 2 szt. | Jabłka
 1 łyżka | Sok z cytryny
-2 łyżka | Oliwa lub olej
+2 łyżki | Oliwa lub olej
 1 łyżeczka | Cukier
  | Sól
 > Marchew i jabłka zetrzyj na tarce. Wymieszaj z pozostałymi składnikami.
@@ -522,7 +522,7 @@ export const SEED_PL = `
 600 g | Buraki gotowane
 1 łyżka | Masło
 1 łyżka | Mąka pszenna
-2 łyżka | Sok z cytryny
+2 łyżki | Sok z cytryny
 1 łyżka | Cukier
 1 łyżka | Chrzan
  | Sól
@@ -549,7 +549,7 @@ export const SEED_PL = `
 : Młoda fasolka z masłem i chrupiącą bułką.
 600 g | Fasolka szparagowa
 40 g | Masło
-3 łyżka | Bułka tarta
+3 łyżki | Bułka tarta
  | Sól
 > Fasolkę gotuj w osolonej wodzie 6–8 minut, odcedź.
 > Na maśle zrumień bułkę, wymieszaj z fasolką.
@@ -604,7 +604,7 @@ export const SEED_PL = `
 1 szt. | Jajko
 ## SER
 400 g | Twaróg
-2 łyżka | Cukier
+2 łyżki | Cukier
 1 szt. | Żółtko
 1 łyżka | Cukier waniliowy
 > Zagnieć ciasto, odstaw na 1 godzinę.
@@ -619,7 +619,7 @@ export const SEED_PL = `
 5 szt. | Jajka
 150 g | Mąka pszenna
 150 g | Skrobia ziemniaczana
-2 łyżeczka | Proszek do pieczenia
+2 łyżeczki | Proszek do pieczenia
 1 łyżka | Cukier waniliowy
 > Masło utrzyj z cukrem, dodawaj po jednym jajku.
 > Dodaj mąkę, skrobię i proszek. Przełóż do formy z kominem.
@@ -690,8 +690,8 @@ export const SEED_PL = `
 200 g | Cukier brązowy
 200 ml | Olej
 3 szt. | Jajka
-2 łyżeczka | Proszek do pieczenia
-2 łyżeczka | Cynamon
+2 łyżeczki | Proszek do pieczenia
+2 łyżeczki | Cynamon
 80 g | Orzechy włoskie
 ## KREM
 200 g | Serek śmietankowy
@@ -742,7 +742,7 @@ export const SEED_PL = `
 80 g | Cukier
 80 g | Masło
 1 szt. | Jajko
-2 łyżka | Przyprawa piernikowa
+2 łyżki | Przyprawa piernikowa
 1 łyżeczka | Soda
 1 łyżka | Kakao
 > Miód z cukrem i masłem podgrzej do rozpuszczenia. Dodaj do mąki z przyprawami, sodą i kakao oraz jajkiem.
@@ -767,8 +767,8 @@ export const SEED_PL = `
 @ cat=inne origin=PL trad servings=4 prep=15 art=eggs tags=zakąska,polskie,śniadanie,wegetariańskie
 : Pasta do kanapek z jajek, szczypiorku i majonezu.
 6 szt. | Jajka ugotowane na twardo
-3 łyżka | Majonez
-2 łyżka | Szczypiorek
+3 łyżki | Majonez
+2 łyżki | Szczypiorek
 1 łyżeczka | Musztarda
  | Sól i pieprz
 > Jajka posiekaj lub rozgnieć widelcem. Wymieszaj z resztą składników i dopraw.
@@ -797,7 +797,7 @@ export const SEED_PL = `
 30 g | Grzyby suszone
 1 szt. | Cebula
 1 łyżka | Olej
-2 łyżka | Bułka tarta
+2 łyżki | Bułka tarta
  | Sól i pieprz
 > Grzyby ugotuj, posiekaj. Cebulę zeszklij, połącz z grzybami i bułką, dopraw.
 > Ciasto rozwałkuj cienko, wykrój kwadraty, nakładaj farsz, składaj w trójkąt i sklejaj rogi.

@@ -140,7 +140,7 @@ const CATEGORY_ART = {
 export const ART_KINDS = Object.keys(MOTIFS);
 export { VARIANT_SPECS };
 
-/* ---------- Cieniowanie: płaskie kolory → gradienty z połyskiem (efekt „3D”) ---------- */
+/* ---------- SVG shading: flat fills -> soft 3D gradients ---------- */
 const hex = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
 const toHex = (a) => '#' + a.map((v) => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
 const lighten = (c, t) => toHex(hex(c).map((v) => v + (255 - v) * t));
@@ -152,10 +152,10 @@ function shade(svg) {
     const c = c0.toLowerCase();
     let id = map.get(c);
     if (!id) {
-      id = 's' + map.size; map.set(c, id);
-      defs += `<radialGradient id="${id}" cx=".34" cy=".28" r=".95"><stop offset="0" stop-color="${lighten(c, 0.32)}"/><stop offset=".55" stop-color="${c}"/><stop offset="1" stop-color="${darken(c, 0.26)}"/></radialGradient>`;
+      id = 'shade' + map.size; map.set(c, id);
+      defs += '<radialGradient id="' + id + '" cx=".34" cy=".28" r=".95"><stop offset="0" stop-color="' + lighten(c, .28) + '"/><stop offset=".56" stop-color="' + c + '"/><stop offset="1" stop-color="' + darken(c, .22) + '"/></radialGradient>';
     }
-    return `fill="url(#${id})"`;
+    return 'fill="url(#' + id + ')"';
   });
   return out.replace('</defs>', defs + '</defs>');
 }
@@ -171,7 +171,7 @@ export function artSvg(spec, seedText = '') {
   const h = hash(seedText + k);
   const b1 = 20 + (h % 120), b2 = 30 + ((h >> 3) % 110);
   return shade(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="400" height="400">
-<defs><radialGradient id="vg" cx=".5" cy=".5" r=".72"><stop offset=".62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".42"/></radialGradient><radialGradient id="g" cx=".5" cy=".42" r=".78"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></radialGradient></defs>
+<defs><radialGradient id="g" cx=".5" cy=".42" r=".78"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></radialGradient><radialGradient id="vg" cx=".5" cy=".5" r=".72"><stop offset=".58" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".42"/></radialGradient></defs>
 <rect width="200" height="200" fill="url(#g)"/>
 <circle cx="${b1}" cy="${(b2 % 60) + 14}" r="${30 + (h % 22)}" fill="#fff" opacity=".035"/><circle cx="${200 - b2 / 2}" cy="${150 + (b1 % 40)}" r="${26 + (h % 30)}" fill="#c27a3e" opacity=".07"/>
 ${MOTIFS[k](v)}
@@ -187,6 +187,75 @@ export function artUrl(spec, seedText = '') {
   return u;
 }
 
-export const artKindFor = (r) => (isArtSpec(r.art) ? r.art : CATEGORY_ART[r.category] || 'plate');
-export const recipeArtUrl = (r) => artUrl(artKindFor(r), r.name || r.id || '');
+const NAME_ART = [
+  [/baba\s*ganoush|mutabbal|eggplant dip/i, 'dip:eggplant'],
+  [/hummus|chickpea dip/i, 'dip:hummus'],
+  [/guacamole/i, 'dip:guacamole'],
+  [/mojito|margarita|martini|negroni|spritz|cocktail|koktajl/i, 'cocktail'],
+  [/sushi|maki|nigiri/i, 'sushi'],
+  [/^pesto(?: alla genovese)?$|^chimichurri$|^gremolata$/i, 'sauce:green'],
+  [/^beszamel$|^béchamel$/i, 'sauce:white'],
+  [/^salsa roja$/i, 'sauce'],
+  [/^satay orzechowy$/i, 'sauce:brown'],
+  [/^aioli$|^allioli$/i, 'sauce:mayo'],
+  [/^winegret klasyczny$|^vinaigrette$/i, 'sauce:oil'],
+  [/^pierogi z mięsem$|^pierogi mięsne$|^pierogi ruskie$|^gyoza$|^jiaozi$/i, 'dumpling'],
+  [/^risotto\b/i, 'risotto'],
+  [/^frytki$|^french fries$/i, 'fries'],
+  [/ziemniaki?\s+(?:puree|purée)|purée ziemniaczane|mashed potatoes/i, 'potato:mash'],
+  [/ziemniaki?\s+pieczone|pieczone ziemniaki|roasted potatoes/i, 'potato:roasted'],
+  [/kasza gryczana|buckwheat/i, 'grain:buckwheat'],
+  [/kasza jaglana|millet/i, 'grain:millet'],
+  [/ryż jaśminowy|jasmine rice/i, 'rice'],
+  [/fasolka szparagowa.*migda|green beans.*almond/i, 'beans'],
+  [/grillowane warzywa|roasted vegetables/i, 'veg'],
+  [/colesław|coleslaw/i, 'salad:slaw'],
+  [/pad see ew|pad thai|pad kee mao|chow mein|chow fun|lo mein|yakisoba|mie goreng|wok-fried noodles|smażony makaron/i, 'pasta:asia'],
+  [/fried rice|wok-fried rice|smażony ryż|ryż smażony|nasi goreng|yakimeshi/i, 'rice'],
+  [/currywurst|bratwurst|kiełbas|sausage/i, 'sausage'],
+  [/wieprz|pork/i, 'pork'],
+  [/curry|kari/i, 'curry'],
+  [/tofu|tempeh/i, 'tofu'],
+  [/kaczk|duck|canard/i, 'duck'],
+  [/paella/i, 'paella'],
+  [/ramen|pho|udon soup|noodle soup/i, 'ramen'],
+  [/focaccia/i, 'focaccia'],
+  [/sandwich|kanapka|toast/i, 'sandwich'],
+  [/pizza/i, 'pizza'],
+  [/carbonara|spaghetti|lasagne|lasagna|ravioli|tortellini|tagliatelle|penne|pasta|makaron/i, 'pasta'],
+  [/bigos|gulasz|stew|chili con carne|ragù|ragu/i, 'stew'],
+  [/burger|hamburger/i, 'burger'],
+  [/krewet|shrimp|prawn/i, 'shrimp'],
+  [/łosoś|salmon|dorsz|cod|pstrąg|trout|tuńczyk|tuna|ryba|fish/i, 'fish'],
+  [/stek|steak|wołow|beef|rostbef|antrykot/i, 'steak'],
+  [/schabowy|kotlet|cutlet|schnitzel/i, 'cutlet'],
+  [/kurcz|chicken|pollo|drób/i, 'chicken'],
+  [/klops|meatball|pulpety/i, 'meatballs'],
+  [/jajecznica|omlet|omelette|frittata/i, 'omelette'],
+  [/naleśnik|pancake|placki/i, 'pancakes'],
+  [/zupa|soup|barszcz|rosół|chowder|minestrone/i, 'soup'],
+  [/sałatka|salad|coleslaw|tabbouleh/i, 'salad'],
+  [/brownie/i, 'cookies:brownie'],
+  [/tiramisu/i, 'cake:tiramisu'],
+  [/ciasto|tort|cake|babka|sernik|cheesecake|tarta|tart/i, 'cake'],
+  [/chleb|bread|baguette|bułk|roll/i, 'bread'],
+  [/^sos\b|^sauce\b|sos pomidorowy|marinara|ketchup/i, 'sauce'],
+];
+export const artKindFor = (r) => {
+  const explicit = isArtSpec(r.art) ? r.art : null;
+  const name = String(r.name || '');
+  const matched = NAME_ART.find(([pattern]) => pattern.test(name));
+  if (matched) return matched[1];
+  return explicit || CATEGORY_ART[r.category] || 'plate';
+};
+// Własne zdjęcia wygenerowane w Adobe Firefly — używane jako właściwe miniatury receptur,
+// a nie jako makiety. Gdy sieć nie działa, komponent przełącza się na lokalną ilustrację SVG.
+// Żarłok 2.0: prawdziwe fotografie dań wygenerowane specjalnie dla aplikacji.
+ // Mapujemy zdjęcia tylko do pasujących potraw; reszta zachowuje lokalny fallback SVG.
+// Wszystkie fotografie Żarłoka 2.0 są ładowane lokalnie przez food-photos.js.
+// Ten moduł pozostaje niezależnym fallbackiem SVG i nie wymaga internetu.
+export const recipeArtPhotoUrl = () => '';
+export const recipeArtIsPhoto = () => false;
+export const recipeArtFallbackUrl = (r) => artUrl(artKindFor(r), r.name || r.id || '');
+export const recipeArtUrl = (r) => recipeArtFallbackUrl(r);
 export const categoryArtUrl = (catId) => artUrl(CATEGORY_ART[catId] || 'plate', catId);

@@ -10,9 +10,15 @@
    ========================================================================== */
 import { parseNum, norm } from './util.js';
 
-const UNIT_RE = /^(g|kg|ml|l|szt\.|łyżeczka|łyżka|szczypta|porcja)$/;
+const UNIT_RE = /^(g|kg|ml|l|szt\.|łyżeczka|łyżeczki|łyżeczek|łyżka|łyżki|łyżek|szczypta|szczypty|szczypt|porcja|porcje|porcji)$/;
+const UNIT_CANONICAL = {
+  'łyżka': 'łyżka', 'łyżki': 'łyżka', 'łyżek': 'łyżka',
+  'łyżeczka': 'łyżeczka', 'łyżeczki': 'łyżeczka', 'łyżeczek': 'łyżeczka',
+  'szczypta': 'szczypta', 'szczypty': 'szczypta', 'szczypt': 'szczypta',
+  'porcja': 'porcja', 'porcje': 'porcja', 'porcji': 'porcja',
+};
 
-export function parseSeeds(text, f, opts = {}) {
+export function parseSeeds(text, f) {
   const out = [];
   let cur = null, sec = null;
   const slug = (s) => norm(s).replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
@@ -20,7 +26,6 @@ export function parseSeeds(text, f, opts = {}) {
     if (!cur) return;
     cur.sections = cur.sections.filter((s) => s.ingredients.length);
     if (!cur.sections.length) cur.sections = [f.blankSection('')];
-    if (!cur.origin && opts.origin) cur.origin = opts.origin;
     out.push(cur);
   };
   for (const raw of text.split('\n')) {
@@ -29,7 +34,7 @@ export function parseSeeds(text, f, opts = {}) {
     if (line.startsWith('# ')) {
       finish();
       const name = line.slice(2).trim();
-      cur = f.blankRecipe({ id: 'rcp_seed_' + slug(name), name, sections: [], steps: [], source: 'Kucharzyna' });
+      cur = f.blankRecipe({ id: 'rcp_seed_' + slug(name), name, sections: [], steps: [], source: 'Przepis przykładowy — edytuj lub usuń' });
       sec = null;
     } else if (!cur) continue;
     else if (line.startsWith('@ ')) {
@@ -60,8 +65,8 @@ export function parseSeeds(text, f, opts = {}) {
       if (l) {
         const parts = l.split(/\s+/);
         const u = parts[parts.length - 1];
-        if (parts.length > 1 && UNIT_RE.test(u)) { unit = u; amount = parseNum(parts.slice(0, -1).join(' ')); }
-        else if (UNIT_RE.test(l)) { unit = l; amount = 1; }
+        if (parts.length > 1 && UNIT_RE.test(u)) { unit = UNIT_CANONICAL[u] || u; amount = parseNum(parts.slice(0, -1).join(' ')); }
+        else if (UNIT_RE.test(l)) { unit = UNIT_CANONICAL[l] || l; amount = 1; }
         else amount = parseNum(l);
         if (!Number.isFinite(amount)) amount = null;
       }
@@ -132,7 +137,7 @@ export const SEED_TEXT = `
 2 szt. | Liść laurowy
 3 szt. | Ziele angielskie
 1 łyżeczka | Majeranek
-2 łyżka | Sok z cytryny
+2 łyżki | Sok z cytryny
 1 łyżeczka | Cukier
  | Sól i pieprz
 > Buraki obierz i zetrzyj na grubych oczkach lub pokrój w plastry.
@@ -145,7 +150,7 @@ export const SEED_TEXT = `
 : Klasyczna pomidorowa na rosole z makaronem.
 1,5 l | Rosół
 500 ml | Passata pomidorowa
-3 łyżka | Koncentrat pomidorowy
+3 łyżki | Koncentrat pomidorowy
 100 ml | Śmietana 18%
 150 g | Makaron (nitki lub kokardki)
 1 łyżeczka | Cukier
@@ -165,7 +170,7 @@ export const SEED_TEXT = `
 1 łyżka | Imbir świeży (starty)
 700 ml | Bulion warzywny
 200 ml | Mleko kokosowe
-2 łyżka | Oliwa
+2 łyżki | Oliwa
  | Sól i pieprz
  | Pestki dyni do podania
 > Cebulę i czosnek zeszklij na oliwie. Dodaj imbir i pokrojoną dynię.
@@ -181,9 +186,9 @@ export const SEED_TEXT = `
 4 szt. | Liście limonki kaffir
 200 g | Krewetki
 150 g | Pieczarki
-2 łyżka | Pasta tom yum
-2 łyżka | Sos rybny
-3 łyżka | Sok z limonki
+2 łyżki | Pasta tom yum
+2 łyżki | Sos rybny
+3 łyżki | Sok z limonki
 2 szt. | Chili
  | Kolendra do podania
 > Trawę rozgnieć i pokrój. Zagotuj bulion z trawą, galangalem, liśćmi limonki i pastą — 5 minut.
@@ -199,7 +204,7 @@ export const SEED_TEXT = `
 1 szt. | Czosnek (ząbek)
 50 g | Cebula czerwona
 60 ml | Oliwa extra vergine
-2 łyżka | Ocet sherry
+2 łyżki | Ocet sherry
 50 g | Chleb (bez skórki)
  | Sól
 > Pomidory, ogórek i paprykę pokrój. Chleb namocz w odrobinie wody.
@@ -265,11 +270,11 @@ export const SEED_TEXT = `
 : Wołowy gulasz z dużą ilością cebuli i papryki.
 800 g | Wołowina (łopatka)
 400 g | Cebula
-2 łyżka | Papryka słodka mielona
+2 łyżki | Papryka słodka mielona
 2 szt. | Papryka czerwona
 200 ml | Passata pomidorowa
 3 szt. | Czosnek (ząbki)
-3 łyżka | Smalec lub olej
+3 łyżki | Smalec lub olej
 1 łyżeczka | Kminek
 500 ml | Bulion lub woda
  | Sól
@@ -302,8 +307,8 @@ export const SEED_TEXT = `
 1 szt. | Papryka czerwona
 400 g | Fasola czerwona z puszki (odsączona)
 400 g | Pomidory pelati
-2 łyżka | Koncentrat pomidorowy
-2 łyżeczka | Kmin rzymski
+2 łyżki | Koncentrat pomidorowy
+2 łyżeczki | Kmin rzymski
 1 łyżeczka | Papryka wędzona
 1 łyżeczka | Chili w proszku
 200 ml | Bulion
@@ -325,7 +330,7 @@ export const SEED_TEXT = `
 2 szt. | Ogórek kiszony
  | Sól i pieprz
 ## SOS
-3 łyżka | Majonez
+3 łyżki | Majonez
 1 łyżka | Ketchup
 1 łyżeczka | Musztarda
 > Mięso podziel na 4 kulki po 150 g, spłaszcz na 2 cm, zrób wgłębienie na środku. Posól tuż przed smażeniem.
@@ -338,7 +343,7 @@ export const SEED_TEXT = `
 700 g | Udka kurczaka bez kości
 ## MARYNATA
 150 g | Jogurt naturalny
-2 łyżeczka | Garam masala
+2 łyżeczki | Garam masala
 1 łyżeczka | Kurkuma
 1 łyżeczka | Papryka mielona
 3 szt. | Czosnek (ząbki)
@@ -349,7 +354,7 @@ export const SEED_TEXT = `
 400 g | Pomidory pelati
 150 ml | Śmietana 30%
 40 g | Masło
-2 łyżeczka | Garam masala
+2 łyżeczki | Garam masala
  | Sól
  | Kolendra
 > Kurczaka pokrój w kostkę, wymieszaj z marynatą i odstaw na min. 2 godziny.
@@ -369,7 +374,7 @@ export const SEED_TEXT = `
 250 ml | Bulion drobiowy
 1 łyżka | Koncentrat pomidorowy
 3 szt. | Tymianek (gałązki)
-2 łyżka | Mąka
+2 łyżki | Mąka
 30 g | Masło
  | Sól i pieprz
 > Boczek podsmaż w garnku, odłóż. W tym tłuszczu zrumień posolone udka, odłóż.
@@ -383,7 +388,7 @@ export const SEED_TEXT = `
 ## CIASTO
 500 g | Mąka pszenna
 250 ml | Woda ciepła
-2 łyżka | Olej
+2 łyżki | Olej
 1 łyżeczka | Sól
 ## FARSZ
 600 g | Ziemniaki
@@ -403,7 +408,7 @@ export const SEED_TEXT = `
 500 ml | Mleko
 2 szt. | Jajka
 100 ml | Woda gazowana
-2 łyżka | Olej (+ do smażenia)
+2 łyżki | Olej (+ do smażenia)
 1 łyżka | Cukier
 1 szczypta | Sól
 > Wszystkie składniki zmiksuj na gładkie, rzadkie ciasto. Odstaw na 20 minut.
@@ -415,7 +420,7 @@ export const SEED_TEXT = `
 1000 g | Ziemniaki
 1 szt. | Cebula
 1 szt. | Jajko
-3 łyżka | Mąka pszenna
+3 łyżki | Mąka pszenna
 1 łyżeczka | Sól
 150 ml | Olej do smażenia
  | Pieprz
@@ -433,7 +438,7 @@ export const SEED_TEXT = `
 3 szt. | Czosnek (ząbki)
 1 łyżeczka | Papryka wędzona
 1 łyżeczka | Kmin rzymski
-3 łyżka | Oliwa
+3 łyżki | Oliwa
 80 g | Feta
  | Natka pietruszki
  | Sól
@@ -460,7 +465,7 @@ export const SEED_TEXT = `
 5 szt. | Czosnek (ząbki)
 80 ml | Oliwa extra vergine
 1 szt. | Papryczka chili suszona
-2 łyżka | Natka pietruszki
+2 łyżki | Natka pietruszki
 4 l | Woda do gotowania
 30 g | Sól do wody
 > Ugotuj spaghetti al dente w osolonej wodzie (ok. 10 minut). Zachowaj 150 ml wody z gotowania.
@@ -472,7 +477,7 @@ export const SEED_TEXT = `
 : Rzymski klasyk z trzema składnikami: makaron, pecorino, pieprz.
 400 g | Tonnarelli lub spaghetti
 200 g | Pecorino romano (drobno starte)
-2 łyżeczka | Pieprz czarny (świeżo mielony)
+2 łyżeczki | Pieprz czarny (świeżo mielony)
 3 l | Woda do gotowania
 10 g | Sól do wody
 > Pieprz praż na suchej patelni 1 minutę. Makaron gotuj 9 minut w mniejszej ilości wody — ma być skrobiowa.
@@ -493,7 +498,7 @@ export const SEED_TEXT = `
 100 ml | Wino czerwone
 1 łyżka | Koncentrat pomidorowy
 100 ml | Mleko
-2 łyżka | Oliwa
+2 łyżki | Oliwa
 ## BESZAMEL
 60 g | Masło
 60 g | Mąka pszenna
@@ -517,12 +522,12 @@ export const SEED_TEXT = `
 4 szt. | Szczypiorek (łodygi)
 50 g | Orzeszki ziemne
 3 szt. | Czosnek (ząbki)
-3 łyżka | Olej
+3 łyżki | Olej
 1 szt. | Limonka
 ## SOS
-3 łyżka | Sos rybny
-3 łyżka | Pasta tamaryndowa
-2 łyżka | Cukier brązowy
+3 łyżki | Sos rybny
+3 łyżki | Pasta tamaryndowa
+2 łyżki | Cukier brązowy
 > Makaron zalej gorącą wodą na 8–10 minut, odcedź. Sos wymieszaj.
 > W woku na dużym ogniu smaż krewetki i czosnek, odłóż. Wbij jajka, mieszaj.
 > Dodaj makaron i sos, smaż 2 minuty. Dodaj kiełki, szczypiorek i krewetki. Podaj z orzeszkami i limonką.
@@ -547,7 +552,7 @@ export const SEED_TEXT = `
 1 szt. | Limonka
 40 g | Cebula czerwona
 1 szt. | Pomidor
-2 łyżka | Kolendra
+2 łyżki | Kolendra
 1 szt. | Jalapeño
  | Sól
 > Awokado rozgnieć widelcem, zostawiając kawałki.
@@ -561,8 +566,8 @@ export const SEED_TEXT = `
 50 ml | Sok z cytryny
 1 szt. | Czosnek (ząbek)
 60 ml | Woda lodowata
-2 łyżka | Oliwa
-0,5 łyżeczka | Kmin rzymski
+2 łyżki | Oliwa
+0,5 łyżeczki | Kmin rzymski
  | Sól
 > Tahini zmiksuj z sokiem z cytryny i czosnkiem na kremową masę.
 > Dodaj ciecierzycę, kmin i sól, wlewaj lodowatą wodę, miksując 3–4 minuty. Podaj z oliwą.
@@ -642,7 +647,7 @@ export const SEED_TEXT = `
 : Do steków, ryb i pieczywa; mrożone w rolce.
 250 g | Masło (miękkie)
 2 szt. | Czosnek (ząbki)
-3 łyżka | Natka pietruszki
+3 łyżki | Natka pietruszki
 1 łyżeczka | Tymianek
 1 łyżeczka | Sok z cytryny
  | Sól
@@ -653,7 +658,7 @@ export const SEED_TEXT = `
 : Wolno smażona cebula do burgerów, tart i zup.
 1000 g | Cebula (ok. 8 szt.)
 40 g | Masło
-2 łyżka | Oliwa
+2 łyżki | Oliwa
 1 łyżeczka | Sól
 1 łyżeczka | Cukier
 > Cebulę pokrój w półplasterki. Smaż na maśle z oliwą na małym ogniu 45–60 minut, mieszając.
@@ -665,7 +670,7 @@ export const SEED_TEXT = `
 2 szt. | Cebula czerwona
 150 ml | Ocet jabłkowy
 150 ml | Woda
-2 łyżka | Cukier
+2 łyżki | Cukier
 1 łyżeczka | Sól
 > Cebulę pokrój w cienkie plastry. Zalej gorącą zalewą z octu, wody, cukru i soli. Odstaw na 30 minut.
 
@@ -676,8 +681,8 @@ export const SEED_TEXT = `
 40 g | Masło
 1 szt. | Cytryna
 2 szt. | Czosnek (ząbki)
-2 łyżka | Koperek
-2 łyżka | Oliwa
+2 łyżki | Koperek
+2 łyżki | Oliwa
  | Sól i pieprz
 > Piekarnik nagrzej do 200 °C. Łososia posól, popieprz, skrop oliwą.
 > Połóż skórą do dołu, na wierzchu masło, czosnek, plasterki cytryny. Piecz 12–15 minut. Posyp koperkiem.
@@ -704,8 +709,8 @@ export const SEED_TEXT = `
 100 ml | Oliwa
 6 szt. | Czosnek (ząbki)
 1 szt. | Chili
-2 łyżka | Sherry
-2 łyżka | Natka pietruszki
+2 łyżki | Sherry
+2 łyżki | Natka pietruszki
  | Sól
  | Chleb do podania
 > Czosnek w plasterkach podgrzewaj w oliwie z chili. Dodaj krewetki, smaż 2 minuty z każdej strony.
@@ -720,7 +725,7 @@ export const SEED_TEXT = `
 600 g | Pomidory
 1 szt. | Cebula
 3 szt. | Czosnek (ząbki)
-5 łyżka | Oliwa
+5 łyżek | Oliwa
 2 szt. | Tymianek (gałązki)
 10 szt. | Liście bazylii
  | Sól
@@ -733,7 +738,7 @@ export const SEED_TEXT = `
 : Chłodna surówka z ogórków ze śmietaną.
 600 g | Ogórki
 200 g | Śmietana 18%
-2 łyżka | Koperek
+2 łyżki | Koperek
 1 łyżeczka | Sok z cytryny
 1 szczypta | Cukier
  | Sól
@@ -763,13 +768,13 @@ export const SEED_TEXT = `
 200 g | Masło (zimne)
 100 g | Cukier puder
 3 szt. | Żółtka
-2 łyżka | Śmietana
+2 łyżki | Śmietana
 1 łyżeczka | Proszek do pieczenia
 ## NADZIENIE
 1500 g | Jabłka kwaśne
-2 łyżeczka | Cynamon
+2 łyżeczki | Cynamon
 50 g | Cukier
-3 łyżka | Bułka tarta
+3 łyżki | Bułka tarta
 > Z mąki, masła, cukru pudru, żółtek, śmietany i proszku zagnieć kruche ciasto. Podziel na dwie części, schłódź 30 minut.
 > Jabłka zetrzyj lub pokrój, podduś z cukrem i cynamonem. Dno ciasta posyp bułką tartą, wyłóż jabłka.
 > Przykryj startym na tarce drugim kawałkiem ciasta. Piecz 45–50 minut w 180 °C.
@@ -782,8 +787,8 @@ export const SEED_TEXT = `
 80 g | Cukier
 200 g | Biszkopty savoiardi
 300 ml | Espresso (ostudzone)
-2 łyżka | Marsala lub amaretto
-2 łyżka | Kakao
+2 łyżki | Marsala lub amaretto
+2 łyżki | Kakao
 > Żółtka utrzyj z cukrem na jasną masę, dodaj mascarpone i wymieszaj.
 > Biszkopty szybko zanurzaj w kawie z alkoholem, układaj warstwę w naczyniu, przykryj kremem. Powtórz.
 > Posyp kakao. Schładzaj min. 6 godzin, najlepiej całą noc.
@@ -824,7 +829,7 @@ export const SEED_TEXT = `
 5 szt. | Żółtka
 80 g | Cukier
 1 szt. | Laska wanilii
-6 łyżeczka | Cukier do karmelizowania
+6 łyżeczeczek | Cukier do karmelizowania
 > Śmietanę zagrzej z wanilią. Żółtka utrzyj z cukrem, połącz powoli z gorącą śmietaną.
 > Rozlej do kokilek, piecz w kąpieli wodnej 35–40 minut w 150 °C. Schłódź.
 > Posyp cukrem i przypal palnikiem.
@@ -836,7 +841,7 @@ export const SEED_TEXT = `
 300 ml | Mleko
 2 szt. | Jajka
 30 g | Cukier
-2 łyżeczka | Proszek do pieczenia
+2 łyżeczki | Proszek do pieczenia
 40 g | Masło roztopione
 1 szczypta | Sól
 > Suche składniki wymieszaj, dodaj mleko, jajka i masło. Nie mieszaj za długo — grudki są ok.
@@ -890,7 +895,7 @@ export const SEED_TEXT = `
 0,5 szt. | Cebula czerwona
 100 g | Oliwki kalamata
 200 g | Feta
-4 łyżka | Oliwa
+4 łyżki | Oliwa
 1 łyżeczka | Oregano
 1 łyżka | Ocet winny
 > Warzywa pokrój w grubą kostkę. Dodaj oliwki, na wierzch całą kostkę fety. Skrop oliwą z octem, posyp oregano.
@@ -901,7 +906,7 @@ export const SEED_TEXT = `
 500 g | Pomidory
 250 g | Mozzarella di bufala
 12 szt. | Liście bazylii
-3 łyżka | Oliwa extra vergine
+3 łyżki | Oliwa extra vergine
  | Sól i pieprz
 > Pomidory i mozzarellę pokrój w plastry, układaj naprzemiennie z bazylią. Skrop oliwą, posól.
 
@@ -986,7 +991,7 @@ export const SEED_TEXT = `
 : Rum, limonka i świeża mięta.
 50 ml | Rum biały
 25 ml | Sok z limonki
-2 łyżeczka | Cukier trzcinowy
+2 łyżeczki | Cukier trzcinowy
 10 szt. | Listki mięty
 60 ml | Woda gazowana
  | Lód kruszony

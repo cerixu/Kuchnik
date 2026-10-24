@@ -37,9 +37,9 @@ export const SEED_WORLD = `
 3 szt. | Czosnek (ząbki)
 4 szt. | Anchois (filety)
 80 g | Oliwki czarne
-2 łyżka | Kapary
+2 łyżki | Kapary
 1 szt. | Chili suszone
-3 łyżka | Oliwa
+3 łyżki | Oliwa
  | Natka pietruszki
 > Czosnek i anchois rozpuść w oliwie z chili. Dodaj pomidory i gotuj 10 minut.
 > Dodaj oliwki i kapary. Makaron ugotuj al dente.
@@ -83,7 +83,7 @@ export const SEED_WORLD = `
 400 g | Pomidory pelati
 4 szt. | Czosnek (ząbki)
 2 szt. | Chili suszone
-3 łyżka | Oliwa
+3 łyżki | Oliwa
  | Natka pietruszki, sól
 > Czosnek i chili podgrzej w oliwie 2 minuty. Dodaj pomidory, gotuj 12 minut.
 > Penne ugotuj al dente, wymieszaj z sosem i natką.
@@ -111,7 +111,7 @@ export const SEED_WORLD = `
 200 g | Fasola biała z puszki
 80 g | Makaron ditalini
 1,5 l | Bulion warzywny
-3 łyżka | Oliwa
+3 łyżki | Oliwa
  | Bazylia, sól, pieprz
 > Cebulę, marchew i seler zeszklij na oliwie 8 minut. Dodaj cukinię i pomidory.
 > Zalej bulionem, gotuj 20 minut. Dodaj fasolę i makaron, gotuj 10 minut.
@@ -123,7 +123,7 @@ export const SEED_WORLD = `
 8 szt. | Kromki ciabatty
 400 g | Pomidory dojrzałe
 2 szt. | Czosnek (ząbki)
-3 łyżka | Oliwa extra vergine
+3 łyżki | Oliwa extra vergine
  | Bazylia, sól
 > Pomidory pokrój w kostkę, wymieszaj z oliwą, solą i bazylią, odstaw na 10 minut.
 > Chleb opiecz, natrzyj czosnkiem. Nałóż pomidory.
@@ -135,8 +135,8 @@ export const SEED_WORLD = `
 500 g | Pomidory
 1 szt. | Ogórek
 0,5 szt. | Cebula czerwona
-4 łyżka | Oliwa
-2 łyżka | Ocet winny
+4 łyżki | Oliwa
+2 łyżki | Ocet winny
  | Bazylia, sól
 > Chleb pokrój w kostkę, skrop wodą i oliwą, opiecz lub zostaw suchy.
 > Wymieszaj z pomidorami, ogórkiem i cebulą. Dopraw oliwą, octem, solą i bazylią.
@@ -148,7 +148,7 @@ export const SEED_WORLD = `
 500 g | Cielęcina (cienkie plastry)
 8 szt. | Szynka parmeńska
 8 szt. | Liście szałwi
-2 łyżka | Mąka pszenna
+2 łyżki | Mąka pszenna
 40 g | Masło
 80 ml | Wino białe
 > Plastry rozbij na cienko, przykryj szynką i szałwią, spnij wykałaczką.
@@ -248,7 +248,7 @@ export const SEED_WORLD = `
 500 ml | Wino czerwone
 300 ml | Bulion wołowy
 1 łyżka | Koncentrat pomidorowy
-2 łyżka | Mąka pszenna
+2 łyżki | Mąka pszenna
  | Tymianek, liść laurowy, sól, pieprz
 > Mięso osusz, obtocz w mące i zrumień partiami wraz z boczkiem. Zrumień warzywa.
 > Dodaj koncentrat, wino, bulion i zioła. Zagotuj, przykryj i piecz 2,5–3 godziny w 160 °C.
@@ -289,7 +289,7 @@ export const SEED_WORLD = `
 80 g | Oliwki
 4 szt. | Anchois
 ## SOS
-4 łyżka | Oliwa
+4 łyżki | Oliwa
 1 łyżka | Ocet winny
 1 łyżeczka | Musztarda
 > Ułóż składniki na półmisku. Zmieszaj sos i polej sałatkę.
@@ -328,7 +328,7 @@ export const SEED_WORLD = `
 100 g | Groszek zielony
 3 szt. | Czosnek (ząbki)
 1 g | Szafran
-3 łyżka | Oliwa
+3 łyżki | Oliwa
 > Czosnek i paprykę podsmaż na oliwie. Dodaj kalmary, potem ryż, zalej bulionem z szafranem.
 > Gotuj 15 minut bez mieszania. Ułóż krewetki, małże i groszek, gotuj 10 minut.
 > Odstaw na 5 minut pod folią.
@@ -337,10 +337,10 @@ export const SEED_WORLD = `
 @ cat=warzywa origin=ES trad servings=4 prep=20 cook=30 temp=220_°C art=fries tags=tapas,hiszpańskie,ziemniaki,wegetariańskie
 : Chrupiące ziemniaki z pikantnym sosem pomidorowym.
 800 g | Ziemniaki
-4 łyżka | Oliwa
+4 łyżki | Oliwa
 ## SOS
 200 g | Pomidory pelati
-2 łyżka | Oliwa
+2 łyżki | Oliwa
 1 łyżeczka | Papryka wędzona
 1 łyżeczka | Chili
 1 łyżka | Ocet
@@ -382,10 +382,10 @@ export const SEED_WORLD = `
 @ cat=mieso origin=GR trad servings=4 prep=20 cook=12 art=skewers tags=obiad,greckie,grill
 : Szaszłyczki z kurczaka marynowane w cytrynie i oregano.
 700 g | Pierś lub udka z kurczaka
-3 łyżka | Oliwa
-2 łyżka | Sok z cytryny
+3 łyżki | Oliwa
+2 łyżki | Sok z cytryny
 2 szt. | Czosnek (ząbki)
-2 łyżeczka | Oregano
+2 łyżeczki | Oregano
  | Sól, pieprz
 > Mięso pokrój w kostki i zamarynuj z resztą składników (min. 1 godzina).
 > Nadziej na patyczki, grilluj lub smaż 10–12 minut, obracając.
@@ -415,7 +415,7 @@ export const SEED_WORLD = `
 ## MARYNATA
 2 szt. | Chili ancho
 3 szt. | Czosnek (ząbki)
-2 łyżka | Ocet
+2 łyżki | Ocet
 1 łyżka | Oregano
 1 łyżka | Papryka słodka
 > Zmiksuj marynatę, wymieszaj z mięsem i odstaw na 4 godziny.
@@ -451,8 +451,8 @@ export const SEED_WORLD = `
 4 szt. | Pomidory
 0,5 szt. | Cebula czerwona
 1 szt. | Jalapeño
-3 łyżka | Kolendra
-2 łyżka | Sok z limonki
+3 łyżki | Kolendra
+2 łyżki | Sok z limonki
  | Sól
 > Składniki drobno posiekaj, wymieszaj z sokiem z limonki i solą. Odstaw na 15 minut.
 
@@ -469,7 +469,7 @@ export const SEED_WORLD = `
 > Ryż ugotuj, kurczaka dopraw (kmin, papryka), usmaż i pokrój. Fasolę podgrzej.
 > Do misek wlej ryż i dodatki, polej sokiem z limonki.
 
-# Mac and cheese
+# Makaron z serem po amerykańsku
 @ cat=pasta origin=US servings=4 prep=10 cook=30 temp=200_°C art=pasta:white tags=makaron,sery,wegetariańskie
 : Makaron zapiekany w sosie serowym.
 300 g | Makaron kolanka
@@ -488,7 +488,7 @@ export const SEED_WORLD = `
 : Żeberka pieczone powoli w sosie BBQ.
 1500 g | Żeberka wieprzowe
 ## SUCHA MARYNATA
-2 łyżka | Cukier brązowy
+2 łyżki | Cukier brązowy
 1 łyżka | Papryka wędzona
 1 łyżka | Sól
 1 łyżeczka | Pieprz
@@ -501,8 +501,8 @@ export const SEED_WORLD = `
 @ cat=mieso origin=US servings=8 prep=15 cook=480 temp=140_°C art=ribs tags=obiad,grill,wieprzowina
 : Szarpana wieprzowina z łopatki — idealna do burgerów.
 2000 g | Łopatka wieprzowa
-2 łyżka | Papryka wędzona
-2 łyżka | Cukier brązowy
+2 łyżki | Papryka wędzona
+2 łyżki | Cukier brązowy
 1 łyżka | Sól
 1 łyżeczka | Czosnek granulowany
 200 ml | Sos BBQ
@@ -530,9 +530,9 @@ export const SEED_WORLD = `
 2 szt. | Jajka ugotowane na twardo
 1 szt. | Awokado
 100 g | Pomidorki koktajlowe
-60 g | Ser blue cheese
+60 g | Ser z niebieską pleśnią
 ## SOS
-3 łyżka | Oliwa
+3 łyżki | Oliwa
 1 łyżka | Ocet winny
 > Składniki ułóż rzędami na sałacie. Polej sosem.
 
@@ -541,7 +541,7 @@ export const SEED_WORLD = `
 : Japońska zupa z makaronem, jajkiem i chashu.
 200 g | Makaron ramen
 800 ml | Bulion drobiowy
-3 łyżka | Sos sojowy
+3 łyżki | Sos sojowy
 2 szt. | Jajka (marynowane, 6 minut)
 100 g | Chashu lub wieprzowina
 2 szt. | Szczypiorek
@@ -555,7 +555,7 @@ export const SEED_WORLD = `
 : Rolki z ryżu i nori — z łososiem i ogórkiem.
 300 g | Ryż do sushi
 350 ml | Woda
-3 łyżka | Ocet ryżowy
+3 łyżki | Ocet ryżowy
 1 łyżka | Cukier
 5 szt. | Nori
 150 g | Łosoś (jakość sushi)
@@ -570,10 +570,10 @@ export const SEED_WORLD = `
 : Aromatyczne curry z mleczkiem kokosowym i zieloną pastą.
 500 g | Pierś kurczaka
 400 ml | Mleko kokosowe
-3 łyżka | Pasta zielone curry
+3 łyżki | Pasta zielone curry
 200 g | Bakłażan tajski lub cukinia
 100 g | Groszek cukrowy
-2 łyżka | Sos rybny
+2 łyżki | Sos rybny
 1 łyżka | Cukier palmowy
  | Bazylia tajska, ryż
 > Pastę podsmaż w gęstej części mleka. Dodaj kurczaka i smaż 3 minuty.
@@ -584,9 +584,9 @@ export const SEED_WORLD = `
 @ cat=mieso origin=JP servings=3 prep=10 cook=15 art=chicken tags=obiad,japońskie,szybkie
 : Błyszczący kurczak w słodko-słonej glazurze.
 500 g | Udka kurczaka bez kości
-4 łyżka | Sos sojowy
-3 łyżka | Mirin
-2 łyżka | Cukier
+4 łyżki | Sos sojowy
+3 łyżki | Mirin
+2 łyżki | Cukier
 1 łyżka | Imbir świeży
 1 łyżka | Olej
  | Sezam, szczypiorek, ryż
@@ -601,7 +601,7 @@ export const SEED_WORLD = `
 2 szt. | Jajka
 100 g | Groszek i marchew
 2 szt. | Szczypiorek
-2 łyżka | Sos sojowy
+2 łyżki | Sos sojowy
 1 łyżka | Olej
 > Na dużym ogniu usmaż jajka, odsuń. Dodaj warzywa i ryż, smaż 3 minuty.
 > Dolej sos sojowy, wymieszaj. Posyp szczypiorkiem.
@@ -615,7 +615,7 @@ export const SEED_WORLD = `
 60 g | Imbir opalony
 2 szt. | Anyż
 1 szt. | Cynamon (laska)
-3 łyżka | Sos rybny
+3 łyżki | Sos rybny
 200 g | Makaron ryżowy
  | Kiełki, bazylia, limonka, chili
 > Kości zblanszuj, opłucz. Zalej wodą z opaloną cebulą, imbirem i przyprawami. Gotuj 3 godziny.
@@ -631,7 +631,7 @@ export const SEED_WORLD = `
 100 g | Szpinak
 100 g | Ogórek
 2 szt. | Jajka
-3 łyżka | Gochujang
+3 łyżki | Gochujang
 1 łyżka | Olej sezamowy
 > Mięso podsmaż z sosem sojowym. Warzywa blanszuj lub smaż osobno.
 > Do misek wlej ryż, rozłóż dodatki, na wierzch smażone jajko.
@@ -658,7 +658,7 @@ export const SEED_WORLD = `
 80 g | Orzeszki ziemne
 4 szt. | Chili suszone
 3 szt. | Czosnek (ząbki)
-2 łyżka | Sos sojowy
+2 łyżki | Sos sojowy
 1 łyżka | Ocet ryżowy
 1 łyżka | Cukier
 1 łyżeczka | Skrobia kukurydziana
@@ -670,9 +670,9 @@ export const SEED_WORLD = `
 @ cat=zupy origin=JP trad servings=4 prep=5 cook=10 art=soup:mushroom tags=zupa,japońskie,wegetariańskie,szybkie
 : Delikatna japońska zupa z tofu i wakame.
 800 ml | Woda
-3 łyżka | Pasta miso
+3 łyżki | Pasta miso
 150 g | Tofu
-2 łyżka | Wakame (suszone)
+2 łyżki | Wakame (suszone)
 2 szt. | Szczypiorek
 > Zagotuj wodę, dodaj tofu i wakame, gotuj 2 minuty. Zdejmij z ognia.
 > Rozpuść miso w chochli zupy, wlej do garnka (nie gotuj). Posyp szczypiorkiem.
@@ -681,7 +681,7 @@ export const SEED_WORLD = `
 @ cat=mieso origin=TH servings=4 prep=20 cook=10 art=skewers tags=przekąska,tajskie,grill
 : Szaszłyki z kurczaka z gęstym sosem z masła orzechowego.
 500 g | Pierś kurczaka
-3 łyżka | Mleko kokosowe
+3 łyżki | Mleko kokosowe
 1 łyżeczka | Kurkuma
 ## SOS
 100 g | Masło orzechowe
@@ -700,9 +700,9 @@ export const SEED_WORLD = `
 1 łyżka | Imbir świeży
 400 g | Pomidory pelati
 1 łyżeczka | Kurkuma
-2 łyżeczka | Kmin rzymski
+2 łyżeczki | Kmin rzymski
 750 ml | Woda
-2 łyżka | Olej
+2 łyżki | Olej
 > Cebulę, czosnek i imbir zeszklij z kuminem. Dodaj kurkumę, pomidory, soczewicę i wodę.
 > Gotuj 25 minut do rozpadnięcia. Dopraw solą. Podaj z ryżem lub chlebem naan.
 
@@ -713,7 +713,7 @@ export const SEED_WORLD = `
 300 g | Ryż basmati
 200 g | Jogurt naturalny
 2 szt. | Cebula
-2 łyżka | Garam masala
+2 łyżki | Garam masala
 1 łyżeczka | Kurkuma
 1 g | Szafran
 > Kurczaka marynuj w jogurcie z przyprawami 2 godziny. Cebule zrumień.
@@ -726,10 +726,10 @@ export const SEED_WORLD = `
 300 g | Ciecierzyca suszona (namoczona na noc)
 1 szt. | Cebula
 4 szt. | Czosnek (ząbki)
-3 łyżka | Natka pietruszki
-2 łyżka | Kolendra
-2 łyżeczka | Kmin rzymski
-2 łyżka | Mąka ciecierzycowa
+3 łyżki | Natka pietruszki
+2 łyżki | Kolendra
+2 łyżeczki | Kmin rzymski
+2 łyżki | Mąka ciecierzycowa
  | Sól, olej do smażenia
 > Ciecierzycę (nieugotowaną) zmiel z resztą składników na grubą masę. Odstaw na 30 minut.
 > Formuj kulki, smaż w 180 °C po 3–4 minuty.
@@ -741,8 +741,8 @@ export const SEED_WORLD = `
 3 szt. | Natka pietruszki
 4 szt. | Pomidory
 0,5 szt. | Cebula
-2 łyżka | Sok z cytryny
-4 łyżka | Oliwa
+2 łyżki | Sok z cytryny
+4 łyżki | Oliwa
  | Mięta, sól
 > Bulgur zalej wrzątkiem i odstaw na 15 minut. Natkę i miętę bardzo drobno posiekaj.
 > Wymieszaj wszystko z oliwą i sokiem z cytryny.
@@ -751,10 +751,10 @@ export const SEED_WORLD = `
 @ cat=sosy origin=LB trad servings=6 prep=10 cook=40 art=sauce:hummus tags=sos,bliskowschodnie,bakłażan,wegańskie
 : Dymna pasta z pieczonego bakłażana.
 2 szt. | Bakłażany
-3 łyżka | Pasta tahini
+3 łyżki | Pasta tahini
 2 szt. | Czosnek (ząbki)
-2 łyżka | Sok z cytryny
-2 łyżka | Oliwa
+2 łyżki | Sok z cytryny
+2 łyżki | Oliwa
  | Sól, natka
 > Bakłażany piecz w całości 40 minut w 220 °C do zapadnięcia. Obierz, odsącz.
 > Zmiksuj z tahini, czosnkiem, cytryną i solą. Skrop oliwą.
@@ -764,8 +764,8 @@ export const SEED_WORLD = `
 : Pikantne kotleciki z mielonej jagnięciny na szpikulcu.
 600 g | Jagnięcina mielona
 1 szt. | Cebula
-3 łyżka | Natka pietruszki
-2 łyżeczka | Kmin rzymski
+3 łyżki | Natka pietruszki
+2 łyżeczki | Kmin rzymski
 1 łyżeczka | Papryka słodka
 1 łyżeczka | Chili
  | Sól
@@ -777,9 +777,9 @@ export const SEED_WORLD = `
 : Kurczak w marynacie z kardamonu i kuminu w pitach.
 700 g | Udka kurczaka bez kości
 3 szt. | Czosnek (ząbki)
-2 łyżka | Jogurt
+2 łyżki | Jogurt
 1 łyżka | Sok z cytryny
-2 łyżeczka | Kmin rzymski
+2 łyżeczki | Kmin rzymski
 1 łyżeczka | Kurkuma
 4 szt. | Pita
  | Sos czosnkowy, pomidor, ogórek
@@ -817,7 +817,7 @@ export const SEED_WORLD = `
 3 szt. | Pomidory
 2 szt. | Cebula
 150 g | Kiełbasa wędzona
-2 łyżka | Olej
+2 łyżki | Olej
 1 łyżka | Papryka słodka
 > Cebulę zeszklij, dodaj kiełbasę i paprykę w paskach, smaż 10 minut.
 > Dodaj pomidory i paprykę mieloną, duś 15 minut. Dopraw.
@@ -846,7 +846,7 @@ export const SEED_WORLD = `
 1 szt. | Cebula
 200 ml | Śmietana 18%
 1 łyżka | Musztarda
-2 łyżka | Masło
+2 łyżki | Masło
  | Ogórek kiszony, sól, pieprz
 > Mięso pokrój w paski, smaż szybko na masełku. Wyjmij.
 > Podsmaż cebulę i pieczarki, dodaj śmietanę z musztardą.
@@ -873,7 +873,7 @@ export const SEED_WORLD = `
 2 szt. | Cebula
 100 g | Morele suszone
 80 g | Oliwki zielone
-2 łyżeczka | Kmin rzymski
+2 łyżeczki | Kmin rzymski
 1 łyżeczka | Kurkuma
 1 łyżeczka | Cynamon
 500 ml | Bulion
@@ -888,7 +888,7 @@ export const SEED_WORLD = `
 1 szt. | Cebula
 2 szt. | Marchew
 200 g | Groszek
-2 łyżka | Koncentrat pomidorowy
+2 łyżki | Koncentrat pomidorowy
 250 ml | Bulion
 ## PUREE
 1000 g | Ziemniaki
