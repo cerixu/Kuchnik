@@ -1,35 +1,38 @@
 <!doctype html>
-<html lang="pl" data-theme="dark" data-mode="pro">
+<html lang="pl" data-theme="dark">
 <head>
   <meta charset="utf-8">
-  <title>Kucharzyna</title>
+  <title>Żarłok</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Kucharzyna — prywatny notatnik szefa kuchni: receptury, przeliczanie, procenty piekarskie, food cost, zakupy. Działa offline.">
+  <meta name="description" content="Żarłok — prywatny notatnik szefa kuchni: receptury, przeliczanie, procenty piekarskie, food cost, zakupy. Działa offline.">
 
   <!-- Kolor paska systemowego (jasny / ciemny) -->
-  <meta name="theme-color" content="#1d1d1f">
+  <meta name="theme-color" content="#0b0d0f">
   <meta name="color-scheme" content="dark light">
 
   <!-- iOS: aplikacja na ekranie początkowym -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Kucharzyna">
+  <meta name="apple-mobile-web-app-title" content="Żarłok">
   <meta name="format-detection" content="telephone=no">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="manifest" href="manifest.webmanifest">
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2.1.9">
+  <link rel="stylesheet" href="start-final.css?v=2.1.9">
+  <link rel="stylesheet" href="visual-system.css?v=2.1.9">
+  <link rel="stylesheet" href="kucharzyna-visual.css?v=2.1.9">
+  <link rel="stylesheet" href="claude-completion.css?v=2.1.9">
 
   <!-- Motyw ustawiany zanim pojawi się cokolwiek (brak błysku). Źródłem prawdy jest IndexedDB. -->
   <script>
     (function () {
       try {
-        var t = localStorage.getItem('k:theme'), m = localStorage.getItem('k:mode'), z = localStorage.getItem('k:tap'), s = localStorage.getItem('k:ts'), g = localStorage.getItem('k:glass'), tl = localStorage.getItem('k:tl');
+        var t = localStorage.getItem('k:theme'), z = localStorage.getItem('k:tap'), s = localStorage.getItem('k:ts'), g = localStorage.getItem('k:glass'), tl = localStorage.getItem('k:tl');
         var d = document.documentElement;
         if (t) d.setAttribute('data-theme', t);
-        if (m) d.setAttribute('data-mode', m);
         if (z) d.setAttribute('data-tap', z);
         if (s) d.style.setProperty('--ts', String(+s / 100));
         if (g) d.style.setProperty('--glass', String(+g / 100));
@@ -37,16 +40,112 @@
       } catch (e) {}
     })();
   </script>
+  <style>
+    #view.boot-shell {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+    }
+    .boot-shell-inner {
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+      color: rgba(247,247,244,.72);
+      text-align: center;
+    }
+    .boot-shell-mark {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(242,184,75,.24);
+      background: rgba(242,184,75,.055);
+      color: #f2b84b;
+      box-shadow: 0 0 0 9px rgba(242,184,75,.02);
+      font-size: 30px;
+    }
+    .boot-shell-name {
+      color: rgba(247,247,244,.92);
+      font: 520 1.2rem -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+      letter-spacing: -.03em;
+    }
+    .boot-shell-note {
+      color: rgba(247,247,244,.42);
+      font: 500 .68rem -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+    }
+  </style>
+  <link rel="stylesheet" href="visual-redesign.css?v=2.1.9">
+  <link rel="stylesheet" href="generated-art.css?v=2.1.9">
+  <link rel="stylesheet" href="zarlok-v2.css?v=2.1.9">
+  <link rel="stylesheet" href="design-overhaul.css?v=2.1.9">
+  <link rel="stylesheet" href="mobile-polish.css?v=2.1.9">
+  <link rel="stylesheet" href="art-direction.css?v=2.1.9">
 </head>
 <body>
   <div id="app">
-    <main id="view" aria-live="polite"></main>
+    <main id="view" class="boot-shell" aria-live="polite">
+    <div class="boot-shell-inner">
+      <div class="boot-shell-mark" aria-hidden="true">👨‍🍳</div>
+      <div class="boot-shell-name">Żarłok</div>
+      <div class="boot-shell-note">Przygotowuję Twój notatnik…</div>
+    </div>
+  </main>
     <nav id="tabbar" aria-label="Główna nawigacja"></nav>
   </div>
   <div id="toasts" aria-live="polite"></div>
   <div id="overlays"></div>
-  <noscript><p style="padding:24px;font:16px system-ui">Kucharzyna wymaga włączonego JavaScriptu.</p></noscript>
-  <div id="boot" class="boot" aria-hidden="true"><div class="boot-mark">👨‍🍳</div><div class="boot-name">Kucharzyna</div></div>
-  <script type="module" src="app.js"></script>
+  <noscript><p style="padding:24px;font:16px system-ui">Żarłok wymaga włączonego JavaScriptu.</p></noscript>
+  <script>
+    (function () {
+      var shown = false;
+      function showError(message) {
+        if (shown) return;
+        shown = true;
+        var view = document.getElementById('view');
+        if (!view) return;
+        view.className = '';
+        view.innerHTML =
+          '<div style="min-height:100%;display:grid;place-items:center;padding:28px;text-align:center;color:#f7f7f4">' +
+            '<div style="max-width:330px">' +
+              '<div style="font-size:40px;margin-bottom:16px">⚠️</div>' +
+              '<h2 style="margin:0 0 10px;font:600 24px system-ui">Żarłok nie wystartował</h2>' +
+              '<p style="margin:0 0 16px;color:rgba(247,247,244,.55);font:14px/1.5 system-ui">Wystąpił błąd podczas ładowania aplikacji.</p>' +
+              '<pre style="margin:0 0 18px;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:14px;white-space:pre-wrap;overflow:auto;max-height:150px;color:rgba(247,247,244,.7);font:11px/1.45 ui-monospace">' +
+                String(message || 'Nieznany błąd').replace(/[<>&]/g, function (x) {
+                  return x === '<' ? '&lt;' : x === '>' ? '&gt;' : '&amp;';
+                }) +
+              '</pre>' +
+              '<button id="boot-retry" style="border:0;border-radius:999px;padding:13px 20px;background:#f7f7f4;color:#151515;font:600 14px system-ui">Uruchom ponownie</button>' +
+            '</div>' +
+          '</div>';
+        var retry = document.getElementById('boot-retry');
+        if (retry) retry.addEventListener('click', function () { location.reload(); });
+      }
+
+      window.addEventListener('error', function (event) {
+        var file = event && event.filename ? String(event.filename) : '';
+        var msg = event && event.error ? String(event.error.stack || event.error.message || event.error) : (event && event.message ? event.message : '');
+        if (event && event.filename) msg += '\\nŹRÓDŁO: ' + event.filename + ':' + (event.lineno || 0) + ':' + (event.colno || 0);
+        if (file.indexOf('app.js') >= 0 || file.indexOf('views-') >= 0 || file.indexOf('recipes.js') >= 0) {
+          showError(msg || 'Błąd JavaScript podczas uruchamiania.');
+        }
+      });
+
+      window.addEventListener('unhandledrejection', function (event) {
+        var reason = event && event.reason;
+        showError(reason && (reason.stack || reason.message) ? (reason.stack || reason.message) : String(reason || 'Nieobsłużony błąd Promise.'));
+      });
+
+      window.setTimeout(function () {
+        var view = document.getElementById('view');
+        if (view && view.className.indexOf('boot-shell') >= 0) {
+          showError('Aplikacja nie odpowiedziała podczas uruchamiania.');
+        }
+      }, 8000);
+    }());
+  </script>
+  <script type="module" src="app.js?v=2.1.9"></script>
 </body>
 </html>
