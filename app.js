@@ -2,49 +2,52 @@
    app.js — start aplikacji: baza, ustawienia, motyw, nawigacja dolna,
    obsługa klawiatury iOS (visualViewport), trasy, service worker.
    ========================================================================== */
-import { openDB, storageStatus } from './db.js';
-import { loadAll, state, subscribe, getSetting } from './recipes.js';
+import { openDB } from './db.js';
+import { loadAll, state, subscribe, getSetting, DEFAULT_SETTINGS, DEFAULT_CATEGORIES } from './recipes.js';
 import { h, icon, toast, $, openSheet } from './ui.js';
 import { APP_VERSION } from './util.js';
+import { CHANGELOG } from './changelog.js';
 import { setSetting } from './recipes.js';
 import { route, startRouter, navigate } from './router.js';
 import { registerSW, requestPersist } from './pwa.js';
 import { mountTimerPill, initTimers, openTimersSheet } from './timers.js';
 
 import { startView } from './views-start.js';
-import { recipesView, resetRecipeFilters } from './views-recipes.js';
+import { recipesView, categoriesView, resetRecipeFilters } from './views-recipes.js';
 import { detailView } from './views-detail.js';
 import { editorView } from './views-editor.js';
 import { cookView } from './views-cook.js';
+import { cookEntryView } from './views-cook-home.js';
 import { calcView } from './views-calc.js';
 import { shoppingView, pendingCount } from './shopping.js';
 import { importView } from './views-import.js';
 import { settingsView } from './views-settings.js';
 import { guideView } from './views-guide.js';
 import { searchView } from './views-search.js';
+import { inventoryView } from './inventory.js';
+import { moreView } from './views-more.js';
 
 const root = document.documentElement;
 
 /* ---------- Motyw, tryb, rozmiary ---------- */
 
-const BG = { light: { pro: '#f1f0ed', amateur: '#eef7f0' }, dark: { pro: '#1d1d1f', amateur: '#0f1a13' } };
+const BG = { light: '#f1f0ed', dark: '#1d1d1f' };
 const dark = matchMedia('(prefers-color-scheme: dark)');
 
 function applyAppearance() {
-  const theme = getSetting('theme'), mode = getSetting('mode'), tap = getSetting('tapSize'), ts = getSetting('textScale'), glass = getSetting('glass');
+  const theme = getSetting('theme'), tap = getSetting('tapSize'), ts = getSetting('textScale'), glass = getSetting('glass');
   root.setAttribute('data-theme', theme);
-  root.setAttribute('data-mode', mode);
   root.setAttribute('data-tap', tap);
   root.style.setProperty('--ts', String((ts || 100) / 100));
   root.setAttribute('data-tablabels', getSetting('tabLabels') ? 'on' : 'off');
   root.style.setProperty('--glass', String(Math.min(100, Math.max(0, glass == null ? 70 : glass)) / 100));
   try {
-    localStorage.setItem('k:theme', theme); localStorage.setItem('k:mode', mode);
+    localStorage.setItem('k:theme', theme);
     localStorage.setItem('k:tap', tap); localStorage.setItem('k:ts', String(ts)); localStorage.setItem('k:glass', String(glass)); localStorage.setItem('k:tl', getSetting('tabLabels') ? 'on' : 'off');
   } catch (_) { /* tryb prywatny */ }
   // Kolor paska systemowego zgodny z faktycznie wybranym motywem (nie tylko z systemowym).
   const eff = theme === 'auto' ? (dark.matches ? 'dark' : 'light') : theme;
-  const color = BG[eff][mode] || BG[eff].pro;
+  const color = BG[eff];
   document.querySelectorAll('meta[name="theme-color"]').forEach((m) => { m.setAttribute('content', color); m.removeAttribute('media'); });
 }
 dark.addEventListener && dark.addEventListener('change', () => { if (getSetting('theme') === 'auto') applyAppearance(); });
@@ -52,11 +55,12 @@ dark.addEventListener && dark.addEventListener('change', () => { if (getSetting(
 /* ---------- Dolna nawigacja ---------- */
 
 const TABS = [
-  ['start', 'Start', 'home2', '/'],
-  ['recipes', 'Receptury', 'pot', '/recipes'],
-  ['calc', 'Kalkulatory', 'calc', '/calc'],
-  ['shopping', 'Zakupy', 'basket', '/shopping'],
-  ['settings', 'Ustawienia', 'gear', '/settings'],
+  ['start', 'Start', 'home', '/'],
+  ['recipes', 'Receptury', 'book', '/recipes'],
+  ['categories', 'Kategorie', 'grid', '/categories'],
+  ['cook', 'Gotuję', 'pot', '/cook'],
+  ['inventory', 'Magazyn', 'fridge', '/inventory'],
+  ['more', 'Więcej', 'more', '/more'],
 ];
 
 function buildTabbar() {
@@ -95,8 +99,21 @@ function setActiveTab(meta) {
 function watchViewport() {
   const vv = window.visualViewport;
   const update = () => {
-    if (!vv) return;
-    const kb = window.innerHeight - vv.height > 150;
+    if (!vv) {
+      document.body.classList.remove('kb-open');
+      root.style.removeProperty('--app-h');
+      root.style.removeProperty('--vv-top');
+      return;
+    }
+    // iOS może raportować zmniejszony visualViewport także po schowaniu klawiatury.
+    // Uznawaj klawiaturę za otwartą tylko wtedy, gdy fokus nadal jest w polu edycji.
+    const active = document.activeElement;
+    const editing = active instanceof HTMLElement &&
+      /^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName) &&
+      !active.hasAttribute('readonly') &&
+      !active.hasAttribute('disabled');
+    const viewportGap = window.innerHeight - vv.height;
+    const kb = editing && viewportGap > 140;
     document.body.classList.toggle('kb-open', kb);
     if (kb) {
       root.style.setProperty('--app-h', vv.height + 'px');
@@ -115,6 +132,8 @@ function watchViewport() {
     if (!(t instanceof HTMLElement) || !/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
     setTimeout(() => { try { t.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (_) { /* */ } }, 320);
   });
+  // Po zamknięciu klawiatury Safari nie zawsze wysyła resize; czyść stan po blur.
+  document.addEventListener('focusout', () => setTimeout(update, 80));
   // Safari↔aplikacja: po powrocie odśwież wymiary.
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') setTimeout(update, 100); });
   window.addEventListener('pageshow', () => setTimeout(update, 50));
@@ -134,81 +153,109 @@ function watchNetwork() {
 
 route('/', () => startView(), { tab: 'start' });
 route('/recipes', (p, q) => recipesView(q), { tab: 'recipes' });
+route('/categories', () => categoriesView(), { tab: 'categories' });
 route('/recipe/:id', (p) => detailView(p), { tab: 'recipes' });
 route('/edit/:id', (p) => editorView(p), { tab: 'recipes', tabs: false });
 route('/new', (p, q) => editorView({ id: null }, q), { tab: 'recipes', tabs: false });
-route('/cook/:id', (p) => cookView(p), { tab: 'recipes', tabs: false });
-route('/guide/:id', (p) => guideView(p), { tab: 'recipes', tabs: false });
-route('/search', (p, q) => searchView(q), { tab: 'recipes' });
-route('/import', (p, q) => importView(q), { tab: 'recipes' });
-route('/calc', () => calcView({}), { tab: 'calc' });
-route('/calc/:kind', (p, q) => calcView(p, q), { tab: 'calc' });
-route('/shopping', () => shoppingView(), { tab: 'shopping' });
-route('/settings', () => settingsView(), { tab: 'settings' });
+route('/cook', () => cookEntryView(), { tab: 'cook' });
+route('/cook/:id', (p) => cookView(p), { tab: 'cook', tabs: false });
+route('/guide/:id', (p) => guideView(p), { tab: 'cook', tabs: false });
+route('/search', (p, q) => searchView(q), { tab: 'more' });
+route('/import', (p, q) => importView(q), { tab: 'more' });
+route('/calc', () => calcView({}), { tab: 'more' });
+route('/calc/:kind', (p, q) => calcView(p, q), { tab: 'more' });
+route('/shopping', () => shoppingView(), { tab: 'more' });
+route('/inventory', () => inventoryView(), { tab: 'inventory' });
+route('/settings', () => settingsView(), { tab: 'more' });
+route('/more', () => moreView(), { tab: 'more' });
 
 /* ---------- Start ---------- */
 
 function fatal(err) {
   console.error(err);
-  const bootEl = $('#boot');
-  if (bootEl) bootEl.remove();
-  const st = storageStatus();
-  const detail = `${err && err.name ? err.name + ': ' : ''}${(err && err.message) || err}${st.reason ? ' · ' + st.reason : ''}`;
-  const retry = () => location.reload();
-  const fallback = () => { try { sessionStorage.setItem('k:forceFallback', '1'); } catch (_) { /* */ } location.reload(); };
+  $('#view').classList.remove('boot-shell');
   $('#view').replaceChildren(h('div', { class: 'screen' }, h('div', { class: 'scroll' }, h('div', { class: 'content' },
-    h('div', { class: 'empty' }, h('div', { class: 'empty-emoji' }, '⚠️'), h('h2', null, 'Nie mogę otworzyć danych'),
-      h('p', { class: 'muted' }, 'Safari zablokowało albo zawiesiło pamięć aplikacji. Spróbuj ponownie; jeśli to nie pomaga, uruchom tryb awaryjny (dane w pamięci strony).'),
-      h('div', { class: 'row wrap center gap' },
-        h('button', { type: 'button', class: 'btn primary', onClick: retry }, 'Spróbuj ponownie'),
-        h('button', { type: 'button', class: 'btn', onClick: fallback }, 'Tryb awaryjny')),
-      h('p', { class: 'muted small' }, detail))))));
+    h('div', { class: 'empty' }, h('div', { class: 'empty-emoji' }, '⚠️'), h('h2', null, 'Nie mogę otworzyć bazy danych'),
+      h('p', { class: 'muted' }, 'Żarłok zapisuje dane lokalnie (IndexedDB). Sprawdź, czy przeglądarka nie działa w trybie prywatnym ani nie blokuje pamięci witryny, i uruchom ponownie.'),
+      h('p', { class: 'muted small' }, String(err && err.message || err)))))));
 }
 
+let whatsNewOpened = false;
 function whatsNew() {
-  if (getSetting('seenVersion') === APP_VERSION || document.querySelector('.overlay')) return;
-  const li = (t) => h('li', null, t);
+  // WebKit can finish more than one startup hydration path; show this release sheet once per page.
+  if (whatsNewOpened || getSetting('seenVersion') === APP_VERSION || document.querySelector('.overlay')) return;
+  whatsNewOpened = true;
+  const release = CHANGELOG[APP_VERSION];
+  const items = release && Array.isArray(release.items) && release.items.length
+    ? release.items
+    : ['Brakuje wpisu w dzienniku zmian dla tej wersji.'];
   openSheet({
     title: `Co nowego w ${APP_VERSION}`, variant: 'sheet',
     body: h('div', { class: 'stack' },
-      h('ul', { class: 'whatsnew' },
-        li('Naprawione otwieranie w Safari: aplikacja ponawia połączenie z pamięcią, a gdy iOS ją blokuje, działa w trybie awaryjnym zamiast pokazywać błąd.'),
-        li('Nowe menu główne (karuzela kart, okrągłe przyciski, kuchnie świata) i pływający dok na dole.'),
-        li('Każda karta ma krótki opis, kraj pochodzenia i źródło przepisu.'),
-        li('Ilustracje dań z cieniowaniem 3D, szacunek kalorii, składniki na łuku.')),
-      h('p', { class: 'muted small' }, 'Podpisy pod ikonami paska włączysz w Ustawieniach. Poprzedni wygląd: Ustawienia → Motyw.')),
+      release && release.intro ? h('p', { class: 'muted small' }, release.intro) : null,
+      h('ul', { class: 'whatsnew' }, ...items.map((t) => h('li', null, t))),
+      h('p', { class: 'muted small' }, release && release.footer
+        ? release.footer
+        : 'Opis tej wersji nie został jeszcze uzupełniony.')),
     actions: [{ label: 'Zaczynamy', kind: 'primary' }],
     onClose: () => setSetting('seenVersion', APP_VERSION),
   });
 }
 
 async function boot() {
-  try {
-    await openDB();
-    await loadAll();
-  } catch (e) { fatal(e); return; }
+  // Pierwszy render nie zależy od IndexedDB. To jest ważne na iOS, gdzie
+  // otwarcie/odczyt dużej bazy może potrwać wyraźnie dłużej niż render UI.
+  state.settings = { ...DEFAULT_SETTINGS };
+  state.categories = [...DEFAULT_CATEGORIES];
+  state.ready = false;
 
-  const stg = storageStatus();
-  if (stg.mode !== 'idb') setTimeout(() => toast(stg.mode === 'local' ? 'Tryb awaryjny: Safari zablokowało IndexedDB, dane zapisuję w pamięci strony. Rób kopie JSON.' : 'Uwaga: pamięć trwała jest niedostępna — dane znikną po zamknięciu karty. Zrób kopię JSON.', { sticky: true, action: { label: 'OK', fn: () => {} } }), 1200);
-  if ((getSetting('designV') || 0) < 2) { await setSetting('theme', 'dark'); await setSetting('designV', 2); }   // jednorazowo: nowy ciemny wygląd
-  applyAppearance();
   subscribe((type) => {
     if (type === 'settings') applyAppearance();
     if (type === 'shopping') updateBadge();
   });
+
+  applyAppearance();
   buildTabbar();
   watchViewport();
   watchNetwork();
   startRouter($('#view'), (path, meta) => { setActiveTab(meta); updateBadge(); });
-  const bootEl = $('#boot');
-  if (bootEl) { bootEl.classList.add('gone'); setTimeout(() => bootEl.remove(), 350); }
+
+  const viewEl = $('#view');
+  if (viewEl) viewEl.classList.remove('boot-shell');
 
   mountTimerPill($('#app'), openTimersSheet);
   initTimers();
   requestPersist();
-  registerSW();
-  setTimeout(whatsNew, 900);
-  window.__kucharzyna = { state, ready: true };
+  // SW rejestruje się równolegle ze startem. Nie blokuje pierwszego renderu ani IndexedDB.
+  registerSW().catch((e) => console.warn('Nie udało się uruchomić trybu PWA/offline:', e));
+  window.__kucharzyna = { state, ready: false };
+
+  // Hydratacja bazy w tle. Start jest już widoczny i interaktywny.
+  try {
+    await openDB();
+    await loadAll();
+    if ((getSetting('designV') || 0) < 2) {
+      await setSetting('theme', 'dark');
+      await setSetting('designV', 2);
+    }
+    applyAppearance();
+    window.__kucharzyna.ready = true;
+    setTimeout(whatsNew, 900);
+  } catch (e) {
+    // Safari/WebKit can occasionally reject the first IndexedDB open during startup.
+    // Retry once without touching/deleting user data.
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 120));
+      await openDB();
+      await loadAll();
+      applyAppearance();
+      window.__kucharzyna.ready = true;
+      setTimeout(whatsNew, 900);
+    } catch (retryError) {
+      fatal(retryError);
+      window.__kucharzyna.ready = false;
+    }
+  }
 }
 
 boot();
