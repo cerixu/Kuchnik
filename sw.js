@@ -9,13 +9,13 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.5.1';
+const VERSION = 'kucharzyna-1.5.2';
 const NETWORK_TIMEOUT = 3500;
 
 const CORE = [
   './',
   'index.html',
-  'styles.css',
+  'styles.css', 'changelog.js',
   'manifest.webmanifest',
   'app.js', 'router.js', 'pwa.js', 'ui.js', 'util.js', 'db.js', 'recipes.js', 'calculator.js', 'importer.js', 'backup.js',
   'components.js', 'shopping.js', 'art.js', 'inventory.js', 'barcode.js', 'ingredient-icons.js', 'art-kit.js', 'art-extra.js', 'nutrition.js', 'seeds.js', 'seeds-pl.js', 'seeds-world.js', 'seeds-more.js', 'seeds-curated.js', 'food-photos.js', 'timers.js', 'kitchen.js', 'tools-data.js', 'calc-kit.js', 'search.js',
