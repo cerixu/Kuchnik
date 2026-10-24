@@ -11,7 +11,7 @@ import {
   state, listRecipes, getRecipe, saveRecipe, blankRecipe, blankIngredient, blankSection, blankStep, kv, getSetting, allIngredients,
 } from './recipes.js';
 import {
-  pizzaCalc, yeastSuggestion, YEAST_TYPES, scaleRecipe, factorFromServings, factorFromYield, factorFromIngredient, effectiveYield, recipeCost, priceForFoodCost,
+  pizzaCalc, pizzaCalcFromFlour, yeastSuggestion, YEAST_TYPES, scaleRecipe, factorFromServings, factorFromYield, factorFromIngredient, effectiveYield, recipeCost, priceForFoodCost,
 } from './calculator.js';
 import { fmtAmount, fmtNum, fmtMoney, debounce } from './util.js';
 import { qtyParts } from './components.js';
@@ -121,7 +121,7 @@ function pizzaCalculator() {
       name: st.mode === 'flour' ? `Ciasto na pizzę (${fmtAmount(r.flour)} g mąki)` : `Ciasto na pizzę (${st.balls} × ${fmtAmount(st.ballWeight)} g)`, category: 'cat-pizza', servings: st.mode === 'flour' ? Math.max(1, r.ballCount) : st.balls, yieldAmount: Math.round(r.total), yieldUnit: 'g',
       fermentTime: Math.round((st.hours || 0) * 60), temperature: `fermentacja w ${st.temp} °C`, bakers: true, sections: [sec],
       description: `Hydracja ${st.hydration}%, sól ${st.salt}%${st.oil ? `, oliwa ${st.oil}%` : ''}, drożdże ${st.yeast}%.`, tags: ['ciasto', 'kalkulator'],
-      steps: [blankStep('Rozpuść sól w wodzie, dodaj drożdże.'), blankStep('Dodaj mąkę i wyrabiaj do gładkiego, elastycznego ciasta.'),
+      steps: [blankStep(st.leavenType === 'starter' ? 'Wymieszaj aktywny zakwas z wodą i solą.' : 'Rozpuść sól w wodzie, dodaj drożdże.'), blankStep('Dodaj mąkę i wyrabiaj do gładkiego, elastycznego ciasta.'),
         blankStep(st.mode === 'flour' ? `Podziel orientacyjnie na ${r.ballCount} kulek po ${fmtAmount(st.ballWeight)} g${r.remainder > 0 ? `; pozostanie ${fmtAmount(r.remainder)} g ciasta` : ''}.` : `Podziel na ${st.balls} kulek po ${fmtAmount(st.ballWeight)} g.`), blankStep(`Fermentuj ok. ${fmtNum(st.hours, 1)} h w ${st.temp} °C.`)],
     });
     const saved = await saveRecipe(rec);
