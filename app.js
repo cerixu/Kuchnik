@@ -184,6 +184,7 @@ function whatsNew() {
         li('Osobny ekran Gotuję z wyszukiwaniem po nazwie i składnikach.'),
         li('Cache-First dla zdjęć, ikon i fontów; cache mediów przetrwa kolejne wydania aplikacji.'),
         li('Magazyn lepiej rozpoznaje polskie odmiany nazw składników, ale nie utożsamia ogólnej nazwy z bardziej szczegółowym produktem.'),
+        li('Dopasowanie magazynu zachowuje znaczące określenia w nawiasach, np. kolor papryki, aby nie pobierać niewłaściwego produktu.'),
         li('Historia ruchów magazynowych nie jest już automatycznie kasowana po roku.')),
       h('p', { class: 'muted small' }, 'Podpisy pod ikonami paska włączysz w Ustawieniach. Poprzedni wygląd: Ustawienia → Motyw.')),
     actions: [{ label: 'Zaczynamy', kind: 'primary' }],
