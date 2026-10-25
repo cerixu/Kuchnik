@@ -9,8 +9,16 @@ const context = await browser.newContext({
 const page = await context.newPage();
 
 const errors = [];
+let networkCut = false;
 page.on('pageerror', (e) => errors.push(String(e)));
-page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+page.on('console', (m) => {
+  if (m.type() !== 'error') return;
+  const message = m.text();
+  // A strict offline test intentionally makes network requests fail after the cut.
+  // Keep reporting JS errors, but don't mistake expected offline fetch failures for app bugs.
+  if (networkCut && /Failed to load resource: net::ERR_FAILED|net::ERR_INTERNET_DISCONNECTED|net::ERR_NETWORK_CHANGED/.test(message)) return;
+  errors.push(message);
+});
 
 async function ready() {
   await page.waitForFunction(() => window.__kucharzyna?.ready === true, null, { timeout: 15000 });
@@ -41,6 +49,7 @@ try {
   if (onlineCount < 1 || !href) throw new Error('Brak receptury do testu offline.');
 
   // Hard network cut after the service worker is controlling the page.
+  networkCut = true;
   await context.setOffline(true);
   await page.reload({ waitUntil: 'domcontentloaded' });
   await ready();
