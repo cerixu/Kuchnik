@@ -112,7 +112,7 @@ function pizzaCalculator() {
   async function saveAsRecipe(r) {
     const I = (name, amount, unit, extra = {}) => blankIngredient({ name, amount, unit, ...extra });
     const r1 = (v) => Math.round(v * 10) / 10;
-    const ings = [I('Mąka pszenna', r1(st.leavenType === 'starter' ? r.doughFlour : r.flour), 'g', { flour: true, percent: st.leavenType === 'starter' ? Math.round((100 - st.starterPct) * 100) / 100 : 100 }), I('Woda', r1(st.leavenType === 'starter' ? r.doughWater : r.water), 'g', { percent: st.leavenType === 'starter' ? Math.round((st.hydration - 2 * st.starterPct) * 100) / 100 : st.hydration }), I('Sól', r1(r.salt), 'g', { percent: st.salt })];
+    const ings = [I('Mąka pszenna', r1(st.leavenType === 'starter' ? r.doughFlour : r.flour), 'g', { flour: true, percent: st.leavenType === 'starter' ? Math.round((100 - st.starterPct) * 100) / 100 : 100 }), I('Woda', r1(st.leavenType === 'starter' ? r.doughWater : r.water), 'g', { percent: st.leavenType === 'starter' ? Math.round((st.hydration - 2.5 * st.starterPct) * 100) / 100 : st.hydration }), I('Sól', r1(r.salt), 'g', { percent: st.salt })];
     if (st.leavenType === 'starter') ings.push(I('Zakwas macierzysty', r1(r.starterSeed), 'g'), I('Mąka pszenna do zakwasu', r1(r.starterFlour), 'g', { flour: true, percent: st.starterPct }), I('Woda do zakwasu', r1(r.starterWater), 'g', { percent: Math.round(2 * st.starterPct * 100) / 100 }));
     if (st.oil > 0) ings.push(I('Oliwa', r1(r.oil), 'g', { percent: st.oil }));
     if (st.leavenType !== 'starter') ings.push(I(`Drożdże ${YEAST_TYPES[st.yeastType].label}`, Math.round(r.yeast * 100) / 100, 'g', { percent: st.yeast }));
