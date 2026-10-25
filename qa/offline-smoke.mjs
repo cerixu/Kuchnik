@@ -11,7 +11,14 @@ const page = await context.newPage();
 const errors = [];
 let networkCut = false;
 let stage = 'online bootstrap';
-page.on('pageerror', (e) => errors.push(String(e)));
+page.on('pageerror', (e) => {
+  const message = String(e);
+  // Resource loading can surface as a pageerror as well as a console error
+  // when the test intentionally disconnects Chromium from the network.
+  if (networkCut && (/ERR_FAILED|ERR_INTERNET_DISCONNECTED|ERR_NETWORK_CHANGED/.test(message)
+    || /Failed to load resource/i.test(message))) return;
+  errors.push('[' + stage + '] ' + message);
+});
 page.on('console', (m) => {
   if (m.type() !== 'error') return;
   const message = m.text();
