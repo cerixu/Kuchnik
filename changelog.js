@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.30': Object.freeze({
+    intro: 'Kuchnik 1.4.30 — odporniejsza instalacja service workera.',
+    items: [
+      'Brak opcjonalnej ilustracji, ikony lub fontu nie blokuje instalacji aktualizacji.',
+      'Wymagane pliki aplikacji nadal muszą zostać poprawnie zapisane w cache.',
+      'Dodano test regresyjny symulujący brak jednego z opcjonalnych zasobów.'
+    ],
+    footer: 'Zmiana dotyczy wyłącznie cache plików. Receptury, ustawienia i historia magazynu pozostają bez zmian.'
+  }),
   '1.4.29': Object.freeze({
     intro: 'Kuchnik 1.4.29 — ograniczenie czasu oczekiwania service workera.',
     items: [
