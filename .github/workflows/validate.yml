@@ -149,6 +149,9 @@ jobs:
       - name: Run atomic inventory movement regression tests
         run: node --experimental-default-type=module --test qa/inventory-movements-atomic.test.mjs
 
+      - name: Run sourdough pizza calculator regression tests
+        run: node --experimental-default-type=module --test qa/pizza-starter-calculator.test.mjs
+
       - name: Run service-worker network timeout regression test
         run: node --experimental-default-type=module --test qa/sw-network-timeout.test.mjs
 

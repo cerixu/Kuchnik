@@ -3,6 +3,16 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.34': Object.freeze({
+    intro: 'Kuchnik 1.4.34 — kalkulator pizzy z aktywnym zakwasem 1:1:2.',
+    items: [
+      'Tryby „Mam mąkę” i „Na kulki” obsługują teraz również aktywny zakwas.',
+      'Mąka i woda z zakwasu są wliczane do docelowej hydracji i masy ciasta; zakwas macierzysty jest ograniczony do 1% całkowitej mąki.',
+      'Zapis receptury i lista zakupów uwzględniają osobno mąkę oraz wodę do dokarmienia zakwasu.',
+      'Dodano testy bilansu masy, zgodności trybu kulek i obsługi nieprawidłowych danych liczbowych.'
+    ],
+    footer: 'Zachowano dotychczasowe ustawienia kalkulatora. Nie zmieniono ani nie usunięto danych receptur i magazynu.'
+  }),
   '1.4.33': Object.freeze({
     intro: 'Kuchnik 1.4.33 — bezpieczniejsze operacje magazynowe.',
     items: [
