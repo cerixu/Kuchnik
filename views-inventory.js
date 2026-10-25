@@ -96,7 +96,7 @@ export function inventoryView() {
       body: form,
       actions: [
         { label: 'Anuluj', kind: 'ghost' },
-        { label: 'Zapisz', kind: 'primary', onClick: async () => {
+        { label: 'Zapisz', kind: 'primary', close: false, onClick: async () => {
           try {
             draft.name = name.value.trim();
             draft.expiry = expiry.value;
@@ -128,7 +128,7 @@ export function inventoryView() {
       body,
       actions: [
         { label: 'Anuluj', kind: 'ghost' },
-        { label: type === 'waste' ? 'Zapisz stratę' : 'Dodaj', kind: 'primary', onClick: async () => {
+        { label: type === 'waste' ? 'Zapisz stratę' : 'Dodaj', kind: 'primary', close: false, onClick: async () => {
           const amount = amountInput.value.trim() === '' ? null : parseNum(amountInput.value);
           if (!(amount > 0) || !Number.isFinite(amount)) { toast('Wpisz poprawną ilość większą od zera', { type: 'error' }); return; }
           try {
