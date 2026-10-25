@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title>Avocado toast</title><desc>Grzanka z awokado i jajkiem.</desc>
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#24272a"/><stop offset="1" stop-color="#111315"/></radialGradient><linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4044"/><stop offset="1" stop-color="#171a1c"/></linearGradient></defs>
+<rect width="240" height="240" rx="28" fill="url(#bg)"/>
+<ellipse cx="120" cy="188" rx="76" ry="9" fill="#000" opacity=".35"/>
+<circle cx="120" cy="118" r="83" fill="url(#plate)" stroke="#a97948" stroke-width="2.5"/>
+<circle cx="120" cy="118" r="72" fill="none" stroke="#e1b574" stroke-width="1" opacity=".55"/>
+<g><path d="M55 94 L155 76 L184 143 L82 163 Z" fill="#b87945" stroke="#e0b477" stroke-width="5"/><path d="M67 99 L151 85 L170 138 L84 153 Z" fill="#f0d39a"/><path d="M74 103 Q104 83 125 104 T164 121 L153 139 Q125 122 92 143Z" fill="#6f9c55"/><path d="M100 108 Q111 93 125 104 Q139 115 127 129 Q115 139 102 126Z" fill="#d7e4a2"/><circle cx="135" cy="105" r="19" fill="#f5ead0"/><circle cx="135" cy="105" r="9" fill="#efb94d"/><g fill="#5b7f43"><circle cx="92" cy="119" r="2.5"/><circle cx="151" cy="127" r="2.5"/></g></g>
+<path d="M58 58 Q69 47 83 50" fill="none" stroke="#fff" stroke-width="2" opacity=".14" stroke-linecap="round"/>
+</svg>
