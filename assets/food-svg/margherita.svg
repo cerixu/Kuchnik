@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title id="title">Pizza Margherita — hybrydowa ilustracja SVG</title>
+<desc id="desc">Pizza neapolitańska z pomidorami, mozzarellą i listkami bazylii. Przezroczyste tło.</desc>
+<defs>
+ <linearGradient id="crust" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe09a"/><stop offset=".55" stop-color="#eea74b"/><stop offset="1" stop-color="#bb6728"/></linearGradient>
+ <linearGradient id="sauce" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#f65f3d"/><stop offset="1" stop-color="#b92722"/></linearGradient>
+ <linearGradient id="mozz" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff8df"/><stop offset="1" stop-color="#e8d6a6"/></linearGradient>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feGaussianBlur stdDeviation="5"/></filter>
+ <g id="basil"><path d="M0 0C-15-13-13-29 1-34 14-21 13-8 0 0Z" fill="#4c9a43" stroke="#276632" stroke-width="1.3"/><path d="M0-2 1-25" stroke="#badd80" stroke-width="1.5" fill="none"/></g>
+ <g id="mozzarella"><path d="M-14-5Q-13-16 0-15T15-3Q16 7 5 12T-12 6Z" fill="url(#mozz)" stroke="#d5bf8b" stroke-width="1.4"/><ellipse cx="-3" cy="-7" rx="4" ry="2.5" fill="#fffdf0" opacity=".75"/></g>
+</defs>
+<ellipse cx="120" cy="188" rx="88" ry="11" fill="#000" opacity=".12" filter="url(#shadow)"/>
+<circle cx="120" cy="112" r="91" fill="url(#crust)" stroke="#bc702e" stroke-width="2"/>
+<circle cx="120" cy="112" r="77" fill="#e4a052"/>
+<circle cx="120" cy="112" r="70" fill="url(#sauce)"/>
+<path d="M63 84C83 56 110 68 125 58M145 154C164 137 172 118 166 99M69 133C84 152 91 158 106 162" stroke="#ff8b59" stroke-width="5" stroke-linecap="round" fill="none" opacity=".65"/>
+<use href="#mozzarella" transform="translate(91 75) rotate(-12) scale(.9)"/><use href="#mozzarella" transform="translate(144 75) rotate(18) scale(.88)"/><use href="#mozzarella" transform="translate(157 123) rotate(36) scale(.88)"/><use href="#mozzarella" transform="translate(107 145) rotate(-14) scale(.94)"/><use href="#mozzarella" transform="translate(69 117) rotate(8) scale(.76)"/><use href="#mozzarella" transform="translate(119 103) rotate(20) scale(.72)"/>
+<use href="#basil" transform="translate(111 85) rotate(-38) scale(.63)"/><use href="#basil" transform="translate(125 87) rotate(42) scale(.55)"/><use href="#basil" transform="translate(141 127) rotate(35) scale(.57)"/><use href="#basil" transform="translate(91 137) rotate(-25) scale(.5)"/>
+<g fill="#6c3022" opacity=".8"><circle cx="85" cy="103" r="2"/><circle cx="137" cy="100" r="2.2"/><circle cx="120" cy="136" r="2"/><circle cx="158" cy="99" r="1.8"/><circle cx="99" cy="59" r="2"/></g>
+<g fill="#ffd28a"><circle cx="57" cy="105" r="3"/><circle cx="180" cy="112" r="3"/><circle cx="117" cy="31" r="2.5"/><circle cx="120" cy="193" r="2.5"/></g>
+</svg>
