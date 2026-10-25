@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title>Grillowane krewetki</title><desc>Krewetki z grilla z cytryną i ziołami.</desc>
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#24272a"/><stop offset="1" stop-color="#111315"/></radialGradient><linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4044"/><stop offset="1" stop-color="#171a1c"/></linearGradient></defs>
+<rect width="240" height="240" rx="28" fill="url(#bg)"/>
+<ellipse cx="120" cy="188" rx="76" ry="9" fill="#000" opacity=".35"/>
+<circle cx="120" cy="118" r="83" fill="url(#plate)" stroke="#a97948" stroke-width="2.5"/>
+<circle cx="120" cy="118" r="72" fill="none" stroke="#e1b574" stroke-width="1" opacity=".55"/>
+<g><g fill="#e78d66" stroke="#f6b58c" stroke-width="3"><path d="M67 99 Q68 75 91 79 Q111 84 103 103 Q98 117 82 112 Q70 109 67 99Z"/><path d="M109 91 Q110 67 134 73 Q155 80 144 100 Q136 113 121 105 Q111 102 109 91Z"/><path d="M128 129 Q129 105 151 110 Q172 117 160 137 Q151 151 138 142 Q130 138 128 129Z"/></g><g stroke="#a9503d" stroke-width="3" fill="none"><path d="M77 82 L91 107"/><path d="M119 76 L136 101"/><path d="M139 113 L153 139"/></g><path d="M65 138 Q79 126 94 138 Q80 151 65 138Z" fill="#8db45d"/><path d="M157 80 L177 94 L158 105Z" fill="#91b55e" stroke="#c1d785" stroke-width="2"/><g fill="#5f8c4c"><ellipse cx="103" cy="141" rx="12" ry="4" transform="rotate(-20 103 141)"/><ellipse cx="171" cy="126" rx="10" ry="4" transform="rotate(35 171 126)"/></g></g>
+<path d="M58 58 Q69 47 83 50" fill="none" stroke="#fff" stroke-width="2" opacity=".14" stroke-linecap="round"/>
+</svg>
