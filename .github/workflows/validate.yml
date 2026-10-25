@@ -169,4 +169,5 @@ jobs:
           node qa/smoke-test.mjs
           node qa/indexeddb-recovery.mjs
           node qa/startup-deadline.mjs
+          node qa/inventory-scanner-smoke.mjs
           node qa/offline-smoke.mjs

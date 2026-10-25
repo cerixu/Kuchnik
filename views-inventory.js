@@ -158,6 +158,9 @@ export function inventoryView() {
         if (stopped || busy) return;
         try {
           const hit = await detectFrame(video, canvas);
+          // Zamknięcie skanera w trakcie dekodowania unieważnia wynik tej klatki.
+          // Nie otwieraj formularza produktu po anulowaniu skanowania.
+          if (stopped) return;
           if (hit && hit.code) {
             const code = normalizeEAN(hit.code);
             busy = true;
