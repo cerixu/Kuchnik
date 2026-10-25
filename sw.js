@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.28';
+const VERSION = 'kucharzyna-1.4.29';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -83,15 +83,24 @@ async function networkFirst(event, url, cacheKey) {
     return res;
   });
 
-  if (!cached) return net;                       // brak kopii — czekamy na sieć
-  event.waitUntil(net.catch(() => {}));          // dokończ aktualizację cache w tle
+  // Ogranicz czas oczekiwania także wtedy, gdy nie ma jeszcze kopii w cache.
+  // W przeciwnym razie na pustym/wyczyszczonym cache nawigacja może wisieć bez końca.
+  const timeout = new Promise((resolve) => setTimeout(() => resolve(null), NETWORK_TIMEOUT));
+  const bounded = Promise.race([net, timeout]);
 
-  const timeout = new Promise((resolve) => setTimeout(() => resolve(cached), NETWORK_TIMEOUT));
+  if (!cached) {
+    const response = await bounded;
+    if (!response) throw new Error('Network timeout without cached response');
+    return response;
+  }
+
+  // Aktualizacja cache działa w tle, ale nie przedłuża życia workera bez limitu.
+  event.waitUntil(bounded.catch(() => {}));
   try {
-    const res = await Promise.race([net, timeout]);
-    return res && res.ok ? res : cached;         // 404/500 z sieci → lepsza kopia
+    const res = await bounded;
+    return res && res.ok ? res : cached;
   } catch (_) {
-    return cached;                               // offline
+    return cached;
   }
 }
 
