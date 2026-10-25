@@ -138,6 +138,9 @@ jobs:
       - name: Run inventory matching regression tests
         run: node --experimental-default-type=module --test qa/inventory-matching.test.mjs
 
+      - name: Run barcode decoder regression tests
+        run: node --experimental-default-type=module qa/barcode-smoke.mjs
+
       - name: Install Playwright Chromium
         run: |
           npm install --no-save --package-lock=false playwright@1.55.0
