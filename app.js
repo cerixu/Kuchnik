@@ -181,6 +181,7 @@ function whatsNew() {
         li('Naprawiono import wyszukiwania kodów EAN, który blokował start modułów magazynu.'),
         li('Cały rozruch — także zapis ustawień i montowanie widoku — ma limit 60 sekund i pokazuje błąd zamiast wiszącej animacji.'),
         li('28 lokalnych zdjęć potraw, ładowanych na żądanie; zdjęcia własne mają pierwszeństwo.'),
+        li('Sześć lekkich ilustracji SVG jest dostępnych offline jako fallback, gdy zdjęcie potrawy nie jest dostępne.'),
         li('Osobny ekran Gotuję z wyszukiwaniem po nazwie i składnikach.'),
         li('Cache-First dla zdjęć, ikon i fontów; cache mediów przetrwa kolejne wydania aplikacji.'),
         li('Magazyn lepiej rozpoznaje polskie odmiany nazw składników, ale nie utożsamia ogólnej nazwy z bardziej szczegółowym produktem.'),

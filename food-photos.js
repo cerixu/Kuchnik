@@ -89,6 +89,43 @@ const RECIPE_RULES = [
   ['seafood', /\b(frutti di mare|mule marinara|mussels marinara|owoce morza na parze)\b/],
 ];
 
+const SVG_FILES = Object.freeze({
+  carbonara: 'carbonara.svg',
+  margherita: 'margherita.svg',
+  'tomato-soup': 'tomato-soup.svg',
+  burger: 'burger.svg',
+  'greek-salad': 'greek-salad.svg',
+  mojito: 'mojito.svg',
+});
+
+const SVG_RECIPE_RULES = [
+  ['carbonara', /\b(spaghetti carbonara|carbonara tradizionale|carbonara tradycyjna|carbonara klasyczna|pasta alla carbonara)\b/],
+  ['margherita', /\b(pizza margherita|margherita neapolitana|margherita classica|neapolitan margherita)\b/],
+  ['tomato-soup', /\b(zupa pomidorowa|krem pomidorowy|tomato soup|pomidorowa)\b/],
+  ['burger', /\b(burger klasyczny|burger wolowy|cheeseburger|hamburger wolowy|classic burger)\b/],
+  ['greek-salad', /\b(salatka grecka|greek salad)\b/],
+  ['mojito', /\bmojito\b/],
+];
+
+export function recipeSvgKey(recipe) {
+  if (!recipe || !recipe.name) return null;
+  const name = normalise(recipe.name);
+  for (const [key, pattern] of SVG_RECIPE_RULES) {
+    if (pattern.test(name)) return key;
+  }
+  return null;
+}
+
+function attachSvg(img, key) {
+  const file = SVG_FILES[key];
+  if (!img || !file) return false;
+  img.dataset.photoRequested = 'svg:' + key;
+  img.classList.remove('art');
+  img.dataset.photoSource = 'svg:' + key;
+  img.src = new URL('./assets/food-svg/' + file, import.meta.url).href;
+  return true;
+}
+
 const photoPromises = new Map();
 
 function loadPhoto(key) {
@@ -113,15 +150,21 @@ function loadPhoto(key) {
   return photoPromises.get(key);
 }
 
-function attach(img, key) {
+function attach(img, key, fallbackSvgKey = null) {
   if (!img || !key) return;
   img.dataset.photoRequested = key;
   loadPhoto(key).then((src) => {
-    if (!src || !img.isConnected || img.dataset.photoRequested !== key) return;
-    img.classList.remove('art');
-    img.dataset.photoSource = key;
-    img.src = src;
-  }).catch(() => {});
+    if (!img.isConnected || img.dataset.photoRequested !== key) return;
+    if (src) {
+      img.classList.remove('art');
+      img.dataset.photoSource = key;
+      img.src = src;
+      return;
+    }
+    if (fallbackSvgKey) attachSvg(img, fallbackSvgKey);
+  }).catch(() => {
+    if (img.isConnected && img.dataset.photoRequested === key && fallbackSvgKey) attachSvg(img, fallbackSvgKey);
+  });
 }
 
 export function recipePhotoKey(recipe) {
@@ -134,8 +177,16 @@ export function recipePhotoKey(recipe) {
 }
 
 export function attachRecipePhoto(img, recipe) {
+  // Własne zdjęcia użytkownika zawsze mają pierwszeństwo.
   if (!img || !recipe || recipe.thumb || recipe.photo) return;
-  attach(img, recipePhotoKey(recipe));
+  const photoKey = recipePhotoKey(recipe);
+  const svgKey = recipeSvgKey(recipe);
+  if (photoKey) {
+    // Preferuj zdjęcie, ale w razie braku pliku pokaż lokalną ilustrację wektorową.
+    attach(img, photoKey, svgKey);
+    return;
+  }
+  if (svgKey) attachSvg(img, svgKey);
 }
 
 export function attachCategoryPhoto(img, categoryId) {
@@ -143,5 +194,5 @@ export function attachCategoryPhoto(img, categoryId) {
 }
 
 export function hasFoodPhoto(recipe) {
-  return !!(recipe && (recipe.thumb || recipe.photo || recipePhotoKey(recipe)));
+  return !!(recipe && (recipe.thumb || recipe.photo || recipePhotoKey(recipe) || recipeSvgKey(recipe)));
 }

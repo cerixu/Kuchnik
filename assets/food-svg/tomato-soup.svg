@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title id="title">Krem pomidorowy — hybrydowa ilustracja SVG</title>
+<desc id="desc">Gładki krem pomidorowy z zawijasem śmietanki i świeżą bazylią. Przezroczyste tło.</desc>
+<defs>
+ <linearGradient id="ceramic" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff8e9"/><stop offset=".52" stop-color="#d7d4ca"/><stop offset="1" stop-color="#818c8d"/></linearGradient>
+ <linearGradient id="bowl" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#3b494e"/><stop offset=".7" stop-color="#172227"/><stop offset="1" stop-color="#0b1115"/></linearGradient>
+ <linearGradient id="soup" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff7950"/><stop offset=".55" stop-color="#e4472f"/><stop offset="1" stop-color="#b72a24"/></linearGradient>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feGaussianBlur stdDeviation="5"/></filter>
+ <g id="leaf"><path d="M0 0C-15-13-13-29 1-34 14-21 13-8 0 0Z" fill="#4d9b47" stroke="#286833" stroke-width="1.3"/><path d="M0-2 1-25" stroke="#c0dc7c" stroke-width="1.5" fill="none"/></g>
+</defs>
+<ellipse cx="120" cy="183" rx="87" ry="12" fill="#000" opacity=".13" filter="url(#shadow)"/>
+<path d="M25 110C32 159 63 185 120 185S208 158 215 110Z" fill="url(#bowl)" stroke="#657275" stroke-width="2.6"/>
+<ellipse cx="120" cy="110" rx="98" ry="52" fill="url(#ceramic)" stroke="#fff8e9" stroke-width="2.5"/>
+<ellipse cx="120" cy="108" rx="84" ry="40" fill="#f0c9a3"/>
+<ellipse cx="120" cy="105" rx="78" ry="35" fill="url(#soup)"/>
+<path d="M71 99C81 82 97 85 101 99S117 116 127 98 151 81 162 96" fill="none" stroke="#ffd5a6" stroke-width="6" stroke-linecap="round"/>
+<path d="M89 119C99 108 114 112 119 121" fill="none" stroke="#fff0cf" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+<use href="#leaf" transform="translate(113 98) rotate(-28) scale(.62)"/><use href="#leaf" transform="translate(124 98) rotate(46) scale(.5)"/><use href="#leaf" transform="translate(129 101) rotate(98) scale(.4)"/>
+<g fill="#ffe7be" opacity=".9"><circle cx="80" cy="110" r="1.8"/><circle cx="151" cy="112" r="1.7"/><circle cx="143" cy="85" r="1.5"/></g>
+</svg>
