@@ -254,7 +254,7 @@ function pizzaCalculator() {
             }))),
             col(field('Drożdże %', numInput({ value: st.yeast, label: 'Drożdże procent', dec: 2, onInput: upd('yeast') })))),
         suggestionHost,
-        h('p', { class: 'muted small' }, 'Wskazówka fermentacji jest orientacyjna — mąka, temperatura ciasta i proces zmieniają tempo dojrzewania.'))));
+        h('p', { class: 'muted small' }, 'Wskazówka fermentacji jest orientacyjna — mąka, temperatura ciasta i proces zmieniają tempo dojrzewania.')));
     paintSuggestion();
   }
 
