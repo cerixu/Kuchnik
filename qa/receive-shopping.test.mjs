@@ -49,7 +49,7 @@ test('równoległe przyjęcie tej samej pozycji nalicza stan i historię tylko r
   await loadInventory();
 
   const id = 'shp_concurrent_receipt_test';
-  const name = 'Produkt testowy — przyjęcie równoległe';
+  const name = 'Sos ostrygowy — przyjęcie równoległe QA 9137';
   const rowA = { id, name, amount: 2, unit: 'kg', done: true };
   const rowB = { id, name, amount: 2, unit: 'kg', done: true };
 
