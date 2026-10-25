@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Wersja pośrednia 1.4.16.** Naprawiono krytyczny import funkcji EAN, który zatrzymywał ładowanie modułów i mógł zostawiać ekran startowy. Cały rozruch ma wspólny limit 60 sekund. Dodano ekran „Gotuję”, 28 lokalnych zdjęć dań i osobny Cache-First cache mediów zachowywany między wydaniami. Dane użytkownika pozostają nietknięte.
+> **Wersja pośrednia 1.4.17.** Naprawiono krytyczny import funkcji EAN, który zatrzymywał ładowanie modułów i mógł zostawiać ekran startowy. Cały rozruch ma wspólny limit 60 sekund. Dodano ekran „Gotuję”, 28 lokalnych zdjęć dań i osobny Cache-First cache mediów zachowywany między wydaniami. Dane użytkownika pozostają nietknięte.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
