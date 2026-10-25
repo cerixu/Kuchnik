@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title>Polpette</title><desc>Pulpety w sosie pomidorowym z bazylią.</desc>
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#24272a"/><stop offset="1" stop-color="#111315"/></radialGradient><linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4044"/><stop offset="1" stop-color="#171a1c"/></linearGradient></defs>
+<rect width="240" height="240" rx="28" fill="url(#bg)"/>
+<ellipse cx="120" cy="188" rx="76" ry="9" fill="#000" opacity=".35"/>
+<circle cx="120" cy="118" r="83" fill="url(#plate)" stroke="#a97948" stroke-width="2.5"/>
+<circle cx="120" cy="118" r="72" fill="none" stroke="#e1b574" stroke-width="1" opacity=".55"/>
+<g><ellipse cx="120" cy="119" rx="68" ry="42" fill="#b94f38"/><ellipse cx="120" cy="110" rx="61" ry="33" fill="#d76548"/><g fill="#92513b" stroke="#d18a58" stroke-width="3"><circle cx="86" cy="101" r="17"/><circle cx="124" cy="91" r="18"/><circle cx="153" cy="113" r="18"/><circle cx="109" cy="128" r="17"/></g><g fill="#f2c08a"><circle cx="81" cy="95" r="3"/><circle cx="119" cy="85" r="3"/><circle cx="148" cy="107" r="3"/><circle cx="104" cy="122" r="3"/></g><g fill="#609451"><path d="M91 76 Q72 61 70 81 Q80 91 91 76Z"/><path d="M143 76 Q159 59 165 78 Q156 90 143 76Z"/><path d="M135 139 Q117 129 118 147 Q128 154 135 139Z"/></g></g>
+<path d="M58 58 Q69 47 83 50" fill="none" stroke="#fff" stroke-width="2" opacity=".14" stroke-linecap="round"/>
+</svg>
