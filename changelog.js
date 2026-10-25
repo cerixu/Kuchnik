@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.36': Object.freeze({
+    intro: 'Kuchnik 1.4.36 — zapis produktu magazynowego jest odporniejszy na błędy.',
+    items: [
+      'Nieudany zapis produktu nie publikuje niezapisanej zmiany w pamięci aplikacji.',
+      'Jeśli edycja produktu zapisuje również ruch magazynowy, oba wpisy trafiają do jednej transakcji IndexedDB.',
+      'Dodano test regresyjny awarii zapisu; istniejące dane i historia pozostają zachowane.'
+    ],
+    footer: 'Bez migracji bazy danych i bez usuwania istniejących danych.'
+  }),
   '1.4.35': Object.freeze({
     intro: 'Kuchnik 1.4.35 — bezpieczniejsze przyjmowanie zakupów i odczyt magazynu.',
     items: [
