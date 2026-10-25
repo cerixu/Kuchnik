@@ -5,14 +5,14 @@ import vm from 'node:vm';
 
 const source = fs.readFileSync('sw.js', 'utf8');
 const start = source.indexOf('async function networkFirst(event, url, cacheKey) {');
-const end = source.indexOf("\\nself.addEventListener('fetch'", start);
+const end = source.indexOf("\nself.addEventListener('fetch'", start);
 if (start < 0 || end < 0) throw new Error('Nie można odczytać networkFirst z sw.js.');
 
 const functionSource = [
   'const NETWORK_TIMEOUT = 25;',
   source.slice(start, end),
   'globalThis.networkFirst = networkFirst;',
-].join('\\n');
+].join('\n');
 
 function harness({ cached = null, fetchImpl }) {
   const waits = [];
