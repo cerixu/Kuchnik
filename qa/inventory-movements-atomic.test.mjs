@@ -130,3 +130,35 @@ test('failed inventory reload preserves the last valid in-memory snapshot', asyn
     await cleanup([item]);
   }
 });
+
+
+test('saveItem does not publish unsaved state when the storage transaction fails', async () => {
+  await openDB();
+  await loadInventory();
+
+  const item = newItem({ name: 'QA saveItem atomic failure 20261025', unit: 'g', stock: 123 });
+  const originalTx = db.tx;
+
+  try {
+    db.tx = async () => { throw new Error('simulated saveItem transaction failure'); };
+    await assert.rejects(
+      saveItem(item, { log: { type: 'adjust', amount: 23, reason: 'QA atomic save' } }),
+      /simulated saveItem transaction failure/,
+    );
+    assert.equal(getItem(item.id), undefined);
+    assert.equal(inventoryItems().some((entry) => entry.id === item.id), false);
+    assert.equal(await db.get('inventoryItems', item.id), undefined);
+    assert.equal(movements(item.id).length, 0);
+  } finally {
+    db.tx = originalTx;
+  }
+
+  const saved = await saveItem(item, { log: { type: 'adjust', amount: 23, reason: 'QA atomic save' } });
+  assert.equal(getItem(saved.id).stock, 123);
+  assert.equal((await db.get('inventoryItems', saved.id)).stock, 123);
+  const movement = movements(saved.id).find((entry) => entry.reason === 'QA atomic save');
+  assert.ok(movement, 'the audit movement must appear after the successful transaction');
+  assert.equal((await db.get('inventoryMovements', movement.id)).amount, 23);
+
+  await cleanup([saved]);
+});
