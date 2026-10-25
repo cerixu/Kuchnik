@@ -301,19 +301,73 @@ export function restockList() {
 
 /** Zakupy oznaczone jako kupione → stany magazynu (zakładanie nowych pozycji, gdy brakuje). */
 export async function receiveShopping(items) {
-  let added = 0, created = 0;
+  let added = 0, created = 0, skipped = 0;
+
   for (const s of items) {
-    const unit = ['g', 'kg', 'ml', 'l', 'szt.'].includes(s.unit) ? s.unit : 'szt.';
-    const amount = s.amount != null && s.amount > 0 ? toBase(s.amount, unit) : (unit === 'szt.' ? 1 : null);
-    if (amount == null) continue;
-    let it = findItemFor(s.name);
-    if (!it) { it = newItem({ name: s.name, unit: baseUnit(unit), stock: 0 }); created++; await persist(it); }
-    const converted = it.unit === baseUnit(unit) ? amount : (it.unit === 'szt.' ? amount / (pieceGrams(it.name) || 100) : amount * (pieceGrams(s.name) || 1));
-    await changeStock(it, converted, { type: 'purchase', reason: 'Kupione (lista zakupów)' });
+    const sourceId = s && s.id != null ? String(s.id) : '';
+    const name = String(s && s.name || '').trim();
+    const unit = s && s.unit;
+    const amount = s && s.amount != null && Number(s.amount) > 0
+      ? toBase(Number(s.amount), unit)
+      : null;
+
+    if (!sourceId || !name || !['g', 'kg', 'ml', 'l', 'szt.'].includes(unit) || !Number.isFinite(amount) || amount <= 0) {
+      skipped++;
+      continue;
+    }
+
+    // Idempotency guard: the receipt marker and stock movement are written together below.
+    // Also recognize older receipts that were marked before this atomic flow existed.
+    const priorMove = store.moves.find((m) => String(m.sourceShoppingId || '') === sourceId);
+    if (s.inventoryReceivedAt || priorMove) {
+      if (!s.inventoryReceivedAt && priorMove) {
+        const marked = { ...s, inventoryReceivedAt: priorMove.at || Date.now() };
+        await db.tx(['shoppingItems'], (t) => t.put('shoppingItems', marked));
+        Object.assign(s, marked);
+      }
+      skipped++;
+      continue;
+    }
+
+    let item = findItemFor(name);
+    const isNew = !item;
+    if (!item) item = newItem({ name, unit: baseUnit(unit), stock: 0 });
+
+    const converted = item.unit === baseUnit(unit)
+      ? amount
+      : (item.unit === 'szt.' ? amount / (pieceGrams(item.name) || 100) : amount * (pieceGrams(name) || 1));
+    if (!Number.isFinite(converted) || converted <= 0) {
+      skipped++;
+      continue;
+    }
+
+    const before = Math.max(0, Number(item.stock) || 0);
+    const now = Date.now();
+    const nextItem = { ...item, stock: before + converted, updatedAt: now };
+    const movement = {
+      id: uid('mv_'), at: now, cost: 0, reason: 'Kupione (lista zakupów)',
+      itemId: nextItem.id, name: nextItem.name, unit: nextItem.unit,
+      type: 'purchase', amount: nextItem.stock - before, sourceShoppingId: sourceId,
+    };
+    const marked = { ...s, inventoryReceivedAt: now };
+
+    // IndexedDB commits stock, movement history and the shopping marker atomically.
+    // A reload or retry cannot add the same shopping row a second time.
+    await db.tx(['inventoryItems', 'inventoryMovements', 'shoppingItems'], (t) => {
+      t.put('inventoryItems', nextItem);
+      t.put('inventoryMovements', movement);
+      t.put('shoppingItems', marked);
+    });
+
+    store.items.set(nextItem.id, nextItem);
+    store.moves.unshift(movement);
+    Object.assign(s, marked);
+    if (isNew) created++;
     added++;
   }
+
   emit('inventory');
-  return { added, created };
+  return { added, created, skipped };
 }
 
 /** Szybki szacunek, ile receptur z całej książki da się ugotować z magazynu (≥ minPct składników). */
