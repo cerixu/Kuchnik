@@ -13,6 +13,7 @@ import { db } from './db.js';
 import { uid, norm, fmtNum } from './util.js';
 import { state, emit, getSetting, allIngredients } from './recipes.js';
 import { nameStems, stem, aisleOf } from './kitchen.js';
+import { inventoryNamesMatch } from './inventory-matching.js';
 import { pieceGrams } from './nutrition.js';
 
 export const INV_CATS = ['Nabiał i jaja', 'Mięso i ryby', 'Warzywa i owoce', 'Sypkie i pieczywo', 'Przyprawy, oleje, sosy', 'Napoje', 'Mrożonki', 'Inne'];
@@ -183,6 +184,8 @@ const BASIC = /^(woda|sol|pieprz|lod|przyprawy?)(\s|$|,)|^sol\b|^woda\b/;
 const wordStart = (hay, st) => !!st && new RegExp('(^|[^a-z0-9])' + st).test(hay);
 
 function matchScore(ingName, item) {
+  // Prefer exact or same-phrase Polish inflection matches before the legacy prefix heuristic.
+  if (inventoryNamesMatch(item, ingName)) return 10;
   const n = norm(ingName);
   const ing = nameStems(ingName);
   const names = [item.name, ...(item.aliases || [])];
