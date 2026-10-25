@@ -14,6 +14,7 @@ const fixtures = [
   { name: 'Gnocchi al pomodoro', key: 'gnocchi', tokens: [/gnocchi/i, /pomodoro/i, /bazyli/i] },
   { name: 'Bruschetta al pomodoro', key: 'bruschetta', tokens: [/bruschetta/i, /pomidor/i, /bazyli/i] },
   { name: 'Panna cotta waniliowa', key: 'panna-cotta', tokens: [/panna cotta/i, /malin/i, /waniliow/i] },
+  { name: 'Tagliatelle al ragù', key: 'tagliatelle-ragu', tokens: [/tagliatelle/i, /ragù/i, /parmezan/i, /bazyli/i] },
 ];
 
 test('dedicated SVG matching is specific and stable', () => {
