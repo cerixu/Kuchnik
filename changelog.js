@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.28': Object.freeze({
+    intro: 'Kuchnik 1.4.28 — test trwałości ulubionych.',
+    items: [
+      'Dodano test przeglądarkowy sprawdzający, czy zmiana ulubionej receptury przetrwa pełne przeładowanie aplikacji.',
+      'Test przywraca początkowy stan ulubionej receptury i działa na odizolowanym profilu testowym.',
+      'Poprzednia poprawka skanera EAN nadal ignoruje wyniki dekodowania, które docierają po zamknięciu okna skanera.'
+    ],
+    footer: 'Testy nie usuwają ani nie modyfikują danych z Twojego urządzenia.'
+  }),
   '1.4.27': Object.freeze({
     intro: 'Kuchnik 1.4.27 — anulowanie skanera jest bezpieczniejsze.',
     items: [
