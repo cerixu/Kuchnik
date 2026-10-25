@@ -80,6 +80,35 @@ jobs:
             if (!fs.existsSync(asset)) problems.push(`food-photos.js: mapped photo missing from repository: ${asset}`);
           }
 
+          // Sprawdź, czy każdy nazwany import rzeczywiście jest eksportowany przez moduł docelowy.
+          const exportNames = (source) => {
+            const names = new Set();
+            for (const m of source.matchAll(/\\bexport\\s+(?:async\\s+)?(?:function|class|const|let|var)\\s+([A-Za-z_$][\\w$]*)/g)) names.add(m[1]);
+            for (const m of source.matchAll(/\\bexport\\s*\\{([^}]+)\\}/g)) {
+              for (const raw of m[1].split(',')) {
+                const parts = raw.trim().split(/\\s+as\\s+/);
+                const name = (parts[1] || parts[0]).trim();
+                if (/^[A-Za-z_$][\\w$]*$/.test(name)) names.add(name);
+              }
+            }
+            return names;
+          };
+          for (const file of files) {
+            const source = fs.readFileSync(file, 'utf8');
+            const imports = source.matchAll(/^\\s*import\\s*\\{([\\s\\S]*?)\\}\\s*from\\s*['"]([^'"]+)['"]/gm);
+            for (const m of imports) {
+              const specifier = m[2];
+              if (!specifier.startsWith('.')) continue;
+              const target = path.resolve(path.dirname(path.resolve(file)), specifier);
+              if (!fs.existsSync(target)) continue;
+              const names = exportNames(fs.readFileSync(target, 'utf8'));
+              for (const raw of m[1].split(',')) {
+                const imported = raw.replace(/\\/\\*[\\s\\S]*?\\*\\//g, '').trim().split(/\\s+as\\s+/)[0].trim();
+                if (imported && !names.has(imported)) problems.push(`${file}: ${specifier} does not export "${imported}"`);
+              }
+            }
+          }
+
           const appVersion = util.match(/APP_VERSION\s*=\s*['"]([^'"]+)['"]/)?.[1];
           const swVersion = sw.match(/const VERSION\s*=\s*['"]kucharzyna-([^'"]+)['"]/)?.[1];
           if (!appVersion) problems.push('util.js: APP_VERSION not found');

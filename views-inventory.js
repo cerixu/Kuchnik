@@ -5,11 +5,11 @@
 import { h, icon, screen, button, iconBtn, toast, openSheet, confirmDialog, field, textInput, numInput, selectEl, emptyState } from './ui.js';
 import { navigate, goBack } from './router.js';
 import {
-  INV_CATS, LOCATIONS, inventoryItems, inventorySummary, newItem, saveItem, getItem,
+  INV_CATS, LOCATIONS, inventoryItems, inventorySummary, newItem, saveItem, getItem, findByBarcode,
   changeStock, recordWaste, deleteItem, fmtStock, locName, isOut, isLow, isSoon, isExpired, stockValue,
 } from './inventory.js';
 import { fmtMoney, fmtNum, parseNum, norm } from './util.js';
-import { detectFrame, lookupProduct, findByBarcode, normalizeEAN, nativeSupported } from './barcode.js';
+import { detectFrame, lookupProduct, normalizeEAN, nativeSupported } from './barcode.js';
 
 const UNIT_OPTIONS = [['g', 'g'], ['ml', 'ml'], ['szt.', 'szt.']];
 const LOCATION_OPTIONS = LOCATIONS.map(([id, label]) => [id, label]);

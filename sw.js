@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.15';
+const VERSION = 'kucharzyna-1.4.16';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -107,7 +107,7 @@ self.addEventListener('fetch', (event) => {
     }));
     return;
   }
-  if (/\\.(?:avif|gif|jpe?g|png|svg|webp|woff2?|ttf|otf)$/i.test(url.pathname)) {
+  if (/\.(?:avif|gif|jpe?g|png|svg|webp|woff2?|ttf|otf)$/i.test(url.pathname)) {
     event.respondWith(cacheFirst(req).catch(async () => {
       const media = await caches.open(MEDIA_CACHE);
       return (await media.match(req, { ignoreSearch: true })) || Response.error();
