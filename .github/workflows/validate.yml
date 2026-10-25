@@ -73,6 +73,12 @@ jobs:
             }
           }
 
+          const photoModule = fs.readFileSync('food-photos.js', 'utf8');
+          const photoFiles = [...photoModule.matchAll(/:\s*['"]([^'"]+\\.jpg)['"]/g)].map((m) => m[1]);
+          for (const asset of photoFiles) {
+            if (!fs.existsSync(asset)) problems.push(`food-photos.js: mapped photo missing from repository: ${asset}`);
+          }
+
           const appVersion = util.match(/APP_VERSION\s*=\s*['"]([^'"]+)['"]/)?.[1];
           const swVersion = sw.match(/const VERSION\s*=\s*['"]kucharzyna-([^'"]+)['"]/)?.[1];
           if (!appVersion) problems.push('util.js: APP_VERSION not found');
@@ -92,5 +98,24 @@ jobs:
             console.error('Validation failed:\n- ' + problems.join('\n- '));
             process.exit(1);
           }
-          console.log(`Validation passed: ${files.length} JavaScript modules, local imports, ${appVersion} version sync, service-worker cache and manifest.`);
+          console.log(`Validation passed: ${files.length} JavaScript modules, local imports, ${photoFiles.length} photo assets, ${appVersion} version sync, service-worker cache and manifest.`);
           NODE
+
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Smoke test startup and cooking flow
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/kuchnik-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:4173/ >/dev/null
+          node qa/smoke-test.mjs
