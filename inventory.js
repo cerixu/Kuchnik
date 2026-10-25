@@ -29,9 +29,9 @@ export async function loadInventory() {
   try {
     const [items, moves] = await Promise.all([db.getAll('inventoryItems'), db.getAll('inventoryMovements')]);
     store.items = new Map(items.map((i) => [i.id, i]));
+    // Zachowujemy pełną historię ruchów. Nie usuwaj jej automatycznie na podstawie wieku:
+    // może być potrzebna do rozliczeń, strat i kontroli stanów.
     store.moves = moves.sort((a, b) => b.at - a.at);
-    const old = store.moves.filter((m) => Date.now() - m.at > 365 * DAY);           // porządek: ruchy starsze niż rok
-    if (old.length) { await Promise.all(old.map((m) => db.delete('inventoryMovements', m.id))); store.moves = store.moves.filter((m) => !old.includes(m)); }
   } catch (e) { console.warn('Magazyn: nie udało się wczytać', e); store.items = new Map(); store.moves = []; }
   store.loaded = true;
   emit('inventory');
