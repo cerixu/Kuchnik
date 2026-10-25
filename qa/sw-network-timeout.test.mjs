@@ -9,6 +9,7 @@ const end = source.indexOf("\nself.addEventListener('fetch'", start);
 if (start < 0 || end < 0) throw new Error('Nie można odczytać networkFirst z sw.js.');
 
 const functionSource = [
+  'const VERSION = "test-version";',
   'const NETWORK_TIMEOUT = 25;',
   source.slice(start, end),
   'globalThis.networkFirst = networkFirst;',
