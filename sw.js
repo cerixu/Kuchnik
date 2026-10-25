@@ -36,7 +36,7 @@ self.addEventListener('install', (event) => {
     // Wymagane pliki aplikacji muszą być kompletne, ale brak jednej ilustracji,
     // ikony lub fontu nie może zablokować instalacji całego service workera.
     const uniqueCore = [...new Set(CORE)];
-    const optionalAsset = (p) => /\\.(?:png|jpe?g|webp|avif|woff2?|ttf|otf|svg|b64)$/i.test(p);
+    const optionalAsset = (p) => /\.(?:png|jpe?g|webp|avif|woff2?|ttf|otf|svg|b64)$/i.test(p);
     const required = uniqueCore.filter((p) => !optionalAsset(p));
     const optional = uniqueCore.filter(optionalAsset);
     await cache.addAll(required.map((p) => new Request(scopeUrl(p), { cache: 'reload' })));
