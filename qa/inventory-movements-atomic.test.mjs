@@ -66,6 +66,7 @@ test('recipe deduction and undo are all-or-nothing across multiple stock items',
       ingredients: [
         { name: flour.name, amount: 100, unit: 'g' },
         { name: butter.name, amount: 50, unit: 'g' },
+        { name: flour.name, amount: 450, unit: 'g' },
       ],
     }],
   };
@@ -84,15 +85,16 @@ test('recipe deduction and undo are all-or-nothing across multiple stock items',
 
   try {
     result = await deductRecipe(recipe);
-    assert.equal(result.moves.length, 2);
-    assert.equal(getItem(flour.id).stock, 400);
+    assert.equal(result.moves.length, 3);
+    assert.ok(result.short.includes(flour.name), 'repeated flour ingredients must not spend more than available stock');
+    assert.equal(getItem(flour.id).stock, 0);
     assert.equal(getItem(butter.id).stock, 200);
 
     db.tx = async () => { throw new Error('simulated undo transaction failure'); };
     await assert.rejects(undoMovements(result.moves), /simulated undo transaction failure/);
     assert.equal(getItem(flour.id).stock, 400);
     assert.equal(getItem(butter.id).stock, 200);
-    assert.equal(movements(flour.id).length + movements(butter.id).length, 2);
+    assert.equal(movements(flour.id).length + movements(butter.id).length, 3);
   } finally {
     db.tx = originalTx;
   }
