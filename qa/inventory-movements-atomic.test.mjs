@@ -92,7 +92,7 @@ test('recipe deduction and undo are all-or-nothing across multiple stock items',
 
     db.tx = async () => { throw new Error('simulated undo transaction failure'); };
     await assert.rejects(undoMovements(result.moves), /simulated undo transaction failure/);
-    assert.equal(getItem(flour.id).stock, 400);
+    assert.equal(getItem(flour.id).stock, 0, 'failed undo must leave the completed deduction unchanged');
     assert.equal(getItem(butter.id).stock, 200);
     assert.equal(movements(flour.id).length + movements(butter.id).length, 3);
   } finally {
