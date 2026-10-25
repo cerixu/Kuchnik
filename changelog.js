@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.29': Object.freeze({
+    intro: 'Kuchnik 1.4.29 — ograniczenie czasu oczekiwania service workera.',
+    items: [
+      'Nawigacja nie czeka bez końca na sieć, jeśli odpowiedź nie istnieje jeszcze w cache.',
+      'Przy dostępnej kopii aplikacja wraca do cache po krótkim limicie sieciowym.',
+      'Dodano testy regresyjne dla braku cache, wolnej sieci i szybkiej odpowiedzi.'
+    ],
+    footer: 'Zmiana dotyczy wyłącznie pobierania zasobów; receptury, magazyn i historia pozostają bez zmian.'
+  }),
   '1.4.28': Object.freeze({
     intro: 'Kuchnik 1.4.28 — test trwałości ulubionych.',
     items: [
