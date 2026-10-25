@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Wersja pośrednia 1.4.0.** Gotowe: pełny przepis w dużym szklanym oknie („Cały przepis”), kolorowe ikony składników (66 sztuk, zamiast emoji), polska odmiana porcji, rdzeń magazynu (baza, logika, import/eksport kopii), własny dekoder kodów EAN. Ekrany magazynu, skaner w aplikacji, zakładki „Gotuję” i „Więcej” oraz nowe przepisy dochodzą w kolejnym wydaniu.
+> **Wersja robocza 1.6.1.** Integracja z Żarłoka obejmuje kalkulator pizzy „Mam mąkę”, ekran Gotuję, magazyn, skaner EAN, lokalne zdjęcia potraw i rozszerzony zestaw testów QA. Service worker nie czeka bez końca na sieć przy braku wpisu w cache: po 3,5 s uruchamia fallback, a przy dostępnej kopii wraca do cache. Zmiana nie modyfikuje bazy danych ani danych użytkownika.
 
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
