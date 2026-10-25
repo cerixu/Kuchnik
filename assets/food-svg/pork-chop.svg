@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title>Kotlet schabowy</title><desc>Złocisty kotlet schabowy z cytryną i ziołami.</desc>
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#24272a"/><stop offset="1" stop-color="#111315"/></radialGradient><linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4044"/><stop offset="1" stop-color="#171a1c"/></linearGradient></defs>
+<rect width="240" height="240" rx="28" fill="url(#bg)"/>
+<ellipse cx="120" cy="188" rx="76" ry="9" fill="#000" opacity=".35"/>
+<circle cx="120" cy="118" r="83" fill="url(#plate)" stroke="#a97948" stroke-width="2.5"/>
+<circle cx="120" cy="118" r="72" fill="none" stroke="#e1b574" stroke-width="1" opacity=".55"/>
+<g><path d="M72 85 Q89 67 109 83 Q128 68 145 85 Q174 85 174 111 Q178 138 149 145 Q123 159 96 144 Q70 141 66 116 Q60 98 72 85Z" fill="#d8a35c" stroke="#f0ca86" stroke-width="4"/><g fill="#f5d89a"><path d="M83 96 l13 -7 7 9 -12 8Z"/><path d="M121 88 l12 4 -3 10 -13 -2Z"/><path d="M143 111 l12 -4 6 10 -12 7Z"/><path d="M96 126 l13 -6 6 9 -12 7Z"/><path d="M126 133 l12 -6 6 8 -11 6Z"/></g><path d="M60 139 Q76 125 91 140 Q77 155 60 139Z" fill="#6d9950"/><path d="M154 73 L176 86 L156 99Z" fill="#94b85c" stroke="#c5d987" stroke-width="2"/></g>
+<path d="M58 58 Q69 47 83 50" fill="none" stroke="#fff" stroke-width="2" opacity=".14" stroke-linecap="round"/>
+</svg>
