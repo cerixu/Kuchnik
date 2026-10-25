@@ -12,7 +12,8 @@
      • brakujące magazyny są dorabiane automatycznie,
      • operacja przerwana przez zerwane połączenie jest powtarzana,
      • gdy IndexedDB nie działa wcale, aplikacja przechodzi w TRYB AWARYJNY
-       (localStorage, a w ostateczności sama pamięć), zamiast pokazać błąd.
+       (localStorage, a w ostateczności sama pamięć), zamiast pokazać błąd;
+     • uszkodzony zapis awaryjny nie jest automatycznie nadpisywany pustymi danymi.
    ========================================================================== */
 
 const DB_NAME = 'kucharzyna-db';
@@ -154,18 +155,50 @@ const clone = (v) => { try { return JSON.parse(JSON.stringify(v)); } catch (_) {
 function mapBackend(persist) {
   const maps = {};
   const key = (s) => 'kdb:' + s;
+  let canRead = persist;
+  let canWrite = persist;
+  const suspendWrites = (reason) => {
+    canWrite = false;
+    status.mode = 'memory';
+    status.reason = reason;
+  };
   const load = (s) => {
     if (maps[s]) return maps[s];
     const m = new Map();
-    if (persist) {
-      try { const raw = localStorage.getItem(key(s)); if (raw) for (const v of JSON.parse(raw)) m.set(v[STORES[s]], v); } catch (_) { /* uszkodzone — zaczynamy od zera */ }
+    if (canRead) {
+      let raw = null;
+      try { raw = localStorage.getItem(key(s)); }
+      catch (_) {
+        canRead = false;
+        suspendWrites('Nie można odczytać awaryjnej pamięci przeglądarki. Zapis lokalny został wstrzymany, aby nie nadpisać istniejących danych.');
+      }
+      if (raw) {
+        try {
+          const values = JSON.parse(raw);
+          const primaryKey = STORES[s];
+          if (!Array.isArray(values) || values.some((v) =>
+            !v || typeof v !== 'object' || !Object.prototype.hasOwnProperty.call(v, primaryKey) || v[primaryKey] == null
+          )) throw new Error('Nieprawidłowy format danych');
+          for (const v of values) m.set(v[primaryKey], v);
+        } catch (_) {
+          // Nigdy nie zapisuj pustej mapy na uszkodzony klucz: oryginalny tekst
+          // może być jedyną kopią danych, którą da się później odzyskać.
+          suspendWrites(`Awaryjne dane „${s}” mają nieprawidłowy format. Oryginał pozostaje w localStorage; zapis awaryjny wstrzymano, aby go nie nadpisać.`);
+        }
+      }
     }
     return (maps[s] = m);
   };
   const flush = (s) => {
-    if (!persist) return;
-    try { localStorage.setItem(key(s), JSON.stringify([...load(s).values()])); }
-    catch (e) { status.quotaHit = true; }          // przepełnienie: dane żyją dalej w pamięci strony
+    if (!canWrite) return;
+    const values = [...load(s).values()];
+    // load() mogło wykryć uszkodzone dane i wstrzymać zapis.
+    if (!canWrite) return;
+    try { localStorage.setItem(key(s), JSON.stringify(values)); }
+    catch (_) {
+      status.quotaHit = true;
+      suspendWrites('Brak miejsca w awaryjnej pamięci przeglądarki. Dalszy zapis wstrzymano, aby nie nadpisać istniejących danych.');
+    }
   };
   const kp = (s, v) => v[STORES[s]];
   return {
