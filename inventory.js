@@ -26,13 +26,13 @@ const DAY = 86400000;
 /* ---------- Ładowanie / zapis ---------- */
 
 export async function loadInventory() {
-  try {
-    const [items, moves] = await Promise.all([db.getAll('inventoryItems'), db.getAll('inventoryMovements')]);
-    store.items = new Map(items.map((i) => [i.id, i]));
-    // Zachowujemy pełną historię ruchów. Nie usuwaj jej automatycznie na podstawie wieku:
-    // może być potrzebna do rozliczeń, strat i kontroli stanów.
-    store.moves = moves.sort((a, b) => b.at - a.at);
-  } catch (e) { console.warn('Magazyn: nie udało się wczytać', e); store.items = new Map(); store.moves = []; }
+  // Odczytujemy oba magazyny przed podmianą stanu w pamięci. Jeśli którykolwiek
+  // odczyt zawiedzie, zachowujemy ostatni poprawny snapshot i przekazujemy błąd
+  // do diagnostyki startu zamiast udawać, że magazyn jest pusty.
+  const [items, moves] = await Promise.all([db.getAll('inventoryItems'), db.getAll('inventoryMovements')]);
+  store.items = new Map(items.map((i) => [i.id, i]));
+  // Zachowujemy pełną historię ruchów; nie usuwamy jej automatycznie na podstawie wieku.
+  store.moves = moves.sort((a, b) => b.at - a.at);
   store.loaded = true;
   emit('inventory');
 }
@@ -424,20 +424,34 @@ export async function receiveShopping(items) {
     const before = Math.max(0, Number(item.stock) || 0);
     const now = Date.now();
     const nextItem = { ...item, stock: before + converted, updatedAt: now };
+    // Stable movement ID + add() makes the receipt idempotent even if two
+    // tabs process the same shopping row at the same time.
     const movement = {
-      id: uid('mv_'), at: now, cost: 0, reason: 'Kupione (lista zakupów)',
+      id: 'mv_receipt_' + sourceId, at: now, cost: 0, reason: 'Kupione (lista zakupów)',
       itemId: nextItem.id, name: nextItem.name, unit: nextItem.unit,
       type: 'purchase', amount: nextItem.stock - before, sourceShoppingId: sourceId,
     };
     const marked = { ...s, inventoryReceivedAt: now };
 
-    // IndexedDB commits stock, movement history and the shopping marker atomically.
-    // A reload or retry cannot add the same shopping row a second time.
-    await db.tx(['inventoryItems', 'inventoryMovements', 'shoppingItems'], (t) => {
-      t.put('inventoryItems', nextItem);
-      t.put('inventoryMovements', movement);
-      t.put('shoppingItems', marked);
-    });
+    // The unique movement key, stock update and shopping marker commit together.
+    // A concurrent duplicate aborts the whole transaction, never half-applying stock.
+    try {
+      await db.tx(['inventoryItems', 'inventoryMovements', 'shoppingItems'], (t) => {
+        t.add('inventoryMovements', movement);
+        t.put('inventoryItems', nextItem);
+        t.put('shoppingItems', marked);
+      });
+    } catch (error) {
+      // Browsers can report the uniqueness conflict slightly differently. Treat it
+      // as a retry only when the matching receipt is actually present in storage.
+      const prior = await db.get('inventoryMovements', movement.id).catch(() => null);
+      if (!prior || String(prior.sourceShoppingId || '') !== sourceId) throw error;
+      const alreadyMarked = { ...s, inventoryReceivedAt: prior.at || now };
+      await db.tx(['shoppingItems'], (t) => t.put('shoppingItems', alreadyMarked));
+      Object.assign(s, alreadyMarked);
+      skipped++;
+      continue;
+    }
 
     store.items.set(nextItem.id, nextItem);
     store.moves.unshift(movement);

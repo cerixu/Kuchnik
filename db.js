@@ -150,7 +150,7 @@ function idbBackend(first) {
     clear: (s) => run((d) => { const t = d.transaction(s, 'readwrite'); t.objectStore(s).clear(); return done(t); }),
     tx: (stores, fn) => run((d) => {
       const t = d.transaction(stores, 'readwrite');
-      fn({ put: (s, v) => t.objectStore(s).put(v), delete: (s, k) => t.objectStore(s).delete(k), clear: (s) => t.objectStore(s).clear() });
+      fn({ put: (s, v) => t.objectStore(s).put(v), add: (s, v) => t.objectStore(s).add(v), delete: (s, k) => t.objectStore(s).delete(k), clear: (s) => t.objectStore(s).clear() });
       return done(t);
     }),
   };
@@ -221,6 +221,11 @@ function mapBackend(persist) {
       const touched = new Set();
       fn({
         put: (s, v) => { load(s).set(kp(s, v), clone(v)); touched.add(s); },
+        add: (s, v) => {
+          const m = load(s), id = kp(s, v);
+          if (m.has(id)) throw Object.assign(new Error('Rekord już istnieje: ' + s), { name: 'ConstraintError' });
+          m.set(id, clone(v)); touched.add(s);
+        },
         delete: (s, k) => { load(s).delete(k); touched.add(s); },
         clear: (s) => { load(s).clear(); touched.add(s); },
       });

@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.35': Object.freeze({
+    intro: 'Kuchnik 1.4.35 — bezpieczniejsze przyjmowanie zakupów i odczyt magazynu.',
+    items: [
+      'Równoległe przyjęcie tej samej pozycji z listy zakupów nie nalicza drugi raz stanu ani historii ruchów.',
+      'Błąd odczytu magazynu nie czyści ostatniego poprawnego widoku w pamięci; rozruch przechodzi do diagnostyki zamiast udawać pusty magazyn.',
+      'Dodano testy regresyjne dla równoległych przyjęć i błędów odczytu.'
+    ],
+    footer: 'Bez migracji bazy danych. Istniejące receptury, stany i historia pozostają zachowane.'
+  }),
   '1.4.34': Object.freeze({
     intro: 'Kuchnik 1.4.34 — kalkulator pizzy z aktywnym zakwasem 1:1:2.',
     items: [
