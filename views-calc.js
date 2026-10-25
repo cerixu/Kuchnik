@@ -112,8 +112,8 @@ function pizzaCalculator() {
   async function saveAsRecipe(r) {
     const I = (name, amount, unit, extra = {}) => blankIngredient({ name, amount, unit, ...extra });
     const r1 = (v) => Math.round(v * 10) / 10;
-    const ings = [I('Mąka pszenna', r1(st.leavenType === 'starter' ? r.doughFlour : r.flour), 'g', { flour: true, percent: st.leavenType === 'starter' ? Math.round((100 - st.starterPct) * 100) / 100 : 100 }), I('Woda', r1(st.leavenType === 'starter' ? r.doughWater : r.water), 'g', { percent: st.hydration }), I('Sól', r1(r.salt), 'g', { percent: st.salt })];
-    if (st.leavenType === 'starter') ings.push(I('Zakwas macierzysty', r1(r.starterSeed), 'g'), I('Mąka pszenna do zakwasu', r1(r.starterFlour), 'g', { flour: true, percent: st.starterPct }), I('Woda do zakwasu', r1(r.starterWater), 'g'));
+    const ings = [I('Mąka pszenna', r1(st.leavenType === 'starter' ? r.doughFlour : r.flour), 'g', { flour: true, percent: st.leavenType === 'starter' ? Math.round((100 - st.starterPct) * 100) / 100 : 100 }), I('Woda', r1(st.leavenType === 'starter' ? r.doughWater : r.water), 'g', { percent: st.leavenType === 'starter' ? Math.round((st.hydration - 2 * st.starterPct) * 100) / 100 : st.hydration }), I('Sól', r1(r.salt), 'g', { percent: st.salt })];
+    if (st.leavenType === 'starter') ings.push(I('Zakwas macierzysty', r1(r.starterSeed), 'g'), I('Mąka pszenna do zakwasu', r1(r.starterFlour), 'g', { flour: true, percent: st.starterPct }), I('Woda do zakwasu', r1(r.starterWater), 'g', { percent: Math.round(2 * st.starterPct * 100) / 100 }));
     if (st.oil > 0) ings.push(I('Oliwa', r1(r.oil), 'g', { percent: st.oil }));
     if (st.leavenType !== 'starter') ings.push(I(`Drożdże ${YEAST_TYPES[st.yeastType].label}`, Math.round(r.yeast * 100) / 100, 'g', { percent: st.yeast }));
     const sec = blankSection('CIASTO'); sec.ingredients = ings;
@@ -121,7 +121,7 @@ function pizzaCalculator() {
       name: st.mode === 'flour' ? `Ciasto na pizzę (${fmtAmount(r.flour)} g mąki)` : `Ciasto na pizzę (${st.balls} × ${fmtAmount(st.ballWeight)} g)`, category: 'cat-pizza', servings: st.mode === 'flour' ? Math.max(1, r.ballCount) : st.balls, yieldAmount: Math.round(r.total), yieldUnit: 'g',
       fermentTime: Math.round((st.hours || 0) * 60), temperature: `fermentacja w ${st.temp} °C`, bakers: true, sections: [sec],
       description: st.leavenType === 'starter' ? `Hydracja ${st.hydration}%, sól ${st.salt}%, aktywny zakwas 1:1:2, zakwas macierzysty ${st.starterPct}% mąki.` : `Hydracja ${st.hydration}%, sól ${st.salt}%${st.oil ? `, oliwa ${st.oil}%` : ''}, drożdże ${st.yeast}%.`, tags: ['ciasto', 'kalkulator'],
-      steps: [blankStep(st.leavenType === 'starter' ? 'Wymieszaj aktywny zakwas z wodą i solą.' : 'Rozpuść sól w wodzie, dodaj drożdże.'), blankStep('Dodaj mąkę i wyrabiaj do gładkiego, elastycznego ciasta.'),
+      steps: [blankStep(st.leavenType === 'starter' ? 'Połącz zakwas macierzysty z odmierzoną mąką i wodą do zakwasu (1:1:2); użyj aktywnego, dojrzałego zakwasu.' : 'Rozpuść sól w wodzie, dodaj drożdże.'), blankStep(st.leavenType === 'starter' ? 'Dodaj pozostałą mąkę, wodę, sól i oliwę. Wyrabiaj do uzyskania gładkiego, elastycznego ciasta.' : 'Dodaj mąkę i wyrabiaj do gładkiego, elastycznego ciasta.'),
         blankStep(st.mode === 'flour' ? `Podziel orientacyjnie na ${r.ballCount} kulek po ${fmtAmount(st.ballWeight)} g${r.remainder > 0 ? `; pozostanie ${fmtAmount(r.remainder)} g ciasta` : ''}.` : `Podziel na ${st.balls} kulek po ${fmtAmount(st.ballWeight)} g.`), blankStep(`Fermentuj ok. ${fmtNum(st.hours, 1)} h w ${st.temp} °C.`)],
     });
     const saved = await saveRecipe(rec);
