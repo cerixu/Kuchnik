@@ -10,6 +10,7 @@ const page = await context.newPage();
 
 const errors = [];
 let networkCut = false;
+let stage = 'online bootstrap';
 page.on('pageerror', (e) => errors.push(String(e)));
 page.on('console', (m) => {
   if (m.type() !== 'error') return;
@@ -21,7 +22,7 @@ page.on('console', (m) => {
   // uncaught exceptions remain fatal via pageerror above.
   if (networkCut && (/ERR_FAILED|ERR_INTERNET_DISCONNECTED|ERR_NETWORK_CHANGED/.test(message)
     || /Failed to load resource/i.test(message))) return;
-  errors.push(message + (m.location()?.url ? ' [' + m.location().url + ']' : ''));
+  errors.push('[' + stage + '] ' + message + (m.location()?.url ? ' [' + m.location().url + ']' : ''));
 });
 
 async function ready() {
@@ -38,6 +39,7 @@ try {
   await ready();
   await dismiss();
 
+  stage = 'opening recipes online';
   await page.goto(base + '#/recipes', { waitUntil: 'networkidle' });
   await ready();
   await page.waitForSelector('a[href^="#/recipe/"]', { state: 'visible', timeout: 8000 });
@@ -65,6 +67,7 @@ try {
     throw new Error('Offline utracił receptury: online=' + onlineCount + ', offline=' + offlineCount);
   }
 
+  stage = 'opening recipe offline';
   await page.goto(base + href, { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('.detail', { state: 'visible', timeout: 8000 });
   if (!(await page.locator('.detail').count())) throw new Error('Receptura nie otworzyła się offline.');
