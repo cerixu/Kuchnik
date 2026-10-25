@@ -43,14 +43,6 @@ export const movements = (itemId) => (itemId ? store.moves.filter((m) => m.itemI
 export const inventoryLoaded = () => store.loaded;
 export const hasInventory = () => store.items.size > 0;
 
-async function persist(item) { item.updatedAt = Date.now(); store.items.set(item.id, item); await db.put('inventoryItems', item); }
-async function logMove(m) {
-  const mv = { id: uid('mv_'), at: Date.now(), cost: 0, reason: '', ...m };
-  store.moves.unshift(mv);
-  await db.put('inventoryMovements', mv);
-  return mv;
-}
-
 /* ---------- Jednostki ---------- */
 
 export const baseUnit = (u) => ({ g: 'g', kg: 'g', ml: 'ml', l: 'ml' }[u] || 'szt.');
@@ -124,11 +116,44 @@ export function guessLocation(name, cat) {
 }
 
 export async function saveItem(item, { log = null } = {}) {
-  item.name = String(item.name || '').trim();
-  if (!item.name) throw new Error('Podaj nazwę produktu');
-  item.stock = Math.max(0, Number(item.stock) || 0);
-  await persist(item);
-  if (log) await logMove({ itemId: item.id, name: item.name, unit: item.unit, ...log });
+  const name = String(item.name || '').trim();
+  if (!name) throw new Error('Podaj nazwę produktu');
+
+  // Prepare a detached candidate first. Failed storage writes must not publish
+  // an unsaved item into the in-memory inventory snapshot.
+  const nextItem = {
+    ...item,
+    name,
+    stock: Math.max(0, Number(item.stock) || 0),
+    updatedAt: Date.now(),
+  };
+
+  let movement = null;
+  if (log) {
+    movement = {
+      id: uid('mv_'),
+      at: nextItem.updatedAt,
+      cost: 0,
+      reason: '',
+      itemId: nextItem.id,
+      name: nextItem.name,
+      unit: nextItem.unit,
+      ...log,
+    };
+
+    // Keep the item and its audit movement atomic, matching changeStock().
+    await db.tx(['inventoryItems', 'inventoryMovements'], (tx) => {
+      tx.put('inventoryItems', nextItem);
+      tx.put('inventoryMovements', movement);
+    });
+  } else {
+    await db.put('inventoryItems', nextItem);
+  }
+
+  // Publish in-memory state only after IndexedDB has committed successfully.
+  Object.assign(item, nextItem);
+  store.items.set(item.id, item);
+  if (movement) store.moves.unshift(movement);
   emit('inventory');
   return item;
 }
