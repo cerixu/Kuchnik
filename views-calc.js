@@ -87,7 +87,7 @@ function pizzaCalculator() {
   function paintOut() {
     const r = compute();
     const ok = r.total > 0 && Number.isFinite(r.flour);
-    if (!ok) { out.replaceChildren(h('p', { class: 'muted pad' }, 'Wpisz liczbę kulek i wagę kulki.')); return; }
+    if (!ok) { out.replaceChildren(h('p', { class: 'muted pad' }, st.mode === 'flour' ? 'Wpisz ilość mąki w gramach.' : 'Wpisz liczbę kulek i wagę kulki.')); return; }
     const yl = YEAST_TYPES[st.yeastType].label;
     out.replaceChildren(
       h('div', { class: 'results-grid' },
@@ -122,7 +122,7 @@ function pizzaCalculator() {
       fermentTime: Math.round((st.hours || 0) * 60), temperature: `fermentacja w ${st.temp} °C`, bakers: true, sections: [sec],
       description: `Hydracja ${st.hydration}%, sól ${st.salt}%${st.oil ? `, oliwa ${st.oil}%` : ''}, drożdże ${st.yeast}%.`, tags: ['ciasto', 'kalkulator'],
       steps: [blankStep('Rozpuść sól w wodzie, dodaj drożdże.'), blankStep('Dodaj mąkę i wyrabiaj do gładkiego, elastycznego ciasta.'),
-        blankStep(`Podziel na ${st.balls} kulek po ${fmtAmount(st.ballWeight)} g.`), blankStep(`Fermentuj ok. ${fmtNum(st.hours, 1)} h w ${st.temp} °C.`)],
+        blankStep(st.mode === 'flour' ? 'Podziel ciasto na porcje o wymaganej gramaturze.' : `Podziel na ${st.balls} kulek po ${fmtAmount(st.ballWeight)} g.`), blankStep(`Fermentuj ok. ${fmtNum(st.hours, 1)} h w ${st.temp} °C.`)],
     });
     const saved = await saveRecipe(rec);
     toast('Zapisano recepturę', { action: { label: 'Otwórz', fn: () => navigate('/recipe/' + saved.id) } });
