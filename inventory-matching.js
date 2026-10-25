@@ -14,6 +14,7 @@ function inflectionStem(word) {
   const w = norm(word);
   if (w.length < 4) return w;
   if (/^ogor(?:ek|ka|ku|ki|kow|kiem)?$/.test(w)) return 'ogor';
+  if (/^olej(?:u|em|owi|ach|ami)?$/.test(w)) return 'olej';
   if (w === 'czosnek' || w === 'czosnku') return 'czosn';
   return w.replace(/(?:owymi|owych|owego|owej|owie|ami|ach|ech|ich|ych|ego|emu|owa|owe|owy|owi|ow|om|em|iej|ej|ie|ku|ek|y|i|e|a|u|o)$/, '') || w;
 }
