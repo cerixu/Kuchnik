@@ -26,6 +26,26 @@ const files = [
   'assets/food-svg/tuna-sashimi.svg',
   'assets/food-svg/fries.svg',
   'assets/food-svg/apple-pie.svg',
+  'assets/food-svg/bolognese.svg',
+  'assets/food-svg/pesto-pasta.svg',
+  'assets/food-svg/kebab.svg',
+  'assets/food-svg/caprese.svg',
+  'assets/food-svg/burrata-salad.svg',
+  'assets/food-svg/omelette.svg',
+  'assets/food-svg/avocado-toast.svg',
+  'assets/food-svg/fried-rice.svg',
+  'assets/food-svg/pad-thai.svg',
+  'assets/food-svg/udon.svg',
+  'assets/food-svg/grilled-shrimp.svg',
+  'assets/food-svg/fish-and-chips.svg',
+  'assets/food-svg/meatballs.svg',
+  'assets/food-svg/pork-chop.svg',
+  'assets/food-svg/roast-duck.svg',
+  'assets/food-svg/creme-brulee.svg',
+  'assets/food-svg/cannoli.svg',
+  'assets/food-svg/churros.svg',
+  'assets/food-svg/brownie.svg',
+  'assets/food-svg/waffles.svg',
 ];
 const sw = fs.readFileSync('sw.js', 'utf8');
 const photos = fs.readFileSync('food-photos.js', 'utf8');
@@ -58,8 +78,8 @@ test('new SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.match(util, /APP_VERSION = '1\.4\.41'/);
-  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.41'/);
-  assert.ok(changelog.includes("'1.4.41'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.41'), 'README version missing');
+  assert.match(util, /APP_VERSION = '1\.4\.42'/);
+  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.42'/);
+  assert.ok(changelog.includes("'1.4.42'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.42'), 'README version missing');
 });
