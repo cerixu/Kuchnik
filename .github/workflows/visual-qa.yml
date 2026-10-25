@@ -24,6 +24,8 @@ jobs:
         run: python3 -m http.server 4173 >/tmp/zaruok-http.log 2>&1 &
       - name: Architecture audit
         run: node qa/architecture-audit.mjs
+      - name: Service-worker network timeout regression
+        run: node --test qa/sw-network-timeout.test.mjs
       - name: JS compatibility audit
         run: node qa/js-compat.mjs
       - name: Mobile visual regression smoke
