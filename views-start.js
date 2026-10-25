@@ -75,7 +75,7 @@ export function startView() {
     kids.push(h('div', { class: 'qa-row', role: 'group', 'aria-label': 'Szybkie akcje' },
       action('Nowa receptura', 'plus', '/new', { primary: true }), action('Moje receptury', 'pot', '/recipes'), action('Ostatnio używane', 'clock', '/recipes?f=recent'),
       action('Ulubione', 'heart', '/recipes?f=fav'), action('Kalkulatory', 'calc', '/calc'), action('Lista zakupów', 'cart', '/shopping', { badge: n }),
-      action('Szukaj w sieci', 'globe', '/search'), action('Minutnik', 'timer', null, { fn: () => openTimersSheet() })));
+      action('Szukaj w sieci', 'globe', '/search'), action('Magazyn', 'fridge', '/inventory'), action('Minutnik', 'timer', null, { fn: () => openTimersSheet() })));
 
     if (backupDue()) {
       const d = daysSinceBackup();
