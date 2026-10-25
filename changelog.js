@@ -5,6 +5,15 @@
    ========================================================================== */
 
 export const CHANGELOG = Object.freeze({
+  '1.6.1': Object.freeze({
+    intro: 'Kuchnik 1.6.1 — bezterminowe oczekiwanie na sieć nie blokuje już nawigacji.',
+    items: [
+      'Service worker stosuje limit 3,5 s także wtedy, gdy brakuje odpowiedzi w cache.',
+      'Gdy kopia jest dostępna, po przekroczeniu limitu zwracana jest wersja z cache.',
+      'Dodano testy dla zawieszonej sieci, braku cache i szybkiej odpowiedzi; poprawiono też kontrolę składni w workflow publikacji.'
+    ],
+    footer: 'Zmiana nie dotyka IndexedDB ani danych receptur, zakupów i magazynu.'
+  }),
   '1.6.0': Object.freeze({
     intro: 'Kuchnik 1.6.0 — kalkulator pizzy „Mam mąkę”.',
     items: [
