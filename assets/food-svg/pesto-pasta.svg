@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title>Pasta al pesto</title><desc>Makaron z zielonym pesto i serem.</desc>
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#24272a"/><stop offset="1" stop-color="#111315"/></radialGradient><linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4044"/><stop offset="1" stop-color="#171a1c"/></linearGradient></defs>
+<rect width="240" height="240" rx="28" fill="url(#bg)"/>
+<ellipse cx="120" cy="188" rx="76" ry="9" fill="#000" opacity=".35"/>
+<circle cx="120" cy="118" r="83" fill="url(#plate)" stroke="#a97948" stroke-width="2.5"/>
+<circle cx="120" cy="118" r="72" fill="none" stroke="#e1b574" stroke-width="1" opacity=".55"/>
+<g><path d="M54 118 Q68 80 91 108 T132 99 T180 120" fill="none" stroke="#e6c574" stroke-width="12" stroke-linecap="round"/><path d="M58 132 Q77 94 101 121 T145 112 T177 134" fill="none" stroke="#b6c66d" stroke-width="9" stroke-linecap="round"/><g fill="#4f8052"><ellipse cx="82" cy="94" rx="8" ry="4" transform="rotate(-30 82 94)"/><ellipse cx="133" cy="94" rx="9" ry="4" transform="rotate(28 133 94)"/><ellipse cx="161" cy="128" rx="8" ry="4" transform="rotate(-20 161 128)"/></g><g fill="#fff0c4"><circle cx="102" cy="105" r="3"/><circle cx="147" cy="117" r="3"/><circle cx="75" cy="124" r="2.5"/></g></g>
+<path d="M58 58 Q69 47 83 50" fill="none" stroke="#fff" stroke-width="2" opacity=".14" stroke-linecap="round"/>
+</svg>
