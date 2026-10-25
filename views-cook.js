@@ -10,6 +10,7 @@ import { scaleRecipe, factorFromServings } from './calculator.js';
 import { qtyParts } from './components.js';
 import { fmtNum, debounce, parseNum } from './util.js';
 import { startTimer, openTimersSheet } from './timers.js';
+import { hasInventory, availability, deductRecipe } from './inventory.js';
 
 /* ---------- Widok ---------- */
 
@@ -203,7 +204,36 @@ export function cookView({ id }) {
       const ok = await confirmDialog({ title: 'Zakończyć gotowanie?', message: 'Nie wszystko jest odhaczone. Postęp zostanie zapamiętany, więc możesz wrócić do tego miejsca.', confirmText: 'Zakończ' });
       if (!ok) return;
     }
-    if (all) { prog.ing = {}; prog.steps = {}; prog.tab = 'ing'; saveProg.flush(); toast('Smacznego! 👨‍🍳'); }
+
+    // Odejmowanie wykonujemy wyłącznie po pełnym zakończeniu i po potwierdzeniu.
+    // Używamy przeliczonej receptury, więc ilości odpowiadają wybranej liczbie porcji.
+    if (all && getSetting('invAutoDeduct') !== false && hasInventory()) {
+      const recipeToUse = view();
+      const av = availability(recipeToUse, 1);
+      const gaps = av.rows.filter((r) => ['partial', 'missing'].includes(r.status) && r.ing.amount != null);
+      const gapText = gaps.length
+        ? '\n\nBraki / niewystarczające stany: ' + gaps.slice(0, 6).map((r) => r.ing.name).join(', ') + (gaps.length > 6 ? '…' : '')
+        : '';
+      const ok = await confirmDialog({
+        title: 'Rozliczyć składniki?',
+        message: 'Po potwierdzeniu aplikacja odejmie z magazynu dostępne ilości składników tej receptury.' + gapText,
+        confirmText: 'Odejmij z magazynu',
+      });
+      if (!ok) return;
+      try {
+        const result = await deductRecipe(recipeToUse, 1);
+        if (result.short.length) {
+          toast('Gotowanie zapisane. Niepełne stany: ' + result.short.slice(0, 3).join(', '), { type: 'error' });
+        } else {
+          toast('Składniki odjęte z magazynu ✓');
+        }
+      } catch (e) {
+        console.error('Nie udało się rozliczyć magazynu po gotowaniu', e);
+        toast('Gotowanie zakończone, ale nie udało się zaktualizować magazynu', { type: 'error' });
+      }
+    }
+
+    if (all) { prog.ing = {}; prog.steps = {}; prog.tab = 'ing'; saveProg.flush(); if (getSetting('invAutoDeduct') === false || !hasInventory()) toast('Smacznego! 👨‍🍳'); }
     goBack('/recipe/' + id);
   }
 
