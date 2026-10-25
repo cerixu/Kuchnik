@@ -127,7 +127,7 @@ const SVG_FILES = Object.freeze({
 });
 
 const SVG_RECIPE_RULES = [
-  ['bolognese', /\b(tagliatelle al ragu|tagliatelle al ragù|tagliatelle z ragu|tagliatelle z sosem bolognese|spaghetti bolognese)\b/],
+  ['bolognese', /\b(spaghetti bolognese|spaghetti alla bolognese|bolognese pasta)\b/],
   ['pesto-pasta', /\b(pasta al pesto|makaron z pesto|spaghetti pesto|pesto pasta)\b/],
   ['kebab', /\b(kebab|kebap|doner kebab|döner kebab)\b/],
   ['caprese', /\b(insalata caprese|caprese|salatka caprese)\b/],
