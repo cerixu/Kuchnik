@@ -197,26 +197,49 @@ function mapBackend(persist) {
     }
     return (maps[s] = m);
   };
-  const flush = (s) => {
-    if (!canWrite) return;
-    const values = [...load(s).values()];
-    // load() mogło wykryć uszkodzone dane i wstrzymać zapis.
-    if (!canWrite) return;
-    try { localStorage.setItem(key(s), JSON.stringify(values)); }
-    catch (_) {
-      status.quotaHit = true;
-      suspendWrites('Brak miejsca w awaryjnej pamięci przeglądarki. Dalszy zapis wstrzymano, aby nie nadpisać istniejących danych.');
+  // Jednomagazynowy zapis też musi być „persist-first”: nie publikuj nowej mapy
+  // w pamięci, dopóki localStorage nie potwierdzi zapisu. setItem jest atomowy
+  // dla pojedynczego klucza, więc przy błędzie zachowujemy poprzednią mapę i tekst.
+  const commitMap = (s, next) => {
+    if (!canWrite) {
+      // Jawny tryb pamięci: nie nadpisuj uszkodzonego / niedostępnego klucza.
+      maps[s] = next;
+      return;
     }
+    const serialized = JSON.stringify([...next.values()]);
+    try {
+      localStorage.setItem(key(s), serialized);
+    } catch (e) {
+      if (e && e.name === 'QuotaExceededError') status.quotaHit = true;
+      suspendWrites('Nie udało się utrwalić zmiany w awaryjnej pamięci. Ostatnia operacja została odrzucona, a poprzednie dane zachowano; dalsze zapisy wymagają trybu pamięci lub zwolnienia miejsca.');
+      throw Object.assign(
+        new Error('Nie udało się zapisać danych awaryjnych; poprzedni stan zachowano.'),
+        { name: e?.name || 'StorageError', cause: e },
+      );
+    }
+    maps[s] = next;
   };
   const kp = (s, v) => v[STORES[s]];
   return {
     getAll: async (s) => [...load(s).values()].map(clone),
     get: async (s, k) => { const v = load(s).get(k); return v === undefined ? undefined : clone(v); },
     byIndex: async (s, i, k) => [...load(s).values()].filter((v) => v[i] === k).map(clone),
-    put: async (s, v) => { load(s).set(kp(s, v), clone(v)); flush(s); },
-    putMany: async (s, vals) => { const m = load(s); vals.forEach((v) => m.set(kp(s, v), clone(v))); flush(s); },
-    delete: async (s, k) => { load(s).delete(k); flush(s); },
-    clear: async (s) => { load(s).clear(); flush(s); },
+    put: async (s, v) => {
+      const next = new Map(load(s));
+      next.set(kp(s, v), clone(v));
+      commitMap(s, next);
+    },
+    putMany: async (s, vals) => {
+      const next = new Map(load(s));
+      vals.forEach((v) => next.set(kp(s, v), clone(v)));
+      commitMap(s, next);
+    },
+    delete: async (s, k) => {
+      const next = new Map(load(s));
+      next.delete(k);
+      commitMap(s, next);
+    },
+    clear: async (s) => commitMap(s, new Map()),
     tx: async (stores, fn) => {
       const scope = new Set(stores);
       const staged = new Map();
