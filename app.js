@@ -25,6 +25,8 @@ import { guideView } from './views-guide.js';
 import { searchView } from './views-search.js';
 import { inventoryView } from './views-inventory.js';
 
+window.__kuchnikBootStarted = true;
+
 const root = document.documentElement;
 
 /* ---------- Motyw, tryb, rozmiary ---------- */
@@ -152,6 +154,7 @@ route('/inventory', () => inventoryView(), { tab: 'start' });
 /* ---------- Start ---------- */
 
 function fatal(err) {
+  window.__kuchnikBootFailed = true;
   console.error(err);
   const bootEl = $('#boot');
   if (bootEl) bootEl.remove();
@@ -190,10 +193,18 @@ async function boot() {
   try {
     // Etap startu ma limit czasu. Gdy IndexedDB/Safari się zawiesi, pokaż błąd
     // zamiast zostawiać użytkownika na nieskończonej animacji.
-    const timed = (label, promise) => Promise.race([
-      promise,
-      new Promise((_, reject) => setTimeout(() => reject(Object.assign(new Error('Przekroczono limit czasu: ' + label), { name: 'StartupTimeoutError' })), 12000)),
-    ]);
+    // IndexedDB ma 4 ograniczone próby (do ok. 24,4 s) i potem uruchamia
+    // bezpieczny backend awaryjny. Limit startu musi pozwolić temu fallbackowi zadziałać.
+    const timed = (label, promise, limit = 28000) => new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(Object.assign(
+        new Error('Przekroczono limit czasu: ' + label),
+        { name: 'StartupTimeoutError' },
+      )), limit);
+      Promise.resolve(promise).then(
+        (value) => { clearTimeout(timer); resolve(value); },
+        (error) => { clearTimeout(timer); reject(error); },
+      );
+    });
     await timed('otwieranie bazy danych', openDB());
     await timed('wczytywanie receptur i ustawień', loadAll());
     await timed('wczytywanie magazynu', loadInventory());

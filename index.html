@@ -50,12 +50,13 @@
   <script>
     // Diagnostyka startu: błąd ładowania modułu lub zawieszony rozruch nie może zostawić samej animacji.
     (function () {
-      var timer;
+      var timer, hardTimer;
       function showBootError(message) {
         var boot = document.getElementById('boot');
         if (!boot || boot.dataset.recoveryShown === '1') return;
         boot.dataset.recoveryShown = '1';
         clearTimeout(timer);
+        clearTimeout(hardTimer);
         boot.setAttribute('aria-hidden', 'false');
         boot.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;background:#171719;color:#f5f5f5;font:16px system-ui;text-align:center;gap:14px';
         boot.replaceChildren();
@@ -67,14 +68,29 @@
         boot.append(title, detail, retry, help);
       }
       window.addEventListener('error', function (e) {
-        if (document.getElementById('boot')) showBootError(e.message || 'Nie udało się załadować plików aplikacji.');
-      });
+        if (document.getElementById('boot') && !window.__kuchnikBootStarted) {
+          showBootError(e.message || 'Nie udało się załadować modułów aplikacji.');
+        }
+      }, true);
       window.addEventListener('unhandledrejection', function (e) {
-        if (document.getElementById('boot')) showBootError(e.reason && e.reason.message ? e.reason.message : 'Błąd podczas uruchamiania danych.');
+        if (document.getElementById('boot') && !window.__kuchnikBootStarted) {
+          showBootError(e.reason && e.reason.message ? e.reason.message : 'Błąd podczas ładowania modułów aplikacji.');
+        }
       });
+      // Szybka diagnostyka tylko wtedy, gdy moduł app.js w ogóle nie wystartował.
       timer = setTimeout(function () {
-        if (document.getElementById('boot')) showBootError('Aplikacja nie zakończyła startu w 15 sekund. Odśwież ją; jeśli nadal się zawiesza, przekaż nam ten ekran diagnostyczny.');
+        if (document.getElementById('boot') && !window.__kuchnikBootStarted) {
+          showBootError('Moduły aplikacji nie załadowały się w 15 sekund. Odśwież stronę; dane pozostają nietknięte.');
+        }
       }, 15000);
+      // Awaryjny watchdog na wypadek nieobsłużonego błędu po starcie modułu.
+      hardTimer = setTimeout(function () {
+        if (document.getElementById('boot')) {
+          showBootError(window.__kuchnikBootStarted
+            ? 'Rozruch nie zakończył się w 35 sekund. Odśwież aplikację; nie usuwaj danych witryny.'
+            : 'Nie udało się załadować aplikacji w 35 sekund. Sprawdź połączenie i spróbuj ponownie.');
+        }
+      }, 35000);
     })();
   </script>
   <script type="module" src="app.js"></script>

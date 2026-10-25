@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Wersja pośrednia 1.4.9.** Gotowe: pełny przepis w dużym szklanym oknie („Cały przepis”), kolorowe ikony składników (66 sztuk, zamiast emoji), polska odmiana porcji, magazyn z ruchem stanów i stratami, skaner EAN oraz rozliczanie składników po zakończeniu trybu GOTUJĘ.
+> **Wersja pośrednia 1.4.10.** Gotowe: pełny przepis w dużym szklanym oknie („Cały przepis”), kolorowe ikony składników (66 sztuk, zamiast emoji), polska odmiana porcji, magazyn z ruchem stanów i stratami, skaner EAN oraz rozliczanie składników po zakończeniu trybu GOTUJĘ.
 
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
