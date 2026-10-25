@@ -29,14 +29,17 @@ try {
     null,
     { timeout: 20000 },
   );
+  const delayObservedAt = Date.now();
   await page.waitForFunction(
     () => window.__kuchnikBootFailed === true,
     null,
     { timeout: 12000 },
   );
 
-  // Poczekaj, aż celowo opóźniona operacja zakończy się po ekranie błędu.
-  await page.waitForTimeout(6500);
+  // Poczekaj do końca pełnego opóźnienia liczonego od startu operacji,
+  // aby test sprawdził stan także PO jej późnym zakończeniu.
+  const remainingDelay = Math.max(0, 12500 - (Date.now() - delayObservedAt));
+  await page.waitForTimeout(remainingDelay);
   const state = await page.evaluate(() => ({
     failed: window.__kuchnikBootFailed === true,
     ready: window.__kucharzyna?.ready === true,
