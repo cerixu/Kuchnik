@@ -54,13 +54,20 @@ function guardOK(w, i, count) {
   return true;
 }
 
+/** Reject barcode-like substrings inside a longer code (e.g. EAN-8 false hits inside EAN-13). */
+function quietZonesOK(w, start, runCount) {
+  if (start <= 0 || start + runCount >= w.length) return false;
+  const unit = (w[start] + w[start + 1] + w[start + 2]) / 3;
+  return unit > 0 && w[start - 1] >= unit * 2.5 && w[start + runCount] >= unit * 2.5;
+}
+
 /** `w` — kolejne szerokości biegów (naprzemiennie kreska/przerwa), `barFirst` — czy w[0] jest kreską. */
 function decodeRuns(w, barFirst) {
   const n = w.length;
   for (let i = barFirst ? 0 : 1; i + 43 <= n; i += 2) {
     if (!guardOK(w, i, 3)) continue;
     // EAN-13 / UPC-A: 3 + 24 + 5 + 24 + 3 = 59 biegów
-    if (i + 59 <= n) {
+    if (i + 59 <= n && quietZonesOK(w, i, 59)) {
       const left = [], par = [];
       let ok = true, j = i + 3;
       for (let k = 0; k < 6 && ok; k++, j += 4) { const r = bestDigit(w.slice(j, j + 4), ['L', 'G']); if (!r) ok = false; else { left.push(r.d); par.push(r.set); } }
