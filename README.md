@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Wersja pośrednia 1.4.8.** Gotowe: pełny przepis w dużym szklanym oknie („Cały przepis”), kolorowe ikony składników (66 sztuk, zamiast emoji), polska odmiana porcji, magazyn z ruchem stanów i stratami, skaner EAN oraz rozliczanie składników po zakończeniu trybu GOTUJĘ.
+> **Wersja pośrednia 1.4.9.** Gotowe: pełny przepis w dużym szklanym oknie („Cały przepis”), kolorowe ikony składników (66 sztuk, zamiast emoji), polska odmiana porcji, magazyn z ruchem stanów i stratami, skaner EAN oraz rozliczanie składników po zakończeniu trybu GOTUJĘ.
 
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
@@ -20,6 +20,7 @@ Wszystkie dane są w pamięci Twojego urządzenia.
 - **GOTUJĘ — „Prowadź mnie” krok po kroku:** ekran „Przygotuj” (składniki, zmiana porcji), potem jeden krok na ekranie z potrzebnymi składnikami i wykrytymi minutnikami; przesuwanie palcem, czytanie na głos, wznawianie, ocena 1–5 i notatka na koniec. Obok klasyczna „Lista kontrolna”.
 - **Wiele minutników naraz** z pastylką widoczną na każdym ekranie.
 - **Szukaj w sieci — w samej aplikacji** (patrz niżej).
+- **Start i diagnostyka:** jeśli ładowanie modułów albo bazy się zawiesi, aplikacja pokaże ekran diagnostyczny z przyciskiem odświeżenia zamiast bez końca wyświetlać animację startową. Limit czasu rozruchu wykrywa problem z bazą.
 - **Magazyn:** osobny ekran dostępny ze Startu; wyszukiwanie, filtrowanie po lokalizacji, dodawanie i edycja produktów, szybkie zwiększanie stanów, zapisywanie strat i podgląd ich kosztu. Po pełnym zakończeniu trybu GOTUJĘ aplikacja może po potwierdzeniu odjąć dostępne składniki od stanu magazynu, zgodnie z przeliczoną liczbą porcji. Skaner EAN uruchamia kamerę, automatycznie wykrywa kod i opcjonalnie pobiera nazwę produktu z Open Food Facts. Testy kamery na fizycznym iPhonie pozostają do wykonania.
 - **Narzędzia kuchenne** (zakładka Kalkulatory): pizza/ciasto z procentami piekarskimi — obliczanie od liczby i masy kulek albo bezpośrednio od ilości mąki (np. 7,5 kg), procenty, przeliczanie receptury, koszt i food cost, sól i solanki, zakwas, forma do pieczenia, przelicznik jednostek (także g ↔ ml), temperatury mięs, czasy gotowania z minutnikiem, zamienniki, „Co mam w lodówce?”, „Co dziś gotujemy?”.
 - **Przelicz**, **procenty piekarskie**, **food cost**, **zakupy** (z alejkami), **import z tekstu**, **historia zmian** z przywracaniem wersji, **kopia zapasowa JSON** — jak w poprzednich wersjach.
