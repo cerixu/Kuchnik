@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.41';
+const VERSION = 'kucharzyna-1.4.42';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -42,6 +42,26 @@ const CORE = [
   'assets/food-svg/tuna-sashimi.svg',
   'assets/food-svg/fries.svg',
   'assets/food-svg/apple-pie.svg',
+  'assets/food-svg/bolognese.svg',
+  'assets/food-svg/pesto-pasta.svg',
+  'assets/food-svg/kebab.svg',
+  'assets/food-svg/caprese.svg',
+  'assets/food-svg/burrata-salad.svg',
+  'assets/food-svg/omelette.svg',
+  'assets/food-svg/avocado-toast.svg',
+  'assets/food-svg/fried-rice.svg',
+  'assets/food-svg/pad-thai.svg',
+  'assets/food-svg/udon.svg',
+  'assets/food-svg/grilled-shrimp.svg',
+  'assets/food-svg/fish-and-chips.svg',
+  'assets/food-svg/meatballs.svg',
+  'assets/food-svg/pork-chop.svg',
+  'assets/food-svg/roast-duck.svg',
+  'assets/food-svg/creme-brulee.svg',
+  'assets/food-svg/cannoli.svg',
+  'assets/food-svg/churros.svg',
+  'assets/food-svg/brownie.svg',
+  'assets/food-svg/waffles.svg',
   'app.js', 'changelog.js', 'router.js', 'pwa.js', 'ui.js', 'util.js', 'db.js', 'recipes.js', 'calculator.js', 'importer.js', 'backup.js',
   'components.js', 'shopping.js', 'art.js', 'food-photos.js', 'inventory-matching.js', 'inventory.js', 'barcode.js', 'ingredient-icons.js', 'art-kit.js', 'art-extra.js', 'nutrition.js', 'seeds.js', 'seeds-pl.js', 'seeds-world.js', 'seeds-more.js', 'timers.js', 'kitchen.js', 'tools-data.js', 'calc-kit.js', 'search.js',
   'views-start.js', 'views-recipes.js', 'views-detail.js', 'views-editor.js', 'views-cook.js', 'views-cook-home.js', 'views-calc.js', 'views-tools.js', 'views-guide.js', 'views-search.js', 'views-import.js', 'views-settings.js', 'views-inventory.js',
