@@ -195,7 +195,7 @@ async function boot() {
     // zamiast zostawiać użytkownika na nieskończonej animacji.
     // IndexedDB ma 4 ograniczone próby (do ok. 24,4 s) i potem uruchamia
     // bezpieczny backend awaryjny. Limit startu musi pozwolić temu fallbackowi zadziałać.
-    const timed = (label, promise, limit = 28000) => new Promise((resolve, reject) => {
+    const timed = (label, promise, limit = 32000) => new Promise((resolve, reject) => {
       const timer = setTimeout(() => reject(Object.assign(
         new Error('Przekroczono limit czasu: ' + label),
         { name: 'StartupTimeoutError' },
