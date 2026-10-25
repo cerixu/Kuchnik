@@ -146,6 +146,9 @@ jobs:
       - name: Run atomic shopping receipt regression test
         run: node --experimental-default-type=module --test qa/receive-shopping.test.mjs
 
+      - name: Run service-worker network timeout regression test
+        run: node --experimental-default-type=module --test qa/sw-network-timeout.test.mjs
+
       - name: Run barcode decoder regression tests
         run: node --experimental-default-type=module qa/barcode-smoke.mjs
 
