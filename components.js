@@ -4,7 +4,7 @@
 import { h, icon, toast } from './ui.js';
 import { navigate } from './router.js';
 import { catName, catIcon, ORIGINS, toggleFavorite } from './recipes.js';
-import { fmtMinutes, fmtAmount, fmtNum } from './util.js';
+import { fmtMinutes, fmtAmount, fmtKitchenAmount, fmtNum, fmtUnit } from './util.js';
 import { recipeArtUrl, categoryArtUrl } from './art.js';
 import { attachRecipePhoto, attachCategoryPhoto } from './food-photos.js';
 import { estimateKcal } from './nutrition.js';
@@ -139,7 +139,10 @@ export function sectionHead(title, { action, onAction, count } = {}) {
 /** Ilość składnika do wyświetlenia: { num: '1000', unit: 'g' } albo { num: '', unit: 'do smaku' }. */
 export function qtyParts(ing) {
   if (ing.amount == null || !Number.isFinite(ing.amount)) return { num: '', unit: 'do smaku' };
-  return { num: fmtAmount(ing.amount), unit: ing.unit === 'szt.' ? 'szt.' : ing.unit || '' };
+  return {
+    num: fmtKitchenAmount(ing.amount, ing.unit || ''),
+    unit: ing.unit === 'szt.' ? 'szt.' : fmtUnit(ing.amount, ing.unit || ''),
+  };
 }
 
 /** Receptura jako czysty tekst (kopiowanie, udostępnianie). */
