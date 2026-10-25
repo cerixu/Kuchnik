@@ -4,7 +4,7 @@
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
-Wszystkie dane są w pamięci Twojego urządzenia. W wersji 1.4.40 dodano trzy autorskie, lokalne ilustracje SVG: ramen tonkotsu, sushi maki i croissant; działają offline, a własne zdjęcia nadal mają pierwszeństwo.
+Wszystkie dane są w pamięci Twojego urządzenia. W wersji 1.4.42 zatwierdzonym wzorcem ilustracji są przekazane przez użytkownika SVG Carbonary i Bruschetty. Nowe ilustracje muszą zachować ich realistyczny, malarski charakter, tekstury składników, ciemną zastawę i dopracowane oświetlenie; nie dodawać uproszczonych, schematycznych ikon. Własne zdjęcia użytkownika nadal mają pierwszeństwo.
 
 ## Co potrafi
 
