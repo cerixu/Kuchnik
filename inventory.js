@@ -320,15 +320,50 @@ export function shoppingGaps(recipe, factor = 1) {
 export async function deductRecipe(recipe, factor = 1) {
   const av = availability(recipe, factor);
   const moves = [], used = [], short = [];
+  const nextItems = new Map();
+
   for (const r of av.rows) {
-    if (!r.item || !(r.need > 0) || !['ok', 'partial'].includes(r.status)) { if (r.status === 'missing' && r.ing.amount != null) short.push(r.ing.name); continue; }
-    const take = Math.min(r.need, r.item.stock);
-    if (!(take > 0)) continue;
-    const mv = await changeStock(r.item, -take, { type: 'cook', recipeId: recipe.id, recipeName: recipe.name, reason: `Gotowanie: ${recipe.name}` });
-    moves.push(mv.id); used.push({ name: r.item.name, amount: take, item: r.item });
-    if (r.status === 'partial') short.push(r.ing.name);
+    if (!r.item || !(r.need > 0)) {
+      if (r.status === 'missing' && r.ing.amount != null) short.push(r.ing.name);
+      continue;
+    }
+
+    // Multiple recipe ingredients may map to the same stock item. Calculate
+    // against the working balance so one item can never be spent twice.
+    const nextItem = nextItems.get(r.item.id) || { ...r.item };
+    const before = Math.max(0, Number(nextItem.stock) || 0);
+    const take = Math.min(r.need, before);
+    if (take > 0) {
+      nextItem.stock = before - take;
+      nextItem.updatedAt = Date.now();
+      nextItems.set(nextItem.id, nextItem);
+      moves.push({
+        id: uid('mv_'), at: nextItem.updatedAt, cost: 0,
+        reason: `Gotowanie: ${recipe.name}`,
+        itemId: nextItem.id, name: nextItem.name, unit: nextItem.unit,
+        type: 'cook', amount: -take, recipeId: recipe.id, recipeName: recipe.name,
+      });
+      used.push({ name: nextItem.name, amount: take, item: r.item });
+    }
+    if (take + 1e-9 < r.need) short.push(r.ing.name);
   }
-  return { moves, used, short };
+
+  if (!moves.length) return { moves: [], used, short };
+
+  // One IndexedDB transaction for all ingredient balances and all movement rows.
+  await db.tx(['inventoryItems', 'inventoryMovements'], (t) => {
+    for (const item of nextItems.values()) t.put('inventoryItems', item);
+    for (const mv of moves) t.put('inventoryMovements', mv);
+  });
+
+  for (const [id, next] of nextItems) {
+    const current = store.items.get(id);
+    if (current) Object.assign(current, next);
+    store.items.set(id, current || next);
+  }
+  store.moves.unshift(...moves.slice().reverse());
+  emit('inventory');
+  return { moves: moves.map((m) => m.id), used, short };
 }
 
 /* ---------- Niskie stany → zakupy; kupione → magazyn ---------- */
