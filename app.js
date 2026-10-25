@@ -23,6 +23,7 @@ import { importView } from './views-import.js';
 import { settingsView } from './views-settings.js';
 import { guideView } from './views-guide.js';
 import { searchView } from './views-search.js';
+import { inventoryView } from './views-inventory.js';
 
 const root = document.documentElement;
 
@@ -146,6 +147,7 @@ route('/calc', () => calcView({}), { tab: 'calc' });
 route('/calc/:kind', (p, q) => calcView(p, q), { tab: 'calc' });
 route('/shopping', () => shoppingView(), { tab: 'shopping' });
 route('/settings', () => settingsView(), { tab: 'settings' });
+route('/inventory', () => inventoryView(), { tab: 'start' });
 
 /* ---------- Start ---------- */
 
