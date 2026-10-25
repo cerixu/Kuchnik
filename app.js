@@ -7,6 +7,7 @@ import { loadAll, state, subscribe, getSetting } from './recipes.js';
 import { loadInventory } from './inventory.js';
 import { h, icon, toast, $, openSheet } from './ui.js';
 import { APP_VERSION } from './util.js';
+import { CHANGELOG } from './changelog.js';
 import { setSetting } from './recipes.js';
 import { route, startRouter, navigate } from './router.js';
 import { registerSW, requestPersist } from './pwa.js';
@@ -153,7 +154,10 @@ route('/inventory', () => inventoryView(), { tab: 'start' });
 
 /* ---------- Start ---------- */
 
+let bootFailed = false;
 function fatal(err) {
+  if (bootFailed || window.__kucharzyna?.ready) return;
+  bootFailed = true;
   window.__kuchnikBootFailed = true;
   console.error(err);
   const bootEl = $('#boot');
@@ -173,32 +177,29 @@ function fatal(err) {
 
 function whatsNew() {
   if (getSetting('seenVersion') === APP_VERSION || document.querySelector('.overlay')) return;
-  const li = (t) => h('li', null, t);
+  const release = CHANGELOG[APP_VERSION];
+  const items = release && Array.isArray(release.items) && release.items.length
+    ? release.items
+    : ['Opis tej wersji nie został jeszcze uzupełniony.'];
   openSheet({
     title: `Co nowego w ${APP_VERSION}`, variant: 'sheet',
     body: h('div', { class: 'stack' },
-      h('ul', { class: 'whatsnew' },
-        li('Naprawiono import wyszukiwania kodów EAN, który blokował start modułów magazynu.'),
-        li('Skaner EAN odrzuca teraz kody pozornie znalezione wewnątrz dłuższego kodu, ograniczając fałszywe trafienia EAN-8.'),
-        li('Cały rozruch — także zapis ustawień i montowanie widoku — ma limit 60 sekund i pokazuje błąd zamiast wiszącej animacji.'),
-        li('28 lokalnych zdjęć potraw, ładowanych na żądanie; zdjęcia własne mają pierwszeństwo.'),
-        li('Sześć lekkich ilustracji SVG jest dostępnych offline jako fallback, gdy zdjęcie potrawy nie jest dostępne.'),
-        li('Osobny ekran Gotuję z wyszukiwaniem po nazwie i składnikach.'),
-        li('Cache-First dla zdjęć, ikon i fontów; cache mediów przetrwa kolejne wydania aplikacji.'),
-        li('Magazyn lepiej rozpoznaje polskie odmiany nazw składników, ale nie utożsamia ogólnej nazwy z bardziej szczegółowym produktem.'),
-        li('Dopasowanie magazynu zachowuje znaczące określenia w nawiasach, np. kolor papryki, aby nie pobierać niewłaściwego produktu.'),
-        li('Przyjęcie zakupów do magazynu zapisuje stan, historię ruchu i znacznik pozycji w jednej transakcji, ograniczając ryzyko podwójnego naliczenia.'),
-        li('Niekompletna kopia zapasowa nie czyści sekcji, których w niej brakuje; po imporcie odświeżany jest również stan magazynu.'),
-        li('Uszkodzona awaryjna pamięć localStorage nie jest nadpisywana pustymi danymi; zapis zostaje wstrzymany, a oryginał zachowany do odzyskania.'),
-        li('Historia ruchów magazynowych nie jest już automatycznie kasowana po roku.')),
-      h('p', { class: 'muted small' }, 'Podpisy pod ikonami paska włączysz w Ustawieniach. Poprzedni wygląd: Ustawienia → Motyw.')),
+      release && release.intro ? h('p', { class: 'muted small' }, release.intro) : null,
+      h('ul', { class: 'whatsnew' }, ...items.map((text) => h('li', null, text))),
+      h('p', { class: 'muted small' }, release && release.footer
+        ? release.footer
+        : 'Opis tej wersji nie został jeszcze uzupełniony.')),
     actions: [{ label: 'Zaczynamy', kind: 'primary' }],
     onClose: () => setSetting('seenVersion', APP_VERSION),
   });
 }
 
 async function boot() {
-  const timed = (label, promise, limit = 32000) => new Promise((resolve, reject) => {
+  const qa = globalThis.__kuchnikQA && typeof globalThis.__kuchnikQA === 'object' ? globalThis.__kuchnikQA : null;
+  const clampTimeout = (value, fallback, min, max) => Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : fallback;
+  const startupLimit = clampTimeout(qa && qa.startupDeadlineMs, 60000, 100, 60000);
+  const phaseLimit = clampTimeout(qa && qa.startupPhaseTimeoutMs, 32000, 50, 32000);
+  const timed = (label, promise, limit = phaseLimit) => new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(Object.assign(
       new Error('Przekroczono limit czasu: ' + label),
       { name: 'StartupTimeoutError' },
@@ -213,9 +214,24 @@ async function boot() {
     // Jeden deadline obejmuje również ustawienia startowe i montowanie widoku,
     // nie tylko otwarcie IndexedDB. Żadna faza nie może zostawić animacji bez końca.
     await timed('pełne uruchamianie aplikacji', (async () => {
-      await timed('otwieranie bazy danych', openDB(), 32000);
-      await timed('wczytywanie receptur i ustawień', loadAll(), 32000);
-      await timed('wczytywanie magazynu', loadInventory(), 32000);
+      await timed('otwieranie bazy danych', openDB(), phaseLimit);
+      if (bootFailed) return;
+      await timed('wczytywanie receptur i ustawień', loadAll(), phaseLimit);
+      if (bootFailed) return;
+
+      // Test-only fault injection: opóźnia odczyt magazynu, aby sprawdzić,
+      // że po przekroczeniu globalnego limitu późna odpowiedź nie montuje UI.
+      const delayInventoryMs = clampTimeout(qa && qa.delayInventoryLoadMs, 0, 0, 15000);
+      let inventoryPromise;
+      if (delayInventoryMs > 0) {
+        qa.inventoryDelayStarted = true;
+        inventoryPromise = new Promise((resolve) => setTimeout(resolve, delayInventoryMs))
+          .then(() => bootFailed ? null : loadInventory());
+      } else {
+        inventoryPromise = loadInventory();
+      }
+      await timed('wczytywanie magazynu', inventoryPromise, phaseLimit);
+      if (bootFailed) return;
 
       const stg = storageStatus();
       if (stg.mode !== 'idb') setTimeout(() => toast(stg.mode === 'local' ? 'Tryb awaryjny: Safari zablokowało IndexedDB, dane zapisuję w pamięci strony. Rób kopie JSON.' : 'Uwaga: pamięć trwała jest niedostępna — dane znikną po zamknięciu karty. Zrób kopię JSON.', { sticky: true, action: { label: 'OK', fn: () => {} } }), 1200);
@@ -223,8 +239,10 @@ async function boot() {
         await timed('zapis ustawień startowych', (async () => {
           await setSetting('theme', 'dark');
           await setSetting('designV', 2);
-        })(), 5000);
+        })(), Math.min(5000, phaseLimit));
+        if (bootFailed) return;
       }
+      if (bootFailed) return;
       applyAppearance();
       subscribe((type) => {
         if (type === 'settings') applyAppearance();
@@ -243,7 +261,7 @@ async function boot() {
       registerSW();
       setTimeout(whatsNew, 900);
       window.__kucharzyna = { state, ready: true };
-    })(), 60000);
+    })(), startupLimit);
   } catch (e) {
     fatal(e);
   }

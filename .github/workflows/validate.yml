@@ -113,8 +113,10 @@ jobs:
             }
           }
 
+          const changelog = fs.readFileSync('changelog.js', 'utf8');
           const appVersion = util.match(/APP_VERSION\s*=\s*['"]([^'"]+)['"]/)?.[1];
           const swVersion = sw.match(/const VERSION\s*=\s*['"]kucharzyna-([^'"]+)['"]/)?.[1];
+          if (appVersion && !changelog.includes(`'${appVersion}'`)) problems.push(`changelog.js: release entry missing for ${appVersion}`);
           if (!appVersion) problems.push('util.js: APP_VERSION not found');
           if (!swVersion) problems.push('sw.js: VERSION not found');
           if (appVersion && swVersion && appVersion !== swVersion) {
@@ -166,4 +168,5 @@ jobs:
           curl -fsS http://127.0.0.1:4173/ >/dev/null
           node qa/smoke-test.mjs
           node qa/indexeddb-recovery.mjs
+          node qa/startup-deadline.mjs
           node qa/offline-smoke.mjs
