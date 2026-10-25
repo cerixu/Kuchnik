@@ -178,11 +178,11 @@ function whatsNew() {
     title: `Co nowego w ${APP_VERSION}`, variant: 'sheet',
     body: h('div', { class: 'stack' },
       h('ul', { class: 'whatsnew' },
-        li('Start ma wspólny limit 60 sekund i przechwytuje błędy inicjalizacji zamiast zostawiać samą animację.'),
-        li('Lokalne zdjęcia 28 konkretnych potraw: ładują się na żądanie, działają z cache offline i nie zastępują zdjęć własnych.'),
+        li('Cały rozruch — także zapis ustawień i montowanie widoku — ma limit 60 sekund i pokazuje błąd zamiast wiszącej animacji.'),
+        li('Lokalne zdjęcia 28 konkretnych potraw: ładowanie na żądanie, cache offline i pierwszeństwo zdjęć własnych.'),
         li('Osobny ekran Gotuję: wyszukiwanie receptur po nazwie i składnikach, ulubione oraz ostatnio otwierane.'),
         li('Lista zakupów współpracuje z magazynem: dodawanie braków i przyjmowanie kupionych produktów na stan.'),
-        li('Zachowano ilustracje SVG jako bezpieczny fallback, gdy zdjęcie nie pasuje albo jest niedostępne.')),
+        li('Cache-First dla zdjęć, ikon i fontów; ilustracje SVG pozostają fallbackiem przy braku zdjęcia.')),
       h('p', { class: 'muted small' }, 'Podpisy pod ikonami paska włączysz w Ustawieniach. Poprzedni wygląd: Ustawienia → Motyw.')),
     actions: [{ label: 'Zaczynamy', kind: 'primary' }],
     onClose: () => setSetting('seenVersion', APP_VERSION),
@@ -190,8 +190,6 @@ function whatsNew() {
 }
 
 async function boot() {
-  // Limity pojedynczych etapów oraz wspólny deadline zapobiegają długiemu
-  // oczekiwaniu na kilka kolejnych operacji IndexedDB/Safari.
   const timed = (label, promise, limit = 32000) => new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(Object.assign(
       new Error('Przekroczono limit czasu: ' + label),
@@ -204,34 +202,40 @@ async function boot() {
   });
 
   try {
+    // Jeden deadline obejmuje również ustawienia startowe i montowanie widoku,
+    // nie tylko otwarcie IndexedDB. Żadna faza nie może zostawić animacji bez końca.
     await timed('pełne uruchamianie aplikacji', (async () => {
-      // IndexedDB ma 4 ograniczone próby i bezpieczny backend awaryjny.
       await timed('otwieranie bazy danych', openDB(), 32000);
       await timed('wczytywanie receptur i ustawień', loadAll(), 32000);
       await timed('wczytywanie magazynu', loadInventory(), 32000);
+
+      const stg = storageStatus();
+      if (stg.mode !== 'idb') setTimeout(() => toast(stg.mode === 'local' ? 'Tryb awaryjny: Safari zablokowało IndexedDB, dane zapisuję w pamięci strony. Rób kopie JSON.' : 'Uwaga: pamięć trwała jest niedostępna — dane znikną po zamknięciu karty. Zrób kopię JSON.', { sticky: true, action: { label: 'OK', fn: () => {} } }), 1200);
+      if ((getSetting('designV') || 0) < 2) {
+        await timed('zapis ustawień startowych', (async () => {
+          await setSetting('theme', 'dark');
+          await setSetting('designV', 2);
+        })(), 5000);
+      }
+      applyAppearance();
+      subscribe((type) => {
+        if (type === 'settings') applyAppearance();
+        if (type === 'shopping') updateBadge();
+      });
+      buildTabbar();
+      watchViewport();
+      watchNetwork();
+      startRouter($('#view'), (path, meta) => { setActiveTab(meta); updateBadge(); });
+      const bootEl = $('#boot');
+      if (bootEl) { bootEl.classList.add('gone'); setTimeout(() => bootEl.remove(), 350); }
+
+      mountTimerPill($('#app'), openTimersSheet);
+      initTimers();
+      requestPersist();
+      registerSW();
+      setTimeout(whatsNew, 900);
+      window.__kucharzyna = { state, ready: true };
     })(), 60000);
-
-    const stg = storageStatus();
-    if (stg.mode !== 'idb') setTimeout(() => toast(stg.mode === 'local' ? 'Tryb awaryjny: Safari zablokowało IndexedDB, dane zapisuję w pamięci strony. Rób kopie JSON.' : 'Uwaga: pamięć trwała jest niedostępna — dane znikną po zamknięciu karty. Zrób kopię JSON.', { sticky: true, action: { label: 'OK', fn: () => {} } }), 1200);
-    if ((getSetting('designV') || 0) < 2) { await setSetting('theme', 'dark'); await setSetting('designV', 2); }   // jednorazowo: nowy ciemny wygląd
-    applyAppearance();
-    subscribe((type) => {
-      if (type === 'settings') applyAppearance();
-      if (type === 'shopping') updateBadge();
-    });
-    buildTabbar();
-    watchViewport();
-    watchNetwork();
-    startRouter($('#view'), (path, meta) => { setActiveTab(meta); updateBadge(); });
-    const bootEl = $('#boot');
-    if (bootEl) { bootEl.classList.add('gone'); setTimeout(() => bootEl.remove(), 350); }
-
-    mountTimerPill($('#app'), openTimersSheet);
-    initTimers();
-    requestPersist();
-    registerSW();
-    setTimeout(whatsNew, 900);
-    window.__kucharzyna = { state, ready: true };
   } catch (e) {
     fatal(e);
   }

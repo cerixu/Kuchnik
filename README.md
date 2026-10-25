@@ -1,8 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Wersja pośrednia 1.4.14.** Przeniesiono z Żarłoka lokalną bibliotekę zdjęć oraz osobny ekran „Gotuję” z wyszukiwaniem po nazwie i składnikach. Rozruch ma jeden limit 60 sekund i przechwytuje błędy inicjalizacji. Zachowano tryb awaryjny, zdjęcia własne, integrację zakupów z magazynem i ilustracje SVG jako fallback.
-
-
+> **Wersja pośrednia 1.4.15.** Rozruch ma jeden limit 60 sekund obejmujący cały start, w tym ustawienia i montowanie widoku. Dodano 28 lokalnych zdjęć dań oraz ekran „Gotuję” przeniesiony z Żarłoka. Zdjęcia, ikony i fonty korzystają z Cache-First, a osobny cache mediów jest zachowywany między wydaniami. Zachowano tryb awaryjny, zdjęcia własne, integrację zakupów z magazynem i ilustracje SVG jako fallback.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.

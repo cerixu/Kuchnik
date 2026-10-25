@@ -9,7 +9,8 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.14';
+const VERSION = 'kucharzyna-1.4.15';
+const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
 const CORE = [
@@ -38,7 +39,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter((k) => k.startsWith('kucharzyna-') && k !== VERSION).map((k) => caches.delete(k)));
+    await Promise.all(keys.filter((k) => k.startsWith('kucharzyna-') && k !== VERSION && k !== MEDIA_CACHE).map((k) => caches.delete(k)));
     await self.clients.claim();
   })());
 });
@@ -48,6 +49,27 @@ self.addEventListener('message', (event) => {
   if (msg.type === 'SKIP_WAITING') self.skipWaiting();
   else if (msg.type === 'GET_VERSION' && event.ports && event.ports[0]) event.ports[0].postMessage({ version: VERSION });
 });
+
+/** Cache-First dla mediów: szybki odczyt i osobny cache zachowywany między wydaniami. */
+async function cacheFirst(request) {
+  const media = await caches.open(MEDIA_CACHE);
+  const cached = await media.match(request, { ignoreSearch: true });
+  if (cached) return cached;
+
+  // Ikony/fonty z CORE są już w cache wersji aplikacji — przenieś kopię do trwałego cache mediów.
+  const core = await caches.open(VERSION);
+  const bundled = await core.match(request, { ignoreSearch: true });
+  if (bundled) {
+    await media.put(request, bundled.clone()).catch(() => {});
+    return bundled;
+  }
+
+  const response = await fetch(request, { cache: 'no-cache' });
+  if (response && response.ok && response.type !== 'opaque') {
+    await media.put(request, response.clone()).catch(() => {});
+  }
+  return response;
+}
 
 /** Sieć najpierw (z limitem czasu, gdy mamy kopię), potem pamięć podręczna. */
 async function networkFirst(event, url, cacheKey) {
@@ -82,6 +104,13 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(networkFirst(event, INDEX(), INDEX()).catch(async () => {
       const cache = await caches.open(VERSION);
       return (await cache.match(INDEX())) || Response.error();
+    }));
+    return;
+  }
+  if (/\\.(?:avif|gif|jpe?g|png|svg|webp|woff2?|ttf|otf)$/i.test(url.pathname)) {
+    event.respondWith(cacheFirst(req).catch(async () => {
+      const media = await caches.open(MEDIA_CACHE);
+      return (await media.match(req, { ignoreSearch: true })) || Response.error();
     }));
     return;
   }
