@@ -10,6 +10,7 @@ const page = await browser.newPage({
 const errors = [];
 
 page.on('pageerror', (error) => errors.push('pageerror: ' + error.message));
+page.on('requestfailed', (request) => errors.push('requestfailed: ' + request.url() + ' — ' + request.failure()?.errorText));
 page.on('console', (message) => {
   if (message.type() === 'error') errors.push('console: ' + message.text());
 });
@@ -21,7 +22,28 @@ try {
   });
   if (!response || !response.ok()) throw new Error('Start page returned a non-success HTTP response.');
 
-  await page.waitForFunction(() => window.__kucharzyna?.ready === true, null, { timeout: 65000 });
+  await page.waitForFunction(() =>
+    window.__kucharzyna?.ready === true ||
+    window.__kuchnikBootFailed === true ||
+    document.querySelector('#boot')?.dataset.recoveryShown === '1',
+    null,
+    { timeout: 65000 },
+  ).catch(async () => {
+    const state = await page.evaluate(() => ({
+      ready: !!window.__kucharzyna?.ready,
+      failed: !!window.__kuchnikBootFailed,
+      boot: document.querySelector('#boot')?.innerText || '',
+      view: document.querySelector('#view')?.innerText || '',
+    }));
+    throw new Error('Startup timed out before ready: ' + JSON.stringify(state) + '\\nConsole errors: ' + errors.join(' | '));
+  });
+  const startup = await page.evaluate(() => ({
+    ready: !!window.__kucharzyna?.ready,
+    failed: !!window.__kuchnikBootFailed,
+    boot: document.querySelector('#boot')?.innerText || '',
+    view: document.querySelector('#view')?.innerText || '',
+  }));
+  if (!startup.ready) throw new Error('App startup failed: ' + JSON.stringify(startup) + '\\nConsole errors: ' + errors.join(' | '));
   await page.locator('#boot').waitFor({ state: 'detached', timeout: 10000 });
   await page.waitForTimeout(1100);
 
