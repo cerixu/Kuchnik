@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Wersja pośrednia 1.4.12.** Nowość: lista zakupów współpracuje z magazynem — można dodać brakujące stany do listy oraz przyjąć oznaczone zakupy do magazynu z ochroną przed ponownym przyjęciem. Zachowane: pełny przepis w dużym szklanym oknie („Cały przepis”), kolorowe ikony składników (66 sztuk), polska odmiana porcji, magazyn ze stratami, skaner EAN i rozliczanie składników po zakończeniu trybu GOTUJĘ.
+> **Wersja pośrednia 1.4.13.** Dodano lokalną bibliotekę zdjęć z Żarłoka: zdjęcia konkretnych potraw pojawiają się na kafelkach receptur i w szczegółach, a zdjęcia własne mają pierwszeństwo. Zdjęcia są ładowane na żądanie i cache'owane po użyciu; przy braku sieci pozostają ilustracje SVG. Zachowane: integracja zakupów z magazynem, food cost, skaner EAN i rozliczanie składników po zakończeniu trybu GOTUJĘ.
 
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).

@@ -6,6 +6,7 @@ import { navigate } from './router.js';
 import { catName, catIcon, ORIGINS, toggleFavorite } from './recipes.js';
 import { fmtMinutes, fmtAmount, fmtNum } from './util.js';
 import { recipeArtUrl, categoryArtUrl } from './art.js';
+import { attachRecipePhoto, attachCategoryPhoto } from './food-photos.js';
 import { estimateKcal } from './nutrition.js';
 import { hostOf } from './importer.js';
 
@@ -69,8 +70,15 @@ export function heartBtn(r, onToggle) {
 }
 
 /** Miniatura: własne zdjęcie, a gdy go brak — ilustracja potrawy rysowana w kodzie. */
+function recipeImage(r, alt = '') {
+  const custom = r.thumb || r.photo;
+  const img = h('img', { class: custom ? '' : 'art', src: custom || recipeArtUrl(r), alt, loading: 'lazy', decoding: 'async' });
+  if (!custom) attachRecipePhoto(img, r);
+  return img;
+}
+
 export function thumbEl(r, cls = '') {
-  return h('div', { class: 'rthumb ' + cls }, h('img', { class: r.thumb ? '' : 'art', src: r.thumb || recipeArtUrl(r), alt: '', loading: 'lazy', decoding: 'async' }));
+  return h('div', { class: 'rthumb ' + cls }, recipeImage(r));
 }
 
 /** Prawa kolumna karty (jak „4.8 ★ / 350 kcal” na makiecie): ocena albo czas, pod spodem kalorie. */
@@ -89,7 +97,7 @@ export function recipeTile(r, { onFav } = {}) {
   const org = originLabel(r);
   return h('div', { class: 'rtile' + (r.traditional ? ' trad-tile' : '') },
     h('a', { class: 'rtile-link', href: '#' + href, 'aria-label': r.name, onClick: (e) => { e.preventDefault(); navigate(href); } },
-      h('div', { class: 'rtile-img' }, h('img', { class: r.thumb ? '' : 'art', src: r.thumb || recipeArtUrl(r), alt: '', loading: 'lazy', decoding: 'async' })),
+      h('div', { class: 'rtile-img' }, recipeImage(r)),
       h('div', { class: 'rtile-row' },
         h('div', { class: 'rtile-name' }, r.traditional ? h('span', { class: 'rtile-trad' }, h('span', { class: 'trad-star' }, icon('star', 14))) : null, r.name || 'Bez nazwy'),
         sideInfo(r)),
@@ -100,8 +108,10 @@ export function recipeTile(r, { onFav } = {}) {
 
 /** Okrągła kafelka kategorii (ilustracja + nazwa + liczba). */
 export function catTile(cat, count, onClick) {
+  const img = h('img', { class: 'art', src: categoryArtUrl(cat.id), alt: '', loading: 'lazy', decoding: 'async' });
+  attachCategoryPhoto(img, cat.id);
   return h('button', { type: 'button', class: 'ctile', onClick, 'aria-label': `${cat.name}: ${count}` },
-    h('span', { class: 'ctile-img' }, h('img', { class: 'art', src: categoryArtUrl(cat.id), alt: '', loading: 'lazy', decoding: 'async' })),
+    h('span', { class: 'ctile-img' }, img),
     h('span', { class: 'ctile-name' }, cat.name), h('span', { class: 'ctile-n' }, String(count)));
 }
 
