@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title>Kaczka pieczona</title><desc>Pieczona pierś kaczki z rumianą skórką.</desc>
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#24272a"/><stop offset="1" stop-color="#111315"/></radialGradient><linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4044"/><stop offset="1" stop-color="#171a1c"/></linearGradient></defs>
+<rect width="240" height="240" rx="28" fill="url(#bg)"/>
+<ellipse cx="120" cy="188" rx="76" ry="9" fill="#000" opacity=".35"/>
+<circle cx="120" cy="118" r="83" fill="url(#plate)" stroke="#a97948" stroke-width="2.5"/>
+<circle cx="120" cy="118" r="72" fill="none" stroke="#e1b574" stroke-width="1" opacity=".55"/>
+<g><path d="M66 98 Q81 72 111 83 Q142 67 165 91 Q183 112 163 134 Q142 155 111 142 Q79 151 65 127 Q57 112 66 98Z" fill="#8e4b36" stroke="#c27a50" stroke-width="4"/><path d="M75 100 Q99 81 119 94 Q141 81 158 98 Q168 113 153 126 Q133 140 113 127 Q90 137 77 120Z" fill="#b65e3f"/><g fill="#e3a46c"><path d="M88 95 l13 -5 4 7 -13 7Z"/><path d="M124 91 l12 -3 4 8 -12 4Z"/><path d="M141 114 l12 -2 3 8 -12 4Z"/></g><g fill="#6e9650"><ellipse cx="88" cy="143" rx="13" ry="5" transform="rotate(-20 88 143)"/><ellipse cx="160" cy="77" rx="12" ry="5" transform="rotate(30 160 77)"/></g></g>
+<path d="M58 58 Q69 47 83 50" fill="none" stroke="#fff" stroke-width="2" opacity=".14" stroke-linecap="round"/>
+</svg>
