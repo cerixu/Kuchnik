@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title id="title">Ramen tonkotsu</title><desc id="desc">Ilustracja miski ramen z kremowym bulionem, makaronem, jajkiem i nori.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#303039"/><stop offset="1" stop-color="#17171d"/></linearGradient><linearGradient id="bowl" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f0e5d0"/><stop offset="1" stop-color="#b9a58b"/></linearGradient><radialGradient id="broth"><stop stop-color="#f3dba3"/><stop offset="1" stop-color="#d49b4c"/></radialGradient></defs>
+<rect width="240" height="240" rx="34" fill="url(#bg)"/><ellipse cx="120" cy="190" rx="77" ry="13" fill="#08080b" opacity=".5"/>
+<ellipse cx="120" cy="113" rx="91" ry="62" fill="#8b332b"/><path d="M29 111c7 52 42 82 91 82s84-30 91-82l-13 3c-9 39-38 59-78 59s-69-20-78-59z" fill="url(#bowl)"/><ellipse cx="120" cy="108" rx="82" ry="51" fill="#f6e6c5"/><ellipse cx="120" cy="108" rx="73" ry="43" fill="url(#broth)"/>
+<g fill="none" stroke="#f8e8b5" stroke-width="5" stroke-linecap="round"><path d="M62 93c14-21 22 25 39 4s23 20 39-2 22 15 35-3"/><path d="M59 109c13-20 23 25 40 4s23 20 39-2 22 15 35-3"/><path d="M72 124c13-20 23 25 40 4s23 20 39-2 16 8 26-1"/></g>
+<path d="M73 72l29 4 2 39-28-2z" fill="#213d36" stroke="#436c58" stroke-width="2"/><path d="M77 79l20 2m-19 8 20 2m-19 8 20 2" stroke="#789d78" stroke-width="2"/>
+<circle cx="145" cy="88" r="21" fill="#fff0cc"/><circle cx="145" cy="88" r="13" fill="#e7a34d"/><circle cx="145" cy="88" r="7" fill="#f3c968"/>
+<path d="M161 125c-7-14-3-25 9-28 13 7 13 20 3 30z" fill="#6b8e48"/><path d="M171 126l9-20" stroke="#a6c26b" stroke-width="3" stroke-linecap="round"/>
+<g fill="#c9583d"><circle cx="91" cy="135" r="4"/><circle cx="109" cy="82" r="3"/><circle cx="166" cy="104" r="3"/><circle cx="126" cy="143" r="3"/></g>
+<path d="M43 105c5-35 37-57 77-57s72 22 77 57" fill="none" stroke="#fff6e7" stroke-opacity=".55" stroke-width="3"/>
+</svg>
