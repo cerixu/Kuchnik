@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 
 import { db, openDB } from '../db.js';
 import {
-  changeStock, deductRecipe, getItem, inventoryItems, loadInventory,
+  changeStock, deductRecipe, getItem, inventoryItems, inventoryLoaded, loadInventory,
   movements, newItem, saveItem, undoMovements,
 } from '../inventory.js';
 
@@ -106,5 +106,27 @@ test('recipe deduction and undo are all-or-nothing across multiple stock items',
     assert.equal(movements(flour.id).length + movements(butter.id).length, 0);
   } finally {
     await cleanup([flour, butter]);
+  }
+});
+
+
+test('failed inventory reload preserves the last valid in-memory snapshot', async () => {
+  await openDB();
+  await loadInventory();
+  const item = await addItem('QA snapshot magazynu zachowany', 321);
+  const originalGetAll = db.getAll;
+
+  try {
+    db.getAll = async (storeName) => {
+      if (storeName === 'inventoryMovements') throw new Error('simulated inventory read failure');
+      return originalGetAll(storeName);
+    };
+    await assert.rejects(loadInventory(), /simulated inventory read failure/);
+    assert.equal(inventoryLoaded(), true);
+    assert.equal(getItem(item.id).stock, 321);
+    assert.equal((await originalGetAll('inventoryItems')).find((x) => x.id === item.id).stock, 321);
+  } finally {
+    db.getAll = originalGetAll;
+    await cleanup([item]);
   }
 });
