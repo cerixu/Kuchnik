@@ -5,6 +5,7 @@ import { inventoryNamesMatch } from '../inventory-matching.js';
 test('matches common Polish inflections conservatively', () => {
   assert.equal(inventoryNamesMatch({ name: 'Ogórek' }, 'ogórka'), true);
   assert.equal(inventoryNamesMatch({ name: 'Czosnek' }, 'czosnku'), true);
+  assert.equal(inventoryNamesMatch({ name: 'Olej' }, 'oleju'), true);
   assert.equal(inventoryNamesMatch({ name: 'Pomidory' }, 'pomidor'), true);
 });
 
