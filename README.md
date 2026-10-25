@@ -1,6 +1,7 @@
 # Kucharzyna 👨‍🍳
 
-> **Wersja pośrednia 1.4.13.** Dodano lokalną bibliotekę zdjęć z Żarłoka: zdjęcia konkretnych potraw pojawiają się na kafelkach receptur i w szczegółach, a zdjęcia własne mają pierwszeństwo. Zdjęcia są ładowane na żądanie i cache'owane po użyciu; przy braku sieci pozostają ilustracje SVG. Zachowane: integracja zakupów z magazynem, food cost, skaner EAN i rozliczanie składników po zakończeniu trybu GOTUJĘ.
+> **Wersja pośrednia 1.4.14.** Przeniesiono z Żarłoka lokalną bibliotekę zdjęć oraz osobny ekran „Gotuję” z wyszukiwaniem po nazwie i składnikach. Rozruch ma jeden limit 60 sekund i przechwytuje błędy inicjalizacji. Zachowano tryb awaryjny, zdjęcia własne, integrację zakupów z magazynem i ilustracje SVG jako fallback.
+
 
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).

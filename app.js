@@ -17,6 +17,7 @@ import { recipesView, resetRecipeFilters } from './views-recipes.js';
 import { detailView } from './views-detail.js';
 import { editorView } from './views-editor.js';
 import { cookView } from './views-cook.js';
+import { cookEntryView } from './views-cook-home.js';
 import { calcView } from './views-calc.js';
 import { shoppingView, pendingCount } from './shopping.js';
 import { importView } from './views-import.js';
@@ -24,8 +25,6 @@ import { settingsView } from './views-settings.js';
 import { guideView } from './views-guide.js';
 import { searchView } from './views-search.js';
 import { inventoryView } from './views-inventory.js';
-
-window.__kuchnikBootStarted = true;
 
 const root = document.documentElement;
 
@@ -141,6 +140,7 @@ route('/recipes', (p, q) => recipesView(q), { tab: 'recipes' });
 route('/recipe/:id', (p) => detailView(p), { tab: 'recipes' });
 route('/edit/:id', (p) => editorView(p), { tab: 'recipes', tabs: false });
 route('/new', (p, q) => editorView({ id: null }, q), { tab: 'recipes', tabs: false });
+route('/cook', () => cookEntryView(), { tab: 'recipes' });
 route('/cook/:id', (p) => cookView(p), { tab: 'recipes', tabs: false });
 route('/guide/:id', (p) => guideView(p), { tab: 'recipes', tabs: false });
 route('/search', (p, q) => searchView(q), { tab: 'recipes' });
@@ -178,11 +178,11 @@ function whatsNew() {
     title: `Co nowego w ${APP_VERSION}`, variant: 'sheet',
     body: h('div', { class: 'stack' },
       h('ul', { class: 'whatsnew' },
-        li('Naprawione otwieranie w Safari: aplikacja ponawia połączenie z pamięcią, a gdy iOS ją blokuje, działa w trybie awaryjnym zamiast pokazywać błąd.'),
-        li('Nowe menu główne (karuzela kart, okrągłe przyciski, kuchnie świata) i pływający dok na dole.'),
-        li('Każda karta ma krótki opis, kraj pochodzenia i źródło przepisu.'),
-        li('Ilustracje dań z cieniowaniem 3D, szacunek kalorii, składniki na łuku.'),
-        li('Magazyn: wyszukiwanie i filtrowanie produktów, edycja stanów, terminy ważności oraz raportowanie strat.')),
+        li('Start ma wspólny limit 60 sekund i przechwytuje błędy inicjalizacji zamiast zostawiać samą animację.'),
+        li('Lokalne zdjęcia 28 konkretnych potraw: ładują się na żądanie, działają z cache offline i nie zastępują zdjęć własnych.'),
+        li('Osobny ekran Gotuję: wyszukiwanie receptur po nazwie i składnikach, ulubione oraz ostatnio otwierane.'),
+        li('Lista zakupów współpracuje z magazynem: dodawanie braków i przyjmowanie kupionych produktów na stan.'),
+        li('Zachowano ilustracje SVG jako bezpieczny fallback, gdy zdjęcie nie pasuje albo jest niedostępne.')),
       h('p', { class: 'muted small' }, 'Podpisy pod ikonami paska włączysz w Ustawieniach. Poprzedni wygląd: Ustawienia → Motyw.')),
     actions: [{ label: 'Zaczynamy', kind: 'primary' }],
     onClose: () => setSetting('seenVersion', APP_VERSION),
@@ -236,4 +236,5 @@ async function boot() {
     fatal(e);
   }
 }
+window.__kuchnikBootStarted = true;
 boot();

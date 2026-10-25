@@ -1362,3 +1362,36 @@ img.art { transform: scale(1.3); }
 .av-list { display: flex; flex-direction: column; } .av-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--hairline); }
 .av-text { flex: 1; min-width: 0; display: flex; flex-direction: column; } .av-mark { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; }
 .av-mark.ok { background: rgba(74,208,122,.2); color: #4ad07a; } .av-mark.partial { background: rgba(255,181,46,.2); color: #ffb52e; } .av-mark.missing { background: rgba(255,107,107,.2); color: #ff6b6b; }
+
+
+/* ---------- Osobny ekran „Gotuję” (przeniesiony z Żarłoka) ---------- */
+.cook-entry .cook-entry-hero {
+  margin: 0 0 18px; padding: 20px; border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: linear-gradient(145deg, var(--surface), var(--surface-2)); box-shadow: var(--shadow);
+}
+.cook-entry-hero .eyebrow { display: block; margin-bottom: 8px; color: var(--accent-text); font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+.cook-entry-hero h2 { margin: 0 0 8px; font-size: clamp(1.25rem, 5vw, 1.65rem); line-height: 1.1; }
+.cook-entry-hero p { margin: 0 0 16px; color: var(--muted); line-height: 1.45; }
+.cook-entry-hero-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.cook-entry-search { display: flex; align-items: center; gap: 10px; margin: 14px 0 22px; color: var(--muted); }
+.cook-entry-search .input { flex: 1; width: 1px; }
+.cook-entry-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 12px; }
+.cook-entry-heading h2 { margin: 0; font-size: 1.12rem; }
+.cook-entry-list { display: grid; gap: 10px; padding-bottom: 12px; }
+.cook-entry-card {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr) 18px; align-items: center; gap: 12px;
+  width: 100%; min-width: 0; padding: 10px; border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--surface); color: var(--text); text-align: left; box-shadow: var(--shadow);
+}
+.cook-entry-card:active { transform: scale(.99); }
+.cook-entry-art { display: block; width: 72px; height: 72px; overflow: hidden; border-radius: 16px; background: var(--surface-2); }
+.cook-entry-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cook-entry-copy { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+.cook-entry-copy strong { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-height: 1.2; }
+.cook-entry-meta { color: var(--muted); font-size: .78rem; }
+.cook-entry-arrow { color: var(--accent-text); }
+@media (min-width: 560px) {
+  .cook-entry-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cook-entry-card { grid-template-columns: 64px minmax(0, 1fr) 16px; gap: 10px; }
+  .cook-entry-art { width: 64px; height: 64px; }
+}
