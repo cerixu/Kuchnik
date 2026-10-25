@@ -9,6 +9,7 @@ import {
 } from './ui.js';
 import { navigate } from './router.js';
 import { aisleOf, AISLE_LABELS } from './kitchen.js';
+import { restockList, receiveShopping } from './inventory.js';
 
 /* ---------- Logika ---------- */
 
@@ -154,6 +155,36 @@ export function shoppingView() {
         h('div', null, h('div', { class: 'field-label' }, 'Grupowanie'),
           segmented([['aisle', 'Alejki'], ['recipe', 'Receptury'], ['none', 'Brak']], groupMode(), (v) => setSetting('shopGroup', v), { label: 'Grupowanie' })),
         h('div', { class: 'menu' },
+          button('Dodaj braki z magazynu', { icon: 'cart', block: true, onClick: async () => {
+            sh.close();
+            const gaps = restockList();
+            if (!gaps.length) { toast('Magazyn nie zgłasza braków'); return; }
+            const res = await addItems(gaps);
+            toast(`Dodano braki z magazynu: ${res.count}${res.merged ? ` (połączono ${res.merged})` : ''}`, { action: { label: 'Pokaż', fn: () => navigate('/shopping') } });
+          } }),
+          button('Przyjmij kupione do magazynu', { icon: 'check', block: true, onClick: async () => {
+            sh.close();
+            const bought = state.shopping.filter((i) => i.done && !i.inventoryReceivedAt);
+            if (!bought.length) { toast('Brak nowych zakupów do przyjęcia'); return; }
+            const eligible = bought.filter((i) => i.amount > 0 && ['g', 'kg', 'ml', 'l', 'szt.'].includes(i.unit));
+            const skipped = bought.length - eligible.length;
+            if (!eligible.length) {
+              toast('Uzupełnij ilość i jednostkę (g, kg, ml, l lub szt.), aby przyjąć zakupy', { type: 'error' });
+              return;
+            }
+            let received = 0;
+            try {
+              for (const item of eligible) {
+                await receiveShopping([item]);
+                item.inventoryReceivedAt = Date.now();
+                await persist([item]);
+                received++;
+              }
+              toast(`Przyjęto do magazynu: ${received}${skipped ? `; pominięto bez ilości/jednostki: ${skipped}` : ''}`);
+            } catch (e) {
+              toast(`Przyjęto ${received}; reszta wymaga ponowienia. Sprawdź magazyn przed kolejną próbą.`, { type: 'error' });
+            }
+          } }),
           button('Skopiuj / udostępnij listę', { icon: 'share', block: true, onClick: async () => {
             sh.close();
             const text = listAsText(state.shopping);
