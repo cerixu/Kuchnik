@@ -118,9 +118,9 @@ const SVG_RECIPE_RULES = [
   ['bruschetta', /\b(bruschetta al pomodoro|bruschetta z pomidorami|bruschetta)\b/],
   ['tagliatelle-ragu', /\b(tagliatelle al ragu|tagliatelle z ragu|tagliatelle bolognese|tagliatelle z sosem bolognese)\b/],
   ['panna-cotta', /\bpanna cotta\b/],
-  ['ramen-tonkotsu', /\\b(ramen tonkotsu|tonkotsu ramen|ramen wieprzowy tonkotsu)\\b/],
-  ['sushi-maki', /\\b(sushi maki|maki sushi|salmon cucumber maki)\\b/],
-  ['croissant', /\\b(croissant|rogalik maslany|rogal francuski)\\b/],
+  ['ramen-tonkotsu', /\b(ramen tonkotsu|tonkotsu ramen|ramen wieprzowy tonkotsu)\b/],
+  ['sushi-maki', /\b(sushi maki|maki sushi|salmon cucumber maki)\b/],
+  ['croissant', /\b(croissant|rogalik maslany|rogal francuski)\b/],
 ];
 
 export function recipeSvgKey(recipe) {
