@@ -6,9 +6,12 @@
 import { db } from './db.js';
 import { loadAll, state, setSetting, getSetting, normalizeRecipe, DEFAULT_SETTINGS, emit } from './recipes.js';
 import { APP_VERSION } from './util.js';
+import { loadInventory } from './inventory.js';
 
 const FORMAT = 'Kucharzyna';
 const BACKUP_DUE_DAYS = 14;
+const BACKUP_STORES = ['recipes', 'ingredients', 'categories', 'shoppingItems', 'settings', 'history', 'inventoryItems', 'inventoryMovements'];
+const BACKUP_SECTION_LABELS = { recipes: 'receptury', ingredients: 'katalog składników', categories: 'kategorie', shoppingItems: 'lista zakupów', settings: 'ustawienia', history: 'historia zmian', inventoryItems: 'pozycje magazynu', inventoryMovements: 'historia magazynu' };
 
 /** Zbiera całą zawartość bazy. */
 export async function collectData() {
@@ -88,7 +91,19 @@ export function parseBackup(text) {
   try { obj = JSON.parse(text); } catch (_) { throw new Error('To nie jest poprawny plik JSON.'); }
   if (!obj || obj.app !== FORMAT || !obj.data || typeof obj.data !== 'object') throw new Error('To nie jest kopia zapasowa Kucharzyny.');
   const d = obj.data;
+  if (!Array.isArray(d.recipes)) throw new Error('Kopia jest niekompletna: brakuje sekcji receptur. Nie zmieniono danych.');
+
   const arr = (x) => (Array.isArray(x) ? x : []);
+  const presentStores = BACKUP_STORES.filter((key) => Array.isArray(d[key]));
+  const replaceable = new Set(presentStores);
+  // Pozycje magazynu i ich ruchy muszą pochodzić z tej samej kopii.
+  if (!replaceable.has('inventoryItems') || !replaceable.has('inventoryMovements')) {
+    replaceable.delete('inventoryItems');
+    replaceable.delete('inventoryMovements');
+  }
+  const preservedSections = BACKUP_STORES
+    .filter((key) => !replaceable.has(key))
+    .map((key) => ({ key, label: BACKUP_SECTION_LABELS[key] }));
   const data = {
     recipes: arr(d.recipes).filter((r) => r && r.id), ingredients: arr(d.ingredients).filter((r) => r && r.id),
     categories: arr(d.categories).filter((r) => r && r.id), shoppingItems: arr(d.shoppingItems).filter((r) => r && r.id),
@@ -96,10 +111,12 @@ export function parseBackup(text) {
     inventoryItems: arr(d.inventoryItems).filter((r) => r && r.id), inventoryMovements: arr(d.inventoryMovements).filter((r) => r && r.id),
   };
   return {
-    backup: { ...obj, data },
+    backup: { ...obj, data, _presentStores: presentStores },
     summary: {
       recipes: data.recipes.length, categories: data.categories.length, shopping: data.shoppingItems.length,
-      history: data.history.length, inventory: data.inventoryItems.length, exportedAt: obj.exportedAt ? new Date(obj.exportedAt) : null,
+      history: data.history.length, inventory: data.inventoryItems.length,
+      exportedAt: obj.exportedAt ? new Date(obj.exportedAt) : null,
+      preservedSections,
     },
   };
 }
@@ -114,16 +131,24 @@ export async function importBackup(backup, mode) {
   const recipes = d.recipes.map((r) => normalizeRecipe(r));
 
   if (mode === 'replace') {
-    await db.tx(['recipes', 'ingredients', 'categories', 'shoppingItems', 'settings', 'history', 'inventoryItems', 'inventoryMovements'], (t) => {
-      ['recipes', 'ingredients', 'categories', 'shoppingItems', 'settings', 'history', 'inventoryItems', 'inventoryMovements'].forEach((s) => t.clear(s));
-      recipes.forEach((r) => t.put('recipes', r));
-      d.ingredients.forEach((r) => t.put('ingredients', r));
-      d.categories.forEach((r) => t.put('categories', r));
-      d.shoppingItems.forEach((r) => t.put('shoppingItems', r));
-      d.settings.forEach((r) => t.put('settings', r));
-      d.history.forEach((r) => t.put('history', r));
-      d.inventoryItems.forEach((r) => t.put('inventoryItems', r));
-      d.inventoryMovements.forEach((r) => t.put('inventoryMovements', r));
+    const present = new Set(Array.isArray(backup._presentStores) ? backup._presentStores : BACKUP_STORES);
+    const replaceStores = BACKUP_STORES.filter((key) => present.has(key));
+    // Nie zostawiaj ruchów magazynowych osieroconych względem pozycji.
+    if (!present.has('inventoryItems') || !present.has('inventoryMovements')) {
+      const itemIndex = replaceStores.indexOf('inventoryItems');
+      if (itemIndex >= 0) replaceStores.splice(itemIndex, 1);
+      const movementIndex = replaceStores.indexOf('inventoryMovements');
+      if (movementIndex >= 0) replaceStores.splice(movementIndex, 1);
+    }
+    const entries = {
+      recipes, ingredients: d.ingredients, categories: d.categories, shoppingItems: d.shoppingItems,
+      settings: d.settings, history: d.history, inventoryItems: d.inventoryItems, inventoryMovements: d.inventoryMovements,
+    };
+    // Ustawienia bierzemy do transakcji zawsze, ale czyścimy tylko gdy sekcja jest w kopii.
+    const txStores = [...new Set([...replaceStores, 'settings'])];
+    await db.tx(txStores, (t) => {
+      replaceStores.forEach((s) => t.clear(s));
+      replaceStores.forEach((s) => (entries[s] || []).forEach((row) => t.put(s, row)));
       t.put('settings', { key: 'seeded', value: true });
     });
   } else {
@@ -148,7 +173,7 @@ export async function importBackup(backup, mode) {
     });
   }
   await loadAll();
-  // Domyślne wartości dla brakujących ustawień.
+  await loadInventory();
   Object.keys(DEFAULT_SETTINGS).forEach((k) => { if (!(k in state.settings)) state.settings[k] = DEFAULT_SETTINGS[k]; });
   emit('settings'); emit('recipes'); emit('categories'); emit('shopping');
   return { recipes: state.recipes.size };

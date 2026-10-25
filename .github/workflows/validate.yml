@@ -138,6 +138,9 @@ jobs:
       - name: Run inventory matching regression tests
         run: node --experimental-default-type=module --test qa/inventory-matching.test.mjs
 
+      - name: Run backup safety regression test
+        run: node --experimental-default-type=module --test qa/backup-safety.test.mjs
+
       - name: Run atomic shopping receipt regression test
         run: node --experimental-default-type=module --test qa/receive-shopping.test.mjs
 

@@ -109,6 +109,8 @@ export function settingsView() {
   });
 
   function openRestore({ backup, summary }) {
+    const preserved = summary.preservedSections || [];
+    const partial = preserved.length > 0;
     const sh = openSheet({
       title: 'Wczytać kopię zapasową?', variant: 'sheet',
       body: h('div', { class: 'stack' },
@@ -116,13 +118,16 @@ export function settingsView() {
           h('div', { class: 'kv-row' }, h('span', null, 'Receptury'), h('span', { class: 'num' }, String(summary.recipes))),
           h('div', { class: 'kv-row' }, h('span', null, 'Kategorie'), h('span', { class: 'num' }, String(summary.categories))),
           h('div', { class: 'kv-row' }, h('span', null, 'Pozycje zakupów'), h('span', { class: 'num' }, String(summary.shopping))),
-          h('div', { class: 'kv-row' }, h('span', null, 'Wpisy historii'), h('span', { class: 'num' }, String(summary.history))),
+          h('div', { class: 'kv-row' }, h('span', null, 'Wpisy historii'), h('span', { class: 'num' }, preserved.some((x) => x.key === 'history') ? 'zachowane z telefonu' : String(summary.history))),
+          h('div', { class: 'kv-row' }, h('span', null, 'Pozycje magazynu'), h('span', { class: 'num' }, preserved.some((x) => x.key === 'inventoryItems') ? 'zachowane z telefonu' : String(summary.inventory))),
           summary.exportedAt ? h('div', { class: 'kv-row' }, h('span', null, 'Zrobiona'), h('span', { class: 'num' }, fmtDateTime(summary.exportedAt))) : null),
-        h('p', { class: 'muted small' }, '„Połącz” dodaje brakujące receptury i zostawia nowszą wersję każdej z nich. „Zastąp” usuwa obecne dane i wczytuje tylko kopię.')),
+        h('p', { class: 'muted small' }, partial
+          ? 'Kopia nie zawiera kompletnych sekcji: ' + preserved.map((x) => x.label).join(', ') + '. W trybie zastępowania te sekcje zostaną zachowane z tego telefonu. Pozostałe sekcje zostaną zastąpione kopią.'
+          : '„Połącz” dodaje brakujące receptury i zostawia nowszą wersję każdej z nich. „Zastąp” zastępuje dane sekcjami z kopii.')),
       actions: [
         { label: 'Anuluj', kind: 'ghost' },
-        { label: 'Zastąp wszystko', kind: 'danger', onClick: async () => {
-          const ok = await confirmDialog({ title: 'Zastąpić wszystkie dane?', message: `Obecnych receptur (${listRecipes().length}) nie będzie już w aplikacji. Tej operacji nie da się cofnąć.`, confirmText: 'Zastąp', danger: true });
+        { label: partial ? 'Zastąp sekcje z kopii' : 'Zastąp wszystko', kind: 'danger', onClick: async () => {
+          const ok = await confirmDialog({ title: 'Zastąpić dane?', message: 'Obecnych receptur (' + listRecipes().length + ') nie będzie już w aplikacji. Tej operacji nie da się cofnąć.', confirmText: 'Zastąp', danger: true });
           if (!ok) return false;
           await doImport(backup, 'replace');
         } },
