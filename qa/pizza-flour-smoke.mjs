@@ -91,9 +91,9 @@ try {
   await openRecipe.waitFor({ state: 'visible', timeout: 5000 });
   await openRecipe.click();
   await page.waitForSelector('.detail', { state: 'visible', timeout: 5000 });
-  await page.locator('.orb-more').first().click();
-  await page.waitForSelector('.recipe-full-modal', { state: 'visible', timeout: 5000 });
-  const savedRecipe = await page.locator('.recipe-full-modal').innerText();
+  await page.locator('.more-toggle').first().click();
+  await page.waitForSelector('.full-recipe', { state: 'visible', timeout: 5000 });
+  const savedRecipe = await page.locator('.full-recipe').innerText();
   for (const item of ['Zakwas macierzysty', 'Mąka pszenna do zakwasu', 'Woda do zakwasu']) {
     if (!savedRecipe.includes(item)) throw new Error('Zapisana receptura nie zawiera składnika: ' + item);
   }
