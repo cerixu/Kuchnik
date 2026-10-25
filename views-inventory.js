@@ -9,6 +9,7 @@ import {
   changeStock, recordWaste, deleteItem, fmtStock, locName, isOut, isLow, isSoon, isExpired, stockValue,
 } from './inventory.js';
 import { fmtMoney, fmtNum, parseNum, norm } from './util.js';
+import { detectFrame, lookupProduct, findByBarcode, normalizeEAN } from './barcode.js';
 
 const UNIT_OPTIONS = [['g', 'g'], ['ml', 'ml'], ['szt.', 'szt.']];
 const LOCATION_OPTIONS = LOCATIONS.map(([id, label]) => [id, label]);
@@ -17,7 +18,7 @@ export function inventoryView() {
   const s = screen({
     title: 'Magazyn',
     left: iconBtn('left', 'Wstecz', () => goBack('/')),
-    right: iconBtn('plus', 'Dodaj produkt', () => openEditor()),
+    right: h('div', { class: 'row gap' }, iconBtn('search', 'Skanuj kod EAN', () => openScanner()), iconBtn('plus', 'Dodaj produkt', () => openEditor())),
     cls: 'inventory',
   });
   const body = h('div', { class: 'stack' });
@@ -74,8 +75,8 @@ export function inventoryView() {
 
   function paint() { paintStats(); paintList(); }
 
-  function openEditor(existing = null) {
-    const draft = newItem(existing ? { ...existing } : {});
+  function openEditor(existing = null, preset = {}) {
+    const draft = newItem(existing ? { ...existing } : preset);
     const name = textInput({ value: draft.name, placeholder: 'np. Mąka typu 00', label: 'Nazwa produktu' });
     const unit = selectEl(UNIT_OPTIONS, draft.unit || 'g', (v) => { draft.unit = v; });
     if (existing) unit.disabled = true; // jednostka bazowa nie może się zmienić bez konwersji stanu
@@ -115,6 +116,69 @@ export function inventoryView() {
     });
   }
 
+  async function openScanner() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      toast('Ta przeglądarka nie udostępnia kamery. Otwórz aplikację w Safari przez HTTPS.', { type: 'error' });
+      return;
+    }
+    const video = h('video', { autoplay: true, muted: true, playsinline: true, style: { width: '100%', maxHeight: '45dvh', objectFit: 'cover', background: '#090909', borderRadius: '18px' }, 'aria-label': 'Podgląd kamery do skanowania kodu kreskowego' });
+    const canvas = h('canvas', { hidden: true });
+    const status = h('p', { class: 'muted small' }, 'Ustaw kod kreskowy w kadrze. Skanowanie rozpocznie się automatycznie.');
+    let stream = null, torchOn = false, stopped = false, busy = false, raf = 0, sheet;
+    const torchBtn = button('Włącz latarkę', { sm: true, onClick: async () => {
+      const track = stream && stream.getVideoTracks()[0];
+      if (!track) return;
+      try {
+        torchOn = !torchOn;
+        await track.applyConstraints({ advanced: [{ torch: torchOn }] });
+        torchBtn.textContent = torchOn ? 'Wyłącz latarkę' : 'Włącz latarkę';
+      } catch (_) { torchOn = false; toast('Latarka nie jest obsługiwana przez tę kamerę.'); }
+    } });
+    const stop = () => {
+      stopped = true;
+      if (raf) cancelAnimationFrame(raf);
+      if (stream) stream.getTracks().forEach((track) => track.stop());
+      stream = null;
+      try { video.pause(); video.srcObject = null; } catch (_) { /* kamera mogła nie wystartować */ }
+    };
+    sheet = openSheet({
+      title: 'Skanuj kod kreskowy',
+      body: h('div', { class: 'stack' }, video, canvas, status, h('div', { class: 'row wrap gap' }, torchBtn),
+        h('p', { class: 'muted small' }, 'Kod EAN zostaje porównany z magazynem. Jeśli nie ma produktu, spróbujemy pobrać nazwę z Open Food Facts; możesz też wpisać ją ręcznie.')),
+      actions: [{ label: 'Zamknij', kind: 'ghost' }],
+      onClose: stop,
+    });
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } });
+      if (stopped) { stream.getTracks().forEach((track) => track.stop()); return; }
+      video.srcObject = stream;
+      await video.play();
+      const tick = async () => {
+        if (stopped || busy) return;
+        try {
+          const hit = await detectFrame(video, canvas);
+          if (hit && hit.code) {
+            const code = normalizeEAN(hit.code);
+            busy = true;
+            status.textContent = 'Odczytano ' + code + ' — sprawdzam produkt…';
+            stop();
+            sheet.close();
+            const existing = findByBarcode(code);
+            if (existing) { openEditor(existing); return; }
+            const product = await lookupProduct(code);
+            openEditor(null, { barcode: code, name: product ? product.name : '', unit: product && product.unit ? product.unit : 'szt.' });
+            return;
+          }
+        } catch (_) { /* następna klatka spróbuje ponownie */ }
+        if (!stopped) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    } catch (e) {
+      stop();
+      status.textContent = 'Nie udało się uruchomić kamery. Sprawdź uprawnienia Safari i spróbuj ponownie.';
+      toast(e && e.name === 'NotAllowedError' ? 'Zezwól Safari na dostęp do kamery.' : 'Kamera niedostępna. Sprawdź HTTPS i uprawnienia.', { type: 'error' });
+    }
+  }
   async function adjustStock(id, type) {
     const item = getItem(id);
     if (!item) return;
