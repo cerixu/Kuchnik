@@ -3,6 +3,16 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.38': Object.freeze({
+    intro: 'Kuchnik 1.4.38 — transakcje magazynowe w trybie awaryjnym nie pozostawiają częściowych zmian.',
+    items: [
+      'Operacje wielomagazynowe są najpierw przygotowywane na odłączonych kopiach danych.',
+      'Błąd callbacku nie zmienia pamięci ani localStorage.',
+      'Jeśli zapis jednego z magazynów nie powiedzie się, wcześniejsze zapisy są cofane, a operacja zgłasza błąd.',
+      'Dodano test regresyjny błędu callbacku i limitu pamięci; bez migracji IndexedDB.'
+    ],
+    footer: 'Dane istniejące przed transakcją pozostają zachowane.'
+  }),
   '1.4.37': Object.freeze({
     intro: 'Kuchnik 1.4.37 — usuwanie produktu magazynowego nie rozjeżdża stanu pamięci.',
     items: [
