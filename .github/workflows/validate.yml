@@ -74,7 +74,8 @@ jobs:
           }
 
           const photoModule = fs.readFileSync('food-photos.js', 'utf8');
-          const photoFiles = [...photoModule.matchAll(/:\s*['"]([^'"]+\\.jpg)['"]/g)].map((m) => m[1]);
+          const photoFiles = [...photoModule.matchAll(/:\s*['"]([^'"]+\.jpg)['"]/g)].map((m) => m[1]);
+          if (!photoFiles.length) problems.push('food-photos.js: no mapped photos found');
           for (const asset of photoFiles) {
             if (!fs.existsSync(asset)) problems.push(`food-photos.js: mapped photo missing from repository: ${asset}`);
           }
