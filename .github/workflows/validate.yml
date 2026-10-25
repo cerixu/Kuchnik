@@ -152,6 +152,9 @@ jobs:
       - name: Run service-worker install resilience regression test
         run: node --experimental-default-type=module --test qa/sw-install-resilience.test.mjs
 
+      - name: Run offline JavaScript dependency closure regression test
+        run: node --experimental-default-type=module --test qa/sw-import-closure.test.mjs
+
       - name: Run barcode decoder regression tests
         run: node --experimental-default-type=module qa/barcode-smoke.mjs
 
