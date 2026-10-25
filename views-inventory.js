@@ -78,6 +78,7 @@ export function inventoryView() {
     const draft = newItem(existing ? { ...existing } : {});
     const name = textInput({ value: draft.name, placeholder: 'np. Mąka typu 00', label: 'Nazwa produktu' });
     const unit = selectEl(UNIT_OPTIONS, draft.unit || 'g', (v) => { draft.unit = v; });
+    if (existing) unit.disabled = true; // jednostka bazowa nie może się zmienić bez konwersji stanu
     const stock = numInput({ value: draft.stock, label: 'Stan początkowy', dec: 2, onInput: (v) => { draft.stock = v == null ? 0 : Math.max(0, v); } });
     const min = numInput({ value: draft.minStock, label: 'Próg minimalny', dec: 2, onInput: (v) => { draft.minStock = v == null ? 0 : Math.max(0, v); } });
     const category = selectEl(INV_CATS, draft.category, (v) => { draft.category = v; });
