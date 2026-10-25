@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.37': Object.freeze({
+    intro: 'Kuchnik 1.4.37 — usuwanie produktu magazynowego nie rozjeżdża stanu pamięci.',
+    items: [
+      'Produkt znika z bieżącego widoku dopiero po potwierdzonym usunięciu z IndexedDB.',
+      'Błąd zapisu nie powoduje zniknięcia produktu, który nadal istnieje w bazie.',
+      'Dodano test regresyjny awarii usuwania; historia ruchów pozostaje nietknięta.'
+    ],
+    footer: 'Bez migracji bazy danych i bez kasowania historii magazynowej.'
+  }),
   '1.4.36': Object.freeze({
     intro: 'Kuchnik 1.4.36 — zapis produktu magazynowego jest odporniejszy na błędy.',
     items: [
