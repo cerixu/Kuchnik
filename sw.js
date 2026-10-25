@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.29';
+const VERSION = 'kucharzyna-1.4.30';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -33,8 +33,16 @@ const INDEX = () => scopeUrl('index.html');
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(VERSION);
-    // cache:'reload' omija pamięć HTTP przeglądarki — w cache lądują świeże pliki.
-    await cache.addAll(CORE.map((p) => new Request(scopeUrl(p), { cache: 'reload' })));
+    // Wymagane pliki aplikacji muszą być kompletne, ale brak jednej ilustracji,
+    // ikony lub fontu nie może zablokować instalacji całego service workera.
+    const uniqueCore = [...new Set(CORE)];
+    const optionalAsset = (p) => /\\.(?:png|jpe?g|webp|avif|woff2?|ttf|otf|svg|b64)$/i.test(p);
+    const required = uniqueCore.filter((p) => !optionalAsset(p));
+    const optional = uniqueCore.filter(optionalAsset);
+    await cache.addAll(required.map((p) => new Request(scopeUrl(p), { cache: 'reload' })));
+    await Promise.allSettled(optional.map((p) =>
+      cache.add(new Request(scopeUrl(p), { cache: 'reload' }))
+    ));
   })());
 });
 
