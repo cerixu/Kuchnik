@@ -5,8 +5,11 @@
 import { norm } from './util.js';
 
 const clean = (value) => norm(String(value || '')
-  .replace(/\s*\([^)]*\)\s*/g, ' ')
-  .replace(/\b(swiezy|swieza|swieze|posiekany|posiekana|posiekane|drobno|starty|starta|starte)\b/g, ' ')
+  // Parentheses often contain product identity ("papryka (czerwona)").
+  // Preserve that meaning; remove only preparation descriptors, not varieties.
+  .replace(/\(([^)]*)\)/g, ' $1 ')
+  .replace(/\b(swiezy|swieza|swieze|posiekany|posiekana|posiekane|drobno|starty|starta|starte|obrany|obrana|obrane|pokrojony|pokrojona|pokrojone)\b/g, ' ')
+  .replace(/[()]/g, ' ')
   .replace(/\s+/g, ' ')
   .trim());
 
