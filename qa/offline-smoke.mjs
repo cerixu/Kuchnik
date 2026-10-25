@@ -16,8 +16,8 @@ page.on('console', (m) => {
   const message = m.text();
   // A strict offline test intentionally makes network requests fail after the cut.
   // Keep reporting JS errors, but don't mistake expected offline fetch failures for app bugs.
-  if (networkCut && /Failed to load resource: net::ERR_FAILED|net::ERR_INTERNET_DISCONNECTED|net::ERR_NETWORK_CHANGED/.test(message)) return;
-  errors.push(message);
+  if (networkCut && /ERR_FAILED|ERR_INTERNET_DISCONNECTED|ERR_NETWORK_CHANGED/.test(message)) return;
+  errors.push(message + (m.location()?.url ? ' [' + m.location().url + ']' : ''));
 });
 
 async function ready() {
