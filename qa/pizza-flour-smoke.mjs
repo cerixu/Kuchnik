@@ -35,7 +35,7 @@ try {
     const r = pizzaCalcFromFlour({ flour: 7700, hydration: 65, salt: 3, oil: 0, yeast: 0, starter: 0.656 });
     return { seed: r.starterSeed, flour: r.starterFlour, water: r.starterWater, totalStarter: r.starter, doughFlour: r.doughFlour, doughWater: r.doughWater, total: r.total };
   });
-  const starterExpected = { seed: 50.512, flour: 50.512, water: 101.024, totalStarter: 202.048, doughFlour: 7649.488, doughWater: 4903.976, total: 12986.512 };
+  const starterExpected = { seed: 50.512, flour: 50.512, water: 101.024, totalStarter: 202.048, doughFlour: 7624.232, doughWater: 4878.72, total: 12936 };
   for (const [k, v] of Object.entries(starterExpected)) if (Math.abs(starter[k] - v) > 0.001) throw new Error('Błędny przelicznik aktywnego zakwasu ' + k + ': ' + starter[k] + ', oczekiwano ' + v);
   const capped = await page.evaluate(async () => {
     const { pizzaCalcFromFlour } = await import('./calculator.js');
@@ -82,7 +82,7 @@ try {
   if (!(await row('Woda do zakwasu').innerText()).includes('101')) throw new Error('Woda do zakwasu powinna mieć ok. 101 g');
   if (!(await row('Aktywny zakwas łącznie').innerText()).includes('202')) throw new Error('Aktywny zakwas powinien mieć ok. 202 g');
   const totalText = await row('Masa całkowita').innerText();
-  if (!totalText.includes('12 987') && !totalText.includes('12987')) throw new Error('Masa końcowa powinna zaokrąglać się do 12 987 g bez podwójnego liczenia mąki i wody');
+  if (!totalText.includes('12 936') && !totalText.includes('12936')) throw new Error('Masa końcowa powinna wynosić 12 936 g przy zadanej całkowitej ilości mąki i hydracji');
   await page.getByLabel('Zakwas macierzysty procent mąki').fill('5');
   if (!(await page.getByLabel('Zakwas macierzysty procent mąki').inputValue()).startsWith('1')) throw new Error('Pole zakwasu nie ogranicza wartości do 1%');
 
