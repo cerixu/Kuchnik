@@ -136,11 +136,14 @@ export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, ye
   const oilAmount = f * oil / 100;
   const yeastAmount = f * yeast / 100;
   const starterSeed = f * seedPct / 100;
+  // Mother starter is assumed 100% hydration: half flour, half water.
+  // For a 1:1:2 feed (starter:flour:water), total formula flour/water
+  // must include both the mother starter's contribution and the feed.
   const starterFlour = starterSeed;
   const starterWater = starterSeed * 2;
   const starterTotal = starterSeed * 4;
-  const doughFlour = f - starterFlour;
-  const doughWater = water - starterWater;
+  const doughFlour = f - starterSeed * 1.5;
+  const doughWater = water - starterSeed * 2.5;
   const total = doughFlour + doughWater + saltAmount + oilAmount + yeastAmount + starterTotal;
   const ballCount = ballWeight > 0 ? Math.floor((total + 1e-8) / ballWeight) : 0;
   const remainder = ballWeight > 0 ? Math.max(0, total - ballCount * ballWeight) : total;
