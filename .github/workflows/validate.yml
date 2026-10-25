@@ -131,6 +131,9 @@ jobs:
           console.log(`Validation passed: ${files.length} JavaScript modules, local imports, ${photoFiles.length} photo assets, ${appVersion} version sync, service-worker cache and manifest.`);
           NODE
 
+      - name: Run inventory matching regression tests
+        run: node --experimental-default-type=module --test qa/inventory-matching.test.mjs
+
       - name: Install Playwright Chromium
         run: |
           npm install --no-save --package-lock=false playwright@1.55.0
