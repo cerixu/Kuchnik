@@ -1,0 +1,96 @@
+name: Validate PWA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Syntax, imports and PWA consistency
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check JavaScript module syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=( *.js )
+          test "${#files[@]}" -gt 0
+          for file in "${files[@]}"; do
+            echo "Checking syntax: $file"
+            node --check --input-type=module < "$file"
+          done
+
+      - name: Check local imports, service-worker cache and versions
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+
+          const problems = [];
+          const files = fs.readdirSync('.').filter((name) => name.endsWith('.js'));
+          for (const file of files) {
+            const source = fs.readFileSync(file, 'utf8');
+            const patterns = [
+              /^[ \t]*import[ \t]+(?:[\s\S]*?[ \t]+from[ \t]*)?['"]([^'"]+)['"]/gm,
+              /^[ \t]*export[ \t]+(?:\*|\{[\s\S]*?\})[ \t]+from[ \t]*['"]([^'"]+)['"]/gm,
+              /\bimport\([ \t]*['"]([^'"]+)['"][ \t]*\)/g,
+            ];
+            for (const pattern of patterns) {
+              for (const match of source.matchAll(pattern)) {
+                const specifier = match[1];
+                if (!specifier.startsWith('.')) continue;
+                const target = path.resolve(path.dirname(path.resolve(file)), specifier);
+                if (!fs.existsSync(target)) problems.push(`${file}: missing local import "${specifier}"`);
+              }
+            }
+          }
+
+          const sw = fs.readFileSync('sw.js', 'utf8');
+          const util = fs.readFileSync('util.js', 'utf8');
+          const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest', 'utf8'));
+          const coreMatch = sw.match(/const CORE = \[([\s\S]*?)\];/);
+          if (!coreMatch) problems.push('sw.js: CORE cache list not found');
+          else {
+            const core = [...coreMatch[1].matchAll(/['"]([^'"]+)['"]/g)].map((m) => m[1]);
+            for (const asset of core) {
+              if (asset === './') continue;
+              if (!fs.existsSync(asset)) problems.push(`sw.js: cached asset missing from repository: ${asset}`);
+            }
+          }
+
+          const appVersion = util.match(/APP_VERSION\s*=\s*['"]([^'"]+)['"]/)?.[1];
+          const swVersion = sw.match(/const VERSION\s*=\s*['"]kucharzyna-([^'"]+)['"]/)?.[1];
+          if (!appVersion) problems.push('util.js: APP_VERSION not found');
+          if (!swVersion) problems.push('sw.js: VERSION not found');
+          if (appVersion && swVersion && appVersion !== swVersion) {
+            problems.push(`Version mismatch: APP_VERSION=${appVersion}, service worker=${swVersion}`);
+          }
+          if (manifest.display !== 'standalone') problems.push('manifest.webmanifest: display must be standalone');
+          if (!Array.isArray(manifest.icons) || !manifest.icons.some((icon) => icon.purpose === 'maskable')) {
+            problems.push('manifest.webmanifest: maskable icon missing');
+          }
+          if (!fs.readFileSync('index.html', 'utf8').includes('src="app.js"')) {
+            problems.push('index.html: app.js module entry point missing');
+          }
+
+          if (problems.length) {
+            console.error('Validation failed:\n- ' + problems.join('\n- '));
+            process.exit(1);
+          }
+          console.log(`Validation passed: ${files.length} JavaScript modules, local imports, ${appVersion} version sync, service-worker cache and manifest.`);
+          NODE
