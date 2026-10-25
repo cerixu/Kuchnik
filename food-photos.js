@@ -100,6 +100,7 @@ const SVG_FILES = Object.freeze({
   gnocchi: 'gnocchi.svg',
   bruschetta: 'bruschetta.svg',
   'panna-cotta': 'panna-cotta.svg',
+  'tagliatelle-ragu': 'tagliatelle-ragu.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -112,6 +113,7 @@ const SVG_RECIPE_RULES = [
   ['lasagna', /\b(lasagne alla bolognese|lasagna bolognese|lasagne bolognese|lasagne tradycyjne|lasagne klasyczne|lasagna)\b/],
   ['gnocchi', /\b(gnocchi al pomodoro|gnocchi pomodoro|gnocchi z sosem pomidorowym|gnocchi)\b/],
   ['bruschetta', /\b(bruschetta al pomodoro|bruschetta z pomidorami|bruschetta)\b/],
+  ['tagliatelle-ragu', /\b(tagliatelle al ragu|tagliatelle z ragu|tagliatelle bolognese|tagliatelle z sosem bolognese)\b/],
   ['panna-cotta', /\bpanna cotta\b/],
 ];
 

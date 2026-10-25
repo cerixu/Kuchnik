@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.32': Object.freeze({
+    intro: 'Kuchnik 1.4.32 — dedykowana ilustracja tagliatelle al ragù.',
+    items: [
+      'Dodano lekką, lokalną ilustrację SVG tagliatelle al ragù (około 3,6 KB), przeniesioną ze sprawdzonego wariantu hybrydowego Żarłoka.',
+      'Dopasowanie obejmuje konkretne nazwy tagliatelle z ragù lub sosem bolognese; nie przypisuje ilustracji przypadkowym daniom makaronowym.',
+      'Plik znajduje się w cache Service Workera i jest objęty testami dostępności offline.'
+    ],
+    footer: 'Zdjęcia dodane przez użytkownika nadal mają pierwszeństwo. Nie zmieniono receptur ani danych magazynowych.'
+  }),
   '1.4.31': Object.freeze({
     intro: 'Kuchnik 1.4.31 — cztery nowe ilustracje potraw.',
     items: [
