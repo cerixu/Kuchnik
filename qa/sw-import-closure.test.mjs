@@ -44,3 +44,17 @@ test('offline shell contains app entry and every imported local JavaScript depen
   assert.deepEqual(failures, [], failures.join('\n'));
   assert.ok(moduleFiles.length > 0, 'CORE must include JavaScript modules');
 });
+
+test('every mapped SVG fallback exists and is cached for offline use', () => {
+  const photoSource = fs.readFileSync('food-photos.js', 'utf8');
+  const svgMap = photoSource.match(/const SVG_FILES = Object\\.freeze\\(\\{([\\s\\S]*?)\\}\\);/);
+  assert.ok(svgMap, 'food-photos.js must declare SVG_FILES');
+  const names = [...svgMap[1].matchAll(/:\\s*['"]([^'"]+\\.svg)['"]/g)].map((entry) => entry[1]);
+  assert.ok(names.length > 0, 'SVG fallback map must not be empty');
+
+  for (const name of names) {
+    const asset = 'assets/food-svg/' + name;
+    assert.ok(fs.existsSync(asset), 'mapped SVG missing from repository: ' + asset);
+    assert.ok(coreSet.has(asset), 'mapped SVG absent from service-worker CORE: ' + asset);
+  }
+});
