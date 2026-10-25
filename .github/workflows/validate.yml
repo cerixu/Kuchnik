@@ -83,19 +83,19 @@ jobs:
           // Sprawdź, czy każdy nazwany import rzeczywiście jest eksportowany przez moduł docelowy.
           const exportNames = (source) => {
             const names = new Set();
-            for (const m of source.matchAll(/\\bexport\\s+(?:async\\s+)?(?:function|class|const|let|var)\\s+([A-Za-z_$][\\w$]*)/g)) names.add(m[1]);
-            for (const m of source.matchAll(/\\bexport\\s*\\{([^}]+)\\}/g)) {
+            for (const m of source.matchAll(/\bexport\s+(?:async\s+)?(?:function|class|const|let|var)\s+([A-Za-z_$][\w$]*)/g)) names.add(m[1]);
+            for (const m of source.matchAll(/\bexport\s*\{([^}]+)\}/g)) {
               for (const raw of m[1].split(',')) {
-                const parts = raw.trim().split(/\\s+as\\s+/);
+                const parts = raw.trim().split(/\s+as\s+/);
                 const name = (parts[1] || parts[0]).trim();
-                if (/^[A-Za-z_$][\\w$]*$/.test(name)) names.add(name);
+                if (/^[A-Za-z_$][\w$]*$/.test(name)) names.add(name);
               }
             }
             return names;
           };
           for (const file of files) {
             const source = fs.readFileSync(file, 'utf8');
-            const imports = source.matchAll(/^\\s*import\\s*\\{([\\s\\S]*?)\\}\\s*from\\s*['"]([^'"]+)['"]/gm);
+            const imports = source.matchAll(/^\s*import\s*\{([\s\S]*?)\}\s*from\s*['"]([^'"]+)['"]/gm);
             for (const m of imports) {
               const specifier = m[2];
               if (!specifier.startsWith('.')) continue;
@@ -103,7 +103,7 @@ jobs:
               if (!fs.existsSync(target)) continue;
               const names = exportNames(fs.readFileSync(target, 'utf8'));
               for (const raw of m[1].split(',')) {
-                const imported = raw.replace(/\\/\\*[\\s\\S]*?\\*\\//g, '').trim().split(/\\s+as\\s+/)[0].trim();
+                const imported = raw.replace(/\/\*[\s\S]*?\*\//g, '').trim().split(/\s+as\s+/)[0].trim();
                 if (imported && !names.has(imported)) problems.push(`${file}: ${specifier} does not export "${imported}"`);
               }
             }
