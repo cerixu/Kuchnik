@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Wersja pośrednia 1.4.17.** Naprawiono krytyczny import funkcji EAN, który zatrzymywał ładowanie modułów i mógł zostawiać ekran startowy. Cały rozruch ma wspólny limit 60 sekund. Dodano ekran „Gotuję”, 28 lokalnych zdjęć dań i osobny Cache-First cache mediów zachowywany między wydaniami. Dopasowywanie nazw składników w magazynie rozpoznaje częste polskie odmiany i ignoruje opisy przygotowania, bez łączenia ogólnych nazw z bardziej szczegółowymi produktami. Dane użytkownika pozostają nietknięte.
+> **Wersja pośrednia 1.4.17.** Naprawiono krytyczny import funkcji EAN, który zatrzymywał ładowanie modułów i mógł zostawiać ekran startowy. Cały rozruch ma wspólny limit 60 sekund. Dodano ekran „Gotuję”, 28 lokalnych zdjęć dań i osobny Cache-First cache mediów zachowywany między wydaniami. Dopasowywanie nazw składników w magazynie rozpoznaje częste polskie odmiany i ignoruje opisy przygotowania, bez łączenia ogólnych nazw z bardziej szczegółowymi produktami. Historia ruchów magazynowych nie jest automatycznie usuwana po roku. Dane użytkownika pozostają nietknięte.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
