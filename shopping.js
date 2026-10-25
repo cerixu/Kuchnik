@@ -167,22 +167,17 @@ export function shoppingView() {
             const bought = state.shopping.filter((i) => i.done && !i.inventoryReceivedAt);
             if (!bought.length) { toast('Brak nowych zakupów do przyjęcia'); return; }
             const eligible = bought.filter((i) => i.amount > 0 && ['g', 'kg', 'ml', 'l', 'szt.'].includes(i.unit));
-            const skipped = bought.length - eligible.length;
+            const invalid = bought.length - eligible.length;
             if (!eligible.length) {
               toast('Uzupełnij ilość i jednostkę (g, kg, ml, l lub szt.), aby przyjąć zakupy', { type: 'error' });
               return;
             }
-            let received = 0;
             try {
-              for (const item of eligible) {
-                await receiveShopping([item]);
-                item.inventoryReceivedAt = Date.now();
-                await persist([item]);
-                received++;
-              }
-              toast(`Przyjęto do magazynu: ${received}${skipped ? `; pominięto bez ilości/jednostki: ${skipped}` : ''}`);
+              const res = await receiveShopping(eligible);
+              const skipped = invalid + res.skipped;
+              toast(`Przyjęto do magazynu: ${res.added}${res.created ? `; nowe produkty: ${res.created}` : ''}${skipped ? `; pominięto: ${skipped}` : ''}`);
             } catch (e) {
-              toast(`Przyjęto ${received}; reszta wymaga ponowienia. Sprawdź magazyn przed kolejną próbą.`, { type: 'error' });
+              toast('Nie udało się zakończyć przyjęcia. Pozycje zapisane wcześniej są oznaczone automatycznie; sprawdź magazyn przed ponowieniem.', { type: 'error' });
             }
           } }),
           button('Skopiuj / udostępnij listę', { icon: 'share', block: true, onClick: async () => {
