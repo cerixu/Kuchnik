@@ -9,17 +9,19 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.0';
+const VERSION = 'kucharzyna-1.6.0';
 const NETWORK_TIMEOUT = 3500;
 
 const CORE = [
   './',
   'index.html',
-  'styles.css',
+  'styles.css', 'changelog.js',
   'manifest.webmanifest',
   'app.js', 'router.js', 'pwa.js', 'ui.js', 'util.js', 'db.js', 'recipes.js', 'calculator.js', 'importer.js', 'backup.js',
-  'components.js', 'shopping.js', 'art.js', 'inventory.js', 'barcode.js', 'ingredient-icons.js', 'art-kit.js', 'art-extra.js', 'nutrition.js', 'seeds.js', 'seeds-pl.js', 'seeds-world.js', 'seeds-more.js', 'timers.js', 'kitchen.js', 'tools-data.js', 'calc-kit.js', 'search.js',
-  'views-start.js', 'views-recipes.js', 'views-detail.js', 'views-editor.js', 'views-cook.js', 'views-calc.js', 'views-tools.js', 'views-guide.js', 'views-search.js', 'views-import.js', 'views-settings.js',
+  'components.js', 'shopping.js', 'art.js', 'inventory.js', 'barcode.js', 'ingredient-icons.js', 'art-kit.js', 'art-extra.js', 'nutrition.js', 'seeds.js', 'seeds-pl.js', 'seeds-world.js', 'seeds-more.js', 'seeds-curated.js', 'food-photos.js', 'timers.js', 'kitchen.js', 'tools-data.js', 'calc-kit.js', 'search.js',
+  'views-start.js', 'views-recipes.js', 'views-detail.js', 'views-editor.js', 'views-cook.js', 'views-cook-home.js', 'views-inventory.js', 'views-more.js', 'views-calc.js', 'views-tools.js', 'views-guide.js', 'views-search.js', 'views-import.js', 'views-settings.js',
+  'start-final.css', 'visual-system.css', 'kucharzyna-visual.css', 'claude-completion.css', 'visual-redesign.css', 'generated-art.css', 'zarlok-v2.css', 'design-overhaul.css', 'mobile-polish.css', 'art-direction.css',
+  'food-pizza.jpg.b64', 'food-carbonara.jpg.b64', 'food-risotto.jpg.b64', 'food-salmon.jpg.b64', 'food-steak.jpg.b64', 'food-dessert.jpg.b64', 'food-salad.jpg.b64', 'food-sauce.jpg.b64', 'food-soup.jpg.b64', 'food-seafood.jpg.b64', 'food-pierogi.jpg.b64', 'food-burger.jpg.b64', 'food-focaccia.jpg.b64', 'food-pasta-tomato.jpg.b64', 'food-lasagna.jpg.b64', 'food-chicken-curry.jpg.b64', 'food-schnitzel.jpg.b64', 'food-soup-tomato.jpg.b64', 'food-soup-clear.jpg.b64', 'food-soup-pumpkin.jpg.b64', 'food-sourdough.jpg.b64', 'food-baguette.jpg.b64', 'food-cake.jpg.b64', 'food-babka-piaskowa.jpg.b64', 'food-baba-ganoush.jpg.b64', 'food-cocktail.jpg.b64', 'food-asian-noodles.jpg.b64', 'food-fried-rice.jpg.b64', 'food-barszcz.jpg.b64', 'food-bigos.jpg.b64', 'food-bbq-ribs.jpg.b64', 'food-beef-stew.jpg.b64', 'food-brownie.jpg.b64', 'food-creme-brulee.jpg.b64', 'food-crepes.jpg.b64', 'food-bagel.jpg.b64', 'food-bibimbap.jpg.b64', 'food-curry-chickpea.jpg.b64', 'food-bruschetta.jpg.b64', 'food-aperol.jpg.b64',
   'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png',
   'bg-texture.png', 'poppins-300.woff', 'poppins-400.woff', 'poppins-500.woff', 'poppins-700.woff',
 ];

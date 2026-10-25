@@ -126,13 +126,38 @@ export function bakersRecalc(r, o = {}) {
 
 export const YEAST_TYPES = { fresh: { label: 'świeże', f: 1 }, dry: { label: 'suche aktywne', f: 0.4 }, instant: { label: 'instant', f: 0.33 } };
 
-/** total = kulki × masa; mąka = total / (1 + suma procentów). */
-export function pizzaCalc({ balls, ballWeight, hydration, salt, oil, yeast }) {
-  const total = balls * ballWeight;
-  const pctSum = 100 + hydration + salt + oil + yeast;
+/** Obliczenia pizzy od ilości mąki; zakwas aktywny w proporcji 1:1:2, seed ograniczony do 1% mąki. */
+export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, yeast = 0, starter = 0, ballWeight = 250 }) {
+  const f = Math.max(0, Number(flour) || 0);
+  const seedPct = Math.min(1, Math.max(0, Number(starter) || 0));
+  const pctSum = 100 + hydration + salt + oil + yeast + seedPct;
+  const water = f * hydration / 100;
+  const saltAmount = f * salt / 100;
+  const oilAmount = f * oil / 100;
+  const yeastAmount = f * yeast / 100;
+  const starterSeed = f * seedPct / 100;
+  // Mother starter is assumed 100% hydration: half flour, half water.
+  // For a 1:1:2 feed (starter:flour:water), total formula flour/water
+  // must include both the mother starter's contribution and the feed.
+  const starterFlour = starterSeed;
+  const starterWater = starterSeed * 2;
+  const starterTotal = starterSeed * 4;
+  const doughFlour = f - starterSeed * 1.5;
+  const doughWater = water - starterSeed * 2.5;
+  const total = doughFlour + doughWater + saltAmount + oilAmount + yeastAmount + starterTotal;
+  const ballCount = ballWeight > 0 ? Math.floor((total + 1e-8) / ballWeight) : 0;
+  const remainder = ballWeight > 0 ? Math.max(0, total - ballCount * ballWeight) : total;
+  return { flour: f, water, salt: saltAmount, oil: oilAmount, yeast: yeastAmount, total, pctSum, ballCount, remainder, starterSeed, starterFlour, starterWater, starter: starterTotal, doughFlour, doughWater };
+}
+
+/** Zachowuje dotychczasowy tryb liczenia od kulek i dodaje zgodne wyniki trybu „Mam mąkę”. */
+export function pizzaCalc({ balls, ballWeight, hydration, salt, oil, yeast, starter = 0 }) {
+  const seedPct = Math.min(1, Math.max(0, Number(starter) || 0));
+  const pctSum = 100 + hydration + salt + oil + yeast + seedPct;
+  const total = Math.max(0, Number(balls) || 0) * Math.max(0, Number(ballWeight) || 0);
   const flour = total / (pctSum / 100);
-  const part = (p) => (flour * p) / 100;
-  return { flour, water: part(hydration), salt: part(salt), oil: part(oil), yeast: part(yeast), total, pctSum };
+  const r = pizzaCalcFromFlour({ flour, hydration, salt, oil, yeast, starter: seedPct, ballWeight });
+  return { ...r, flour, total, pctSum, ballCount: Math.max(0, Math.floor(Number(balls) || 0)), remainder: 0 };
 }
 
 /**

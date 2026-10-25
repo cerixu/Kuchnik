@@ -12,12 +12,12 @@ import { backupDue, daysSinceBackup } from './backup.js';
 import { openTimersSheet } from './timers.js';
 import { ORIGINS } from './recipes.js';
 
-const HEADLINE = '„No Elo kurwa, Kucharzyno za pięć złotych👨‍🍳”';
+const HEADLINE = 'Profesjonalna kuchnia. Wszystko pod ręką.';
 const plural = (n) => `${n} ${n === 1 ? 'receptura' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'receptury' : 'receptur'}`;
 
 export function startView() {
   const fire = h('button', { type: 'button', class: 'fire-btn', 'aria-label': 'Wylosuj coś na dziś', onClick: () => navigate('/calc/random') }, '🔥');
-  const s = screen({ title: 'Kucharzyna', large: 'hero', right: fire, cls: 'start' });
+  const s = screen({ title: 'Kuchnik', large: 'hero', right: fire, cls: 'start' });
   const c = s.content;
   let unsub;
 
@@ -57,7 +57,7 @@ export function startView() {
     const n = pendingCount();
     const kids = [
       h('div', { class: 'start-head' },
-        h('p', { class: 'eyebrow' }, 'Kucharzyna'),
+        h('p', { class: 'eyebrow' }, 'Kuchnik'),
         h('h1', { class: 'hero-line' }, HEADLINE),
         h('p', { class: 'muted hero-sub' }, `${plural(all.length)} w telefonie · działa bez internetu`)),
       searchBox,

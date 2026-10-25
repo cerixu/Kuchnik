@@ -1,0 +1,24 @@
+/* Żarłok 1.9.31 — oryginalne zdjęcia Firefly i dopracowane mikrointerakcje. */
+:root{--food-photo-radius:inherit}
+.rthumb,.rtile-img,.ctile-img,.zf-feature-img{isolation:isolate;background:linear-gradient(135deg,rgba(217,151,97,.11),rgba(255,255,255,.015));}
+.rthumb img:not(.art),.rtile-img img:not(.art),.zf-feature-img img:not(.art){transform:scale(1.001);transition:transform .62s cubic-bezier(.2,.7,.2,1),filter .4s ease;will-change:transform;backface-visibility:hidden}
+@media(hover:hover) and (pointer:fine){
+  .rcard:hover .rthumb img:not(.art),.rtile:hover .rtile-img img:not(.art),.zf-feature:hover .zf-feature-img img:not(.art){transform:scale(1.055);filter:saturate(1.06) contrast(1.02)}
+}
+.rthumb img:not(.art),.rtile-img img:not(.art){animation:zarlok-photo-in .58s cubic-bezier(.2,.7,.2,1) both}
+@keyframes zarlok-photo-in{from{opacity:.45;transform:scale(1.035);filter:blur(3px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
+.rcard,.rtile,.ctile,.inventory-item,.zf-action,.zf-tool{transition:transform .2s cubic-bezier(.2,.7,.2,1),border-color .22s ease,box-shadow .24s ease,background-color .22s ease}
+.rcard:active,.rtile:active,.ctile:active{transform:scale(.987)}
+.heart{transform-origin:center;transition:transform .22s cubic-bezier(.2,.8,.2,1),color .18s ease,background .18s ease}
+.heart.on{animation:zarlok-heart-pop .32s cubic-bezier(.2,.8,.2,1)}
+@keyframes zarlok-heart-pop{0%{transform:scale(.82)}55%{transform:scale(1.18)}100%{transform:scale(1)}}
+.btn:focus-visible,.iconbtn:focus-visible,.heart:focus-visible,.tab:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
+.rthumb img.art,.rtile-img img.art,.ctile-img img.art{animation:none}
+
+/* Dolna nawigacja: kapsuła zakładki stoi w miejscu, reaguje wyłącznie ikona. */
+#tabbar .tab{transform:none!important}
+#tabbar .tab:active{transform:none!important}
+#tabbar .tab:active .tab-ico{transform:scale(.92)!important}
+
+/* Znak aplikacji — oryginalna grafika wygenerowana w Adobe Firefly. */
+.boot-shell-mark{background-image:url("./assets/brand/mark.jpg");background-position:center;background-size:cover;background-repeat:no-repeat;border-color:rgba(217,151,97,.4);color:transparent;font-size:0;box-shadow:0 0 0 8px rgba(217,151,97,.035),0 12px 34px rgba(0,0,0,.25)}

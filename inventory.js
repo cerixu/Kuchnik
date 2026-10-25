@@ -199,6 +199,56 @@ function matchScore(ingName, item) {
   return best;
 }
 
+/** Ścisłe dopasowanie nazwy magazynowej: warianty fleksyjne tak, dopiski rozróżniające produkt nie. */
+const NAME_QUALIFIERS = new Set(['swieze', 'swiezy', 'swieza', 'mielony', 'mielona', 'mielone', 'suszone', 'suszony', 'suszona', 'wedzony', 'wedzona', 'wedzone', 'wędzony', 'wędzona', 'wędzone', 'ostry', 'ostra', 'ostre', 'slodki', 'slodka', 'slodkie', 'konserwowy', 'konserwowa', 'konserwowe', 'marynowany', 'marynowana', 'marynowane']);
+const nameQualifiers = (name) => norm(String(name).replace(/\([^)]*\)/g, ' ')).split(/[^a-z0-9]+/).filter((w) => NAME_QUALIFIERS.has(w)).sort().join('|');
+
+export function inventoryNamesMatch(item, name) {
+  if (!item || !name) return false;
+  const target = nameStems(name);
+  if (!target.length) return false;
+  const targetQualifiers = nameQualifiers(name);
+  return [item.name, ...(item.aliases || [])].some((candidate) => {
+    const parts = nameStems(candidate);
+    if (!parts.length || !parts[0].startsWith(target[0]) && !target[0].startsWith(parts[0])) return false;
+    if (parts.length !== target.length) return false;
+    if (parts.some((part, i) => !part.startsWith(target[i]) && !target[i].startsWith(part))) return false;
+    // Cechy zmieniające rodzaj produktu (np. papryka świeża/mielona) muszą się zgadzać.
+    return nameQualifiers(candidate) === targetQualifiers;
+  });
+}
+
+/** Konwersja ilości między jednostkami zgodnymi wymiarowo; null przy braku danych. */
+export function convertInventoryAmount(amount, fromUnit, toUnit, name = '') {
+  const value = Number(amount);
+  if (!Number.isFinite(value) || value < 0) return null;
+  if (fromUnit === toUnit) return value;
+  const mass = new Set(['g', 'kg']);
+  const volume = new Set(['ml', 'l']);
+  const counts = fromUnit === 'szt.' || toUnit === 'szt.';
+  if (mass.has(fromUnit) && mass.has(toUnit)) {
+    const grams = fromUnit === 'kg' ? value * 1000 : value;
+    return toUnit === 'kg' ? grams / 1000 : grams;
+  }
+  if (volume.has(fromUnit) && volume.has(toUnit)) {
+    const ml = fromUnit === 'l' ? value * 1000 : value;
+    return toUnit === 'l' ? ml / 1000 : ml;
+  }
+  if (counts) {
+    const grams = pieceGrams(name);
+    if (!grams) return null;
+    if (fromUnit === 'szt.' && mass.has(toUnit)) {
+      const total = value * grams;
+      return toUnit === 'kg' ? total / 1000 : total;
+    }
+    if (mass.has(fromUnit) && toUnit === 'szt.') {
+      const total = fromUnit === 'kg' ? value * 1000 : value;
+      return total / grams;
+    }
+  }
+  return null;
+}
+
 export function findItemFor(ingName) {
   let best = null, bestScore = 1;
   for (const it of store.items.values()) {

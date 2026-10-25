@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Kucharzyna",
-  "short_name": "Kucharzyna",
-  "description": "Prywatny notatnik szefa kuchni: receptury, przeliczanie, procenty piekarskie, food cost, zakupy. Działa offline.",
+  "name": "Kuchnik",
+  "short_name": "Kuchnik",
+  "description": "Prywatny notatnik szefa kuchni: receptury, kalkulatory, food cost, magazyn i zakupy. Działa offline.",
   "lang": "pl",
   "dir": "ltr",
   "start_url": "./",
@@ -11,34 +11,11 @@
   "orientation": "any",
   "background_color": "#1d1d1f",
   "theme_color": "#1d1d1f",
-  "categories": [
-    "food",
-    "lifestyle",
-    "productivity"
-  ],
+  "categories": ["food", "lifestyle", "productivity"],
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
   ]
 }
