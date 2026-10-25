@@ -9,7 +9,7 @@ import {
   changeStock, recordWaste, deleteItem, fmtStock, locName, isOut, isLow, isSoon, isExpired, stockValue,
 } from './inventory.js';
 import { fmtMoney, fmtNum, parseNum, norm } from './util.js';
-import { detectFrame, lookupProduct, findByBarcode, normalizeEAN } from './barcode.js';
+import { detectFrame, lookupProduct, findByBarcode, normalizeEAN, nativeSupported } from './barcode.js';
 
 const UNIT_OPTIONS = [['g', 'g'], ['ml', 'ml'], ['szt.', 'szt.']];
 const LOCATION_OPTIONS = LOCATIONS.map(([id, label]) => [id, label]);
@@ -149,6 +149,7 @@ export function inventoryView() {
       onClose: stop,
     });
     try {
+      await nativeSupported();
       stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } });
       if (stopped) { stream.getTracks().forEach((track) => track.stop()); return; }
       video.srcObject = stream;
