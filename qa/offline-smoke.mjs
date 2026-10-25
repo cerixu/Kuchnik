@@ -16,7 +16,11 @@ page.on('console', (m) => {
   const message = m.text();
   // A strict offline test intentionally makes network requests fail after the cut.
   // Keep reporting JS errors, but don't mistake expected offline fetch failures for app bugs.
-  if (networkCut && /ERR_FAILED|ERR_INTERNET_DISCONNECTED|ERR_NETWORK_CHANGED/.test(message)) return;
+  // Chromium can emit this generic console message without a URL when the
+  // network is deliberately cut. Resource fetch failures are expected offline;
+  // uncaught exceptions remain fatal via pageerror above.
+  if (networkCut && (/ERR_FAILED|ERR_INTERNET_DISCONNECTED|ERR_NETWORK_CHANGED/.test(message)
+    || /Failed to load resource/i.test(message))) return;
   errors.push(message + (m.location()?.url ? ' [' + m.location().url + ']' : ''));
 });
 
