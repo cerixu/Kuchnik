@@ -179,6 +179,7 @@ function whatsNew() {
     body: h('div', { class: 'stack' },
       h('ul', { class: 'whatsnew' },
         li('Naprawiono import wyszukiwania kodów EAN, który blokował start modułów magazynu.'),
+        li('Skaner EAN odrzuca teraz kody pozornie znalezione wewnątrz dłuższego kodu, ograniczając fałszywe trafienia EAN-8.'),
         li('Cały rozruch — także zapis ustawień i montowanie widoku — ma limit 60 sekund i pokazuje błąd zamiast wiszącej animacji.'),
         li('28 lokalnych zdjęć potraw, ładowanych na żądanie; zdjęcia własne mają pierwszeństwo.'),
         li('Sześć lekkich ilustracji SVG jest dostępnych offline jako fallback, gdy zdjęcie potrawy nie jest dostępne.'),
