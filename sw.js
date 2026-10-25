@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.7';
+const VERSION = 'kucharzyna-1.4.8';
 const NETWORK_TIMEOUT = 3500;
 
 const CORE = [
