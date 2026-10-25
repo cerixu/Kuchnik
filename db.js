@@ -218,18 +218,83 @@ function mapBackend(persist) {
     delete: async (s, k) => { load(s).delete(k); flush(s); },
     clear: async (s) => { load(s).clear(); flush(s); },
     tx: async (stores, fn) => {
+      const scope = new Set(stores);
+      const staged = new Map();
       const touched = new Set();
+      const table = (s) => {
+        if (!STORES[s] || !scope.has(s)) {
+          throw Object.assign(new Error(`Magazyn "${s}" nie należy do transakcji`), { name: 'NotFoundError' });
+        }
+        if (!staged.has(s)) {
+          const current = load(s);
+          staged.set(s, new Map([...current.entries()].map(([k, v]) => [k, clone(v)])));
+        }
+        return staged.get(s);
+      };
+
+      // Apply every operation to detached maps first. A callback error must not
+      // leak half a transaction into the in-memory fallback backend.
       fn({
-        put: (s, v) => { load(s).set(kp(s, v), clone(v)); touched.add(s); },
+        put: (s, v) => { table(s).set(kp(s, v), clone(v)); touched.add(s); },
         add: (s, v) => {
-          const m = load(s), id = kp(s, v);
+          const m = table(s), id = kp(s, v);
           if (m.has(id)) throw Object.assign(new Error('Rekord już istnieje: ' + s), { name: 'ConstraintError' });
           m.set(id, clone(v)); touched.add(s);
         },
-        delete: (s, k) => { load(s).delete(k); touched.add(s); },
-        clear: (s) => { load(s).clear(); touched.add(s); },
+        delete: (s, k) => { table(s).delete(k); touched.add(s); },
+        clear: (s) => { table(s).clear(); touched.add(s); },
       });
-      touched.forEach(flush);
+      if (!touched.size) return;
+
+      // If persistence was already suspended because the stored data is
+      // malformed/unavailable, retain the app's explicit session-memory mode.
+      if (!canWrite) {
+        for (const s of touched) maps[s] = staged.get(s);
+        return;
+      }
+
+      // Serialize before touching storage, so serialization errors cannot leave
+      // one store updated and another store untouched.
+      const serialized = new Map();
+      for (const s of touched) serialized.set(s, JSON.stringify([...staged.get(s).values()]));
+
+      const previous = new Map();
+      try {
+        for (const s of touched) previous.set(s, localStorage.getItem(key(s)));
+      } catch (e) {
+        suspendWrites('Nie można odczytać awaryjnej pamięci przed transakcją; zapis został wstrzymany.');
+        throw e;
+      }
+
+      const written = [];
+      try {
+        for (const s of touched) {
+          localStorage.setItem(key(s), serialized.get(s));
+          written.push(s);
+        }
+      } catch (e) {
+        let rollbackFailed = false;
+        for (const s of written.reverse()) {
+          try {
+            const raw = previous.get(s);
+            if (raw == null) localStorage.removeItem(key(s));
+            else localStorage.setItem(key(s), raw);
+          } catch (_) {
+            rollbackFailed = true;
+          }
+        }
+        status.quotaHit = true;
+        suspendWrites(rollbackFailed
+          ? 'Transakcja awaryjna nie powiodła się, a pełne cofnięcie zapisu nie było możliwe. Nie wykonuj kolejnych zmian i wyeksportuj kopię, jeśli to możliwe.'
+          : 'Brak miejsca w awaryjnej pamięci przeglądarki. Transakcję cofnięto, dalszy zapis wstrzymano, aby chronić istniejące dane.');
+        throw Object.assign(
+          new Error(rollbackFailed ? 'Transakcja awaryjna nie została w pełni cofnięta.' : 'Nie udało się zapisać transakcji awaryjnej; zmiany cofnięto.'),
+          { name: e?.name || 'QuotaExceededError', cause: e },
+        );
+      }
+
+      // Publish the staged maps only after every persistent key was written.
+      for (const s of touched) maps[s] = staged.get(s);
     },
   };
 }
