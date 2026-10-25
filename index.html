@@ -83,14 +83,14 @@
           showBootError('Moduły aplikacji nie załadowały się w 15 sekund. Odśwież stronę; dane pozostają nietknięte.');
         }
       }, 15000);
-      // Awaryjny watchdog na wypadek nieobsłużonego błędu po starcie modułu.
+      // Awaryjny watchdog; app.js ma własny limit pełnego rozruchu 60 s.
       hardTimer = setTimeout(function () {
         if (document.getElementById('boot')) {
           showBootError(window.__kuchnikBootStarted
-            ? 'Rozruch nie zakończył się w 95 sekund. Odśwież aplikację; nie usuwaj danych witryny.'
-            : 'Nie udało się załadować aplikacji w 95 sekund. Sprawdź połączenie i spróbuj ponownie.');
+            ? 'Rozruch nie zakończył się w 70 sekund. Odśwież aplikację; nie usuwaj danych witryny.'
+            : 'Nie udało się załadować aplikacji w 70 sekund. Sprawdź połączenie i spróbuj ponownie.');
         }
-      }, 95000);
+      }, 70000);
     })();
   </script>
   <script type="module" src="app.js"></script>

@@ -190,47 +190,50 @@ function whatsNew() {
 }
 
 async function boot() {
-  try {
-    // Etap startu ma limit czasu. Gdy IndexedDB/Safari się zawiesi, pokaż błąd
-    // zamiast zostawiać użytkownika na nieskończonej animacji.
-    // IndexedDB ma 4 ograniczone próby (do ok. 24,4 s) i potem uruchamia
-    // bezpieczny backend awaryjny. Limit startu musi pozwolić temu fallbackowi zadziałać.
-    const timed = (label, promise, limit = 32000) => new Promise((resolve, reject) => {
-      const timer = setTimeout(() => reject(Object.assign(
-        new Error('Przekroczono limit czasu: ' + label),
-        { name: 'StartupTimeoutError' },
-      )), limit);
-      Promise.resolve(promise).then(
-        (value) => { clearTimeout(timer); resolve(value); },
-        (error) => { clearTimeout(timer); reject(error); },
-      );
-    });
-    await timed('otwieranie bazy danych', openDB());
-    await timed('wczytywanie receptur i ustawień', loadAll());
-    await timed('wczytywanie magazynu', loadInventory());
-  } catch (e) { fatal(e); return; }
-
-  const stg = storageStatus();
-  if (stg.mode !== 'idb') setTimeout(() => toast(stg.mode === 'local' ? 'Tryb awaryjny: Safari zablokowało IndexedDB, dane zapisuję w pamięci strony. Rób kopie JSON.' : 'Uwaga: pamięć trwała jest niedostępna — dane znikną po zamknięciu karty. Zrób kopię JSON.', { sticky: true, action: { label: 'OK', fn: () => {} } }), 1200);
-  if ((getSetting('designV') || 0) < 2) { await setSetting('theme', 'dark'); await setSetting('designV', 2); }   // jednorazowo: nowy ciemny wygląd
-  applyAppearance();
-  subscribe((type) => {
-    if (type === 'settings') applyAppearance();
-    if (type === 'shopping') updateBadge();
+  // Limity pojedynczych etapów oraz wspólny deadline zapobiegają długiemu
+  // oczekiwaniu na kilka kolejnych operacji IndexedDB/Safari.
+  const timed = (label, promise, limit = 32000) => new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(Object.assign(
+      new Error('Przekroczono limit czasu: ' + label),
+      { name: 'StartupTimeoutError' },
+    )), limit);
+    Promise.resolve(promise).then(
+      (value) => { clearTimeout(timer); resolve(value); },
+      (error) => { clearTimeout(timer); reject(error); },
+    );
   });
-  buildTabbar();
-  watchViewport();
-  watchNetwork();
-  startRouter($('#view'), (path, meta) => { setActiveTab(meta); updateBadge(); });
-  const bootEl = $('#boot');
-  if (bootEl) { bootEl.classList.add('gone'); setTimeout(() => bootEl.remove(), 350); }
 
-  mountTimerPill($('#app'), openTimersSheet);
-  initTimers();
-  requestPersist();
-  registerSW();
-  setTimeout(whatsNew, 900);
-  window.__kucharzyna = { state, ready: true };
+  try {
+    await timed('pełne uruchamianie aplikacji', (async () => {
+      // IndexedDB ma 4 ograniczone próby i bezpieczny backend awaryjny.
+      await timed('otwieranie bazy danych', openDB(), 32000);
+      await timed('wczytywanie receptur i ustawień', loadAll(), 32000);
+      await timed('wczytywanie magazynu', loadInventory(), 32000);
+    })(), 60000);
+
+    const stg = storageStatus();
+    if (stg.mode !== 'idb') setTimeout(() => toast(stg.mode === 'local' ? 'Tryb awaryjny: Safari zablokowało IndexedDB, dane zapisuję w pamięci strony. Rób kopie JSON.' : 'Uwaga: pamięć trwała jest niedostępna — dane znikną po zamknięciu karty. Zrób kopię JSON.', { sticky: true, action: { label: 'OK', fn: () => {} } }), 1200);
+    if ((getSetting('designV') || 0) < 2) { await setSetting('theme', 'dark'); await setSetting('designV', 2); }   // jednorazowo: nowy ciemny wygląd
+    applyAppearance();
+    subscribe((type) => {
+      if (type === 'settings') applyAppearance();
+      if (type === 'shopping') updateBadge();
+    });
+    buildTabbar();
+    watchViewport();
+    watchNetwork();
+    startRouter($('#view'), (path, meta) => { setActiveTab(meta); updateBadge(); });
+    const bootEl = $('#boot');
+    if (bootEl) { bootEl.classList.add('gone'); setTimeout(() => bootEl.remove(), 350); }
+
+    mountTimerPill($('#app'), openTimersSheet);
+    initTimers();
+    requestPersist();
+    registerSW();
+    setTimeout(whatsNew, 900);
+    window.__kucharzyna = { state, ready: true };
+  } catch (e) {
+    fatal(e);
+  }
 }
-
 boot();
