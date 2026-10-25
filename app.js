@@ -188,9 +188,15 @@ function whatsNew() {
 
 async function boot() {
   try {
-    await openDB();
-    await loadAll();
-    await loadInventory();
+    // Etap startu ma limit czasu. Gdy IndexedDB/Safari się zawiesi, pokaż błąd
+    // zamiast zostawiać użytkownika na nieskończonej animacji.
+    const timed = (label, promise) => Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(Object.assign(new Error('Przekroczono limit czasu: ' + label), { name: 'StartupTimeoutError' })), 12000)),
+    ]);
+    await timed('otwieranie bazy danych', openDB());
+    await timed('wczytywanie receptur i ustawień', loadAll());
+    await timed('wczytywanie magazynu', loadInventory());
   } catch (e) { fatal(e); return; }
 
   const stg = storageStatus();
