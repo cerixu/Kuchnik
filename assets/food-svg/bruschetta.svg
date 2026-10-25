@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title id="title">Bruschetta al pomodoro — hybrydowa ilustracja SVG</title>
+<desc id="desc">Trzy grzanki bruschetta z dojrzałymi pomidorami, oliwą i świeżą bazylią. Przezroczyste tło.</desc>
+<defs>
+ <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffaf0"/><stop offset=".62" stop-color="#ddd7c9"/><stop offset="1" stop-color="#9ba19d"/></linearGradient>
+ <linearGradient id="crust" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#f3c879"/><stop offset=".55" stop-color="#bf742d"/><stop offset="1" stop-color="#78401f"/></linearGradient>
+ <linearGradient id="bread" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff0bd"/><stop offset="1" stop-color="#dca45b"/></linearGradient>
+ <linearGradient id="tomato" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff7253"/><stop offset="1" stop-color="#b92322"/></linearGradient>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feGaussianBlur stdDeviation="4"/></filter>
+ <g id="leaf"><path d="M0 0C-12-5-15-17-4-24 8-20 11-8 0 0Z" fill="#4c963f" stroke="#276b35" stroke-width="1.2"/><path d="M0-2 0-18" fill="none" stroke="#b5d778" stroke-width="1.3"/></g>
+</defs>
+<ellipse cx="120" cy="183" rx="86" ry="12" fill="#000" opacity=".14" filter="url(#shadow)"/>
+<ellipse cx="120" cy="148" rx="100" ry="48" fill="url(#plate)" stroke="#fff8e8" stroke-width="2.5"/>
+<ellipse cx="120" cy="145" rx="87" ry="37" fill="#f4ead6" stroke="#c4b9a5" stroke-width="1.5"/>
+<g transform="rotate(-13 83 112)">
+ <path d="M43 88Q44 78 55 77L105 76Q117 77 119 89L123 119Q123 130 111 132L61 136Q49 135 47 123Z" fill="url(#crust)" stroke="#8b4d26" stroke-width="1.5"/>
+ <path d="M51 88Q52 83 59 83L103 82Q111 83 112 91L116 118Q116 123 109 124L64 128Q56 128 55 120Z" fill="url(#bread)"/>
+ <path d="M56 91Q81 86 110 91" fill="none" stroke="#fff0c5" stroke-width="2" opacity=".8"/>
+ <g fill="url(#tomato)" stroke="#b82e25" stroke-width=".8">
+  <path d="M59 98l13-5 8 7-4 9-13 1Z"/><path d="M82 94l12-2 7 7-5 9-12-2Z"/><path d="M67 112l12-3 7 7-5 7-12-2Z"/><path d="M93 110l12-3 5 7-5 7-11-2Z"/>
+ </g>
+ <g fill="#ffd7a0" opacity=".8"><circle cx="67" cy="101" r="1.3"/><circle cx="91" cy="99" r="1.3"/><circle cx="77" cy="116" r="1.3"/><circle cx="103" cy="114" r="1.3"/></g>
+ <use href="#leaf" transform="translate(79 101) rotate(24) scale(.62)"/><use href="#leaf" transform="translate(99 116) rotate(70) scale(.5)"/>
+</g>
+<g transform="rotate(13 158 112)">
+ <path d="M126 88Q128 78 139 78L181 80Q192 81 193 92L192 119Q191 130 180 131L140 128Q129 127 128 116Z" fill="url(#crust)" stroke="#8b4d26" stroke-width="1.5"/>
+ <path d="M134 89Q135 84 143 84L179 86Q186 86 186 94L185 116Q184 122 177 123L143 120Q136 119 136 113Z" fill="url(#bread)"/>
+ <g fill="url(#tomato)" stroke="#b82e25" stroke-width=".8">
+  <path d="M139 96l11-4 7 6-4 8-11 1Z"/><path d="M160 94l12-2 7 7-5 8-12-1Z"/><path d="M145 109l11-3 7 7-5 7-11-2Z"/><path d="M168 109l10-2 5 6-4 6-10-1Z"/>
+ </g>
+ <use href="#leaf" transform="translate(158 101) rotate(18) scale(.58)"/><use href="#leaf" transform="translate(175 114) rotate(72) scale(.45)"/>
+</g>
+<g transform="rotate(-4 111 143)">
+ <path d="M70 119Q71 109 82 108L129 109Q140 110 141 121L142 147Q141 158 130 159L86 157Q75 156 74 146Z" fill="url(#crust)" stroke="#8b4d26" stroke-width="1.5"/>
+ <path d="M78 120Q79 115 86 115L126 116Q133 117 133 124L134 145Q133 151 127 151L88 149Q81 148 81 143Z" fill="url(#bread)"/>
+ <g fill="url(#tomato)" stroke="#b82e25" stroke-width=".8">
+  <path d="M84 125l12-4 7 7-4 8-12 1Z"/><path d="M107 123l12-2 7 7-5 8-12-1Z"/><path d="M91 139l11-3 7 7-5 6-11-1Z"/><path d="M115 138l10-2 5 6-4 6-10-1Z"/>
+ </g>
+ <use href="#leaf" transform="translate(103 130) rotate(24) scale(.6)"/><use href="#leaf" transform="translate(122 143) rotate(66) scale(.45)"/>
+</g>
+<path d="M52 151Q71 164 89 165M155 164Q177 158 189 145" fill="none" stroke="#d8b15f" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+<circle cx="177" cy="176" r="2.5" fill="#6e9b3f"/><circle cx="184" cy="171" r="1.8" fill="#6e9b3f"/><circle cx="59" cy="166" r="2" fill="#6e9b3f"/>
+<use href="#leaf" transform="translate(171 165) rotate(36) scale(.42)"/>
+</svg>

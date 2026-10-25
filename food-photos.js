@@ -96,6 +96,10 @@ const SVG_FILES = Object.freeze({
   burger: 'burger.svg',
   'greek-salad': 'greek-salad.svg',
   mojito: 'mojito.svg',
+  lasagna: 'lasagna.svg',
+  gnocchi: 'gnocchi.svg',
+  bruschetta: 'bruschetta.svg',
+  'panna-cotta': 'panna-cotta.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -105,6 +109,10 @@ const SVG_RECIPE_RULES = [
   ['burger', /\b(burger klasyczny|burger wolowy|cheeseburger|hamburger wolowy|classic burger)\b/],
   ['greek-salad', /\b(salatka grecka|greek salad)\b/],
   ['mojito', /\bmojito\b/],
+  ['lasagna', /\b(lasagne alla bolognese|lasagna bolognese|lasagne bolognese|lasagne tradycyjne|lasagne klasyczne|lasagna)\b/],
+  ['gnocchi', /\b(gnocchi al pomodoro|gnocchi pomodoro|gnocchi z sosem pomidorowym|gnocchi)\b/],
+  ['bruschetta', /\b(bruschetta al pomodoro|bruschetta z pomidorami|bruschetta)\b/],
+  ['panna-cotta', /\bpanna cotta\b/],
 ];
 
 export function recipeSvgKey(recipe) {

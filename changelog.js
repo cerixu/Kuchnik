@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.31': Object.freeze({
+    intro: 'Kuchnik 1.4.31 — cztery nowe ilustracje potraw.',
+    items: [
+      'Dodano lokalne ilustracje lasagne, gnocchi al pomodoro, bruschetty i panna cotty przeniesione z Żarłoka.',
+      'Dopasowanie ilustracji opiera się na konkretnych nazwach potraw; zdjęcia dodane przez użytkownika nadal mają pierwszeństwo.',
+      'Service worker zapisuje nowe ilustracje w cache, aby były dostępne offline.'
+    ],
+    footer: 'Dodano pliki graficzne i reguły dopasowania; dane użytkownika pozostają bez zmian.'
+  }),
   '1.4.30': Object.freeze({
     intro: 'Kuchnik 1.4.30 — odporniejsza instalacja service workera.',
     items: [

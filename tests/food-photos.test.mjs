@@ -10,6 +10,10 @@ const fixtures = [
   { name: 'Burger klasyczny', key: 'burger', tokens: [/burger klasyczny/i, /sezamow/i, /kotlet/i] },
   { name: 'Sałatka grecka', key: 'greek-salad', tokens: [/sałatka grecka/i, /oliwk/i, /fet/i] },
   { name: 'Mojito', key: 'mojito', tokens: [/mojito/i, /limonk/i, /mięt/i, /słomk/i] },
+  { name: 'Lasagne alla bolognese', key: 'lasagna', tokens: [/lasagne/i, /ragù/i, /beszamelem/i] },
+  { name: 'Gnocchi al pomodoro', key: 'gnocchi', tokens: [/gnocchi/i, /pomodoro/i, /bazyli/i] },
+  { name: 'Bruschetta al pomodoro', key: 'bruschetta', tokens: [/bruschetta/i, /pomidor/i, /bazyli/i] },
+  { name: 'Panna cotta waniliowa', key: 'panna-cotta', tokens: [/panna cotta/i, /malin/i, /waniliow/i] },
 ];
 
 test('dedicated SVG matching is specific and stable', () => {
