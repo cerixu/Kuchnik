@@ -23,21 +23,10 @@ for (let i = 0; i < 6; i++) invalidEAN13 += (parity[i] === 'L' ? L : G)[Number('
 invalidEAN13 += '01010';
 for (const digit of '123456') invalidEAN13 += R[Number(digit)];
 invalidEAN13 += '101';
-if (decodeProfileBits(invalidEAN13) !== null) throw new Error('Invalid EAN-13 image profile decoded.');
+if (makeFrame(invalidEAN13).decode() !== null) throw new Error('Invalid EAN-13 image decoded despite an invalid checksum.');
 
 const ean8 = '101' + L[9] + L[6] + L[3] + L[8] + '01010' + R[5] + R[0] + R[7] + R[4] + '101';
 if (ean8.length !== 67) throw new Error('EAN-8 fixture must have 67 modules.');
-
-function decodeProfileBits(bits) {
-  const quiet = '000000000000';
-  const profileBits = quiet + bits + quiet;
-  const profile = new Float32Array(profileBits.length * 4);
-  for (let i = 0; i < profileBits.length; i++) profile.fill(profileBits[i] === '1' ? 18 : 244, i * 4, (i + 1) * 4);
-  // A 1-row image is not useful to the multi-angle decoder; expose the profile
-  // through a 960x720 frame fixture below instead. This helper only validates
-  // that malformed fixture bits cannot bypass the checksum guard.
-  return null;
-}
 
 function makeFrame(bits, {
   angle = 0,
