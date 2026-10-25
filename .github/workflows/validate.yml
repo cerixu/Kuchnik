@@ -14,6 +14,7 @@ jobs:
   validate:
     name: Syntax, imports and PWA consistency
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -140,7 +141,7 @@ jobs:
       - name: Install Playwright Chromium
         run: |
           npm install --no-save --package-lock=false playwright@1.55.0
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
 
       - name: Smoke test startup and cooking flow
         shell: bash
