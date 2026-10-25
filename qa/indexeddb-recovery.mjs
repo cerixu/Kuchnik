@@ -27,7 +27,7 @@ try {
     throw e;
   }
 
-  const start = page.locator('.zf-head').first();
+  const start = page.locator('.start-head, h1.hero-line').first();
   if (!(await start.count())) throw new Error('Start nie wyrenderował się po recovery IndexedDB');
 
   // A major version bump opens the release sheet for a fresh profile.
