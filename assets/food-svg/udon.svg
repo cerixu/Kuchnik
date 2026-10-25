@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title>Udon</title><desc>Gruby makaron udon w bulionie z dodatkami.</desc>
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#24272a"/><stop offset="1" stop-color="#111315"/></radialGradient><linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4044"/><stop offset="1" stop-color="#171a1c"/></linearGradient></defs>
+<rect width="240" height="240" rx="28" fill="url(#bg)"/>
+<ellipse cx="120" cy="188" rx="76" ry="9" fill="#000" opacity=".35"/>
+<circle cx="120" cy="118" r="83" fill="url(#plate)" stroke="#a97948" stroke-width="2.5"/>
+<circle cx="120" cy="118" r="72" fill="none" stroke="#e1b574" stroke-width="1" opacity=".55"/>
+<g><ellipse cx="120" cy="117" rx="72" ry="46" fill="#39464b" stroke="#748187" stroke-width="4"/><ellipse cx="120" cy="108" rx="60" ry="34" fill="#b58b55"/><path d="M70 103 Q91 84 110 105 T150 101 T171 108" fill="none" stroke="#f0d49a" stroke-width="9" stroke-linecap="round"/><path d="M73 117 Q93 98 113 119 T153 116 T169 121" fill="none" stroke="#e4bf7d" stroke-width="8" stroke-linecap="round"/><path d="M83 91 Q100 79 117 96 T153 92" fill="none" stroke="#f5e4b8" stroke-width="7" stroke-linecap="round"/><g fill="#5c9256"><ellipse cx="94" cy="85" rx="11" ry="4" transform="rotate(-20 94 85)"/><ellipse cx="152" cy="126" rx="11" ry="4" transform="rotate(25 152 126)"/></g><circle cx="137" cy="94" r="10" fill="#f5e8cf"/><circle cx="137" cy="94" r="5" fill="#edbd56"/></g>
+<path d="M58 58 Q69 47 83 50" fill="none" stroke="#fff" stroke-width="2" opacity=".14" stroke-linecap="round"/>
+</svg>
