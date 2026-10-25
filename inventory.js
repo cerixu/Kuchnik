@@ -159,8 +159,9 @@ export async function saveItem(item, { log = null } = {}) {
 }
 
 export async function deleteItem(id) {
-  store.items.delete(id);
+  // Persist first: a rejected delete must not hide an item that still exists in IndexedDB.
   await db.delete('inventoryItems', id);
+  store.items.delete(id);
   emit('inventory');
 }
 
