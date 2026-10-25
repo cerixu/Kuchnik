@@ -58,8 +58,8 @@ test('new SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.match(util, /APP_VERSION = '1\.4\.40'/);
-  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.40'/);
+  assert.match(util, /APP_VERSION = '1\.4\.41'/);
+  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.41'/);
   assert.ok(changelog.includes("'1.4.41'"), 'changelog entry missing');
   assert.ok(readme.includes('1.4.41'), 'README version missing');
 });
