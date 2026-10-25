@@ -47,9 +47,9 @@ test('offline shell contains app entry and every imported local JavaScript depen
 
 test('every mapped SVG fallback exists and is cached for offline use', () => {
   const photoSource = fs.readFileSync('food-photos.js', 'utf8');
-  const svgMap = photoSource.match(/const SVG_FILES = Object\\.freeze\\(\\{([\\s\\S]*?)\\}\\);/);
+  const svgMap = photoSource.match(/const SVG_FILES = Object\.freeze\(\{([\s\S]*?)\}\);/);
   assert.ok(svgMap, 'food-photos.js must declare SVG_FILES');
-  const names = [...svgMap[1].matchAll(/:\\s*['"]([^'"]+\\.svg)['"]/g)].map((entry) => entry[1]);
+  const names = [...svgMap[1].matchAll(/:\s*['"]([^'"]+\.svg)['"]/g)].map((entry) => entry[1]);
   assert.ok(names.length > 0, 'SVG fallback map must not be empty');
 
   for (const name of names) {
