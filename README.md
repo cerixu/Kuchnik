@@ -66,6 +66,7 @@ views-guide.js          „Prowadź mnie” — gotowanie krok po kroku
 views-search.js         Szukaj w sieci
 views-import.js         import i „Znajdź przepis w internecie"
 views-settings.js       ustawienia
+views-inventory.js     magazyn: stany, terminy, straty
 apple-touch-icon.png    ikona na ekran początkowy iPhone'a (180×180)
 icon-192.png, icon-512.png, icon-maskable-512.png    ikony PWA
 README.md               ten plik
