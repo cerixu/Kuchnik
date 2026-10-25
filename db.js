@@ -50,8 +50,16 @@ function openOnce(version) {
     const fail = (e) => { if (!settled) { settled = true; reject(e); } };
     const timer = setTimeout(() => fail(Object.assign(new Error('Przeglądarka nie odpowiedziała na otwarcie bazy (limit czasu).'), { name: 'TimeoutError' })), timeoutMs());
     let rq;
-    try { rq = version ? indexedDB.open(DB_NAME, version) : indexedDB.open(DB_NAME); }
-    catch (e) { clearTimeout(timer); return fail(e); }
+    try {
+      // Jednorazowy fault-injection hook wyłącznie dla automatycznego testu
+      // odzyskiwania startu. Nie działa bez jawnego ustawienia przez test.
+      const qa = globalThis.__kuchnikQA;
+      if (qa && qa.failNextIndexedDBOpen === true) {
+        qa.failNextIndexedDBOpen = false;
+        throw Object.assign(new Error('Simulated transient IndexedDB startup failure'), { name: 'InvalidStateError' });
+      }
+      rq = version ? indexedDB.open(DB_NAME, version) : indexedDB.open(DB_NAME);
+    } catch (e) { clearTimeout(timer); return fail(e); }
     rq.onupgradeneeded = () => {
       const d = rq.result;
       for (const [name, keyPath] of Object.entries(STORES)) {
