@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Wersja pośrednia 1.4.1.** Gotowe: pełny przepis w dużym szklanym oknie („Cały przepis”), kolorowe ikony składników (66 sztuk, zamiast emoji), polska odmiana porcji, rdzeń magazynu (baza, logika, import/eksport kopii), własny dekoder kodów EAN. Ekrany magazynu, skaner w aplikacji, zakładki „Gotuję” i „Więcej” oraz nowe przepisy dochodzą w kolejnym wydaniu.
+> **Wersja pośrednia 1.4.2.** Gotowe: pełny przepis w dużym szklanym oknie („Cały przepis”), kolorowe ikony składników (66 sztuk, zamiast emoji), polska odmiana porcji, rdzeń magazynu (baza, logika, import/eksport kopii), własny dekoder kodów EAN. Ekrany magazynu, skaner w aplikacji, zakładki „Gotuję” i „Więcej” oraz nowe przepisy dochodzą w kolejnym wydaniu.
 
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
@@ -20,6 +20,7 @@ Wszystkie dane są w pamięci Twojego urządzenia.
 - **GOTUJĘ — „Prowadź mnie” krok po kroku:** ekran „Przygotuj” (składniki, zmiana porcji), potem jeden krok na ekranie z potrzebnymi składnikami i wykrytymi minutnikami; przesuwanie palcem, czytanie na głos, wznawianie, ocena 1–5 i notatka na koniec. Obok klasyczna „Lista kontrolna”.
 - **Wiele minutników naraz** z pastylką widoczną na każdym ekranie.
 - **Szukaj w sieci — w samej aplikacji** (patrz niżej).
+- **Magazyn — przygotowanie danych:** podczas startu aplikacja odczytuje zapisane produkty i ruchy magazynowe, dzięki czemu szczegóły receptury mogą poprawnie sprawdzać dostępność składników. Pełny osobny ekran magazynu i skaner w interfejsie nadal wymagają wdrożenia.
 - **Narzędzia kuchenne** (zakładka Kalkulatory): pizza/ciasto z procentami piekarskimi — obliczanie od liczby i masy kulek albo bezpośrednio od ilości mąki (np. 7,5 kg), procenty, przeliczanie receptury, koszt i food cost, sól i solanki, zakwas, forma do pieczenia, przelicznik jednostek (także g ↔ ml), temperatury mięs, czasy gotowania z minutnikiem, zamienniki, „Co mam w lodówce?”, „Co dziś gotujemy?”.
 - **Przelicz**, **procenty piekarskie**, **food cost**, **zakupy** (z alejkami), **import z tekstu**, **historia zmian** z przywracaniem wersji, **kopia zapasowa JSON** — jak w poprzednich wersjach.
 
