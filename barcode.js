@@ -82,8 +82,8 @@ function decodeRuns(w, barFirst) {
         }
       }
     }
-    // EAN-8: 3 + 16 + 5 + 16 + 3 = 43 biegów
-    {
+    // EAN-8: 3 + 16 + 5 + 16 + 3 = 43 biegów; odrzucaj fragmenty dłuższych kodów.
+    if (i + 43 <= n && quietZonesOK(w, i, 43)) {
       const left = []; let ok = true, j = i + 3;
       for (let k = 0; k < 4 && ok; k++, j += 4) { const r = bestDigit(w.slice(j, j + 4), ['L']); if (!r) ok = false; else left.push(r.d); }
       if (ok) {
