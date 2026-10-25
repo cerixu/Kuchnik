@@ -3,6 +3,11 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.42': Object.freeze({
+    intro: 'Kuchnik 1.4.42 — ilustracje w zatwierdzonym, szczegółowym stylu.',
+    items: ['Podmieniono ilustracje carbonary i bruschetty na dwa dostarczone wzorce: dopracowane wektorowe potrawy na ceramicznych talerzach z realistycznym światłem i cieniowaniem.','Zdefiniowano wspólny kierunek dla kolejnych ilustracji: bez płaskich piktogramów, prostych ikonek i uproszczonych emoji.','Zoptymalizowano SVG bez zastępowania ich bitmapami; zachowano własne zdjęcia użytkownika jako priorytet.','Bez migracji bazy, zmian magazynu ani usuwania danych użytkownika.'],
+    footer: 'Przyszłe ilustracje mają trzymać się wzorca carbonary i bruschetty.'
+  }),
   '1.4.41': Object.freeze({
     intro: 'Kuchnik 1.4.41 — pakiet 20 nowych ilustracji SVG.',
     items: ['Dodano 20 lokalnych ilustracji potraw w spójnym kierunku graficznym ciemnej porcelany i ciepłych akcentów.','Rozszerzono mapowanie nazw receptur i cache offline.','Pliki SVG są samodzielne, opisane i bez zewnętrznych zależności.','Bez migracji bazy, zmian magazynu i usuwania danych użytkownika.'],
