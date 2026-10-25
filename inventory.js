@@ -139,32 +139,77 @@ export async function deleteItem(id) {
   emit('inventory');
 }
 
-/** Zmiana stanu o `delta` (jednostka bazowa). type: purchase | cook | waste | adjust. */
+/** Zmiana stanu i wpis historii są zapisywane w jednej transakcji. */
 export async function changeStock(item, delta, { type = 'adjust', reason = '', recipeId = '', recipeName = '', price = null } = {}) {
-  const before = item.stock;
-  item.stock = Math.max(0, before + delta);
-  const real = item.stock - before;
-  if (type === 'purchase' && price > 0 && delta > 0) {
-    item.price = price; item.priceUnit = item.unit === 'g' ? 'kg' : item.unit === 'ml' ? 'l' : 'szt.';
-    if (item.unit !== 'szt.') item.price = price / (delta / 1000);                                 // cena za kg/l z ceny zakupu
-    else item.price = price / delta;
+  const before = Math.max(0, Number(item.stock) || 0);
+  const change = Number(delta);
+  if (!Number.isFinite(change)) throw new Error('Nieprawidłowa zmiana stanu');
+
+  const nextStock = Math.max(0, before + change);
+  const real = nextStock - before;
+  const nextItem = { ...item, stock: nextStock, updatedAt: Date.now() };
+  if (type === 'purchase' && price > 0 && change > 0) {
+    nextItem.price = price;
+    nextItem.priceUnit = nextItem.unit === 'g' ? 'kg' : nextItem.unit === 'ml' ? 'l' : 'szt.';
+    if (nextItem.unit !== 'szt.') nextItem.price = price / (change / 1000);
+    else nextItem.price = price / change;
   }
-  await persist(item);
-  const cost = type === 'waste' ? Math.abs(real) * unitCost(item) : 0;
-  const mv = await logMove({ itemId: item.id, name: item.name, unit: item.unit, type, amount: real, cost, reason, recipeId, recipeName });
+
+  const mv = {
+    id: uid('mv_'), at: nextItem.updatedAt,
+    cost: type === 'waste' ? Math.abs(real) * unitCost(nextItem) : 0,
+    reason, itemId: nextItem.id, name: nextItem.name, unit: nextItem.unit,
+    type, amount: real, recipeId, recipeName,
+  };
+
+  // IndexedDB commits the new stock and its audit movement together.
+  // Do not mutate the live object until persistence succeeds.
+  await db.tx(['inventoryItems', 'inventoryMovements'], (t) => {
+    t.put('inventoryItems', nextItem);
+    t.put('inventoryMovements', mv);
+  });
+
+  Object.assign(item, nextItem);
+  store.items.set(item.id, item);
+  store.moves.unshift(mv);
   emit('inventory');
   return mv;
 }
 
+/** Cofnij wybrane ruchy jednym zapisem, bez częściowego stanu przy błędzie IndexedDB. */
 export async function undoMovements(ids) {
-  for (const id of ids) {
-    const mv = store.moves.find((m) => m.id === id);
-    if (!mv) continue;
-    const it = store.items.get(mv.itemId);
-    if (it) { it.stock = Math.max(0, it.stock - mv.amount); await persist(it); }
-    store.moves = store.moves.filter((m) => m.id !== id);
-    await db.delete('inventoryMovements', id);
+  const requested = Array.isArray(ids) ? ids : [ids];
+  const uniqueIds = [...new Set(requested.filter((id) => id != null).map(String))];
+  const toUndo = uniqueIds
+    .map((id) => store.moves.find((m) => String(m.id) === id))
+    .filter(Boolean);
+  if (!toUndo.length) return;
+
+  const nextItems = new Map();
+  for (const mv of toUndo) {
+    const base = nextItems.get(mv.itemId) || store.items.get(mv.itemId);
+    if (!base) continue;
+    const stock = Math.max(0, Number(base.stock) || 0);
+    const amount = Number(mv.amount) || 0;
+    nextItems.set(mv.itemId, {
+      ...base,
+      stock: Math.max(0, stock - amount),
+      updatedAt: Date.now(),
+    });
   }
+
+  await db.tx(['inventoryItems', 'inventoryMovements'], (t) => {
+    for (const item of nextItems.values()) t.put('inventoryItems', item);
+    for (const mv of toUndo) t.delete('inventoryMovements', mv.id);
+  });
+
+  for (const [id, next] of nextItems) {
+    const current = store.items.get(id);
+    if (current) Object.assign(current, next);
+    store.items.set(id, current || next);
+  }
+  const removed = new Set(toUndo.map((m) => String(m.id)));
+  store.moves = store.moves.filter((m) => !removed.has(String(m.id)));
   emit('inventory');
 }
 
@@ -275,15 +320,50 @@ export function shoppingGaps(recipe, factor = 1) {
 export async function deductRecipe(recipe, factor = 1) {
   const av = availability(recipe, factor);
   const moves = [], used = [], short = [];
+  const nextItems = new Map();
+
   for (const r of av.rows) {
-    if (!r.item || !(r.need > 0) || !['ok', 'partial'].includes(r.status)) { if (r.status === 'missing' && r.ing.amount != null) short.push(r.ing.name); continue; }
-    const take = Math.min(r.need, r.item.stock);
-    if (!(take > 0)) continue;
-    const mv = await changeStock(r.item, -take, { type: 'cook', recipeId: recipe.id, recipeName: recipe.name, reason: `Gotowanie: ${recipe.name}` });
-    moves.push(mv.id); used.push({ name: r.item.name, amount: take, item: r.item });
-    if (r.status === 'partial') short.push(r.ing.name);
+    if (!r.item || !(r.need > 0)) {
+      if (r.status === 'missing' && r.ing.amount != null) short.push(r.ing.name);
+      continue;
+    }
+
+    // Multiple recipe ingredients may map to the same stock item. Calculate
+    // against the working balance so one item can never be spent twice.
+    const nextItem = nextItems.get(r.item.id) || { ...r.item };
+    const before = Math.max(0, Number(nextItem.stock) || 0);
+    const take = Math.min(r.need, before);
+    if (take > 0) {
+      nextItem.stock = before - take;
+      nextItem.updatedAt = Date.now();
+      nextItems.set(nextItem.id, nextItem);
+      moves.push({
+        id: uid('mv_'), at: nextItem.updatedAt, cost: 0,
+        reason: `Gotowanie: ${recipe.name}`,
+        itemId: nextItem.id, name: nextItem.name, unit: nextItem.unit,
+        type: 'cook', amount: -take, recipeId: recipe.id, recipeName: recipe.name,
+      });
+      used.push({ name: nextItem.name, amount: take, item: r.item });
+    }
+    if (take + 1e-9 < r.need) short.push(r.ing.name);
   }
-  return { moves, used, short };
+
+  if (!moves.length) return { moves: [], used, short };
+
+  // One IndexedDB transaction for all ingredient balances and all movement rows.
+  await db.tx(['inventoryItems', 'inventoryMovements'], (t) => {
+    for (const item of nextItems.values()) t.put('inventoryItems', item);
+    for (const mv of moves) t.put('inventoryMovements', mv);
+  });
+
+  for (const [id, next] of nextItems) {
+    const current = store.items.get(id);
+    if (current) Object.assign(current, next);
+    store.items.set(id, current || next);
+  }
+  store.moves.unshift(...moves.slice().reverse());
+  emit('inventory');
+  return { moves: moves.map((m) => m.id), used, short };
 }
 
 /* ---------- Niskie stany → zakupy; kupione → magazyn ---------- */

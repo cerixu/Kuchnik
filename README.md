@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Aktualna wersja aplikacji: 1.4.32**. Dodano dedykowaną, przezroczystą ilustrację SVG tagliatelle al ragù o rozmiarze około 3,6 KB; dopasowanie obejmuje konkretne warianty ragù/bolognese. Zdjęcia użytkownika nadal mają pierwszeństwo. Service worker zapisuje ilustrację w cache offline, a wersja aplikacji, changelog i cache są synchronizowane. Rozruch ma limit 32 s na fazę i 60 s łącznie; powłoka HTML pokazuje diagnostykę po 15 s bez startu modułu i ekran awaryjny po 70 s. Testy automatyczne obejmują start, odzyskiwanie IndexedDB, opóźnione operacje po timeout, cache offline, magazyn, skaner EAN i kopie zapasowe. Aktualizacje nie usuwają receptur, ustawień ani historii magazynowej.
+> **Aktualna wersja aplikacji: 1.4.33**. Operacje magazynowe zapisują stan i historię w jednej transakcji; zużycie składników receptury oraz cofanie ruchów nie pozostawiają częściowych zmian przy błędzie IndexedDB. Dodano testy regresyjne dla błędów zapisu, wieloskładnikowego gotowania i powtórnego cofnięcia. Rozruch nadal ma limit 32 s na fazę i 60 s łącznie, a powłoka HTML pokazuje diagnostykę po 15 s i ekran awaryjny po 70 s. Brak migracji bazy i kasowania danych użytkownika.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
