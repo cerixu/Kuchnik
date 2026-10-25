@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 
 import { db, openDB } from '../db.js';
 import {
-  changeStock, deductRecipe, getItem, inventoryItems, inventoryLoaded, loadInventory,
+  changeStock, deductRecipe, deleteItem, getItem, inventoryItems, inventoryLoaded, loadInventory,
   movements, newItem, saveItem, undoMovements,
 } from '../inventory.js';
 
@@ -161,4 +161,30 @@ test('saveItem does not publish unsaved state when the storage transaction fails
   assert.equal((await db.get('inventoryMovements', movement.id)).amount, 23);
 
   await cleanup([saved]);
+});
+
+
+test('deleteItem keeps the in-memory item visible when IndexedDB deletion fails', async () => {
+  await openDB();
+  await loadInventory();
+
+  const item = await addItem('QA deleteItem failure 20261025', 456);
+  const originalDelete = db.delete;
+
+  try {
+    db.delete = async (storeName, key) => {
+      if (storeName === 'inventoryItems' && key === item.id) {
+        throw new Error('simulated inventory delete failure');
+      }
+      return originalDelete(storeName, key);
+    };
+
+    await assert.rejects(deleteItem(item.id), /simulated inventory delete failure/);
+    assert.equal(getItem(item.id).stock, 456);
+    assert.equal(inventoryItems().some((entry) => entry.id === item.id), true);
+    assert.equal((await db.get('inventoryItems', item.id)).stock, 456);
+  } finally {
+    db.delete = originalDelete;
+    await cleanup([item]);
+  }
 });
