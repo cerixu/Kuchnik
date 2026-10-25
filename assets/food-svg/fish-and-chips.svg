@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title>Fish and chips</title><desc>Panier z panierowaną rybą i frytkami.</desc>
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#24272a"/><stop offset="1" stop-color="#111315"/></radialGradient><linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4044"/><stop offset="1" stop-color="#171a1c"/></linearGradient></defs>
+<rect width="240" height="240" rx="28" fill="url(#bg)"/>
+<ellipse cx="120" cy="188" rx="76" ry="9" fill="#000" opacity=".35"/>
+<circle cx="120" cy="118" r="83" fill="url(#plate)" stroke="#a97948" stroke-width="2.5"/>
+<circle cx="120" cy="118" r="72" fill="none" stroke="#e1b574" stroke-width="1" opacity=".55"/>
+<g><path d="M57 88 Q119 61 181 88 L170 151 Q120 169 69 151Z" fill="#b9824d" stroke="#e2b77b" stroke-width="4"/><path d="M72 98 L151 83 L165 109 L87 124Z" fill="#e6c17c" stroke="#f8e0a5" stroke-width="3"/><path d="M84 121 L166 107 L173 130 L92 145Z" fill="#e1b46a" stroke="#f6d28d" stroke-width="3"/><g fill="#f1d083" stroke="#c99045" stroke-width="2"><rect x="103" y="76" width="11" height="49" rx="4" transform="rotate(-25 103 76)"/><rect x="124" y="75" width="11" height="48" rx="4" transform="rotate(12 124 75)"/><rect x="146" y="82" width="11" height="43" rx="4" transform="rotate(28 146 82)"/></g><path d="M68 131 Q82 121 93 133 Q82 146 68 131Z" fill="#6b9951"/></g>
+<path d="M58 58 Q69 47 83 50" fill="none" stroke="#fff" stroke-width="2" opacity=".14" stroke-linecap="round"/>
+</svg>
