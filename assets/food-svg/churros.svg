@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title>Churros</title><desc>Churros z cukrem i sosem czekoladowym.</desc>
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#24272a"/><stop offset="1" stop-color="#111315"/></radialGradient><linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4044"/><stop offset="1" stop-color="#171a1c"/></linearGradient></defs>
+<rect width="240" height="240" rx="28" fill="url(#bg)"/>
+<ellipse cx="120" cy="188" rx="76" ry="9" fill="#000" opacity=".35"/>
+<circle cx="120" cy="118" r="83" fill="url(#plate)" stroke="#a97948" stroke-width="2.5"/>
+<circle cx="120" cy="118" r="72" fill="none" stroke="#e1b574" stroke-width="1" opacity=".55"/>
+<g><g stroke="#e9b96f" stroke-width="13" stroke-linecap="round" fill="none"><path d="M65 86 Q91 106 69 133"/><path d="M93 78 Q119 99 96 140"/><path d="M121 78 Q147 100 124 141"/><path d="M149 85 Q174 105 153 134"/></g><g stroke="#f8d697" stroke-width="3" stroke-linecap="round" fill="none"><path d="M65 86 Q91 106 69 133"/><path d="M93 78 Q119 99 96 140"/><path d="M121 78 Q147 100 124 141"/><path d="M149 85 Q174 105 153 134"/></g><path d="M130 146 Q151 131 176 147 Q157 166 130 146Z" fill="#5b3329" stroke="#936047" stroke-width="3"/><g fill="#fff0cb"><circle cx="82" cy="91" r="2"/><circle cx="112" cy="111" r="2"/><circle cx="143" cy="99" r="2"/><circle cx="84" cy="126" r="2"/></g></g>
+<path d="M58 58 Q69 47 83 50" fill="none" stroke="#fff" stroke-width="2" opacity=".14" stroke-linecap="round"/>
+</svg>
