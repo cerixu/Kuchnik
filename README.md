@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Aktualna wersja aplikacji: 1.4.31.** Ostatnie wydanie dodało cztery lokalne ilustracje SVG (lasagne, gnocchi, bruschetta i panna cotta), z dopasowaniem, które nie nadpisuje zdjęć użytkownika, oraz cache offline. Service worker ogranicza oczekiwanie na sieć do 3,5 s i toleruje brak opcjonalnych grafik oraz fontów. Rozruch ma limit 32 s na fazę i 60 s łącznie; powłoka HTML pokazuje diagnostykę po 15 s bez startu modułu i ekran awaryjny po 70 s. Testy automatyczne obejmują start, odzyskiwanie IndexedDB, opóźnione operacje po timeout, cache offline, magazyn, skaner EAN i kopie zapasowe. Aktualizacje nie usuwają receptur, ustawień ani historii magazynowej.
+> **Aktualna wersja aplikacji: 1.4.31**. Ostatnie wydanie dodało cztery lokalne ilustracje SVG (lasagne, gnocchi, bruschetta i panna cotta), z dopasowaniem, które nie nadpisuje zdjęć użytkownika, oraz cache offline. Service worker ogranicza oczekiwanie na sieć do 3,5 s i toleruje brak opcjonalnych grafik oraz fontów. Rozruch ma limit 32 s na fazę i 60 s łącznie; powłoka HTML pokazuje diagnostykę po 15 s bez startu modułu i ekran awaryjny po 70 s. Testy automatyczne obejmują start, odzyskiwanie IndexedDB, opóźnione operacje po timeout, cache offline, magazyn, skaner EAN i kopie zapasowe. Aktualizacje nie usuwają receptur, ustawień ani historii magazynowej.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
