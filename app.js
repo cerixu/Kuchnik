@@ -4,6 +4,7 @@
    ========================================================================== */
 import { openDB, storageStatus } from './db.js';
 import { loadAll, state, subscribe, getSetting } from './recipes.js';
+import { loadInventory } from './inventory.js';
 import { h, icon, toast, $, openSheet } from './ui.js';
 import { APP_VERSION } from './util.js';
 import { setSetting } from './recipes.js';
@@ -186,6 +187,7 @@ async function boot() {
   try {
     await openDB();
     await loadAll();
+    await loadInventory();
   } catch (e) { fatal(e); return; }
 
   const stg = storageStatus();
