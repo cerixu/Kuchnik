@@ -138,8 +138,10 @@ jobs:
       - name: Run inventory matching regression tests
         run: node --experimental-default-type=module --test qa/inventory-matching.test.mjs
 
-      - name: Install Playwright driver (use runner Chrome)
-        run: npm install --no-save --package-lock=false playwright@1.55.0
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install chromium
 
       - name: Smoke test startup and cooking flow
         shell: bash
