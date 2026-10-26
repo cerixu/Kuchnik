@@ -4,6 +4,10 @@ import fs from 'node:fs';
 import { recipeSvgKey, recipePhotoKey } from '../food-photos.js';
 
 const files = [
+  'assets/food-svg/pad-thai.svg',
+  'assets/food-svg/spaghetti-aglio-olio.svg',
+  'assets/food-svg/biryani.svg',
+  'assets/food-svg/falafel.svg',
   'assets/food-svg/spaghetti-puttanesca.svg',
   'assets/food-svg/minestrone.svg',
   'assets/food-svg/moules-mariniere.svg',
@@ -51,6 +55,10 @@ const files = [
 ];
 
 const highDetailFiles = [
+  'assets/food-svg/pad-thai.svg',
+  'assets/food-svg/spaghetti-aglio-olio.svg',
+  'assets/food-svg/biryani.svg',
+  'assets/food-svg/falafel.svg',
   'assets/food-svg/spaghetti-puttanesca.svg',
   'assets/food-svg/minestrone.svg',
   'assets/food-svg/moules-mariniere.svg',
@@ -119,7 +127,7 @@ test('food SVGs are mapped to recipes and precached offline', () => {
     assert.ok(photos.includes("'" + name + "'") || photos.includes(name + "'"), 'SVG must be mapped in food-photos.js: ' + name);
     assert.ok(sw.includes("'" + file + "'"), 'SVG must be included in service worker CORE: ' + file);
   }
-  for (const key of ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee']) {
+  for (const key of ['pad-thai', 'spaghetti-aglio-olio', 'biryani', 'falafel', 'ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee']) {
     assert.ok(photos.includes("'" + key + "'"), 'missing recipe mapping key: ' + key);
   }
   const recipeMarkers = [
@@ -144,6 +152,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
     ['minestrone', ['minestrone', 'zuppa minestrone']],
     ['moules-mariniere', ['moules marinieres', 'moules mariniere']],
     ['quiche-lorraine', ['quiche lorraine', 'lorraine quiche']],
+    ['pad-thai', ['pad thai', 'pad thai z krewetkami']],
+    ['spaghetti-aglio-olio', ['spaghetti aglio e olio', 'aglio e olio']],
+    ['biryani', ['biryani z kurczakiem', 'chicken biryani']],
+    ['falafel', ['falafel', 'falafele']],
     ['gnocchi-burro-salvia', ['gnocchi z maslem szalwiowym', 'gnocchi burro e salvia']],
     ['tarte-tatin', ['tarte tatin', 'tarta tatin']],
     ['moussaka', ['mussaka', 'moussaka grecka']],
@@ -156,10 +168,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.match(util, /APP_VERSION = '1\.4\.49'/);
-  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.49'/);
-  assert.ok(changelog.includes("'1.4.49'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.49'), 'README version missing');
+  assert.match(util, /APP_VERSION = '1\.4\.50'/);
+  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.50'/);
+  assert.ok(changelog.includes("'1.4.50'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.50'), 'README version missing');
 });
 
 
@@ -170,4 +182,10 @@ test('new dish names resolve to their dedicated SVG and minestrone avoids generi
   assert.equal(recipeSvgKey({ name: 'Moules marinières' }), 'moules-mariniere');
   assert.equal(recipeSvgKey({ name: 'Quiche Lorraine' }), 'quiche-lorraine');
   assert.equal(recipeSvgKey({ name: 'Quiche aux légumes' }), null);
+  assert.equal(recipeSvgKey({ name: 'Pad thai z krewetkami' }), 'pad-thai');
+  assert.equal(recipePhotoKey({ name: 'Pad thai z krewetkami' }), null);
+  assert.equal(recipeSvgKey({ name: 'Spaghetti aglio e olio' }), 'spaghetti-aglio-olio');
+  assert.equal(recipeSvgKey({ name: 'Biryani z kurczakiem' }), 'biryani');
+  assert.equal(recipeSvgKey({ name: 'Falafel' }), 'falafel');
+  assert.equal(recipeSvgKey({ name: 'Gnocchi z pesto' }), null);
 });

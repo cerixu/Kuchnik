@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Aktualna wersja aplikacji: 1.4.49**. Dodano cztery szczegółowe ilustracje SVG: Spaghetti alla puttanesca, Minestrone, Moules marinières i Quiche Lorraine. Dodano precyzyjne mapowania, lokalny precache, testy regresyjne i dokumentację pochodzenia grafik.
+> **Aktualna wersja aplikacji: 1.4.50**. Dodano cztery szczegółowe ilustracje SVG: Pad Thai, Spaghetti aglio e olio, Biryani i Falafel. Dodano precyzyjne mapowania, lokalny precache, testy regresyjne i dokumentację pochodzenia grafik.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
