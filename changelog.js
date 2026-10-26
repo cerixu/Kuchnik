@@ -3,6 +3,16 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.48': Object.freeze({
+    intro: 'Kuchnik 1.4.48 — cztery nowe, szczegółowe ilustracje SVG w grafitowo-miedzianym kierunku Żarłoka.',
+    items: [
+      'Dodano ilustracje Gnocchi z masłem szałwiowym, Tarte Tatin, Mussaka i Ramen shoyu.',
+      'Poprawiono mapowanie gnocchi: wariant szałwiowy ma własną grafikę, a generyczne gnocchi nie przechwytuje receptur o innym sosie.',
+      'Wszystkie cztery SVG są lokalne, opisane title/desc, mają kwadratowy viewBox i są uwzględnione w cache offline.',
+      'Firefly i vectorize przygotowały referencje; konektor nie udostępnił źródłowych bajtów SVG. W repo zapisano niezależnie opracowane wektory, a ograniczenie udokumentowano w ART-PACK-1.4.48-NOTES.md.'
+    ],
+    footer: 'Cztery nowe ilustracje są lokalne, szczegółowe i gotowe do cache offline.'
+  }),
   '1.4.47': Object.freeze({
     intro: 'Kuchnik 1.4.47 — cztery nowe ilustracje SVG w malarskim kierunku kulinarnym.',
     items: [

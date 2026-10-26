@@ -3,6 +3,11 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
 const files = [
+  'assets/food-svg/gnocchi-burro-salvia.svg',
+  'assets/food-svg/tarte-tatin.svg',
+  'assets/food-svg/moussaka.svg',
+  'assets/food-svg/ramen-shoyu.svg',
+
   'assets/food-svg/ramen-tonkotsu.svg',
   'assets/food-svg/sushi-maki.svg',
   'assets/food-svg/croissant.svg',
@@ -41,6 +46,11 @@ const files = [
 ];
 
 const highDetailFiles = [
+  'assets/food-svg/gnocchi-burro-salvia.svg',
+  'assets/food-svg/tarte-tatin.svg',
+  'assets/food-svg/moussaka.svg',
+  'assets/food-svg/ramen-shoyu.svg',
+
   'assets/food-svg/ramen-tonkotsu.svg',
   'assets/food-svg/sushi-maki.svg',
   'assets/food-svg/caesar-salad.svg',
@@ -121,6 +131,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
     ['fish-and-chips', ['fish and chips', 'dorsz z frytkami']],
     ['gulasz-wegierski', ['gulasz wegierski', 'hungarian goulash']],
     ['gambas-al-ajillo', ['gambas al ajillo', 'krewetki al ajillo']],
+    ['gnocchi-burro-salvia', ['gnocchi z maslem szalwiowym', 'gnocchi burro e salvia']],
+    ['tarte-tatin', ['tarte tatin', 'tarta tatin']],
+    ['moussaka', ['mussaka', 'moussaka grecka']],
+    ['ramen-shoyu', ['ramen shoyu', 'shoyu ramen']],
   ];
   for (const [key, markers] of recipeMarkers) {
     assert.ok(photos.includes("['" + key + "'"), 'missing recipe matcher: ' + key);
@@ -129,8 +143,8 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.match(util, /APP_VERSION = '1\.4\.47'/);
-  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.47'/);
-  assert.ok(changelog.includes("'1.4.47'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.47'), 'README version missing');
+  assert.match(util, /APP_VERSION = '1\.4\.48'/);
+  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.48'/);
+  assert.ok(changelog.includes("'1.4.48'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.48'), 'README version missing');
 });
