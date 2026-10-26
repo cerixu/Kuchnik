@@ -1,0 +1,92 @@
+name: Temporary Adobe SVG import 1.4.43
+
+on:
+  push:
+    branches:
+      - feat/food-svg-art-pack-1.4.43
+    paths:
+      - .github/workflows/_import-adobe-svg.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/food-svg-art-pack-1.4.43
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download and optimize Adobe vector assets
+        env:
+          RAMEN_URL: https://to.adobe.com/TPgGOaVxWMFmHcPY
+          SUSHI_URL: https://to.adobe.com/6xPT4OYfjm9OF0Jk
+          CAESAR_URL: https://to.adobe.com/DcNuNO1JTo0pyy7W
+          PANNA_URL: https://to.adobe.com/w33xzNoZEMAnNWc0
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/food-svg
+          declare -A urls=(
+            [ramen-tonkotsu.svg]="$RAMEN_URL"
+            [sushi-maki.svg]="$SUSHI_URL"
+            [caesar-salad.svg]="$CAESAR_URL"
+            [panna-cotta.svg]="$PANNA_URL"
+          )
+          for name in "${!urls[@]}"; do
+            file="assets/food-svg/$name"
+            tmp="$file.download"
+            echo "Downloading $name"
+            curl --fail --location --silent --show-error --retry 3 --retry-all-errors --connect-timeout 20 --max-time 120 "${urls[$name]}" --output "$tmp"
+            test -s "$tmp"
+            if ! grep -q '<svg' "$tmp"; then
+              echo "Not an SVG: $name"
+              head -c 300 "$tmp"
+              exit 1
+            fi
+            npx --yes svgo@3.3.2 --multipass --precision=2 --input="$tmp" --output="$file"
+            rm -f "$tmp"
+          done
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const items = [
+            ['ramen-tonkotsu.svg', 'Ramen tonkotsu', 'Kremowy bulion wieprzowy z makaronem, chashu, jajkiem ajitama, nori i szczypiorem.'],
+            ['sushi-maki.svg', 'Sushi maki z łososiem i ogórkiem', 'Sześć rolek maki z łososiem, ogórkiem, ryżem i nori.'],
+            ['caesar-salad.svg', 'Sałatka Caesar z grillowanym kurczakiem', 'Sałata rzymska z sosem Caesar, grzankami, parmezanem i grillowanym kurczakiem.'],
+            ['panna-cotta.svg', 'Panna cotta waniliowa z malinami', 'Jedwabista panna cotta z malinowym coulis, świeżymi malinami i listkiem mięty.'],
+          ];
+          for (const [name, title, desc] of items) {
+            const file = 'assets/food-svg/' + name;
+            let svg = fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, '');
+            const root = svg.match(/<svg\b[^>]*>/i);
+            if (!root) throw new Error(name + ': missing root SVG element');
+            let tag = root[0]
+              .replace(/\s+role=(["']).*?\1/gi, '')
+              .replace(/\s+aria-labelledby=(["']).*?\1/gi, '');
+            if (!/\bviewBox=/i.test(tag)) tag = tag.replace(/>$/, ' viewBox="0 0 1024 1024">');
+            const viewBox = tag.match(/\bviewBox=(["'])(.*?)\1/i)?.[2]?.trim().split(/[ ,]+/).map(Number);
+            if (!viewBox || viewBox.length !== 4 || viewBox[2] <= 0 || viewBox[3] <= 0 || Math.abs(viewBox[2] - viewBox[3]) > 0.01) {
+              throw new Error(name + ': missing or non-square viewBox');
+            }
+            tag = tag.replace(/>$/, ' role="img" aria-labelledby="title desc">');
+            svg = svg.replace(/<title\b[^>]*>[\s\S]*?<\/title>/gi, '')
+                     .replace(/<desc\b[^>]*>[\s\S]*?<\/desc>/gi, '');
+            svg = svg.replace(root[0], tag + '\n<title id="title">' + title + '</title>\n<desc id="desc">' + desc + '</desc>');
+            if (/<script\b|<foreignObject\b/i.test(svg)) throw new Error(name + ': executable or embedded HTML found');
+            if (/(?:href|xlink:href)=(["'])(?:https?:|\/\/|data:image)/i.test(svg)) throw new Error(name + ': external or raster dependency found');
+            const bytes = Buffer.byteLength(svg, 'utf8');
+            if (bytes > 450000) throw new Error(name + ': optimized SVG too large (' + bytes + ' bytes)');
+            fs.writeFileSync(file, svg);
+            console.log(name + ': ' + bytes + ' bytes; viewBox=' + viewBox.join(' '));
+          }
+          NODE
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/food-svg/ramen-tonkotsu.svg assets/food-svg/sushi-maki.svg assets/food-svg/caesar-salad.svg assets/food-svg/panna-cotta.svg
+          git commit -m "Import detailed food SVG artwork from Adobe"
+          git push origin HEAD:feat/food-svg-art-pack-1.4.43
