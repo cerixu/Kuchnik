@@ -5,7 +5,7 @@ import { recipeSvgKey, attachRecipePhoto, hasFoodPhoto } from '../food-photos.js
 
 const fixtures = [
   { name: "Spaghetti all'amatriciana", key: 'spaghetti-amatriciana', tokens: [/amatriciana/i, /guanciale/i, /pecorino/i] },
-  { name: 'Panzanella', key: 'panzanella', tokens: [/panzanella/i, /pomodori/i, /bazylia/i] },
+  { name: 'Panzanella', key: 'panzanella', tokens: [/panzanella/i, /pomidor/i, /bazyli/i] },
   { name: 'Saltimbocca alla romana', key: 'saltimbocca-romana', tokens: [/saltimbocca/i, /prosciutto/i, /szałwią/i] },
   { name: 'Spanakopita', key: 'spanakopita', tokens: [/spanakopita/i, /szpinaku/i, /feta/i] },
   { name: 'Pad thai z krewetkami', key: 'pad-thai', tokens: [/pad thai/i, /prawns/i, /peanuts/i] },
