@@ -18,6 +18,10 @@ const files = [
   'assets/food-svg/paella-marisco.svg',
   'assets/food-svg/parmigiana-di-melanzane.svg',
   'assets/food-svg/french-onion-soup.svg',
+  'assets/food-svg/coq-au-vin.svg',
+  'assets/food-svg/tom-yum.svg',
+  'assets/food-svg/ratatouille.svg',
+  'assets/food-svg/creme-brulee.svg',
   'assets/food-svg/pho-bo.svg',
   'assets/food-svg/bibimbap.svg',
   'assets/food-svg/chicken-curry.svg',
@@ -41,6 +45,10 @@ const highDetailFiles = [
   'assets/food-svg/paella-marisco.svg',
   'assets/food-svg/parmigiana-di-melanzane.svg',
   'assets/food-svg/french-onion-soup.svg',
+  'assets/food-svg/coq-au-vin.svg',
+  'assets/food-svg/tom-yum.svg',
+  'assets/food-svg/ratatouille.svg',
+  'assets/food-svg/creme-brulee.svg',
 ];
 
 const sw = fs.readFileSync('sw.js', 'utf8');
@@ -84,7 +92,7 @@ test('food SVGs are mapped to recipes and precached offline', () => {
     assert.ok(photos.includes("'" + name + "'") || photos.includes(name + "'"), 'SVG must be mapped in food-photos.js: ' + name);
     assert.ok(sw.includes("'" + file + "'"), 'SVG must be included in service worker CORE: ' + file);
   }
-  for (const key of ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup']) {
+  for (const key of ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee']) {
     assert.ok(photos.includes("'" + key + "'"), 'missing recipe mapping key: ' + key);
   }
   const recipeMarkers = [
@@ -96,6 +104,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
     ['paella-marisco', ['paella z owocami morza', 'paella de marisco']],
     ['parmigiana-di-melanzane', ['parmigiana di melanzane', 'melanzane alla parmigiana']],
     ['french-onion-soup', ['zupa cebulowa', 'french onion soup']],
+    ['coq-au-vin', ['coq au vin', 'kurczak duszony w czerwonym winie']],
+    ['tom-yum', ['tom yum goong', 'tom yum']],
+    ['ratatouille', ['ratatouille', 'ratatuj']],
+    ['creme-brulee', ['creme brulee', 'creme brulee waniliowa']],
     ['croissant', ['croissant', 'rogalik maslany']],
   ];
   for (const [key, markers] of recipeMarkers) {
@@ -105,8 +117,8 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.match(util, /APP_VERSION = '1\.4\.45'/);
-  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.45'/);
-  assert.ok(changelog.includes("'1.4.45'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.45'), 'README version missing');
+  assert.match(util, /APP_VERSION = '1\.4\.46'/);
+  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.46'/);
+  assert.ok(changelog.includes("'1.4.46'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.46'), 'README version missing');
 });

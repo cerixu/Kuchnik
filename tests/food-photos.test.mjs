@@ -21,6 +21,10 @@ const fixtures = [
   { name: 'Paella z owocami morza', key: 'paella-marisco', tokens: [/Paella de marisco/i, /krewetkami/i, /małżami/i] },
   { name: 'Parmigiana di melanzane', key: 'parmigiana-di-melanzane', tokens: [/Parmigiana di melanzane/i, /bakłażana/i, /mozzarelli/i] },
   { name: 'Zupa cebulowa', key: 'french-onion-soup', tokens: [/Francuska zupa cebulowa/i, /karmelizowan/i, /Gruyère/i] },
+  { name: 'Coq au vin', key: 'coq-au-vin', tokens: [/Coq au vin/i, /kurczakiem/i, /pieczarkami/i] },
+  { name: 'Tom yum goong', key: 'tom-yum', tokens: [/Tom yum goong/i, /krewetkami/i, /kolendrą/i] },
+  { name: 'Ratatouille niçoise', key: 'ratatouille', tokens: [/Ratatouille/i, /bakłażana/i, /cukinii/i] },
+  { name: 'Crème brûlée', key: 'creme-brulee', tokens: [/crème brûlée/i, /krem waniliowy/i, /skarmelizowan/i] },
   { name: 'Tagliatelle al ragù', key: 'tagliatelle-ragu', tokens: [/tagliatelle/i, /ragù/i, /parmezan/i, /bazyli/i] },
 ];
 

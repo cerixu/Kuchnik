@@ -128,6 +128,10 @@ const SVG_FILES = Object.freeze({
   'paella-marisco': 'paella-marisco.svg',
   'parmigiana-di-melanzane': 'parmigiana-di-melanzane.svg',
   'french-onion-soup': 'french-onion-soup.svg',
+  'coq-au-vin': 'coq-au-vin.svg',
+  'tom-yum': 'tom-yum.svg',
+  'ratatouille': 'ratatouille.svg',
+  'creme-brulee': 'creme-brulee.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -169,6 +173,10 @@ const SVG_RECIPE_RULES = [
   ['paella-marisco', /\b(paella z owocami morza|paella de marisco|seafood paella)\b/],
   ['parmigiana-di-melanzane', /\b(parmigiana di melanzane|melanzane alla parmigiana|parmigiana z baklazanem)\b/],
   ['french-onion-soup', /\b(zupa cebulowa|francuska zupa cebulowa|french onion soup|soupe a l oignon)\b/],
+  ['coq-au-vin', /\b(coq au vin|kurczak duszony w czerwonym winie)\b/],
+  ['tom-yum', /\b(tom yum goong|tom yum|zupa tom yum)\b/],
+  ['ratatouille', /\b(ratatouille|ratatuj)\b/],
+  ['creme-brulee', /\b(creme brulee|creme brulee klasyczna|creme brulee waniliowa)\b/],
 ];
 
 export function recipeSvgKey(recipe) {
