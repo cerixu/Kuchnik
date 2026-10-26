@@ -77,9 +77,17 @@ test('food SVGs are mapped to recipes and precached offline', () => {
   for (const key of ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta']) {
     assert.ok(photos.includes("'" + key + "'"), 'missing recipe mapping key: ' + key);
   }
-  assert.match(photos, /\['ramen-tonkotsu', \/\\b\(ramen tonkotsu\|tonkotsu ramen/);
-  assert.match(photos, /\['sushi-maki', \/\\b\(sushi maki\|maki sushi/);
-  assert.match(photos, /\['croissant', \/\\b\(croissant\|rogalik maslany/);
+  const recipeMarkers = [
+    ['ramen-tonkotsu', ['ramen tonkotsu', 'tonkotsu ramen']],
+    ['sushi-maki', ['sushi maki', 'maki sushi']],
+    ['caesar-salad', ['salatka caesar', 'caesar salad']],
+    ['panna-cotta', ['panna cotta']],
+    ['croissant', ['croissant', 'rogalik maslany']],
+  ];
+  for (const [key, markers] of recipeMarkers) {
+    assert.ok(photos.includes("['" + key + "'"), 'missing recipe matcher: ' + key);
+    for (const marker of markers) assert.ok(photos.includes(marker), key + ' should match ' + marker);
+  }
 });
 
 test('app and service worker versions are synchronized', () => {
