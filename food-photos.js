@@ -124,6 +124,10 @@ const SVG_FILES = Object.freeze({
   'tuna-sashimi': 'tuna-sashimi.svg',
   'fries': 'fries.svg',
   'apple-pie': 'apple-pie.svg',
+  'boeuf-bourguignon': 'boeuf-bourguignon.svg',
+  'paella-marisco': 'paella-marisco.svg',
+  'parmigiana-di-melanzane': 'parmigiana-di-melanzane.svg',
+  'french-onion-soup': 'french-onion-soup.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -161,6 +165,10 @@ const SVG_RECIPE_RULES = [
   ['ramen-tonkotsu', /\b(ramen tonkotsu|tonkotsu ramen|ramen wieprzowy tonkotsu)\b/],
   ['sushi-maki', /\b(sushi maki|maki sushi|salmon cucumber maki)\b/],
   ['croissant', /\b(croissant|rogalik maslany|rogal francuski)\b/],
+  ['boeuf-bourguignon', /\b(boeuf bourguignon|beef bourguignon)\b/],
+  ['paella-marisco', /\b(paella z owocami morza|paella de marisco|seafood paella)\b/],
+  ['parmigiana-di-melanzane', /\b(parmigiana di melanzane|melanzane alla parmigiana|parmigiana z baklazanem)\b/],
+  ['french-onion-soup', /\b(zupa cebulowa|francuska zupa cebulowa|french onion soup|soupe a l oignon)\b/],
 ];
 
 export function recipeSvgKey(recipe) {

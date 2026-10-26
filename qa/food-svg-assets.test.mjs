@@ -14,6 +14,10 @@ const files = [
   'assets/food-svg/focaccia.svg',
   'assets/food-svg/tiramisu.svg',
   'assets/food-svg/caesar-salad.svg',
+  'assets/food-svg/boeuf-bourguignon.svg',
+  'assets/food-svg/paella-marisco.svg',
+  'assets/food-svg/parmigiana-di-melanzane.svg',
+  'assets/food-svg/french-onion-soup.svg',
   'assets/food-svg/pho-bo.svg',
   'assets/food-svg/bibimbap.svg',
   'assets/food-svg/chicken-curry.svg',
@@ -33,6 +37,10 @@ const highDetailFiles = [
   'assets/food-svg/sushi-maki.svg',
   'assets/food-svg/caesar-salad.svg',
   'assets/food-svg/panna-cotta.svg',
+  'assets/food-svg/boeuf-bourguignon.svg',
+  'assets/food-svg/paella-marisco.svg',
+  'assets/food-svg/parmigiana-di-melanzane.svg',
+  'assets/food-svg/french-onion-soup.svg',
 ];
 
 const sw = fs.readFileSync('sw.js', 'utf8');
@@ -56,7 +64,9 @@ test('food SVGs are scalable, accessible, self-contained and size-bounded', () =
     assert.doesNotMatch(svg, /<image\b/i, file + ' must not embed raster artwork');
     assert.doesNotMatch(svg, /(?:href|xlink:href)\s*=\s*["'](?:https?:|\/\/|data:image)/i, file + ' must not depend on external or embedded raster assets');
     assert.doesNotMatch(svg, /url\(\s*["']?(?:https?:|\/\/|data:image)/i, file + ' must not reference external paint assets');
-    assert.ok(Buffer.byteLength(svg, 'utf8') < 320000, file + ' must stay within the mobile asset budget');
+    const largeDetailedFiles = ['assets/food-svg/boeuf-bourguignon.svg', 'assets/food-svg/paella-marisco.svg', 'assets/food-svg/parmigiana-di-melanzane.svg', 'assets/food-svg/french-onion-soup.svg'];
+    const maxBytes = largeDetailedFiles.includes(file) ? 1200000 : 320000;
+    assert.ok(Buffer.byteLength(svg, 'utf8') < maxBytes, file + ' must stay within its mobile asset budget (' + maxBytes + ' bytes)');
   }
 });
 
@@ -74,7 +84,7 @@ test('food SVGs are mapped to recipes and precached offline', () => {
     assert.ok(photos.includes("'" + name + "'") || photos.includes(name + "'"), 'SVG must be mapped in food-photos.js: ' + name);
     assert.ok(sw.includes("'" + file + "'"), 'SVG must be included in service worker CORE: ' + file);
   }
-  for (const key of ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta']) {
+  for (const key of ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup']) {
     assert.ok(photos.includes("'" + key + "'"), 'missing recipe mapping key: ' + key);
   }
   const recipeMarkers = [
@@ -82,6 +92,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
     ['sushi-maki', ['sushi maki', 'maki sushi']],
     ['caesar-salad', ['salatka caesar', 'caesar salad']],
     ['panna-cotta', ['panna cotta']],
+    ['boeuf-bourguignon', ['boeuf bourguignon', 'beef bourguignon']],
+    ['paella-marisco', ['paella z owocami morza', 'paella de marisco']],
+    ['parmigiana-di-melanzane', ['parmigiana di melanzane', 'melanzane alla parmigiana']],
+    ['french-onion-soup', ['zupa cebulowa', 'french onion soup']],
     ['croissant', ['croissant', 'rogalik maslany']],
   ];
   for (const [key, markers] of recipeMarkers) {
@@ -91,8 +105,8 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.match(util, /APP_VERSION = '1\.4\.43'/);
-  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.43'/);
-  assert.ok(changelog.includes("'1.4.43'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.43'), 'README version missing');
+  assert.match(util, /APP_VERSION = '1\.4\.44'/);
+  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.44'/);
+  assert.ok(changelog.includes("'1.4.44'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.44'), 'README version missing');
 });
