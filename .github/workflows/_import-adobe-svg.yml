@@ -24,10 +24,10 @@ jobs:
           node-version: 22
       - name: Download and optimize Adobe vector assets
         env:
-          RAMEN_URL: https://to.adobe.com/TPgGOaVxWMFmHcPY
-          SUSHI_URL: https://to.adobe.com/6xPT4OYfjm9OF0Jk
-          CAESAR_URL: https://to.adobe.com/DcNuNO1JTo0pyy7W
-          PANNA_URL: https://to.adobe.com/w33xzNoZEMAnNWc0
+          RAMEN_URL: https://to.adobe.com/wMBbR5Ga0duwQNai
+          SUSHI_URL: https://to.adobe.com/RYQBibBja3MVU7oQ
+          CAESAR_URL: https://to.adobe.com/DD51HVkJbu1Ow0Tz
+          PANNA_URL: https://to.adobe.com/GnXexD5keG6cdpZo
         shell: bash
         run: |
           set -euo pipefail
