@@ -14,6 +14,9 @@ const fixtures = [
   { name: 'Gnocchi al pomodoro', key: 'gnocchi', tokens: [/gnocchi/i, /pomodoro/i, /bazyli/i] },
   { name: 'Bruschetta al pomodoro', key: 'bruschetta', tokens: [/bruschetta/i, /pomidor/i, /bazyli/i] },
   { name: 'Panna cotta waniliowa', key: 'panna-cotta', tokens: [/panna cotta/i, /malin/i, /waniliow/i] },
+  { name: 'Ramen tonkotsu', key: 'ramen-tonkotsu', tokens: [/Ramen tonkotsu/i, /chashu/i, /ajitama/i] },
+  { name: 'Sushi maki z łososiem i ogórkiem', key: 'sushi-maki', tokens: [/Sushi maki/i, /łosos/i, /nori/i] },
+  { name: 'Sałatka Caesar z grillowanym kurczakiem', key: 'caesar-salad', tokens: [/Sałatka Caesar/i, /kurczakiem/i, /parmezanem/i] },
   { name: 'Tagliatelle al ragù', key: 'tagliatelle-ragu', tokens: [/tagliatelle/i, /ragù/i, /parmezan/i, /bazyli/i] },
 ];
 
@@ -37,7 +40,8 @@ test('dedicated SVGs are accessible, local and safe with image-specific size bud
     assert.match(source, /aria-labelledby="title desc"/);
     assert.match(source, /<title id="title">[\s\S]*?<\/title>/);
     assert.match(source, /<desc id="desc">[\s\S]*?<\/desc>/);
-    const maxBytes = ['carbonara', 'bruschetta'].includes(fixture.key) ? 1800000 : 12000;
+    const highDetailKeys = ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta'];
+    const maxBytes = ['carbonara', 'bruschetta'].includes(fixture.key) ? 1800000 : highDetailKeys.includes(fixture.key) ? 320000 : 12000;
     assert.ok(Buffer.byteLength(source, 'utf8') < maxBytes, fixture.key + ': SVG exceeds ' + maxBytes + ' bytes');
     assert.ok(!/<script\b|(?:href|xlink:href)="https?:\/\//i.test(source), fixture.key + ': external/script content');
     for (const token of fixture.tokens) assert.match(source, token, fixture.key + ': missing dish-specific detail');
