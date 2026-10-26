@@ -8,6 +8,10 @@ const files = [
   'assets/food-svg/spaghetti-aglio-olio.svg',
   'assets/food-svg/biryani.svg',
   'assets/food-svg/falafel.svg',
+  'assets/food-svg/spaghetti-amatriciana.svg',
+  'assets/food-svg/panzanella.svg',
+  'assets/food-svg/saltimbocca-romana.svg',
+  'assets/food-svg/spanakopita.svg',
   'assets/food-svg/spaghetti-puttanesca.svg',
   'assets/food-svg/minestrone.svg',
   'assets/food-svg/moules-mariniere.svg',
@@ -59,6 +63,10 @@ const highDetailFiles = [
   'assets/food-svg/spaghetti-aglio-olio.svg',
   'assets/food-svg/biryani.svg',
   'assets/food-svg/falafel.svg',
+  'assets/food-svg/spaghetti-amatriciana.svg',
+  'assets/food-svg/panzanella.svg',
+  'assets/food-svg/saltimbocca-romana.svg',
+  'assets/food-svg/spanakopita.svg',
   'assets/food-svg/spaghetti-puttanesca.svg',
   'assets/food-svg/minestrone.svg',
   'assets/food-svg/moules-mariniere.svg',
@@ -148,6 +156,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
     ['fish-and-chips', ['fish and chips', 'dorsz z frytkami']],
     ['gulasz-wegierski', ['gulasz wegierski', 'hungarian goulash']],
     ['gambas-al-ajillo', ['gambas al ajillo', 'krewetki al ajillo']],
+    ['spaghetti-amatriciana', ['spaghetti all amatriciana', 'amatriciana']],
+    ['panzanella', ['panzanella', 'insalata panzanella']],
+    ['saltimbocca-romana', ['saltimbocca alla romana', 'saltimbocca']],
+    ['spanakopita', ['spanakopita', 'greek spinach pie']],
     ['spaghetti-puttanesca', ['spaghetti alla puttanesca', 'pasta puttanesca']],
     ['minestrone', ['minestrone', 'zuppa minestrone']],
     ['moules-mariniere', ['moules marinieres', 'moules mariniere']],
@@ -168,10 +180,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.match(util, /APP_VERSION = '1\.4\.50'/);
-  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.50'/);
-  assert.ok(changelog.includes("'1.4.50'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.50'), 'README version missing');
+  assert.match(util, /APP_VERSION = '1\.4\.51'/);
+  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.51'/);
+  assert.ok(changelog.includes("'1.4.51'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.51'), 'README version missing');
 });
 
 
@@ -187,5 +199,12 @@ test('new dish names resolve to their dedicated SVG and minestrone avoids generi
   assert.equal(recipeSvgKey({ name: 'Spaghetti aglio e olio' }), 'spaghetti-aglio-olio');
   assert.equal(recipeSvgKey({ name: 'Biryani z kurczakiem' }), 'biryani');
   assert.equal(recipeSvgKey({ name: 'Falafel' }), 'falafel');
+  assert.equal(recipeSvgKey({ name: "Spaghetti all'amatriciana" }), 'spaghetti-amatriciana');
+  assert.equal(recipeSvgKey({ name: 'Panzanella' }), 'panzanella');
+  assert.equal(recipeSvgKey({ name: 'Saltimbocca alla romana' }), 'saltimbocca-romana');
+  assert.equal(recipeSvgKey({ name: 'Spanakopita' }), 'spanakopita');
+  assert.equal(recipeSvgKey({ name: 'Spaghetti al pomodoro' }), null);
+  assert.equal(recipeSvgKey({ name: 'Sałatka z pomidorami' }), null);
+  assert.equal(recipeSvgKey({ name: 'Pita ze szpinakiem' }), null);
   assert.equal(recipeSvgKey({ name: 'Gnocchi z pesto' }), null);
 });

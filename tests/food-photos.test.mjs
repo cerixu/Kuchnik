@@ -4,6 +4,10 @@ import fs from 'node:fs';
 import { recipeSvgKey, attachRecipePhoto, hasFoodPhoto } from '../food-photos.js';
 
 const fixtures = [
+  { name: "Spaghetti all'amatriciana", key: 'spaghetti-amatriciana', tokens: [/amatriciana/i, /guanciale/i, /pecorino/i] },
+  { name: 'Panzanella', key: 'panzanella', tokens: [/panzanella/i, /pomodori/i, /bazylia/i] },
+  { name: 'Saltimbocca alla romana', key: 'saltimbocca-romana', tokens: [/saltimbocca/i, /prosciutto/i, /szałwią/i] },
+  { name: 'Spanakopita', key: 'spanakopita', tokens: [/spanakopita/i, /szpinaku/i, /feta/i] },
   { name: 'Pad thai z krewetkami', key: 'pad-thai', tokens: [/pad thai/i, /prawns/i, /peanuts/i] },
   { name: 'Spaghetti aglio e olio', key: 'spaghetti-aglio-olio', tokens: [/spaghetti aglio e olio/i, /garlic/i, /olive oil/i] },
   { name: 'Biryani z kurczakiem', key: 'biryani', tokens: [/biryani/i, /chicken/i, /basmati/i] },
@@ -47,6 +51,9 @@ test('dedicated SVG matching is specific and stable', () => {
   }
   assert.equal(recipeSvgKey({ name: 'Sałatka z kurczakiem' }), null);
   assert.equal(recipeSvgKey({ name: 'Gnocchi z pesto' }), null, 'generic gnocchi must not inherit a mismatched illustration');
+  assert.equal(recipeSvgKey({ name: 'Spaghetti al pomodoro' }), null, 'amatriciana must not match generic tomato pasta');
+  assert.equal(recipeSvgKey({ name: 'Sałatka z pomidorami' }), null, 'panzanella must not match generic salad');
+  assert.equal(recipeSvgKey({ name: 'Pita ze szpinakiem' }), null, 'spanakopita must not match generic spinach pita');
 });
 
 test('dedicated SVGs are accessible, local and safe with image-specific size budgets', () => {
@@ -61,7 +68,7 @@ test('dedicated SVGs are accessible, local and safe with image-specific size bud
     assert.match(source, /aria-labelledby="title desc"/);
     assert.match(source, /<title id="title">[\s\S]*?<\/title>/);
     assert.match(source, /<desc id="desc">[\s\S]*?<\/desc>/);
-    const highDetailKeys = ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee', 'cacio-e-pepe', 'fish-and-chips', 'gulasz-wegierski', 'gambas-al-ajillo', 'pad-thai', 'spaghetti-aglio-olio', 'biryani', 'falafel', 'gnocchi-burro-salvia', 'tarte-tatin', 'moussaka', 'ramen-shoyu'];
+    const highDetailKeys = ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee', 'cacio-e-pepe', 'fish-and-chips', 'gulasz-wegierski', 'gambas-al-ajillo', 'pad-thai', 'spaghetti-aglio-olio', 'biryani', 'falafel', 'gnocchi-burro-salvia', 'tarte-tatin', 'moussaka', 'ramen-shoyu', 'spaghetti-amatriciana', 'panzanella', 'saltimbocca-romana', 'spanakopita'];
     const largeDetailKeys = ['boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup'];
     const maxBytes = ['carbonara', 'bruschetta'].includes(fixture.key) ? 1800000 : largeDetailKeys.includes(fixture.key) ? 1200000 : highDetailKeys.includes(fixture.key) ? 320000 : 12000;
     assert.ok(Buffer.byteLength(source, 'utf8') < maxBytes, fixture.key + ': SVG exceeds ' + maxBytes + ' bytes');
