@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.47';
+const VERSION = 'kucharzyna-1.4.48';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -54,6 +54,10 @@ const CORE = [
   'assets/food-svg/fish-and-chips.svg',
   'assets/food-svg/gulasz-wegierski.svg',
   'assets/food-svg/gambas-al-ajillo.svg',
+  'assets/food-svg/gnocchi-burro-salvia.svg',
+  'assets/food-svg/tarte-tatin.svg',
+  'assets/food-svg/moussaka.svg',
+  'assets/food-svg/ramen-shoyu.svg',
   'app.js', 'changelog.js', 'router.js', 'pwa.js', 'ui.js', 'util.js', 'db.js', 'recipes.js', 'calculator.js', 'importer.js', 'backup.js',
   'components.js', 'shopping.js', 'art.js', 'food-photos.js', 'inventory-matching.js', 'inventory.js', 'barcode.js', 'ingredient-icons.js', 'art-kit.js', 'art-extra.js', 'nutrition.js', 'seeds.js', 'seeds-pl.js', 'seeds-world.js', 'seeds-more.js', 'timers.js', 'kitchen.js', 'tools-data.js', 'calc-kit.js', 'search.js',
   'views-start.js', 'views-recipes.js', 'views-detail.js', 'views-editor.js', 'views-cook.js', 'views-cook-home.js', 'views-calc.js', 'views-tools.js', 'views-guide.js', 'views-search.js', 'views-import.js', 'views-settings.js', 'views-inventory.js',

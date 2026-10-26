@@ -136,6 +136,10 @@ const SVG_FILES = Object.freeze({
   'fish-and-chips': 'fish-and-chips.svg',
   'gulasz-wegierski': 'gulasz-wegierski.svg',
   'gambas-al-ajillo': 'gambas-al-ajillo.svg',
+  'gnocchi-burro-salvia': 'gnocchi-burro-salvia.svg',
+  'tarte-tatin': 'tarte-tatin.svg',
+  'moussaka': 'moussaka.svg',
+  'ramen-shoyu': 'ramen-shoyu.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -166,10 +170,14 @@ const SVG_RECIPE_RULES = [
   ['greek-salad', /\b(salatka grecka|greek salad)\b/],
   ['mojito', /\bmojito\b/],
   ['lasagna', /\b(lasagne alla bolognese|lasagna bolognese|lasagne bolognese|lasagne tradycyjne|lasagne klasyczne|lasagna)\b/],
-  ['gnocchi', /\b(gnocchi al pomodoro|gnocchi pomodoro|gnocchi z sosem pomidorowym|gnocchi)\b/],
+  ['gnocchi-burro-salvia', /\b(gnocchi z maslem szalwiowym|gnocchi burro e salvia|gnocchi al burro e salvia|gnocchi with sage butter)\b/],
+  ['gnocchi', /\b(gnocchi al pomodoro|gnocchi pomodoro|gnocchi z sosem pomidorowym)\b/],
+  ['tarte-tatin', /\b(tarte tatin|tarte tatin aux pommes|tarta tatin)\b/],
+  ['moussaka', /\b(mussaka|moussaka|moussaka grecka|musaka)\b/],
   ['bruschetta', /\b(bruschetta al pomodoro|bruschetta z pomidorami|bruschetta)\b/],
   ['tagliatelle-ragu', /\b(tagliatelle al ragu|tagliatelle z ragu|tagliatelle bolognese|tagliatelle z sosem bolognese)\b/],
   ['panna-cotta', /\bpanna cotta\b/],
+  ['ramen-shoyu', /\b(ramen shoyu|shoyu ramen|ramen z sosem sojowym)\b/],
   ['ramen-tonkotsu', /\b(ramen tonkotsu|tonkotsu ramen|ramen wieprzowy tonkotsu)\b/],
   ['sushi-maki', /\b(sushi maki|maki sushi|salmon cucumber maki)\b/],
   ['croissant', /\b(croissant|rogalik maslany|rogal francuski)\b/],
