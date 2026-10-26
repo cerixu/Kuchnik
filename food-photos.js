@@ -152,6 +152,10 @@ const SVG_FILES = Object.freeze({
   'panzanella': 'panzanella.svg',
   'saltimbocca-romana': 'saltimbocca-romana.svg',
   'spanakopita': 'spanakopita.svg',
+  'tortilla-espanola': 'tortilla-espanola.svg',
+  'guacamole': 'guacamole.svg',
+  'brownie-czekoladowe': 'brownie-czekoladowe.svg',
+  'salatka-caprese': 'salatka-caprese.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -217,6 +221,10 @@ const SVG_RECIPE_RULES = [
   ['panzanella', /\b(panzanella|insalata panzanella|salatka panzanella)\b/],
   ['saltimbocca-romana', /\b(saltimbocca alla romana|saltimbocca romana|saltimbocca)\b/],
   ['spanakopita', /\b(spanakopita|spanakopitta|greek spinach pie|grecka pita ze szpinakiem)\b/],
+  ['tortilla-espanola', /\b(tortilla espanola|tortilla de patatas|spanish tortilla)\b/],
+  ['guacamole', /\bguacamole\b/],
+  ['brownie-czekoladowe', /\b(brownie czekoladowe|classic brownie|chocolate brownie|brownies)\b/],
+  ['salatka-caprese', /\b(salatka caprese|insalata caprese|caprese salad)\b/],
 ];
 
 export function recipeSvgKey(recipe) {
