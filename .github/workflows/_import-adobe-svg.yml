@@ -46,7 +46,7 @@ jobs:
               head -c 300 "$tmp"
               exit 1
             fi
-            npx --yes svgo@3.3.2 --multipass --precision=2 --input="$tmp" --output="$file"
+            npx --yes svgo@3.3.2 --multipass --precision=1 --input="$tmp" --output="$file"
             rm -f "$tmp"
           done
           node --input-type=module <<'NODE'
