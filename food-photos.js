@@ -70,7 +70,7 @@ const RECIPE_RULES = [
   ['caesar-salad', /\b(salatka cezar|salatka caesar|caesar salad)\b/],
   ['soup-tomato', /\b(zupa pomidorowa|krem pomidorowy|pomidorowa)\b/],
   ['barszcz', /\b(barszcz czerwony|barszcz ukrainski|barszcz wigilijny|barszcz)\b/],
-  ['soup', /\b(rosol drobiowy|rosol wolowy|bulion drobiowy|zupa ogorkowa|krupnik|zupa grzybowa|minestrone)\b/],
+  ['soup', /\b(rosol drobiowy|rosol wolowy|bulion drobiowy|zupa ogorkowa|krupnik|zupa grzybowa)\b/],
   ['pierogi', /\b(pierogi ruskie|pierogi z miesem|pierogi z kapusta i grzybami|pierogi)\b/],
   ['burger', /\b(burger klasyczny|burger wolowy|cheeseburger|hamburger wolowy|burger domowy)\b/],
   ['focaccia', /\bfocaccia\b/],
@@ -140,6 +140,10 @@ const SVG_FILES = Object.freeze({
   'tarte-tatin': 'tarte-tatin.svg',
   'moussaka': 'moussaka.svg',
   'ramen-shoyu': 'ramen-shoyu.svg',
+  'spaghetti-puttanesca': 'spaghetti-puttanesca.svg',
+  'minestrone': 'minestrone.svg',
+  'moules-mariniere': 'moules-mariniere.svg',
+  'quiche-lorraine': 'quiche-lorraine.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -177,6 +181,10 @@ const SVG_RECIPE_RULES = [
   ['bruschetta', /\b(bruschetta al pomodoro|bruschetta z pomidorami|bruschetta)\b/],
   ['tagliatelle-ragu', /\b(tagliatelle al ragu|tagliatelle z ragu|tagliatelle bolognese|tagliatelle z sosem bolognese)\b/],
   ['panna-cotta', /\bpanna cotta\b/],
+  ['spaghetti-puttanesca', /\b(spaghetti alla puttanesca|spaghetti puttanesca|pasta puttanesca|puttanesca)\b/],
+  ['minestrone', /\b(minestrone|minestrone soup|zuppa minestrone)\b/],
+  ['moules-mariniere', /\b(moules marinieres|moules mariniere|moules mariniere traditionnelles|mussels in white wine)\b/],
+  ['quiche-lorraine', /\b(quiche lorraine|lorraine quiche)\b/],
   ['ramen-shoyu', /\b(ramen shoyu|shoyu ramen|ramen z sosem sojowym)\b/],
   ['ramen-tonkotsu', /\b(ramen tonkotsu|tonkotsu ramen|ramen wieprzowy tonkotsu)\b/],
   ['sushi-maki', /\b(sushi maki|maki sushi|salmon cucumber maki)\b/],
