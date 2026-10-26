@@ -132,6 +132,10 @@ const SVG_FILES = Object.freeze({
   'tom-yum': 'tom-yum.svg',
   'ratatouille': 'ratatouille.svg',
   'creme-brulee': 'creme-brulee.svg',
+  'cacio-e-pepe': 'cacio-e-pepe.svg',
+  'fish-and-chips': 'fish-and-chips.svg',
+  'gulasz-wegierski': 'gulasz-wegierski.svg',
+  'gambas-al-ajillo': 'gambas-al-ajillo.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -177,6 +181,10 @@ const SVG_RECIPE_RULES = [
   ['tom-yum', /\b(tom yum goong|tom yum|zupa tom yum)\b/],
   ['ratatouille', /\b(ratatouille|ratatuj)\b/],
   ['creme-brulee', /\b(creme brulee|creme brulee klasyczna|creme brulee waniliowa)\b/],
+  ['cacio-e-pepe', /\b(cacio e pepe|cacio pepe|spaghetti cacio e pepe|tonnarelli cacio e pepe)\b/],
+  ['fish-and-chips', /\b(fish and chips|fish chips|fish n chips|ryba z frytkami|dorsz z frytkami)\b/],
+  ['gulasz-wegierski', /\b(gulasz wegierski|wegierski gulasz|hungarian goulash|goulash)\b/],
+  ['gambas-al-ajillo', /\b(gambas al ajillo|gambas|krewetki al ajillo|krewetki z czosnkiem)\b/],
 ];
 
 export function recipeSvgKey(recipe) {

@@ -26,6 +26,10 @@ const fixtures = [
   { name: 'Ratatouille niçoise', key: 'ratatouille', tokens: [/Ratatouille/i, /bakłażana/i, /cukinii/i] },
   { name: 'Crème brûlée', key: 'creme-brulee', tokens: [/crème brûlée/i, /krem waniliowy/i, /skarmelizowan/i] },
   { name: 'Tagliatelle al ragù', key: 'tagliatelle-ragu', tokens: [/tagliatelle/i, /ragù/i, /parmezan/i, /bazyli/i] },
+  { name: 'Cacio e pepe', key: 'cacio-e-pepe', tokens: [/cacio e pepe/i, /pecorino/i, /pieprz/i] },
+  { name: 'Fish and chips', key: 'fish-and-chips', tokens: [/fish and chips/i, /dorsz/i, /chips/i] },
+  { name: 'Gulasz węgierski', key: 'gulasz-wegierski', tokens: [/gulasz węgierski/i, /wołowin/i, /papryk/i] },
+  { name: 'Gambas al ajillo', key: 'gambas-al-ajillo', tokens: [/gambas al ajillo/i, /krewet/i, /czosnk/i] },
 ];
 
 test('dedicated SVG matching is specific and stable', () => {
@@ -48,7 +52,7 @@ test('dedicated SVGs are accessible, local and safe with image-specific size bud
     assert.match(source, /aria-labelledby="title desc"/);
     assert.match(source, /<title id="title">[\s\S]*?<\/title>/);
     assert.match(source, /<desc id="desc">[\s\S]*?<\/desc>/);
-    const highDetailKeys = ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee'];
+    const highDetailKeys = ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee', 'cacio-e-pepe', 'fish-and-chips', 'gulasz-wegierski', 'gambas-al-ajillo'];
     const largeDetailKeys = ['boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup'];
     const maxBytes = ['carbonara', 'bruschetta'].includes(fixture.key) ? 1800000 : largeDetailKeys.includes(fixture.key) ? 1200000 : highDetailKeys.includes(fixture.key) ? 320000 : 12000;
     assert.ok(Buffer.byteLength(source, 'utf8') < maxBytes, fixture.key + ': SVG exceeds ' + maxBytes + ' bytes');
