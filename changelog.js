@@ -3,6 +3,16 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.45': Object.freeze({
+    intro: 'Kuchnik 1.4.45 — korekta kadrów ilustracji SVG.',
+    items: [
+      'Poprawiono kwadratowe kadrowanie ramen tonkotsu, sushi maki i panna cotty; usunięto puste pasy tła bez przycinania potraw.',
+      'Ponownie zwektoryzowano i zoptymalizowano ścieżki SVG do rozmiaru odpowiedniego dla kart mobilnych.',
+      'Zachowano opisy title/desc, mapowania receptur, cache offline i pierwszeństwo własnych zdjęć użytkownika.',
+      'Nie zmieniano zatwierdzonych wzorców Carbonary i Bruschetty ani danych użytkownika.'
+    ],
+    footer: 'Kadry są kwadratowe, grafiki lokalne i dostępne offline.'
+  }),
   '1.4.44': Object.freeze({
     intro: 'Kuchnik 1.4.44 — cztery nowe, szczegółowe ilustracje SVG.',
     items: [
