@@ -4,6 +4,10 @@ import fs from 'node:fs';
 import { recipeSvgKey, attachRecipePhoto, hasFoodPhoto } from '../food-photos.js';
 
 const fixtures = [
+  { name: 'Pad thai z krewetkami', key: 'pad-thai', tokens: [/pad thai/i, /prawns/i, /peanuts/i] },
+  { name: 'Spaghetti aglio e olio', key: 'spaghetti-aglio-olio', tokens: [/spaghetti aglio e olio/i, /garlic/i, /olive oil/i] },
+  { name: 'Biryani z kurczakiem', key: 'biryani', tokens: [/biryani/i, /chicken/i, /basmati/i] },
+  { name: 'Falafel', key: 'falafel', tokens: [/falafel/i, /chickpea/i, /tahini/i] },
   { name: 'Spaghetti Carbonara', key: 'carbonara', tokens: [/guanciale/i, /pecorino/i, /pieprz/i] },
   { name: 'Pizza Margherita', key: 'margherita', tokens: [/mozzarell/i, /bazyli/i, /pomidor/i] },
   { name: 'Zupa pomidorowa', key: 'tomato-soup', tokens: [/krem pomidorowy/i, /śmietanki/i, /bazyli/i] },
@@ -57,7 +61,7 @@ test('dedicated SVGs are accessible, local and safe with image-specific size bud
     assert.match(source, /aria-labelledby="title desc"/);
     assert.match(source, /<title id="title">[\s\S]*?<\/title>/);
     assert.match(source, /<desc id="desc">[\s\S]*?<\/desc>/);
-    const highDetailKeys = ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee', 'cacio-e-pepe', 'fish-and-chips', 'gulasz-wegierski', 'gambas-al-ajillo', 'gnocchi-burro-salvia', 'tarte-tatin', 'moussaka', 'ramen-shoyu'];
+    const highDetailKeys = ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee', 'cacio-e-pepe', 'fish-and-chips', 'gulasz-wegierski', 'gambas-al-ajillo', 'pad-thai', 'spaghetti-aglio-olio', 'biryani', 'falafel', 'gnocchi-burro-salvia', 'tarte-tatin', 'moussaka', 'ramen-shoyu'];
     const largeDetailKeys = ['boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup'];
     const maxBytes = ['carbonara', 'bruschetta'].includes(fixture.key) ? 1800000 : largeDetailKeys.includes(fixture.key) ? 1200000 : highDetailKeys.includes(fixture.key) ? 320000 : 12000;
     assert.ok(Buffer.byteLength(source, 'utf8') < maxBytes, fixture.key + ': SVG exceeds ' + maxBytes + ' bytes');

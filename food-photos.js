@@ -144,6 +144,10 @@ const SVG_FILES = Object.freeze({
   'minestrone': 'minestrone.svg',
   'moules-mariniere': 'moules-mariniere.svg',
   'quiche-lorraine': 'quiche-lorraine.svg',
+  'pad-thai': 'pad-thai.svg',
+  'spaghetti-aglio-olio': 'spaghetti-aglio-olio.svg',
+  'biryani': 'biryani.svg',
+  'falafel': 'falafel.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -201,6 +205,10 @@ const SVG_RECIPE_RULES = [
   ['fish-and-chips', /\b(fish and chips|fish chips|fish n chips|ryba z frytkami|dorsz z frytkami)\b/],
   ['gulasz-wegierski', /\b(gulasz wegierski|wegierski gulasz|hungarian goulash|goulash)\b/],
   ['gambas-al-ajillo', /\b(gambas al ajillo|gambas|krewetki al ajillo|krewetki z czosnkiem)\b/],
+  ['pad-thai', /\b(pad thai|pad thai z krewetkami|phad thai|pad thai kung)\b/],
+  ['spaghetti-aglio-olio', /\b(spaghetti aglio e olio|spaghetti aglio olio|aglio e olio|pasta aglio e olio)\b/],
+  ['biryani', /\b(biryani z kurczakiem|chicken biryani|biryani|biriani)\b/],
+  ['falafel', /\b(falafel|falafele|falafel z hummusem)\b/],
 ];
 
 export function recipeSvgKey(recipe) {
