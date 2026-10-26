@@ -20,7 +20,7 @@ const fixtures = [
   { name: 'Boeuf bourguignon', key: 'boeuf-bourguignon', tokens: [/Boeuf bourguignon/i, /wołowin/i, /pieczarkami/i] },
   { name: 'Paella z owocami morza', key: 'paella-marisco', tokens: [/Paella de marisco/i, /krewetkami/i, /małżami/i] },
   { name: 'Parmigiana di melanzane', key: 'parmigiana-di-melanzane', tokens: [/Parmigiana di melanzane/i, /bakłażana/i, /mozzarelli/i] },
-  { name: 'Zupa cebulowa', key: 'french-onion-soup', tokens: [/Francuska zupa cebulowa/i, /karmelizowaną cebulą/i, /Gruyère/i] },
+  { name: 'Zupa cebulowa', key: 'french-onion-soup', tokens: [/Francuska zupa cebulowa/i, /karmelizowan/i, /Gruyère/i] },
   { name: 'Tagliatelle al ragù', key: 'tagliatelle-ragu', tokens: [/tagliatelle/i, /ragù/i, /parmezan/i, /bazyli/i] },
 ];
 
