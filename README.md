@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Aktualna wersja aplikacji: 1.4.46**. Dodano cztery autorskie ilustracje SVG: Coq au vin, Tom yum goong, Ratatouille niçoise i Crème brûlée. Grafiki mają szczegółowe ścieżki wektorowe, opisy dostępności, precyzyjne mapowania receptur oraz lokalny cache offline. Materiały Firefly/vectorize służyły jako kierunek artystyczny; źródłowe bajty SVG nie były dostępne do pobrania przez użyty konektor, dlatego repo zawiera niezależnie opracowane pliki wektorowe, a nie eksporty Adobe. Zachowano wzorce Carbonary i Bruschetty, pierwszeństwo własnych zdjęć oraz wszystkie dane użytkownika.
+> **Aktualna wersja aplikacji: 1.4.47**. Dodano cztery autorskie ilustracje SVG: Cacio e pepe, Fish and chips, gulasz węgierski i Gambas al ajillo. Grafiki mają szczegółowe ścieżki wektorowe, opisy dostępności, precyzyjne mapowania receptur oraz lokalny cache offline. Firefly/vectorize dostarczyły materiały referencyjne; źródłowe bajty SVG nie były dostępne przez konektor, więc repo zawiera niezależnie opracowane wektory, a nie eksporty Adobe (szczegóły: assets/food-svg/ART-PACK-1.4.47-NOTES.md). Zachowano wzorce Carbonary i Bruschetty, pierwszeństwo własnych zdjęć oraz wszystkie dane użytkownika.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.

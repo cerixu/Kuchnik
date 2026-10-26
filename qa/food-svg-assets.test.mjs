@@ -34,6 +34,10 @@ const files = [
   'assets/food-svg/tuna-sashimi.svg',
   'assets/food-svg/fries.svg',
   'assets/food-svg/apple-pie.svg',
+  'assets/food-svg/cacio-e-pepe.svg',
+  'assets/food-svg/fish-and-chips.svg',
+  'assets/food-svg/gulasz-wegierski.svg',
+  'assets/food-svg/gambas-al-ajillo.svg',
 ];
 
 const highDetailFiles = [
@@ -49,6 +53,10 @@ const highDetailFiles = [
   'assets/food-svg/tom-yum.svg',
   'assets/food-svg/ratatouille.svg',
   'assets/food-svg/creme-brulee.svg',
+  'assets/food-svg/cacio-e-pepe.svg',
+  'assets/food-svg/fish-and-chips.svg',
+  'assets/food-svg/gulasz-wegierski.svg',
+  'assets/food-svg/gambas-al-ajillo.svg',
 ];
 
 const sw = fs.readFileSync('sw.js', 'utf8');
@@ -109,6 +117,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
     ['ratatouille', ['ratatouille', 'ratatuj']],
     ['creme-brulee', ['creme brulee', 'creme brulee waniliowa']],
     ['croissant', ['croissant', 'rogalik maslany']],
+    ['cacio-e-pepe', ['cacio e pepe', 'tonnarelli cacio e pepe']],
+    ['fish-and-chips', ['fish and chips', 'dorsz z frytkami']],
+    ['gulasz-wegierski', ['gulasz wegierski', 'hungarian goulash']],
+    ['gambas-al-ajillo', ['gambas al ajillo', 'krewetki al ajillo']],
   ];
   for (const [key, markers] of recipeMarkers) {
     assert.ok(photos.includes("['" + key + "'"), 'missing recipe matcher: ' + key);
@@ -117,8 +129,8 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.match(util, /APP_VERSION = '1\.4\.46'/);
-  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.46'/);
-  assert.ok(changelog.includes("'1.4.46'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.46'), 'README version missing');
+  assert.match(util, /APP_VERSION = '1\.4\.47'/);
+  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.47'/);
+  assert.ok(changelog.includes("'1.4.47'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.47'), 'README version missing');
 });
