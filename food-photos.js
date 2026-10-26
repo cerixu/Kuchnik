@@ -148,6 +148,10 @@ const SVG_FILES = Object.freeze({
   'spaghetti-aglio-olio': 'spaghetti-aglio-olio.svg',
   'biryani': 'biryani.svg',
   'falafel': 'falafel.svg',
+  'spaghetti-amatriciana': 'spaghetti-amatriciana.svg',
+  'panzanella': 'panzanella.svg',
+  'saltimbocca-romana': 'saltimbocca-romana.svg',
+  'spanakopita': 'spanakopita.svg',
 });
 
 const SVG_RECIPE_RULES = [
@@ -209,6 +213,10 @@ const SVG_RECIPE_RULES = [
   ['spaghetti-aglio-olio', /\b(spaghetti aglio e olio|spaghetti aglio olio|aglio e olio|pasta aglio e olio)\b/],
   ['biryani', /\b(biryani z kurczakiem|chicken biryani|biryani|biriani)\b/],
   ['falafel', /\b(falafel|falafele|falafel z hummusem)\b/],
+  ['spaghetti-amatriciana', /\b(spaghetti all amatriciana|spaghetti amatriciana|amatriciana)\b/],
+  ['panzanella', /\b(panzanella|insalata panzanella|salatka panzanella)\b/],
+  ['saltimbocca-romana', /\b(saltimbocca alla romana|saltimbocca romana|saltimbocca)\b/],
+  ['spanakopita', /\b(spanakopita|spanakopitta|greek spinach pie|grecka pita ze szpinakiem)\b/],
 ];
 
 export function recipeSvgKey(recipe) {

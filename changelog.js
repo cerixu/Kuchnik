@@ -3,6 +3,16 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.51': Object.freeze({
+    intro: 'Kuchnik 1.4.51 — cztery nowe ilustracje SVG w malarskim kierunku grafitowo-miedzianym.',
+    items: [
+      'Dodano dedykowane ilustracje Spaghetti all’amatriciana, Panzanella, Saltimbocca alla romana i Spanakopita.',
+      'Każda potrawa ma precyzyjne mapowanie SVG; nie dodano ogólnych reguł przechwytujących inne dania.',
+      'Ilustracje są lokalne, mają kwadratowy viewBox, title/desc, szczegółowe ścieżki i są uwzględnione w precache service workera.',
+      'Firefly wygenerował cztery referencje, a Adobe vectorize potwierdził powodzenie. Konektor udostępnił podglądy SVG, ale nie bajty źródłowe; repo zawiera niezależnie opracowane wektory, a ograniczenie opisano w ART-PACK-1.4.51-NOTES.md.'
+    ],
+    footer: 'Cztery nowe ilustracje są lokalne, opisane i objęte testami regresyjnymi.'
+  }),
   '1.4.50': Object.freeze({
     intro: 'Kuchnik 1.4.50 — cztery nowe ilustracje SVG w malarskim kierunku grafitowo-miedzianym.',
     items: [
