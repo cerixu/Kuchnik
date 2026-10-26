@@ -21,6 +21,10 @@ const fixtures = [
   { name: 'Paella z owocami morza', key: 'paella-marisco', tokens: [/Paella de marisco/i, /krewetkami/i, /małżami/i] },
   { name: 'Parmigiana di melanzane', key: 'parmigiana-di-melanzane', tokens: [/Parmigiana di melanzane/i, /bakłażana/i, /mozzarelli/i] },
   { name: 'Zupa cebulowa', key: 'french-onion-soup', tokens: [/Francuska zupa cebulowa/i, /karmelizowan/i, /Gruyère/i] },
+  { name: 'Coq au vin', key: 'coq-au-vin', tokens: [/Coq au vin/i, /kurczakiem/i, /pieczarkami/i] },
+  { name: 'Tom yum goong', key: 'tom-yum', tokens: [/Tom yum goong/i, /krewetkami/i, /kolendrą/i] },
+  { name: 'Ratatouille niçoise', key: 'ratatouille', tokens: [/Ratatouille/i, /bakłażana/i, /cukinii/i] },
+  { name: 'Crème brûlée', key: 'creme-brulee', tokens: [/crème brûlée/i, /krem waniliowy/i, /skarmelizowan/i] },
   { name: 'Tagliatelle al ragù', key: 'tagliatelle-ragu', tokens: [/tagliatelle/i, /ragù/i, /parmezan/i, /bazyli/i] },
 ];
 
@@ -44,7 +48,7 @@ test('dedicated SVGs are accessible, local and safe with image-specific size bud
     assert.match(source, /aria-labelledby="title desc"/);
     assert.match(source, /<title id="title">[\s\S]*?<\/title>/);
     assert.match(source, /<desc id="desc">[\s\S]*?<\/desc>/);
-    const highDetailKeys = ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup'];
+    const highDetailKeys = ['ramen-tonkotsu', 'sushi-maki', 'caesar-salad', 'panna-cotta', 'boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup', 'coq-au-vin', 'tom-yum', 'ratatouille', 'creme-brulee'];
     const largeDetailKeys = ['boeuf-bourguignon', 'paella-marisco', 'parmigiana-di-melanzane', 'french-onion-soup'];
     const maxBytes = ['carbonara', 'bruschetta'].includes(fixture.key) ? 1800000 : largeDetailKeys.includes(fixture.key) ? 1200000 : highDetailKeys.includes(fixture.key) ? 320000 : 12000;
     assert.ok(Buffer.byteLength(source, 'utf8') < maxBytes, fixture.key + ': SVG exceeds ' + maxBytes + ' bytes');
