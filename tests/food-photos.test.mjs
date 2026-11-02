@@ -4,6 +4,10 @@ import fs from 'node:fs';
 import { recipeSvgKey, attachRecipePhoto, hasFoodPhoto } from '../food-photos.js';
 
 const fixtures = [
+  { name: 'Tortilla española', key: 'tortilla-espanola', tokens: [/tortilla española/i, /ziemniak/i, /jajk/i] },
+  { name: 'Guacamole', key: 'guacamole', tokens: [/guacamole/i, /awokado/i, /kolendr/i] },
+  { name: 'Brownie czekoladowe', key: 'brownie-czekoladowe', tokens: [/brownie/i, /czekolad/i, /orzech/i] },
+  { name: 'Sałatka caprese', key: 'salatka-caprese', tokens: [/caprese/i, /mozzarell/i, /bazyli/i] },
   { name: "Spaghetti all'amatriciana", key: 'spaghetti-amatriciana', tokens: [/amatriciana/i, /guanciale/i, /pecorino/i] },
   { name: 'Panzanella', key: 'panzanella', tokens: [/panzanella/i, /pomidor/i, /bazyli/i] },
   { name: 'Saltimbocca alla romana', key: 'saltimbocca-romana', tokens: [/saltimbocca/i, /prosciutto/i, /szałwią/i] },
@@ -54,6 +58,10 @@ test('dedicated SVG matching is specific and stable', () => {
   assert.equal(recipeSvgKey({ name: 'Spaghetti al pomodoro' }), null, 'amatriciana must not match generic tomato pasta');
   assert.equal(recipeSvgKey({ name: 'Sałatka z pomidorami' }), null, 'panzanella must not match generic salad');
   assert.equal(recipeSvgKey({ name: 'Pita ze szpinakiem' }), null, 'spanakopita must not match generic spinach pita');
+  assert.equal(recipeSvgKey({ name: 'Tortilla pszenna' }), null, 'Spanish potato omelette must not match a wheat tortilla');
+  assert.equal(recipeSvgKey({ name: 'Hummus' }), null, 'guacamole must not match unrelated dips');
+  assert.equal(recipeSvgKey({ name: 'Ciasto czekoladowe' }), null, 'brownie must not match every chocolate cake');
+  assert.equal(recipeSvgKey({ name: 'Pizza caprese' }), null, 'caprese salad must not match caprese pizza');
 });
 
 test('dedicated SVGs are accessible, local and safe with image-specific size budgets', () => {
