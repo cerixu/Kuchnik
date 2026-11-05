@@ -352,3 +352,11 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Czarne talerze z miedzianym rantem i rysunkowa kreska kredkowa są wspólne dla całej partii.
 - Status: **oczekuje na ocenę stylu**.
 - Galeria: 48 ilustracji oczekuje na ocenę, 177 przepisów w kolejce.
+
+
+## Rysunki kredką — partia 10 (2026-11-05)
+
+- Dodano 10 ilustracji: jajecznicę, jajka w koszulkach, racuchy z jabłkami, knedle ze śliwkami, makowiec, sernik klasyczny, brownie, fish and chips, śledzia w oleju i hummus.
+- Naczynia czarne z cienkim miedzianym rantem; styl kredkowy, osobny plik na przepis.
+- Status: **oczekuje na ocenę stylu**.
+- Galeria: 58 ilustracji oczekuje na ocenę, 167 receptur w kolejce.

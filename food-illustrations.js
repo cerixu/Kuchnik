@@ -58,6 +58,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'pulpety-koperkowe', name: 'Pulpety w sosie koperkowym', filename: 'pulpety-koperkowe-kredka.png', path: 'assets/food-illustrations/pulpety-koperkowe-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
   { key: 'salatka-jarzynowa', name: 'Sałatka jarzynowa', filename: 'salatka-jarzynowa-kredka.png', path: 'assets/food-illustrations/salatka-jarzynowa-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
   { key: 'surowka-marchew-jablko', name: 'Surówka z marchewki i jabłka', filename: 'surowka-marchew-jablko-kredka.png', path: 'assets/food-illustrations/surowka-marchew-jablko-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'jajecznica', name: 'Jajecznica na maśle', filename: 'jajecznica-kredka.png', path: 'assets/food-illustrations/jajecznica-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
+  { key: 'jajka-w-koszulkach', name: 'Jajka w koszulkach', filename: 'jajka-w-koszulkach-kredka.png', path: 'assets/food-illustrations/jajka-w-koszulkach-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
+  { key: 'racuchy-jablka', name: 'Racuchy z jabłkami', filename: 'racuchy-z-jablkami-kredka.png', path: 'assets/food-illustrations/racuchy-z-jablkami-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
+  { key: 'knedle-sliwki', name: 'Knedle ze śliwkami', filename: 'knedle-ze-sliwkami-kredka.png', path: 'assets/food-illustrations/knedle-ze-sliwkami-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
+  { key: 'makowiec', name: 'Makowiec', filename: 'makowiec-kredka.png', path: 'assets/food-illustrations/makowiec-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
+  { key: 'sernik-klasyczny', name: 'Sernik klasyczny', filename: 'sernik-klasyczny-kredka.png', path: 'assets/food-illustrations/sernik-klasyczny-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
+  { key: 'brownie-czekoladowe', name: 'Brownie czekoladowe', filename: 'brownie-czekoladowe-kredka.png', path: 'assets/food-illustrations/brownie-czekoladowe-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
+  { key: 'fish-and-chips', name: 'Fish and chips', filename: 'fish-and-chips-kredka.png', path: 'assets/food-illustrations/fish-and-chips-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
+  { key: 'sledz-w-oleju', name: 'Śledź w oleju z cebulą', filename: 'sledz-w-oleju-kredka.png', path: 'assets/food-illustrations/sledz-w-oleju-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
+  { key: 'hummus', name: 'Hummus', filename: 'hummus-kredka.png', path: 'assets/food-illustrations/hummus-kredka.png', batch: 'Partia kredkowa 10', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
