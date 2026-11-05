@@ -1,18 +1,18 @@
 # Kuchnik — rejestr ilustracji potraw
 
-Lista jest zbudowana z 225 tytułów w plikach seed. Przed każdą planszą sprawdzam rejestr i mapowania. Jedna receptura = jeden osobny rysunek, bez powtórek.
+Lista kontrolna jest zgodna z 225 tytułami z plików seed. Przed każdą nową planszą weryfikuję niezaznaczone pozycje oraz mapowanie. Jedna receptura ma dokładnie jeden własny plik.
 
 ## Stan — 2026-11-05
 
-- Przepisów: **225**
-- Ilustracji dodanych do `main` i przypisanych do jednego przepisu: **78**
-- Brakujących ilustracji: **147**
-- Wszystkie dodane grafiki mają status `pending`: są w repo i galerii, czekają na ocenę stylu.
-- Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
-- Stare SVG nie zastępują nowych ilustracji. Prywatne zdjęcia użytkownika pozostają bez zmian.
-- Każdy wiersz oznaczony [x] ma osobny PNG i dokładne mapowanie. [ ] oznacza pozycję do wykonania.
+- **225** przepisów
+- **88** nowych ilustracji PNG jest w `main` i dokładnie przypisanych
+- **137** receptur czeka na ilustrację
+- Wszystkie dodane grafiki mają status `pending`: są wdrożone, ale czekają na ocenę stylu przez użytkownika.
+- Od partii 8 używane są matowe czarne naczynia z cienkim miedzianym rantem.
+- Stare SVG nie zastępują nowych ilustracji; własne zdjęcia użytkownika są zachowane.
+- [x] oznacza osobny plik PNG w repozytorium i przypisanie do przepisu. [ ] oznacza pozycję do wykonania.
 
-## Pełna kolejka
+## Pełna lista — zgodnie z bazą
 
 - [x] 001 — Rosół z kury (PNG w repo; pending)
 - [x] 002 — Żurek na zakwasie (PNG w repo; pending)
@@ -43,17 +43,17 @@ Lista jest zbudowana z 225 tytułów w plikach seed. Przed każdą planszą spra
 - [x] 027 — Guacamole (PNG w repo; pending)
 - [x] 028 — Hummus (PNG w repo; pending)
 - [x] 029 — Tzatziki (PNG w repo; pending)
-- [ ] 030 — Sos beszamel (do narysowania)
-- [ ] 031 — Sos holenderski (do narysowania)
-- [ ] 032 — Majonez domowy (do narysowania)
-- [ ] 033 — Vinaigrette (do narysowania)
-- [ ] 034 — Bulion drobiowy (fond) (do narysowania)
-- [ ] 035 — Masło ziołowe (do narysowania)
-- [ ] 036 — Cebula karmelizowana (do narysowania)
-- [ ] 037 — Marynowana czerwona cebula (do narysowania)
+- [x] 030 — Sos beszamel (PNG w repo; pending)
+- [x] 031 — Sos holenderski (PNG w repo; pending)
+- [x] 032 — Majonez domowy (PNG w repo; pending)
+- [x] 033 — Vinaigrette (PNG w repo; pending)
+- [x] 034 — Bulion drobiowy (fond) (PNG w repo; pending)
+- [x] 035 — Masło ziołowe (PNG w repo; pending)
+- [x] 036 — Cebula karmelizowana (PNG w repo; pending)
+- [x] 037 — Marynowana czerwona cebula (PNG w repo; pending)
 - [x] 038 — Łosoś pieczony z cytryną (PNG w repo; pending)
 - [x] 039 — Fish and chips (PNG w repo; pending)
-- [ ] 040 — Gambas al ajillo (do narysowania)
+- [x] 040 — Gambas al ajillo (PNG w repo; pending)
 - [x] 041 — Ratatouille (PNG w repo; pending)
 - [x] 042 — Mizeria (PNG w repo; pending)
 - [x] 043 — Sernik klasyczny (PNG w repo; pending)
@@ -61,7 +61,7 @@ Lista jest zbudowana z 225 tytułów w plikach seed. Przed każdą planszą spra
 - [x] 045 — Tiramisu (PNG w repo; pending)
 - [x] 046 — Panna cotta z truskawkami (PNG w repo; pending)
 - [x] 047 — Brownie czekoladowe (PNG w repo; pending)
-- [ ] 048 — Crème brûlée (do narysowania)
+- [x] 048 — Crème brûlée (PNG w repo; pending)
 - [ ] 049 — Pancakes amerykańskie (do narysowania)
 - [x] 050 — Focaccia (PNG w repo; pending)
 - [ ] 051 — Chleb na zakwasie (do narysowania)
@@ -240,7 +240,7 @@ Lista jest zbudowana z 225 tytułów w plikach seed. Przed każdą planszą spra
 - [ ] 224 — Grzaniec (do narysowania)
 - [ ] 225 — Lemoniada domowa (do narysowania)
 
-## Partie w repo
+## Partie już dodane
 
 1. Rosół z kury · Kotlet schabowy · Pierogi ruskie · Zupa pomidorowa
 2. Żurek na zakwasie · Barszcz czerwony · Krem z dyni · Kapuśniak
@@ -254,7 +254,6 @@ Lista jest zbudowana z 225 tytułów w plikach seed. Przed każdą planszą spra
 10. Jajecznica na maśle · Jajka w koszulkach · Racuchy z jabłkami · Knedle ze śliwkami · Makowiec · Sernik klasyczny · Brownie czekoladowe · Fish and chips · Śledź w oleju z cebulą · Hummus
 11. Zupa ogórkowa · Pieczeń rzymska · Kluski śląskie · Karp smażony · Szarlotka · Tiramisu · Paella z owocami morza · Tacos al pastor · Ramen shoyu · Bibimbap
 12. Wiener Schnitzel · Kurczak tikka masala · Coq au vin · Naleśniki · Spaghetti aglio e olio · Cacio e pepe · Pad thai z krewetkami · Pesto genovese · Guacamole · Tzatziki
+13. Sos beszamel · Sos holenderski · Majonez domowy · Vinaigrette · Bulion drobiowy (fond) · Masło ziołowe · Cebula karmelizowana · Marynowana czerwona cebula · Gambas al ajillo · Crème brûlée
 
-## Zasada dalszej pracy
-
-Wybieram wyłącznie przepisy oznaczone [ ]. Po każdym dodaniu sprawdzam osobny plik i mapowanie przed odhaczeniem. Nie generuję ponownie żadnego dania z listy [x].
+Kolejne partie wybieram wyłącznie z pozycji [ ]. Po zapisaniu sprawdzam osobny plik i dokładne mapowanie, a następnie odhaczam przepis. Nie powtarzam żadnej zaznaczonej potrawy.

@@ -180,24 +180,30 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.ok(util.includes("APP_VERSION = '1.4.69'"));
-  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.69'"));
-  assert.ok(changelog.includes("'1.4.69'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.69'), 'README version missing');
+  assert.ok(util.includes("APP_VERSION = '1.4.70'"));
+  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.70'"));
+  assert.ok(changelog.includes("'1.4.70'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.70'), 'README version missing');
 });
 
 
-test('legacy SVG is not shown as recipe art fallback', () => {
-  const oldArt = { name: 'Spaghetti aglio e olio' };
+test('legacy SVG stays hidden while an assigned pencil illustration is shown', () => {
+  const illustrated = { name: 'Spaghetti aglio e olio' };
+  assert.equal(recipeSvgKey(illustrated), 'spaghetti-aglio-olio');
+  const img = { dataset: {}, classList: { remove() {} }, src: '' };
+  assert.equal(attachRecipePhoto(img, illustrated), true);
+  assert.ok(img.src.endsWith('/assets/food-illustrations/spaghetti-aglio-olio-kredka.png'));
+  assert.equal(hasFoodPhoto(illustrated), true);
+
+  const legacyOnly = { name: 'Minestrone' };
   const oldImg = { dataset: {}, classList: { remove() {} }, src: '' };
-  assert.equal(recipeSvgKey(oldArt), 'spaghetti-aglio-olio');
-  assert.equal(attachRecipePhoto(oldImg, oldArt), false);
+  assert.equal(recipeSvgKey(legacyOnly), 'minestrone');
+  assert.equal(attachRecipePhoto(oldImg, legacyOnly), false);
   assert.equal(oldImg.src, '');
-  assert.equal(hasFoodPhoto(oldArt), false);
-  const newImg = { dataset: {}, classList: { remove() {} }, src: '' };
-  assert.equal(attachRecipePhoto(newImg, { name: 'Mizeria' }), true);
-  assert.ok(newImg.src.endsWith('/assets/food-illustrations/mizeria-kredka.png'));
-  assert.equal(hasFoodPhoto({ name: 'Mizeria' }), true);
+  assert.equal(hasFoodPhoto(legacyOnly), false);
+
+  const personalImg = { dataset: {}, classList: { remove() {} }, src: '' };
+  assert.equal(attachRecipePhoto(personalImg, { name: 'Moja zupa', photo: 'data:image/png;base64,abc' }), true);
   assert.equal(hasFoodPhoto({ name: 'Moja zupa', photo: 'data:image/png;base64,abc' }), true);
 });
 

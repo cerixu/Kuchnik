@@ -78,6 +78,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'pesto-genovese', name: 'Pesto genovese', filename: 'pesto-genovese-kredka.png', path: 'assets/food-illustrations/pesto-genovese-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
   { key: 'guacamole', name: 'Guacamole', filename: 'guacamole-kredka.png', path: 'assets/food-illustrations/guacamole-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
   { key: 'tzatziki', name: 'Tzatziki', filename: 'tzatziki-kredka.png', path: 'assets/food-illustrations/tzatziki-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'sos-beszamel', name: 'Sos beszamel', filename: 'sos-beszamel-kredka.png', path: 'assets/food-illustrations/sos-beszamel-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
+  { key: 'sos-holenderski', name: 'Sos holenderski', filename: 'sos-holenderski-kredka.png', path: 'assets/food-illustrations/sos-holenderski-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
+  { key: 'majonez-domowy', name: 'Majonez domowy', filename: 'majonez-domowy-kredka.png', path: 'assets/food-illustrations/majonez-domowy-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
+  { key: 'vinaigrette', name: 'Vinaigrette', filename: 'vinaigrette-kredka.png', path: 'assets/food-illustrations/vinaigrette-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
+  { key: 'bulion-drobiowy-fond', name: 'Bulion drobiowy (fond)', filename: 'bulion-drobiowy-fond-kredka.png', path: 'assets/food-illustrations/bulion-drobiowy-fond-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
+  { key: 'maslo-ziolowe', name: 'Masło ziołowe', filename: 'maslo-ziolowe-kredka.png', path: 'assets/food-illustrations/maslo-ziolowe-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
+  { key: 'cebula-karmelizowana', name: 'Cebula karmelizowana', filename: 'cebula-karmelizowana-kredka.png', path: 'assets/food-illustrations/cebula-karmelizowana-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
+  { key: 'marynowana-czerwona-cebula', name: 'Marynowana czerwona cebula', filename: 'marynowana-czerwona-cebula-kredka.png', path: 'assets/food-illustrations/marynowana-czerwona-cebula-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
+  { key: 'gambas-al-ajillo', name: 'Gambas al ajillo', filename: 'gambas-al-ajillo-kredka.png', path: 'assets/food-illustrations/gambas-al-ajillo-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
+  { key: 'creme-brulee', name: 'Crème brûlée', filename: 'creme-brulee-kredka.png', path: 'assets/food-illustrations/creme-brulee-kredka.png', batch: 'Partia kredkowa 13', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

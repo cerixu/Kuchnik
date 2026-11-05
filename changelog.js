@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.70': Object.freeze({
+    intro: 'Kuchnik 1.4.70 — kolejna partia ilustracji i aktualizacja regresji.',
+    items: [
+      'Dodano rysunki sosu beszamelowego, sosu holenderskiego, majonezu, vinaigrette, bulionu drobiowego, masła ziołowego, karmelizowanej cebuli, marynowanej czerwonej cebuli, gambas al ajillo i crème brûlée.',
+      'Każdy przepis ma własny plik PNG; rejestr ma 88 zaznaczonych receptur i 137 pozostałych.',
+      'Test regresji uwzględnia teraz nową ilustrację spaghetti aglio e olio, a także potwierdza, że legacy SVG samo w sobie nie jest fallbackiem.'
+    ],
+    footer: 'Nowe rysunki oczekują na ocenę stylu.'
+  }),
   '1.4.69': Object.freeze({
     intro: 'Kuchnik 1.4.69 — 10 kolejnych ilustracji kredkowych.',
     items: [
