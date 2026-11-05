@@ -2,6 +2,15 @@
 
 Audyt bazy startowej z `seeds.js`, `seeds-pl.js`, `seeds-world.js`, `seeds-more.js`. Stare przypisania sprawdzone w `food-photos.js` oraz w plikach repozytorium.
 
+## Zweryfikowany stan repozytorium — 2026-11-05
+
+- Gałąź `main`, wydanie aplikacji `1.4.52`; galeria jest dostępna pod `art-preview-1-4-52.html`.
+- Baza startowa zawiera 225 receptur. Reguły wskazują 56 receptur z SVG i 27 z JPG; 15 ma oba formaty. Łącznie 68 receptur ma co najmniej jeden dedykowany plik, a 157 nie ma lokalnego SVG/JPG.
+- W repo znajdują się 62 pliki z mapy SVG, 28 plików JPG oraz 5 niepodpiętych SVG `review-*` z podglądu 1.4.52. Brakujące/nieosiągalne pliki z mapowań: 0.
+- W repo nie ma planszy 25 zaakceptowanych ilustracji ani listy tych dań. `STYLE-GUIDE.md` wskazuje Carbonarę i Bruschettę jako wzorce stylu; to nie potwierdza akceptacji zestawu 25.
+- Nie znaleziono plików ani ZIP-ów nowych partii 1 i 2. Część wymienionych potraw ma starszą grafikę: kotlet schabowy (wspólne zdjęcie ze sznyclem), pierogi (SVG i zdjęcie), zupa pomidorowa (SVG i zdjęcie), barszcz (zdjęcie), zupa grzybowa (wspólne ogólne zdjęcie zupy) i sałatka Cezar (SVG i zdjęcie). Rosół i spaghetti bolognese nie mają dedykowanego pliku.
+- W galerii dwa pliki wzorcowe mają status „zatwierdzone”; pięć `review-*` oraz pozostałe pliki biblioteki czekają na potwierdzenie stylu. Receptury bez pliku są wyświetlane jako braki; statusy pochodzą z repozytorium.
+
 ## Standard nowej serii
 - Jedna potrawa = jedna osobna ilustracja. Nie tworzymy plansz-kolaży i nie wycinamy miniatur z plansz.
 - Ręcznie rysowana ilustracja 2D / semi-flat: czytelne kontury, proste kształty, ograniczona paleta, delikatne cieniowanie.
@@ -251,8 +260,9 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 | 225 | Lemoniada domowa | cocktaile | — | brak | [ ] |
 
 ## Workflow
-1. Wygeneruj tylko jedną konkretną potrawę z kolejki.
-2. Sprawdź, czy styl odpowiada zaakceptowanemu wzorcowi i czy składniki są poprawne.
-3. Pokaż podgląd do akceptacji — bez wdrażania.
-4. Po akceptacji utwórz osobny plik, dodaj mapowanie, cache offline i test.
-5. Zaznacz pozycję jako wykonaną. Przejdź do następnej.
+1. Przygotuj jedną planszę 2×2 z czterema różnymi, jeszcze brakującymi potrawami; sprawdź kolejkę i podglądy, aby nie powielać dań.
+2. Wytnij każdą potrawę do osobnego lokalnego pliku, nadaj nazwę zgodną z przepisem i sprawdź jakość oraz brak duplikatów.
+3. Pokaż podgląd partii do akceptacji; nie oznaczaj oczekujących grafik jako zatwierdzonych.
+4. Po akceptacji dodaj pliki, dokładne mapowania, cache offline i regresję; sprawdź galerię na GitHub Pages.
+5. Zaktualizuj ten tracker i oznacz wykonaną pozycję dopiero po zweryfikowaniu plików w `main`.
+
