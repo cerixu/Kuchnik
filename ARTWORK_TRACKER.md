@@ -310,3 +310,11 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Wszystkie cztery kadry sprawdzone po wycięciu; każda grafika przedstawia inną potrawę i ma własne mapowanie.
 - Status: **oczekuje na ocenę stylu**.
 - Galeria: 20 plików w repo, 205 receptur w kolejce.
+
+
+## Rysunki kredką — partia 6 (2026-11-05)
+
+- Dodano cztery różne potrawy: Tom yum z krewetkami, gazpacho, chili con carne i burger domowy.
+- Kadry sprawdzone; każde danie ma osobny plik PNG i własne mapowanie.
+- Status: **oczekuje na ocenę stylu**.
+- Galeria: 24 pliki w repo, 201 receptur w kolejce.

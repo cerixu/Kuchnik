@@ -20,6 +20,10 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'nalesniki-z-serem', name: 'Naleśniki z serem', filename: 'nalesniki-z-serem-kredka.png', path: 'assets/food-illustrations/nalesniki-z-serem-kredka.png', batch: 'Partia kredkowa 5', status: 'pending' },
   { key: 'placki-ziemniaczane', name: 'Placki ziemniaczane', filename: 'placki-ziemniaczane-kredka.png', path: 'assets/food-illustrations/placki-ziemniaczane-kredka.png', batch: 'Partia kredkowa 5', status: 'pending' },
   { key: 'zupa-grzybowa', name: 'Zupa grzybowa', filename: 'zupa-grzybowa-kredka.png', path: 'assets/food-illustrations/zupa-grzybowa-kredka.png', batch: 'Partia kredkowa 5', status: 'pending' },
+  { key: 'tom-yum-z-krewetkami', name: 'Tom yum z krewetkami', filename: 'tom-yum-kredka.png', path: 'assets/food-illustrations/tom-yum-kredka.png', batch: 'Partia kredkowa 6', status: 'pending' },
+  { key: 'gazpacho', name: 'Gazpacho', filename: 'gazpacho-kredka.png', path: 'assets/food-illustrations/gazpacho-kredka.png', batch: 'Partia kredkowa 6', status: 'pending' },
+  { key: 'chili-con-carne', name: 'Chili con carne', filename: 'chili-con-carne-kredka.png', path: 'assets/food-illustrations/chili-con-carne-kredka.png', batch: 'Partia kredkowa 6', status: 'pending' },
+  { key: 'burger-domowy', name: 'Burger domowy', filename: 'burger-domowy-kredka.png', path: 'assets/food-illustrations/burger-domowy-kredka.png', batch: 'Partia kredkowa 6', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
