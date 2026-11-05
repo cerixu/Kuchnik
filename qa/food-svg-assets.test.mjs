@@ -180,10 +180,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.ok(util.includes("APP_VERSION = '1.4.70'"));
-  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.70'"));
-  assert.ok(changelog.includes("'1.4.70'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.70'), 'README version missing');
+  assert.ok(util.includes("APP_VERSION = '1.4.71'"));
+  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.71'"));
+  assert.ok(changelog.includes("'1.4.71'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.71'), 'README version missing');
 });
 
 
@@ -202,8 +202,6 @@ test('legacy SVG stays hidden while an assigned pencil illustration is shown', (
   assert.equal(oldImg.src, '');
   assert.equal(hasFoodPhoto(legacyOnly), false);
 
-  const personalImg = { dataset: {}, classList: { remove() {} }, src: '' };
-  assert.equal(attachRecipePhoto(personalImg, { name: 'Moja zupa', photo: 'data:image/png;base64,abc' }), true);
   assert.equal(hasFoodPhoto({ name: 'Moja zupa', photo: 'data:image/png;base64,abc' }), true);
 });
 

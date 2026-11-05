@@ -1,18 +1,18 @@
 # Kuchnik — rejestr ilustracji potraw
 
-Lista kontrolna jest zgodna z 225 tytułami z plików seed. Przed każdą nową planszą weryfikuję niezaznaczone pozycje oraz mapowanie. Jedna receptura ma dokładnie jeden własny plik.
+Lista kontrolna odpowiada 225 nazwom w bazie startowej. Każdy zaznaczony przepis ma dokładnie jeden PNG w repozytorium. Przed każdą nową planszą sprawdzam ten rejestr i `food-illustrations.js`.
 
 ## Stan — 2026-11-05
 
-- **225** przepisów
-- **88** nowych ilustracji PNG jest w `main` i dokładnie przypisanych
-- **137** receptur czeka na ilustrację
-- Wszystkie dodane grafiki mają status `pending`: są wdrożone, ale czekają na ocenę stylu przez użytkownika.
-- Od partii 8 używane są matowe czarne naczynia z cienkim miedzianym rantem.
-- Stare SVG nie zastępują nowych ilustracji; własne zdjęcia użytkownika są zachowane.
-- [x] oznacza osobny plik PNG w repozytorium i przypisanie do przepisu. [ ] oznacza pozycję do wykonania.
+- Przepisów: **225**
+- Osobnych ilustracji w `main`: **98**
+- Pozostało bez nowego rysunku: **127**
+- Status wszystkich dodanych: `pending`, oczekują na ocenę stylu.
+- Od partii 8 naczynia są matowoczarne z cienkim miedzianym rantem.
+- [x] oznacza obecność osobnego pliku i mapowania. [ ] oznacza do wykonania.
+- Stare SVG nie zastępują nowych rysunków. Własne zdjęcia użytkownika pozostają bez zmian.
 
-## Pełna lista — zgodnie z bazą
+## Wszystkie przepisy
 
 - [x] 001 — Rosół z kury (PNG w repo; pending)
 - [x] 002 — Żurek na zakwasie (PNG w repo; pending)
@@ -62,24 +62,24 @@ Lista kontrolna jest zgodna z 225 tytułami z plików seed. Przed każdą nową 
 - [x] 046 — Panna cotta z truskawkami (PNG w repo; pending)
 - [x] 047 — Brownie czekoladowe (PNG w repo; pending)
 - [x] 048 — Crème brûlée (PNG w repo; pending)
-- [ ] 049 — Pancakes amerykańskie (do narysowania)
+- [x] 049 — Pancakes amerykańskie (PNG w repo; pending)
 - [x] 050 — Focaccia (PNG w repo; pending)
-- [ ] 051 — Chleb na zakwasie (do narysowania)
-- [ ] 052 — Chleb pszenny na drożdżach (do narysowania)
+- [x] 051 — Chleb na zakwasie (PNG w repo; pending)
+- [x] 052 — Chleb pszenny na drożdżach (PNG w repo; pending)
 - [x] 053 — Sałatka grecka (PNG w repo; pending)
 - [x] 054 — Sałatka caprese (PNG w repo; pending)
 - [x] 055 — Sałatka Cezar (PNG w repo; pending)
 - [x] 056 — Sałatka jarzynowa (PNG w repo; pending)
-- [ ] 057 — Margarita (do narysowania)
-- [ ] 058 — Negroni (do narysowania)
-- [ ] 059 — Aperol Spritz (do narysowania)
-- [ ] 060 — Old Fashioned (do narysowania)
-- [ ] 061 — Mojito (do narysowania)
-- [ ] 062 — Espresso Martini (do narysowania)
+- [x] 057 — Margarita (PNG w repo; pending)
+- [x] 058 — Negroni (PNG w repo; pending)
+- [x] 059 — Aperol Spritz (PNG w repo; pending)
+- [x] 060 — Old Fashioned (PNG w repo; pending)
+- [x] 061 — Mojito (PNG w repo; pending)
+- [x] 062 — Espresso Martini (PNG w repo; pending)
 - [x] 063 — Zupa ogórkowa (PNG w repo; pending)
 - [x] 064 — Zupa grzybowa (PNG w repo; pending)
 - [x] 065 — Kapuśniak (PNG w repo; pending)
-- [ ] 066 — Krupnik z kaszą jęczmienną (do narysowania)
+- [x] 066 — Krupnik z kaszą jęczmienną (PNG w repo; pending)
 - [ ] 067 — Zupa koperkowa (do narysowania)
 - [ ] 068 — Flaki wołowe (do narysowania)
 - [ ] 069 — Chłodnik litewski (do narysowania)
@@ -240,7 +240,7 @@ Lista kontrolna jest zgodna z 225 tytułami z plików seed. Przed każdą nową 
 - [ ] 224 — Grzaniec (do narysowania)
 - [ ] 225 — Lemoniada domowa (do narysowania)
 
-## Partie już dodane
+## Partie dodane
 
 1. Rosół z kury · Kotlet schabowy · Pierogi ruskie · Zupa pomidorowa
 2. Żurek na zakwasie · Barszcz czerwony · Krem z dyni · Kapuśniak
@@ -255,5 +255,6 @@ Lista kontrolna jest zgodna z 225 tytułami z plików seed. Przed każdą nową 
 11. Zupa ogórkowa · Pieczeń rzymska · Kluski śląskie · Karp smażony · Szarlotka · Tiramisu · Paella z owocami morza · Tacos al pastor · Ramen shoyu · Bibimbap
 12. Wiener Schnitzel · Kurczak tikka masala · Coq au vin · Naleśniki · Spaghetti aglio e olio · Cacio e pepe · Pad thai z krewetkami · Pesto genovese · Guacamole · Tzatziki
 13. Sos beszamel · Sos holenderski · Majonez domowy · Vinaigrette · Bulion drobiowy (fond) · Masło ziołowe · Cebula karmelizowana · Marynowana czerwona cebula · Gambas al ajillo · Crème brûlée
+14. Pancakes amerykańskie · Chleb na zakwasie · Chleb pszenny na drożdżach · Margarita · Negroni · Aperol Spritz · Old Fashioned · Mojito · Espresso Martini · Krupnik z kaszą jęczmienną
 
-Kolejne partie wybieram wyłącznie z pozycji [ ]. Po zapisaniu sprawdzam osobny plik i dokładne mapowanie, a następnie odhaczam przepis. Nie powtarzam żadnej zaznaczonej potrawy.
+Kolejne grafiki wybieram wyłącznie z [ ] i sprawdzam każdą nazwę przed generowaniem. Odhaczam dopiero po dodaniu osobnego pliku i mapowania. Nie powtarzam zaznaczonych dań.
