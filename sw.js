@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.67';
+const VERSION = 'kucharzyna-1.4.68';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -131,6 +131,16 @@ const CORE = [
   'views-start.js', 'views-recipes.js', 'views-detail.js', 'views-editor.js', 'views-cook.js', 'views-cook-home.js', 'views-calc.js', 'views-tools.js', 'views-guide.js', 'views-search.js', 'views-import.js', 'views-settings.js', 'views-inventory.js',
   'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png',
   'bg-texture.png', 'poppins-300.woff', 'poppins-400.woff', 'poppins-500.woff', 'poppins-700.woff',
+  'assets/food-illustrations/zupa-ogorkowa-kredka.png',
+  'assets/food-illustrations/pieczen-rzymska-kredka.png',
+  'assets/food-illustrations/kluski-slaskie-kredka.png',
+  'assets/food-illustrations/karp-smazony-kredka.png',
+  'assets/food-illustrations/szarlotka-kredka.png',
+  'assets/food-illustrations/tiramisu-kredka.png',
+  'assets/food-illustrations/paella-owoce-morza-kredka.png',
+  'assets/food-illustrations/tacos-al-pastor-kredka.png',
+  'assets/food-illustrations/ramen-shoyu-kredka.png',
+  'assets/food-illustrations/bibimbap-kredka.png',
 ];
 
 const scopeUrl = (p) => new URL(p, self.registration.scope).href;
