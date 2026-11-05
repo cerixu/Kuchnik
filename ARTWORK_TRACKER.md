@@ -263,3 +263,21 @@ Kontynuuję tylko z pozycji [ ]. Po sprawdzeniu nazwy dodaję osobny obraz, mapo
 - [x] 226 — Carbonara (PNG w repo; pending)
 - [x] 227 — Pizza Napoletana (PNG w repo; pending)
 - [x] 228 — Sos pomidorowy (PNG w repo; pending)
+
+
+## Ikony składników
+
+### Stan — 2026-11-06
+
+- Unikalne nazwy składników w czterech zbiorach przepisów: **567**
+- Zweryfikowane przypisania do ilustracji: **567 / 567**
+- Lokalne pliki PNG w bibliotece: **84** (36 istniejących + 48 nowych)
+- Brakujące mapowania w bazie startowej: **0**
+- Nieznane nazwy w autorskich recepturach trafiają do rysowanej mieszanki przypraw jako awaryjny fallback.
+- Wszystkie ikony mają przezroczyste tło i są dodane do cache Service Workera.
+
+#### Dodane pliki w 1.4.89
+
+`seafood.png`, `grain.png`, `parsnip.png`, `broccoli.png`, `eggplant.png`, `corn.png`, `pumpkin.png`, `avocado.png`, `lime.png`, `orange.png`, `pineapple.png`, `apple.png`, `banana.png`, `berry.png`, `dried-fruit.png`, `coconut.png`, `bread.png`, `tortilla.png`, `pastry.png`, `wine.png`, `beer.png`, `spirit.png`, `coffee.png`, `ice.png`, `water.png`, `stock.png`, `mint.png`, `lemongrass.png`, `ginger.png`, `oil.png`, `chocolate.png`, `nuts.png`, `beans.png`, `lentils.png`, `spice.png`, `seasoning-mix.png`, `sauce.png`, `mustard.png`, `vinegar.png`, `yeast.png`, `spoon.png`, `starter.png`, `beet.png`, `celery.png`, `radish.png`, `jam.png`, `pickle.png`, `seaweed.png`
+
+Test pokrycia czyta nazwy bezpośrednio z `seeds.js`, `seeds-pl.js`, `seeds-world.js` i `seeds-more.js`; dla każdej sprawdza mapowanie oraz obecność PNG.

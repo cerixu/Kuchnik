@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.88';
+const VERSION = 'kucharzyna-1.4.89';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -339,6 +339,54 @@ const CORE = [
   'assets/ingredient-illustrations/cream.png',
   'assets/ingredient-illustrations/yogurt.png',
   'assets/ingredient-illustrations/salt.png',
+  'assets/ingredient-illustrations/seafood.png',
+  'assets/ingredient-illustrations/grain.png',
+  'assets/ingredient-illustrations/parsnip.png',
+  'assets/ingredient-illustrations/broccoli.png',
+  'assets/ingredient-illustrations/eggplant.png',
+  'assets/ingredient-illustrations/corn.png',
+  'assets/ingredient-illustrations/pumpkin.png',
+  'assets/ingredient-illustrations/avocado.png',
+  'assets/ingredient-illustrations/lime.png',
+  'assets/ingredient-illustrations/orange.png',
+  'assets/ingredient-illustrations/pineapple.png',
+  'assets/ingredient-illustrations/apple.png',
+  'assets/ingredient-illustrations/banana.png',
+  'assets/ingredient-illustrations/berry.png',
+  'assets/ingredient-illustrations/dried-fruit.png',
+  'assets/ingredient-illustrations/coconut.png',
+  'assets/ingredient-illustrations/bread.png',
+  'assets/ingredient-illustrations/tortilla.png',
+  'assets/ingredient-illustrations/pastry.png',
+  'assets/ingredient-illustrations/wine.png',
+  'assets/ingredient-illustrations/beer.png',
+  'assets/ingredient-illustrations/spirit.png',
+  'assets/ingredient-illustrations/coffee.png',
+  'assets/ingredient-illustrations/ice.png',
+  'assets/ingredient-illustrations/water.png',
+  'assets/ingredient-illustrations/stock.png',
+  'assets/ingredient-illustrations/mint.png',
+  'assets/ingredient-illustrations/lemongrass.png',
+  'assets/ingredient-illustrations/ginger.png',
+  'assets/ingredient-illustrations/oil.png',
+  'assets/ingredient-illustrations/chocolate.png',
+  'assets/ingredient-illustrations/nuts.png',
+  'assets/ingredient-illustrations/beans.png',
+  'assets/ingredient-illustrations/lentils.png',
+  'assets/ingredient-illustrations/spice.png',
+  'assets/ingredient-illustrations/seasoning-mix.png',
+  'assets/ingredient-illustrations/sauce.png',
+  'assets/ingredient-illustrations/mustard.png',
+  'assets/ingredient-illustrations/vinegar.png',
+  'assets/ingredient-illustrations/yeast.png',
+  'assets/ingredient-illustrations/spoon.png',
+  'assets/ingredient-illustrations/starter.png',
+  'assets/ingredient-illustrations/beet.png',
+  'assets/ingredient-illustrations/celery.png',
+  'assets/ingredient-illustrations/radish.png',
+  'assets/ingredient-illustrations/jam.png',
+  'assets/ingredient-illustrations/pickle.png',
+  'assets/ingredient-illustrations/seaweed.png',
 ];
 
 const scopeUrl = (p) => new URL(p, self.registration.scope).href;

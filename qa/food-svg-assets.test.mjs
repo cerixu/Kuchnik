@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { matchIngredientIcon, iconUrlFor, ING_ICON_KEYS } from '../ingredient-icons.js';
 import { recipeSvgKey, recipePhotoKey, attachRecipePhoto, hasFoodPhoto } from '../food-photos.js';
 
 const files = [
@@ -180,12 +182,42 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.ok(util.includes("APP_VERSION = '1.4.88'"));
-  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.88'"));
-  assert.ok(changelog.includes("'1.4.88'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.88'), 'README version missing');
+  assert.ok(util.includes("APP_VERSION = '1.4.89'"));
+  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.89'"));
+  assert.ok(changelog.includes("'1.4.89'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.89'), 'README version missing');
 });
 
+
+test('every seeded recipe ingredient has a local illustration', () => {
+  const seedFiles = ['seeds.js', 'seeds-pl.js', 'seeds-world.js', 'seeds-more.js'];
+  const names = new Set();
+
+  for (const file of seedFiles) {
+    const source = fs.readFileSync(file, 'utf8');
+    const mark = String.fromCharCode(96);
+    const match = source.match(new RegExp('export const SEED(?:_TEXT|_PL|_WORLD|_MORE)?\\s*=\\s*' + mark + '([\\s\\S]*?)' + mark + ';'));
+    assert.ok(match, file + ' should expose a recipe seed block');
+    for (const line of match[1].split(/\r?\n/)) {
+      if (/^\s*[#>]/.test(line)) continue;
+      const separator = line.indexOf('|');
+      if (separator < 0) continue;
+      const name = line.slice(separator + 1).trim();
+      if (name) names.add(name);
+    }
+  }
+
+  assert.equal(names.size, 567, 'ingredient catalog count changed; review mappings');
+  assert.equal(ING_ICON_KEYS.length, 84, 'illustration library should cover all ingredient categories');
+  const missing = [];
+  for (const name of names) {
+    const key = matchIngredientIcon(name);
+    if (!key || !ING_ICON_KEYS.includes(key) || !fs.existsSync(fileURLToPath(iconUrlFor(key)))) {
+      missing.push(name + ' -> ' + (key || 'brak mapowania'));
+    }
+  }
+  assert.deepEqual(missing, []);
+});
 
 test('legacy SVG stays hidden while an assigned pencil illustration is shown', () => {
   const illustrated = { name: 'Spaghetti aglio e olio' };

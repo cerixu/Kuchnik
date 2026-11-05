@@ -1249,7 +1249,7 @@ input[type="range"].range { accent-color:#cb8057; min-height:28px; }
 
 
 /* ==========================================================================
-   ŻARŁOK 1.4.88 — spójna, ciemna oprawa kart i sterowania.
+   ŻARŁOK 1.4.89 — spójna, ciemna oprawa kart i sterowania.
    ========================================================================== */
 :root {
   --bg:#151517;
@@ -1290,7 +1290,7 @@ input[type="range"].range { accent-color:#cb8057; min-height:28px; }
   --glow3:rgba(93,74,65,.06);
 }
 body {
-  background-size:auto,auto,256px 256px,auto;
+  background-size:auto,auto,320px 320px,auto;
 }
 .card,.tile,.bigcard,.rcard,.sr-card,.shop-list,.result,.rtile,.stat,.ing-edit,.step-edit,.sec-card {
   color:var(--text);
