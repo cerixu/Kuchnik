@@ -1,10 +1,10 @@
 # Kucharzyna 👨‍🍳
 
-> **Aktualna wersja aplikacji: 1.4.59**. Dodano centralną galerię lokalnych ilustracji z listą statusów, mapowań i braków; galeria otwiera się również pod kontrolą Service Workera.
+> **Aktualna wersja aplikacji: 1.4.60**. Dodano centralną galerię lokalnych ilustracji z listą statusów, mapowań i braków; galeria otwiera się również pod kontrolą Service Workera.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
-Wszystkie dane są w pamięci Twojego urządzenia. W wersji 1.4.43 dodano cztery nowe lokalne ilustracje; zatwierdzone wzorce Carbonary i Bruschetty pozostają niezmienione. Nowe ilustracje powstają jako ręcznie rysowane obrazy kredką: wyraźna kreska, ograniczona paleta i lekkie cieniowanie, zgodnie z referencją użytkownika. Własne zdjęcia użytkownika nadal mają pierwszeństwo.
+Wszystkie dane są w pamięci Twojego urządzenia. W wersji 1.4.43 dodano cztery nowe lokalne ilustracje; zatwierdzone wzorce Carbonary i Bruschetty pozostają niezmienione. Nowe ilustracje powstają jako ręcznie rysowane obrazy kredką: wyraźna kreska, ograniczona paleta, lekkie cieniowanie oraz matowe czarne talerze z cienkim miedzianym rantem. Własne zdjęcia użytkownika nadal mają pierwszeństwo.
 
 ## Co potrafi
 

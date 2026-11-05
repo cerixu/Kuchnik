@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.59';
+const VERSION = 'kucharzyna-1.4.60';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -32,6 +32,16 @@ const CORE = [
   'assets/food-illustrations/chili-con-carne-kredka.png', 'assets/food-illustrations/burger-domowy-kredka.png',
   'assets/food-illustrations/kaczka-pieczona-jablka-kredka.png', 'assets/food-illustrations/losos-pieczony-cytryna-kredka.png',
   'assets/food-illustrations/pizza-pepperoni-kredka.png', 'assets/food-illustrations/panna-cotta-truskawki-kredka.png',
+  'assets/food-illustrations/lasagne-bolognese-kredka.png',
+  'assets/food-illustrations/bruschetta-pomidory-kredka.png',
+  'assets/food-illustrations/quiche-lorraine-kredka.png',
+  'assets/food-illustrations/focaccia-kredka.png',
+  'assets/food-illustrations/calzone-kredka.png',
+  'assets/food-illustrations/pizza-quattro-formaggi-kredka.png',
+  'assets/food-illustrations/kopytka-kredka.png',
+  'assets/food-illustrations/tortilla-espanola-kredka.png',
+  'assets/food-illustrations/falafel-kredka.png',
+  'assets/food-illustrations/ratatouille-kredka.png',
   'styles.css',
   'manifest.webmanifest',
   'assets/food-svg/carbonara.svg', 'assets/food-svg/margherita.svg', 'assets/food-svg/tomato-soup.svg',
