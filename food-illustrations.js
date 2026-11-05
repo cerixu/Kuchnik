@@ -118,6 +118,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'babka-piaskowa', name: 'Babka piaskowa', filename: 'babka-piaskowa-kredka.png', path: 'assets/food-illustrations/babka-piaskowa-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
   { key: 'mazurek-kajmakowy', name: 'Mazurek kajmakowy', filename: 'mazurek-kajmakowy-kredka.png', path: 'assets/food-illustrations/mazurek-kajmakowy-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
   { key: 'paczek', name: 'Pączki', filename: 'paczek-kredka.png', path: 'assets/food-illustrations/paczek-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'faworki', name: 'Faworki', filename: 'faworki-kredka.png', path: 'assets/food-illustrations/faworki-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'kisiel-zurawinowy', name: 'Kisiel żurawinowy', filename: 'kisiel-zurawinowy-kredka.png', path: 'assets/food-illustrations/kisiel-zurawinowy-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'ciasto-marchewkowe', name: 'Ciasto marchewkowe', filename: 'ciasto-marchewkowe-kredka.png', path: 'assets/food-illustrations/ciasto-marchewkowe-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'placek-drozdzowy-sliwki', name: 'Placek drożdżowy ze śliwkami', filename: 'placek-drozdzowy-sliwki-kredka.png', path: 'assets/food-illustrations/placek-drozdzowy-sliwki-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'kutia', name: 'Kutia', filename: 'kutia-kredka.png', path: 'assets/food-illustrations/kutia-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'pierniczki', name: 'Pierniczki', filename: 'pierniczki-kredka.png', path: 'assets/food-illustrations/pierniczki-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'sledzie-w-smietanie', name: 'Śledzie w śmietanie', filename: 'sledzie-w-smietanie-kredka.png', path: 'assets/food-illustrations/sledzie-w-smietanie-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'pasta-jajeczna', name: 'Pasta jajeczna', filename: 'pasta-jajeczna-kredka.png', path: 'assets/food-illustrations/pasta-jajeczna-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'smalec-ze-skwarami', name: 'Smalec ze skwarkami', filename: 'smalec-ze-skwarami-kredka.png', path: 'assets/food-illustrations/smalec-ze-skwarami-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'uszka-do-barszczu', name: 'Uszka do barszczu', filename: 'uszka-do-barszczu-kredka.png', path: 'assets/food-illustrations/uszka-do-barszczu-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **118**
-- Do wykonania: **107**
-- Status 118 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **128**
+- Do wykonania: **97**
+- Status 128 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -120,16 +120,16 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 104 — Babka piaskowa (PNG w repo; pending)
 - [x] 105 — Mazurek kajmakowy (PNG w repo; pending)
 - [x] 106 — Pączki (PNG w repo; pending)
-- [ ] 107 — Faworki (do narysowania)
-- [ ] 108 — Kisiel żurawinowy (do narysowania)
-- [ ] 109 — Ciasto marchewkowe (do narysowania)
-- [ ] 110 — Placek drożdżowy ze śliwkami (do narysowania)
-- [ ] 111 — Kutia (do narysowania)
-- [ ] 112 — Pierniczki (do narysowania)
-- [ ] 113 — Śledzie w śmietanie (do narysowania)
-- [ ] 114 — Pasta jajeczna (do narysowania)
-- [ ] 115 — Smalec ze skwarkami (do narysowania)
-- [ ] 116 — Uszka do barszczu (do narysowania)
+- [x] 107 — Faworki (PNG w repo; pending)
+- [x] 108 — Kisiel żurawinowy (PNG w repo; pending)
+- [x] 109 — Ciasto marchewkowe (PNG w repo; pending)
+- [x] 110 — Placek drożdżowy ze śliwkami (PNG w repo; pending)
+- [x] 111 — Kutia (PNG w repo; pending)
+- [x] 112 — Pierniczki (PNG w repo; pending)
+- [x] 113 — Śledzie w śmietanie (PNG w repo; pending)
+- [x] 114 — Pasta jajeczna (PNG w repo; pending)
+- [x] 115 — Smalec ze skwarkami (PNG w repo; pending)
+- [x] 116 — Uszka do barszczu (PNG w repo; pending)
 - [ ] 117 — Risotto alla milanese (do narysowania)
 - [ ] 118 — Gnocchi z masłem szałwiowym (do narysowania)
 - [ ] 119 — Spaghetti alla puttanesca (do narysowania)
