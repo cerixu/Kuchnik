@@ -3,6 +3,11 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.87': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.4.87 — kreskowy interfejs i nowy kalkulator mąk do pizzy.',
+    items: ['Nowy ciemny wygląd, wyśrodkowane ilustracje i odświeżony dolny pasek.', 'Dodano kredkowe ilustracje składników oraz ikonę ŻARŁOK.', 'Kalkulator ciasta uwzględnia cztery mąki Caputo, suwaki i podpowiedzi o hydracji oraz fermentacji.', 'Ustawienia interfejsu uproszczono do stałego ciemnego stylu.'],
+    footer: 'Dotychczasowe przepisy i ich ilustracje pozostają na miejscu.'
+  }),
   '1.4.86': Object.freeze({
     intro: 'Kuchnik 1.4.86 — uzupełnienie ilustracji widocznych na stronie.',
     items: ['Dodano rysunki kredką dla Carbonary, Pizza Napoletana i sosu pomidorowego.', 'Baza aplikacji obejmuje teraz 228 mapowań i osobnych grafik.'],

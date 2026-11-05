@@ -1,6 +1,6 @@
-# Kucharzyna 👨‍🍳
+# ŻARŁOK — Kuchnik
 
-> **Aktualna wersja aplikacji: 1.4.86**. Dodano centralną galerię lokalnych ilustracji z listą statusów, mapowań i braków; galeria otwiera się również pod kontrolą Service Workera.
+> **Aktualna wersja aplikacji: 1.4.87**. Dodano centralną galerię lokalnych ilustracji z listą statusów, mapowań i braków; galeria otwiera się również pod kontrolą Service Workera.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
@@ -11,7 +11,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. Biblioteka potraw jest stopni
 - **Safari (1.3):** baza danych ma ponawianie, limit czasu otwarcia, naprawę magazynów i **tryb awaryjny** (localStorage), więc aplikacja otwiera się nawet gdy iOS zablokuje IndexedDB (tryb prywatny, Lockdown, zawieszenie). Przy awarii pokazuje prawdziwy komunikat błędu, przyciski „Spróbuj ponownie” i „Tryb awaryjny”; stan magazynu widać w Ustawieniach.
 - **Nowe menu główne i dok (1.3):** nagłówek jak „We have special offer”, karuzela dużych kart „Polecane na dziś 🔥”, okrągłe przyciski akcji, „Skąd jest przepis” (kuchnie świata z flagami), kategorie; pływający dok z unoszoną aktywną ikoną.
 - **Karty z opisem i pochodzeniem (1.3):** każda receptura ma krótki opis, 🇵🇱 kraj pochodzenia i źródło (Kucharzyna, strona, TheMealDB…); filtr po kraju. W szczegółach: chipy z krajem i źródłem oraz pływający przycisk GOTUJĘ po rozwinięciu.
-- **Wygląd z makiety (1.2):** ciemny grafit, szare karty z miedzianą krawędzią i światłem u dołu, **okrągłe zdjęcia dań**, ocena ★ i kalorie po prawej stronie karty, pasek ikon bez podpisów, font Poppins. Szczegóły receptury: duże okrągłe zdjęcie, tytuł z oceną, **składniki na łuku** (okrągłe ikony) i „Pokaż szczegóły ⌄”. Jasny motyw, tryb Amator i suwak „Przezroczystość szkła” nadal są w Ustawieniach, podpisy pod ikonami paska włączysz tam jednym przełącznikiem.
+- **Wygląd z makiety (1.2):** ciemny grafit, szare karty z miedzianą krawędzią i światłem u dołu, **okrągłe zdjęcia dań**, ocena ★ i kalorie po prawej stronie karty, pasek ikon bez podpisów, font Poppins. Szczegóły receptury: duże okrągłe zdjęcie, tytuł z oceną, **składniki na łuku** (okrągłe ikony) i „Pokaż szczegóły ⌄”. Aplikacja ma stały ciemny motyw, rysowane kredką ilustracje i pięcioprzyciskową nawigację z podpisami.
 - **225 przykładowych receptur:** polska kuchnia (zupy, mięsa, pierogi, ciasta, wigilijne), kuchnie świata (Włochy, Francja, Hiszpania, Grecja, Meksyk, USA, Azja, Bliski Wschód…), śniadania, wege i wegańskie, desery, sosy bazowe, prep, przetwory, ponad 20 drinków. Tradycyjne są oznaczone gwiazdką i flagą kraju. Każdą recepturę możesz edytować lub usunąć; usunięta nie wraca po aktualizacji, a „Przywróć przykładowe receptury” w Ustawieniach przywraca brakujące.
 - **Ilustracje dań** są lokalnymi plikami PNG przypisanymi indywidualnie do przepisów. Stare SVG nie zastępują brakujących rysunków; nowa grafika pojawia się po dodaniu osobnego pliku. Własne zdjęcia dodane w edytorze pozostają zachowane.
 - **Szacunek kalorii na porcję** z tabel wartości odżywczej (pokazywany tylko, gdy rozpoznano ≥ 70% składników; to przybliżenie).
@@ -68,7 +68,7 @@ views-settings.js       ustawienia
 views-inventory.js     magazyn: stany, terminy, straty
 apple-touch-icon.png    ikona na ekran początkowy iPhone'a (180×180)
 icon-192.png, icon-512.png, icon-maskable-512.png    ikony PWA
-galeria-kredkowa.html nowa galeria rysunków kredką dla 225 receptur
+galeria-kredkowa.html nowa galeria rysunków kredką dla 228 receptur
 README.md               ten plik
 ```
 

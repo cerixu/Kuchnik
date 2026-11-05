@@ -36,18 +36,15 @@ export function settingsView() {
   glassRange.addEventListener('change', () => setSetting('glass', +glassRange.value));
 
   const appearance = group('Wygląd',
-    h('div', null, h('div', { class: 'field-label' }, 'Motyw'),
-      segmented([['auto', 'Auto'], ['light', 'Jasny'], ['dark', 'Ciemny']], getSetting('theme'), set('theme'), { label: 'Motyw' })),
-    h('div', null, h('div', { class: 'field-label' }, 'Tryb'),
-      segmented([['pro', 'Pro'], ['amateur', 'Amator']], getSetting('mode'), async (v) => { await setSetting('mode', v); rerender(); }, { label: 'Tryb aplikacji' }),
-      h('p', { class: 'muted small' }, 'Pro: procenty piekarskie, food cost, historia zmian, ciemna stal i szafran. Amator: zielony, zaokrąglony, prostszy wygląd — bez zaawansowanych funkcji.')),
+    h('div', null, h('div', { class: 'field-label' }, 'Motyw aplikacji'),
+      h('p', { class: 'muted small' }, 'ŻARŁOK używa stałego, ciemnego motywu z grafitowym tłem i miedzianymi detalami.')),
     h('div', null, h('div', { class: 'field-label' }, 'Wielkość przycisków'),
       segmented([['normal', 'Normalne'], ['large', 'Duże'], ['xl', 'Bardzo duże']], getSetting('tapSize'), set('tapSize'), { label: 'Wielkość przycisków' }),
-      h('p', { class: 'muted small' }, 'Większe przyciski są wygodniejsze przy mokrych rękach.')),
+      h('p', { class: 'muted small' }, 'Większe pola ułatwiają obsługę telefonu w kuchni.')),
     h('div', null, h('div', { class: 'row between' }, h('span', { class: 'field-label' }, 'Wielkość tekstu'), scaleVal), range),
-    switchEl(!!getSetting('tabLabels'), set('tabLabels'), 'Podpisy pod ikonami paska', 'Domyślnie pasek ma same ikony (jak na makiecie)'),
-    h('div', null, h('div', { class: 'row between' }, h('span', { class: 'field-label' }, 'Przezroczystość szkła'), glassVal), glassRange,
-      h('p', { class: 'muted small' }, 'Jak suwak Liquid Glass w iOS 27: mniej = czytelniej (bardziej kryjące panele), więcej = bardziej przezroczyste.')));
+    h('p', { class: 'muted small' }, 'Dolny pasek zawsze pokazuje podpisy pod ikonami.'),
+    h('div', null, h('div', { class: 'row between' }, h('span', { class: 'field-label' }, 'Przezroczystość powierzchni'), glassVal), glassRange,
+      h('p', { class: 'muted small' }, 'Dostosuj delikatne rozmycie kart i paneli.')));
 
   /* ----- Receptury ----- */
   const recipes = group('Receptury',

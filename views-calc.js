@@ -67,16 +67,25 @@ function hub() {
 
 /* ---------- Pizza ---------- */
 
+const PIZZA_FLOURS = Object.freeze({
+  'pizzeria-blue': { label: 'Caputo 00 Blue · Pizzeria', kind: '00', protein: '12,5%', w: '260–280', hydration: 63, range: '60–65%', fermentation: '8–12 h w temperaturze pokojowej', why: 'Mąka o średniej sile do klasycznej pizzy neapolitańskiej. Zacznij od umiarkowanej hydracji; chłodniejsza fermentacja i dłuższy czas wymagają spokojnego prowadzenia ciasta.', url: 'https://www.mulinocaputo.it/en/products/pizzeria/' },
+  'saccorosso': { label: 'Caputo 00 Red · Saccorosso', kind: '00', protein: '13%', w: '300–320', hydration: 66, range: '64–70%', fermentation: 'dłuższy odpoczynek, najlepiej z etapem w lodówce', why: 'Mocniejsza mąka lepiej znosi dłuższe dojrzewanie. Nie zwiększaj wody tylko z powodu wyższego W — obserwuj, jak konkretna partia ją wchłania.', url: 'https://www.mulinocaputo.it/en/products/saccorosso-5kg/' },
+  nuvola: { label: 'Caputo Nuvola', kind: '0', protein: '12,5%', w: '270–290', hydration: 70, range: '68–75%', fermentation: 'producent podaje ok. 72 h: 48 h w chłodzie + 24 h w temp. pokojowej', why: 'Nuvola jest przeznaczona do lekkich, obszernych rantów i dużych pęcherzy. Wyższa hydracja jest punktem wyjścia, a nie gwarancją — technika mieszania i temperatura mają znaczenie.', url: 'https://www.mulinocaputo.it/en/products/nuvola/' },
+  'nuvola-super': { label: 'Caputo Nuvola Super', kind: '0', protein: '13,5%', w: '320–340', hydration: 74, range: '70–78%', fermentation: 'długie dojrzewanie lub preferment; dobierz do temperatury i procesu', why: 'Najmocniejsza z tych czterech mąk. Daje większy margines przy długim dojrzewaniu i wyższej hydracji, ale mąka o wysokim W nie wymaga automatycznie większej ilości wody.', url: 'https://www.mulinocaputo.it/en/products/super-cloud/' },
+});
+
 function pizzaCalculator() {
   // Zachowujemy dotychczasowe klucze calc:pizza (flour, balls, ballWeight itd.),
   // aby aktualizacja nie resetowała ustawień zapisanych na urządzeniu.
   const { st, save, ready } = memo('pizza', {
-    mode: 'balls', flour: 7500, balls: 4, ballWeight: 250,
+    mode: 'balls', flour: 7500, flourType: 'pizzeria-blue', balls: 4, ballWeight: 250,
     hydration: 65, salt: 3, oil: 0, yeast: 0.2, yeastType: 'fresh',
     leavenType: 'yeast', starterPct: 0.65, temp: 20, hours: 24,
   });
   const out = h('div', { class: 'results' });
   const form = h('div', { class: 'stack' });
+  st.flourType = PIZZA_FLOURS[st.flourType] ? st.flourType : 'pizzeria-blue';
+  const flourProfile = () => PIZZA_FLOURS[st.flourType];
   const s = calcScreen('Pizza i ciasto', form, out);
   let suggestionHost = null;
 
@@ -123,6 +132,11 @@ function pizzaCalculator() {
       h('p', { class: 'muted small' }, st.mode === 'flour'
         ? `Z ${fmtAmount(r.flour)} g łącznej mąki · ok. ${r.ballCount} kulek po ${fmtAmount(st.ballWeight)} g${r.remainder > 0 ? ` + ${fmtAmount(r.remainder)} g reszty` : ''} · suma procentów ${fmtNum(r.pctSum, 2)}% (mąka = 100%)`
         : `${st.balls} × ${fmtAmount(st.ballWeight)} g · suma procentów ${fmtNum(r.pctSum, 2)}% (mąka = 100%)`),
+      h('section', { class: 'card stack flour-advice' },
+        h('div', { class: 'row between wrap' }, h('strong', null, flourProfile().label), h('span', { class: 'muted small' }, `W ${flourProfile().w} · białko ${flourProfile().protein}`)),
+        h('p', { class: 'muted small' }, `Masz tę mąkę: spróbuj ${fmtNum(st.hydration, 1)}% hydracji (zakres startowy ${flourProfile().range}) i fermentacji: ${flourProfile().fermentation}.`),
+        h('p', { class: 'muted small' }, flourProfile().why),
+        h('a', { href: flourProfile().url, target: '_blank', rel: 'noopener noreferrer' }, 'Parametry mąki u producenta ↗')),
       sourdough ? h('p', { class: 'muted small' },
         `${fmtAmount(r.starterSeed)} g zakwasu macierzystego + ${fmtAmount(r.starterFlour)} g mąki + ${fmtAmount(r.starterWater)} g wody = ${fmtAmount(r.starter)} g aktywnego zakwasu (1:1:2).`) : null,
       h('div', { class: 'row wrap gap' },
@@ -216,7 +230,23 @@ function pizzaCalculator() {
           st.mode = value; save(); build(); paintOut();
         }, { label: 'Sposób obliczania' }),
         st.mode === 'flour'
-          ? field('Ilość mąki (g)', numInput({ value: st.flour, label: 'Mąka w gramach', dec: 1, onInput: upd('flour') }))
+          ? h('div', { class: 'stack' },
+            field('Rodzaj mąki', selectEl(Object.entries(PIZZA_FLOURS).map(([key, flour]) => [key, flour.label]), st.flourType, (value) => {
+              st.flourType = value;
+              st.hydration = PIZZA_FLOURS[value].hydration;
+              save(); build(); paintOut();
+            }, { label: 'Rodzaj mąki Caputo' })),
+            (() => {
+              const range = h('input', { type: 'range', min: 250, max: 10000, step: 50, value: Math.min(10000, Math.max(250, st.flour)), class: 'range', 'aria-label': 'Ilość mąki — suwak' });
+              const amount = numInput({ value: st.flour, label: 'Ilość mąki (g)', dec: 0, onInput: (value) => {
+                if (value == null) return;
+                st.flour = value; range.value = String(Math.min(10000, Math.max(250, value))); save(); paintOut();
+              } });
+              range.addEventListener('input', () => {
+                st.flour = Number(range.value); amount.value = String(st.flour); amount.classList.remove('invalid'); save(); paintOut();
+              });
+              return h('div', { class: 'flour-amount-controls' }, field('Ilość mąki (g) — wpisz lub przesuń', amount), range);
+            })())
           : h('div', { class: 'stack' },
             h('div', { class: 'row gap' },
               col(field('Liczba kulek', numInput({ value: st.balls, label: 'Liczba kulek', dec: 0, onInput: upd('balls') }))),
@@ -224,7 +254,15 @@ function pizzaCalculator() {
             chips('ballWeight', [200, 250, 280, 320, 350], ' g'))),
       h('section', { class: 'card stack' },
         h('div', { class: 'row gap' },
-          col(field('Hydracja %', numInput({ value: st.hydration, label: 'Hydracja', dec: 1, onInput: upd('hydration') }))),
+          col((() => {
+            const range = h('input', { type: 'range', min: 50, max: 85, step: 1, value: st.hydration, class: 'range', 'aria-label': 'Hydracja — suwak' });
+            const amount = numInput({ value: st.hydration, label: 'Hydracja (%) — wpisz lub przesuń suwak', dec: 1, onInput: (value) => {
+              if (value == null) return;
+              st.hydration = value; range.value = String(Math.min(85, Math.max(50, value))); save(); paintOut();
+            } });
+            range.addEventListener('input', () => { st.hydration = Number(range.value); amount.value = String(st.hydration); amount.classList.remove('invalid'); save(); paintOut(); });
+            return field('Hydracja %', h('div', { class: 'flour-amount-controls' }, amount, range));
+          })()),
           col(field('Sól %', numInput({ value: st.salt, label: 'Sól', dec: 2, onInput: upd('salt') })))),
         chips('hydration', [60, 62, 65, 70, 75], '%'),
         field('Oliwa % (opcjonalnie)', numInput({ value: st.oil, label: 'Oliwa', dec: 2, onInput: upd('oil') }))),

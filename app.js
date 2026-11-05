@@ -31,27 +31,26 @@ const root = document.documentElement;
 
 /* ---------- Motyw, tryb, rozmiary ---------- */
 
-const BG = { light: { pro: '#f1f0ed', amateur: '#eef7f0' }, dark: { pro: '#1d1d1f', amateur: '#0f1a13' } };
-const dark = matchMedia('(prefers-color-scheme: dark)');
-
 function applyAppearance() {
-  const theme = getSetting('theme'), mode = getSetting('mode'), tap = getSetting('tapSize'), ts = getSetting('textScale'), glass = getSetting('glass');
-  root.setAttribute('data-theme', theme);
-  root.setAttribute('data-mode', mode);
-  root.setAttribute('data-tap', tap);
+  const tap = getSetting('tapSize'), ts = getSetting('textScale'), glass = getSetting('glass');
+  root.setAttribute('data-theme', 'dark');
+  root.setAttribute('data-tap', tap || 'large');
   root.style.setProperty('--ts', String((ts || 100) / 100));
-  root.setAttribute('data-tablabels', getSetting('tabLabels') ? 'on' : 'off');
-  root.style.setProperty('--glass', String(Math.min(100, Math.max(0, glass == null ? 70 : glass)) / 100));
+  root.setAttribute('data-tablabels', 'on');
+  root.style.setProperty('--glass', String(Math.min(100, Math.max(0, glass == null ? 55 : glass)) / 100));
   try {
-    localStorage.setItem('k:theme', theme); localStorage.setItem('k:mode', mode);
-    localStorage.setItem('k:tap', tap); localStorage.setItem('k:ts', String(ts)); localStorage.setItem('k:glass', String(glass)); localStorage.setItem('k:tl', getSetting('tabLabels') ? 'on' : 'off');
+    localStorage.removeItem('k:theme');
+    localStorage.removeItem('k:mode');
+    localStorage.setItem('k:tap', tap || 'large');
+    localStorage.setItem('k:ts', String(ts || 100));
+    localStorage.setItem('k:glass', String(glass == null ? 55 : glass));
+    localStorage.setItem('k:tl', 'on');
   } catch (_) { /* tryb prywatny */ }
-  // Kolor paska systemowego zgodny z faktycznie wybranym motywem (nie tylko z systemowym).
-  const eff = theme === 'auto' ? (dark.matches ? 'dark' : 'light') : theme;
-  const color = BG[eff][mode] || BG[eff].pro;
-  document.querySelectorAll('meta[name="theme-color"]').forEach((m) => { m.setAttribute('content', color); m.removeAttribute('media'); });
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m) => {
+    m.setAttribute('content', '#171719');
+    m.removeAttribute('media');
+  });
 }
-dark.addEventListener && dark.addEventListener('change', () => { if (getSetting('theme') === 'auto') applyAppearance(); });
 
 /* ---------- Dolna nawigacja ---------- */
 

@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.86';
+const VERSION = 'kucharzyna-1.4.87';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -301,6 +301,44 @@ const CORE = [
   'assets/food-illustrations/carbonara-kredka.png',
   'assets/food-illustrations/pizza-napoletana-kredka.png',
   'assets/food-illustrations/sos-pomidorowy-kredka.png',
+'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png',
+  'assets/zarlock-hatch.svg',
+  'assets/ingredient-illustrations/egg.png',
+  'assets/ingredient-illustrations/bacon.png',
+  'assets/ingredient-illustrations/sausage.png',
+  'assets/ingredient-illustrations/pork.png',
+  'assets/ingredient-illustrations/chicken.png',
+  'assets/ingredient-illustrations/beef.png',
+  'assets/ingredient-illustrations/shrimp.png',
+  'assets/ingredient-illustrations/fish.png',
+  'assets/ingredient-illustrations/tofu.png',
+  'assets/ingredient-illustrations/pasta.png',
+  'assets/ingredient-illustrations/rice.png',
+  'assets/ingredient-illustrations/potato.png',
+  'assets/ingredient-illustrations/carrot.png',
+  'assets/ingredient-illustrations/onion.png',
+  'assets/ingredient-illustrations/garlic.png',
+  'assets/ingredient-illustrations/tomato.png',
+  'assets/ingredient-illustrations/can.png',
+  'assets/ingredient-illustrations/pepper.png',
+  'assets/ingredient-illustrations/chili.png',
+  'assets/ingredient-illustrations/cucumber.png',
+  'assets/ingredient-illustrations/zucchini.png',
+  'assets/ingredient-illustrations/leafy.png',
+  'assets/ingredient-illustrations/mushroom.png',
+  'assets/ingredient-illustrations/olive.png',
+  'assets/ingredient-illustrations/lemon.png',
+  'assets/ingredient-illustrations/basil.png',
+  'assets/ingredient-illustrations/herb.png',
+  'assets/ingredient-illustrations/cheese.png',
+  'assets/ingredient-illustrations/milk.png',
+  'assets/ingredient-illustrations/butter.png',
+  'assets/ingredient-illustrations/flour.png',
+  'assets/ingredient-illustrations/sugar.png',
+  'assets/ingredient-illustrations/honey.png',
+  'assets/ingredient-illustrations/cream.png',
+  'assets/ingredient-illustrations/yogurt.png',
+  'assets/ingredient-illustrations/salt.png',
 ];
 
 const scopeUrl = (p) => new URL(p, self.registration.scope).href;
