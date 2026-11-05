@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.57': Object.freeze({
+    intro: 'Kuchnik 1.4.57 — piąta partia rysunków kredką.',
+    items: [
+      'Dodano rysunki: kotleta mielonego, naleśników z serem, placków ziemniaczanych i zupy grzybowej.',
+      'Galeria obejmuje 225 receptur; 20 ilustracji oczekuje na ocenę, a 205 pozostało do wykonania.',
+      'Nowe pliki są lokalne, dokładnie przypisane i dostępne offline.'
+    ],
+    footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
+  }),
   '1.4.56': Object.freeze({
     intro: 'Kuchnik 1.4.56 — czwarta partia rysunków kredką.',
     items: [

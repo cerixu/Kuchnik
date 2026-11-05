@@ -302,3 +302,11 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Styl: rysunek kredką z ograniczoną paletą, wyraźną kreską i przezroczystym tłem.
 - Status: **oczekuje na ocenę stylu**.
 - Galeria: 16 plików w repo, 209 receptur w kolejce.
+
+
+## Rysunki kredką — partia 5 (2026-11-05)
+
+- Dodano kotleta mielonego, naleśniki z serem, placki ziemniaczane i zupę grzybową jako osobne pliki PNG.
+- Wszystkie cztery kadry sprawdzone po wycięciu; każda grafika przedstawia inną potrawę i ma własne mapowanie.
+- Status: **oczekuje na ocenę stylu**.
+- Galeria: 20 plików w repo, 205 receptur w kolejce.

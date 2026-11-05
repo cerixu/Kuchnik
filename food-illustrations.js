@@ -16,6 +16,10 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'salatka-caprese', name: 'Sałatka caprese', filename: 'salatka-caprese-kredka.png', path: 'assets/food-illustrations/salatka-caprese-kredka.png', batch: 'Partia kredkowa 4', status: 'pending' },
   { key: 'salatka-cezar', name: 'Sałatka Cezar', filename: 'salatka-cezar-kredka.png', path: 'assets/food-illustrations/salatka-cezar-kredka.png', batch: 'Partia kredkowa 4', status: 'pending' },
   { key: 'mizeria', name: 'Mizeria', filename: 'mizeria-kredka.png', path: 'assets/food-illustrations/mizeria-kredka.png', batch: 'Partia kredkowa 4', status: 'pending' },
+  { key: 'kotlet-mielony', name: 'Kotlet mielony', filename: 'kotlet-mielony-kredka.png', path: 'assets/food-illustrations/kotlet-mielony-kredka.png', batch: 'Partia kredkowa 5', status: 'pending' },
+  { key: 'nalesniki-z-serem', name: 'Naleśniki z serem', filename: 'nalesniki-z-serem-kredka.png', path: 'assets/food-illustrations/nalesniki-z-serem-kredka.png', batch: 'Partia kredkowa 5', status: 'pending' },
+  { key: 'placki-ziemniaczane', name: 'Placki ziemniaczane', filename: 'placki-ziemniaczane-kredka.png', path: 'assets/food-illustrations/placki-ziemniaczane-kredka.png', batch: 'Partia kredkowa 5', status: 'pending' },
+  { key: 'zupa-grzybowa', name: 'Zupa grzybowa', filename: 'zupa-grzybowa-kredka.png', path: 'assets/food-illustrations/zupa-grzybowa-kredka.png', batch: 'Partia kredkowa 5', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
