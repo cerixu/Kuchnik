@@ -5,7 +5,7 @@ import { h, icon, toast } from './ui.js';
 import { navigate } from './router.js';
 import { catName, catIcon, ORIGINS, toggleFavorite } from './recipes.js';
 import { fmtMinutes, fmtAmount, fmtKitchenAmount, fmtNum, fmtUnit } from './util.js';
-import { recipeArtUrl, categoryArtUrl } from './art.js';
+import { categoryArtUrl } from './art.js';
 import { attachRecipePhoto, attachCategoryPhoto } from './food-photos.js';
 import { estimateKcal } from './nutrition.js';
 import { hostOf } from './importer.js';
@@ -69,12 +69,13 @@ export function heartBtn(r, onToggle) {
   return b;
 }
 
-/** Miniatura: własne zdjęcie, a gdy go brak — ilustracja potrawy rysowana w kodzie. */
+/** Miniatura: własne zdjęcie albo przypisana ilustracja kredkowa. */
 function recipeImage(r, alt = '') {
   const custom = r.thumb || r.photo;
-  const img = h('img', { class: custom ? '' : 'art', src: custom || recipeArtUrl(r), alt, loading: 'lazy', decoding: 'async' });
-  if (!custom) attachRecipePhoto(img, r);
-  return img;
+  if (custom) return h('img', { src: custom, alt, loading: 'lazy', decoding: 'async' });
+  const img = h('img', { class: 'art', alt, loading: 'lazy', decoding: 'async' });
+  if (attachRecipePhoto(img, r)) return img;
+  return h('div', { class: 'recipe-art-pending', role: 'img', 'aria-label': 'Ilustracja w przygotowaniu: ' + (r.name || 'przepis') }, 'Rysunek w przygotowaniu');
 }
 
 export function thumbEl(r, cls = '') {

@@ -180,12 +180,26 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.ok(util.includes("APP_VERSION = '1.4.62'"));
-  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.62'"));
-  assert.ok(changelog.includes("'1.4.62'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.62'), 'README version missing');
+  assert.ok(util.includes("APP_VERSION = '1.4.63'"));
+  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.63'"));
+  assert.ok(changelog.includes("'1.4.63'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.63'), 'README version missing');
 });
 
+
+test('legacy SVG is not shown as recipe art fallback', () => {
+  const oldArt = { name: 'Spaghetti aglio e olio' };
+  const oldImg = { dataset: {}, classList: { remove() {} }, src: '' };
+  assert.equal(recipeSvgKey(oldArt), 'spaghetti-aglio-olio');
+  assert.equal(attachRecipePhoto(oldImg, oldArt), false);
+  assert.equal(oldImg.src, '');
+  assert.equal(hasFoodPhoto(oldArt), false);
+  const newImg = { dataset: {}, classList: { remove() {} }, src: '' };
+  assert.equal(attachRecipePhoto(newImg, { name: 'Mizeria' }), true);
+  assert.ok(newImg.src.endsWith('/assets/food-illustrations/mizeria-kredka.png'));
+  assert.equal(hasFoodPhoto({ name: 'Mizeria' }), true);
+  assert.equal(hasFoodPhoto({ name: 'Moja zupa', photo: 'data:image/png;base64,abc' }), true);
+});
 
 test('new dish names resolve to their dedicated SVG and minestrone avoids generic soup photography', () => {
   assert.equal(recipeSvgKey({ name: 'Spaghetti alla puttanesca' }), 'spaghetti-puttanesca');

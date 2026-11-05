@@ -360,3 +360,11 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Naczynia czarne z cienkim miedzianym rantem; styl kredkowy, osobny plik na przepis.
 - Status: **oczekuje na ocenę stylu**.
 - Galeria: 58 ilustracji oczekuje na ocenę, 167 receptur w kolejce.
+
+
+## Brak starego fallbacku ilustracji — 2026-11-05
+
+- Karty przepisów pokazują własne zdjęcie użytkownika lub lokalny rysunek kredkowy przypisany do dania.
+- Dla brakujących nowych rysunków jest neutralny status „Rysunek w przygotowaniu”; dawne SVG nie są już pokazywane jako gotowa ilustracja.
+- Własne zdjęcia i dane użytkownika pozostają bez zmian.
+- Stan galerii: 58 rysunków oczekuje na ocenę, 167 przepisów pozostało do wykonania.

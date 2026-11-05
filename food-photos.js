@@ -291,18 +291,14 @@ export function recipePhotoKey(recipe) {
 import { illustrationForRecipe } from './food-illustrations.js';
 
 export function attachRecipePhoto(img, recipe) {
-  if (!img || !recipe || recipe.thumb || recipe.photo) return;
+  if (!img || !recipe || recipe.thumb || recipe.photo) return false;
   const illustration = illustrationForRecipe(recipe);
-  if (illustration) {
-    img.dataset.photoRequested = 'illustration:' + illustration.key;
-    img.dataset.photoSource = 'illustration:' + illustration.key;
-    img.classList.remove('art');
-    img.src = new URL('./' + illustration.path, import.meta.url).href;
-    return;
-  }
-  // Nie używaj dawnych JPG; istniejące SVG zostają przejściowym fallbackiem.
-  const svgKey = recipeSvgKey(recipe);
-  if (svgKey) attachSvg(img, svgKey);
+  if (!illustration) return false;
+  img.dataset.photoRequested = 'illustration:' + illustration.key;
+  img.dataset.photoSource = 'illustration:' + illustration.key;
+  img.classList.remove('art');
+  img.src = new URL('./' + illustration.path, import.meta.url).href;
+  return true;
 }
 const CATEGORY_ILLUSTRATIONS = Object.freeze({
   'cat-zupy': 'Rosół z kury',
@@ -317,5 +313,5 @@ export function attachCategoryPhoto(img, categoryId) {
   img.src = new URL('./' + illustration.path, import.meta.url).href;
 }
 export function hasFoodPhoto(recipe) {
-  return !!(recipe && (recipe.thumb || recipe.photo || illustrationForRecipe(recipe) || recipeSvgKey(recipe)));
+  return !!(recipe && (recipe.thumb || recipe.photo || illustrationForRecipe(recipe)));
 }

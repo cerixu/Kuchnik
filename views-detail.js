@@ -21,7 +21,6 @@ import { hasInventory, availability, shoppingGaps, fmtStock, findItemFor } from 
 import { estimateKcal } from './nutrition.js';
 import { openAddToShopping, addItems } from './shopping.js';
 import { hostOf } from './importer.js';
-import { recipeArtUrl } from './art.js';
 import { attachRecipePhoto } from './food-photos.js';
 
 const KIND_LABEL = { flour: 'mąka', water: 'woda', salt: 'sól', yeast: 'drożdże', fat: 'tłuszcz', other: '' };
@@ -391,9 +390,15 @@ export function detailView({ id }) {
     const kids = [];
     const rr = base();
     const heroCustom = rr.photo || rr.thumb;
-    const heroImg = h('img', { class: heroCustom ? '' : 'art', src: heroCustom || recipeArtUrl(rr), alt: heroCustom ? `Zdjęcie: ${r.name}` : '' });
-    if (!heroCustom) attachRecipePhoto(heroImg, rr);
-    kids.push(h('div', { class: 'detail-hero' }, h('div', { class: 'hero-circle' }, heroImg)));
+    let heroVisual;
+    if (heroCustom) {
+      heroVisual = h('img', { src: heroCustom, alt: `Zdjęcie: ${r.name}`, loading: 'lazy', decoding: 'async' });
+    } else {
+      const heroImg = h('img', { class: 'art', alt: '', loading: 'lazy', decoding: 'async' });
+      heroVisual = attachRecipePhoto(heroImg, rr) ? heroImg
+        : h('div', { class: 'recipe-art-pending', role: 'img', 'aria-label': 'Ilustracja w przygotowaniu: ' + (r.name || 'przepis') }, 'Rysunek w przygotowaniu');
+    }
+    kids.push(h('div', { class: 'detail-hero' }, h('div', { class: 'hero-circle' }, heroVisual)));
     kids.push(h('div', { class: 'detail-title-row' },
       h('h1', { class: 'detail-title' }, r.name || 'Receptura'),
       sideInfo({ ...rr, servings: r.servings, sections: r.sections })));
