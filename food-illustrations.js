@@ -178,6 +178,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'spatzle-z-serem', name: 'Spätzle z serem', filename: 'spatzle-z-serem-kredka.png', path: 'assets/food-illustrations/spatzle-z-serem-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
   { key: 'currywurst', name: 'Currywurst', filename: 'currywurst-kredka.png', path: 'assets/food-illustrations/currywurst-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
   { key: 'leczo', name: 'Leczo', filename: 'leczo-kredka.png', path: 'assets/food-illustrations/leczo-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'langosz', name: 'Langosz', filename: 'langosz-kredka.png', path: 'assets/food-illustrations/langosz-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'boeuf-stroganow', name: 'Boeuf Stroganow', filename: 'boeuf-stroganow-kredka.png', path: 'assets/food-illustrations/boeuf-stroganow-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'chaczapuri-adzarskie', name: 'Chaczapuri adżarskie', filename: 'chaczapuri-adzarskie-kredka.png', path: 'assets/food-illustrations/chaczapuri-adzarskie-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'tagine-z-kurczakiem-morele', name: 'Tagine z kurczakiem i morelami', filename: 'tagine-z-kurczakiem-morele-kredka.png', path: 'assets/food-illustrations/tagine-z-kurczakiem-morele-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'shepherds-pie', name: "Shepherd's pie", filename: 'shepherds-pie-kredka.png', path: 'assets/food-illustrations/shepherds-pie-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'owsianka-z-owocami-orzechami', name: 'Owsianka z owocami i orzechami', filename: 'owsianka-z-owocami-orzechami-kredka.png', path: 'assets/food-illustrations/owsianka-z-owocami-orzechami-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'tosty-francuskie', name: 'Tosty francuskie', filename: 'tosty-francuskie-kredka.png', path: 'assets/food-illustrations/tosty-francuskie-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'granola-domowa', name: 'Granola domowa', filename: 'granola-domowa-kredka.png', path: 'assets/food-illustrations/granola-domowa-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'tost-awokado-jajko', name: 'Tost z awokado i jajkiem', filename: 'tost-awokado-jajko-kredka.png', path: 'assets/food-illustrations/tost-awokado-jajko-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'smoothie-bowl-truskawkowy', name: 'Smoothie bowl truskawkowy', filename: 'smoothie-bowl-truskawkowy-kredka.png', path: 'assets/food-illustrations/smoothie-bowl-truskawkowy-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

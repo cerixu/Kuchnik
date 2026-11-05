@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **178**
-- Do wykonania: **47**
-- Status 178 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **188**
+- Do wykonania: **37**
+- Status 188 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -190,18 +190,18 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 174 — Spätzle z serem (PNG w repo; pending)
 - [x] 175 — Currywurst (PNG w repo; pending)
 - [x] 176 — Leczo (PNG w repo; pending)
-- [ ] 177 — Langosz (do narysowania)
-- [ ] 178 — Boeuf Stroganow (do narysowania)
-- [ ] 179 — Chaczapuri adżarskie (do narysowania)
-- [ ] 180 — Tagine z kurczakiem i morelami (do narysowania)
-- [ ] 181 — Shepherd's pie (do narysowania)
-- [ ] 182 — Owsianka z owocami i orzechami (do narysowania)
+- [x] 177 — Langosz (PNG w repo; pending)
+- [x] 178 — Boeuf Stroganow (PNG w repo; pending)
+- [x] 179 — Chaczapuri adżarskie (PNG w repo; pending)
+- [x] 180 — Tagine z kurczakiem i morelami (PNG w repo; pending)
+- [x] 181 — Shepherd's pie (PNG w repo; pending)
+- [x] 182 — Owsianka z owocami i orzechami (PNG w repo; pending)
 - [x] 183 — Jajecznica na maśle (PNG w repo; pending)
 - [x] 184 — Jajka w koszulkach (PNG w repo; pending)
-- [ ] 185 — Tosty francuskie (do narysowania)
-- [ ] 186 — Granola domowa (do narysowania)
-- [ ] 187 — Tost z awokado i jajkiem (do narysowania)
-- [ ] 188 — Smoothie bowl truskawkowy (do narysowania)
+- [x] 185 — Tosty francuskie (PNG w repo; pending)
+- [x] 186 — Granola domowa (PNG w repo; pending)
+- [x] 187 — Tost z awokado i jajkiem (PNG w repo; pending)
+- [x] 188 — Smoothie bowl truskawkowy (PNG w repo; pending)
 - [ ] 189 — Placuszki bananowe (do narysowania)
 - [ ] 190 — Curry z ciecierzycy i szpinaku (do narysowania)
 - [ ] 191 — Kotlety z soczewicy (do narysowania)
