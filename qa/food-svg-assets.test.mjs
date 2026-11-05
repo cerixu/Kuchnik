@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { recipeSvgKey, recipePhotoKey } from '../food-photos.js';
+import { recipeSvgKey, recipePhotoKey, attachRecipePhoto, hasFoodPhoto } from '../food-photos.js';
 
 const files = [
   'assets/food-svg/pad-thai.svg',
@@ -180,10 +180,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.ok(util.includes("APP_VERSION = '1.4.63'"));
-  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.63'"));
-  assert.ok(changelog.includes("'1.4.63'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.63'), 'README version missing');
+  assert.ok(util.includes("APP_VERSION = '1.4.64'"));
+  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.64'"));
+  assert.ok(changelog.includes("'1.4.64'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.64'), 'README version missing');
 });
 
 

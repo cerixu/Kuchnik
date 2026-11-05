@@ -3,6 +3,14 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.64': Object.freeze({
+    intro: 'Kuchnik 1.4.64 — walidacja podmiany ilustracji poprawiona.',
+    items: [
+      'Testy sprawdzają, że stare SVG nie są już fallbackiem, a nowe grafiki kredkowe i własne zdjęcia pozostają widoczne.',
+      'Galeria prowadzi wymianę 225 ilustracji: 58 oczekuje na ocenę, 167 pozostaje do wykonania.'
+    ],
+    footer: 'Stare SVG nie są używane jako ilustracje przepisów.'
+  }),
   '1.4.63': Object.freeze({
     intro: 'Kuchnik 1.4.63 — stare ilustracje nie są już pokazywane jako zastępstwo.',
     items: [

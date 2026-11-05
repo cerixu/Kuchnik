@@ -368,3 +368,9 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Dla brakujących nowych rysunków jest neutralny status „Rysunek w przygotowaniu”; dawne SVG nie są już pokazywane jako gotowa ilustracja.
 - Własne zdjęcia i dane użytkownika pozostają bez zmian.
 - Stan galerii: 58 rysunków oczekuje na ocenę, 167 przepisów pozostało do wykonania.
+
+
+## Walidacja zmiany fallbacku — 2026-11-05
+
+- Uzupełniono import w teście regresji starego SVG i dodano sprawdzenie własnych zdjęć oraz nowej ilustracji.
+- Wersja aplikacji i Service Workera: 1.4.64.
