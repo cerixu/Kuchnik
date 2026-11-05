@@ -68,6 +68,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'tacos-al-pastor', name: 'Tacos al pastor', filename: 'tacos-al-pastor-kredka.png', path: 'assets/food-illustrations/tacos-al-pastor-kredka.png', batch: 'Partia kredkowa 11', status: 'pending' },
   { key: 'ramen-shoyu', name: 'Ramen shoyu', filename: 'ramen-shoyu-kredka.png', path: 'assets/food-illustrations/ramen-shoyu-kredka.png', batch: 'Partia kredkowa 11', status: 'pending' },
   { key: 'bibimbap', name: 'Bibimbap', filename: 'bibimbap-kredka.png', path: 'assets/food-illustrations/bibimbap-kredka.png', batch: 'Partia kredkowa 11', status: 'pending' },
+  { key: 'wiener-schnitzel', name: 'Wiener Schnitzel', filename: 'wiener-schnitzel-kredka.png', path: 'assets/food-illustrations/wiener-schnitzel-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'kurczak-tikka-masala', name: 'Kurczak tikka masala', filename: 'kurczak-tikka-masala-kredka.png', path: 'assets/food-illustrations/kurczak-tikka-masala-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'coq-au-vin', name: 'Coq au vin', filename: 'coq-au-vin-kredka.png', path: 'assets/food-illustrations/coq-au-vin-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'nalesniki', name: 'Naleśniki', filename: 'nalesniki-kredka.png', path: 'assets/food-illustrations/nalesniki-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'spaghetti-aglio-olio', name: 'Spaghetti aglio e olio', filename: 'spaghetti-aglio-olio-kredka.png', path: 'assets/food-illustrations/spaghetti-aglio-olio-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'cacio-e-pepe', name: 'Cacio e pepe', filename: 'cacio-e-pepe-kredka.png', path: 'assets/food-illustrations/cacio-e-pepe-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'pad-thai', name: 'Pad thai z krewetkami', filename: 'pad-thai-kredka.png', path: 'assets/food-illustrations/pad-thai-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'pesto-genovese', name: 'Pesto genovese', filename: 'pesto-genovese-kredka.png', path: 'assets/food-illustrations/pesto-genovese-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'guacamole', name: 'Guacamole', filename: 'guacamole-kredka.png', path: 'assets/food-illustrations/guacamole-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
+  { key: 'tzatziki', name: 'Tzatziki', filename: 'tzatziki-kredka.png', path: 'assets/food-illustrations/tzatziki-kredka.png', batch: 'Partia kredkowa 12', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
