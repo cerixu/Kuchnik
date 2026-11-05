@@ -285,3 +285,11 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Dania są różne od partii 1; każde ma osobny plik i ścisłe dopasowanie nazwy.
 - Status: **oczekuje na ocenę stylu**. Nie oznaczono jako zatwierdzone.
 - Galeria pokazuje 8 plików w repo i 217 receptur do wykonania.
+
+
+## Rysunki kredką — partia 3 (2026-11-05)
+
+- Dodano pliki: Bigos staropolski, Gołąbki w sosie pomidorowym, Gulasz węgierski i Szakszuka.
+- Każdy przepis ma odrębny PNG i własne mapowanie; nie powielono dań z wcześniejszych partii.
+- Status: **oczekuje na ocenę stylu**.
+- Galeria: 12 plików w repo, 213 receptur w kolejce.

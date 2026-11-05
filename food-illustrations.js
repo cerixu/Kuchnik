@@ -8,6 +8,10 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'barszcz-czerwony', name: 'Barszcz czerwony', filename: 'barszcz-czerwony-kredka.png', path: 'assets/food-illustrations/barszcz-czerwony-kredka.png', batch: 'Partia kredkowa 2', status: 'pending' },
   { key: 'krem-z-dyni', name: 'Krem z dyni', filename: 'krem-z-dyni-kredka.png', path: 'assets/food-illustrations/krem-z-dyni-kredka.png', batch: 'Partia kredkowa 2', status: 'pending' },
   { key: 'kapusniak', name: 'Kapuśniak', filename: 'kapusniak-kredka.png', path: 'assets/food-illustrations/kapusniak-kredka.png', batch: 'Partia kredkowa 2', status: 'pending' },
+  { key: 'bigos-staropolski', name: 'Bigos staropolski', filename: 'bigos-staropolski-kredka.png', path: 'assets/food-illustrations/bigos-staropolski-kredka.png', batch: 'Partia kredkowa 3', status: 'pending' },
+  { key: 'golabki-pomidorowe', name: 'Gołąbki w sosie pomidorowym', filename: 'golabki-pomidorowe-kredka.png', path: 'assets/food-illustrations/golabki-pomidorowe-kredka.png', batch: 'Partia kredkowa 3', status: 'pending' },
+  { key: 'gulasz-wegierski', name: 'Gulasz węgierski', filename: 'gulasz-wegierski-kredka.png', path: 'assets/food-illustrations/gulasz-wegierski-kredka.png', batch: 'Partia kredkowa 3', status: 'pending' },
+  { key: 'szakszuka', name: 'Szakszuka', filename: 'szakszuka-kredka.png', path: 'assets/food-illustrations/szakszuka-kredka.png', batch: 'Partia kredkowa 3', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
