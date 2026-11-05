@@ -218,6 +218,13 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'daiquiri', name: 'Daiquiri', filename: 'daiquiri-kredka.png', path: 'assets/food-illustrations/daiquiri-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
   { key: 'moscow-mule', name: 'Moscow Mule', filename: 'moscow-mule-kredka.png', path: 'assets/food-illustrations/moscow-mule-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
   { key: 'pina-colada', name: 'Piña colada', filename: 'pina-colada-kredka.png', path: 'assets/food-illustrations/pina-colada-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'whisky-sour', name: 'Whisky sour', filename: 'whisky-sour-kredka.png', path: 'assets/food-illustrations/whisky-sour-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
+  { key: 'gin-tonic', name: 'Gin tonic', filename: 'gin-tonic-kredka.png', path: 'assets/food-illustrations/gin-tonic-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
+  { key: 'caipirinha', name: 'Caipirinha', filename: 'caipirinha-kredka.png', path: 'assets/food-illustrations/caipirinha-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
+  { key: 'bloody-mary', name: 'Bloody Mary', filename: 'bloody-mary-kredka.png', path: 'assets/food-illustrations/bloody-mary-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
+  { key: 'hugo', name: 'Hugo', filename: 'hugo-kredka.png', path: 'assets/food-illustrations/hugo-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
+  { key: 'grzaniec', name: 'Grzaniec', filename: 'grzaniec-kredka.png', path: 'assets/food-illustrations/grzaniec-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
+  { key: 'lemoniada-domowa', name: 'Lemoniada domowa', filename: 'lemoniada-domowa-kredka.png', path: 'assets/food-illustrations/lemoniada-domowa-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

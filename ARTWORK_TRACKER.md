@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **218**
-- Do wykonania: **7**
-- Status 218 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **225**
+- Do wykonania: **0**
+- Status 225 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -232,13 +232,13 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 216 — Daiquiri (PNG w repo; pending)
 - [x] 217 — Moscow Mule (PNG w repo; pending)
 - [x] 218 — Piña colada (PNG w repo; pending)
-- [ ] 219 — Whisky sour (do narysowania)
-- [ ] 220 — Gin tonic (do narysowania)
-- [ ] 221 — Caipirinha (do narysowania)
-- [ ] 222 — Bloody Mary (do narysowania)
-- [ ] 223 — Hugo (do narysowania)
-- [ ] 224 — Grzaniec (do narysowania)
-- [ ] 225 — Lemoniada domowa (do narysowania)
+- [x] 219 — Whisky sour (PNG w repo; pending)
+- [x] 220 — Gin tonic (PNG w repo; pending)
+- [x] 221 — Caipirinha (PNG w repo; pending)
+- [x] 222 — Bloody Mary (PNG w repo; pending)
+- [x] 223 — Hugo (PNG w repo; pending)
+- [x] 224 — Grzaniec (PNG w repo; pending)
+- [x] 225 — Lemoniada domowa (PNG w repo; pending)
 
 ## Partie dodane
 
