@@ -180,10 +180,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.ok(util.includes("APP_VERSION = '1.4.76'"));
-  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.76'"));
-  assert.ok(changelog.includes("'1.4.76'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.76'), 'README version missing');
+  assert.ok(util.includes("APP_VERSION = '1.4.77'"));
+  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.77'"));
+  assert.ok(changelog.includes("'1.4.77'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.77'), 'README version missing');
 });
 
 
@@ -195,12 +195,12 @@ test('legacy SVG stays hidden while an assigned pencil illustration is shown', (
   assert.ok(img.src.endsWith('/assets/food-illustrations/spaghetti-aglio-olio-kredka.png'));
   assert.equal(hasFoodPhoto(illustrated), true);
 
-  const legacyOnly = { name: 'Minestrone' };
+  const unillustratedRecipe = { name: 'Moja zupa' };
   const oldImg = { dataset: {}, classList: { remove() {} }, src: '' };
-  assert.equal(recipeSvgKey(legacyOnly), 'minestrone');
-  assert.equal(attachRecipePhoto(oldImg, legacyOnly), false);
+  assert.equal(recipeSvgKey(unillustratedRecipe), null);
+  assert.equal(attachRecipePhoto(oldImg, unillustratedRecipe), false);
   assert.equal(oldImg.src, '');
-  assert.equal(hasFoodPhoto(legacyOnly), false);
+  assert.equal(hasFoodPhoto(unillustratedRecipe), false);
 
   assert.equal(hasFoodPhoto({ name: 'Moja zupa', photo: 'data:image/png;base64,abc' }), true);
 });
