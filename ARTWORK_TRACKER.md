@@ -374,3 +374,10 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 
 - Uzupełniono import w teście regresji starego SVG i dodano sprawdzenie własnych zdjęć oraz nowej ilustracji.
 - Wersja aplikacji i Service Workera: 1.4.64.
+
+
+## Regresja starych SVG — 2026-11-05
+
+- Zaktualizowano `tests/food-photos.test.mjs`: stare mapowania SVG pozostają testowalne, ale nie są fallbackiem widocznym w kartach.
+- Dodano potwierdzenie, że nowa ilustracja kredkowa oraz własne zdjęcia użytkownika pozostają dostępne.
+- Wersja aplikacji i Service Workera: 1.4.65.

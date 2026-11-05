@@ -47,7 +47,6 @@ const fixtures = [
 test('dedicated SVG matching is specific and stable', () => {
   for (const fixture of fixtures) {
     assert.equal(recipeSvgKey({ name: fixture.name }), fixture.key, fixture.name);
-    assert.equal(hasFoodPhoto({ name: fixture.name }), true, fixture.name + ' should have artwork');
   }
   assert.equal(recipeSvgKey({ name: 'Sałatka z kurczakiem' }), null);
   assert.equal(recipeSvgKey({ name: 'Gnocchi z pesto' }), null, 'generic gnocchi must not inherit a mismatched illustration');
@@ -89,18 +88,20 @@ test('custom user photo is never replaced by a library illustration', () => {
   assert.equal(img.dataset.photoSource, undefined);
 });
 
-test('missing photo falls back to a local SVG illustration', async () => {
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = async () => { throw new Error('simulated offline'); };
-  try {
-    const img = fakeImage();
-    attachRecipePhoto(img, { name: 'Spaghetti Carbonara' });
-    await new Promise((resolve) => setTimeout(resolve, 30));
-    assert.match(img.src, /assets\/food-svg\/carbonara\.svg$/);
-    assert.equal(img.dataset.photoSource, 'svg:carbonara');
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
+test('recipes without a new pencil drawing do not show the legacy SVG fallback', () => {
+  const img = fakeImage();
+  assert.equal(attachRecipePhoto(img, { name: 'Spaghetti Carbonara' }), false);
+  assert.equal(img.src, 'data:image/svg+xml,placeholder');
+  assert.equal(img.dataset.photoSource, undefined);
+  assert.equal(hasFoodPhoto({ name: 'Spaghetti Carbonara' }), false);
+});
+
+test('new pencil drawings and private photos are still available', () => {
+  const img = fakeImage();
+  assert.equal(attachRecipePhoto(img, { name: 'Mizeria' }), true);
+  assert.match(img.src, /assets\/food-illustrations\/mizeria-kredka\.png$/);
+  assert.equal(hasFoodPhoto({ name: 'Mizeria' }), true);
+  assert.equal(hasFoodPhoto({ name: 'Moja zupa', photo: 'user-photo.jpg' }), true);
 });
 
 function fakeImage() {
