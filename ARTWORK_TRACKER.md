@@ -335,3 +335,12 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Naczynia: matowa czerń z cienkim miedzianym rantem; styl rysowany kredką z ograniczoną paletą.
 - Każdy przepis ma własny plik i mapowanie. Status: **oczekuje na ocenę stylu**.
 - Galeria po tej partii: 38 plików w repo, 187 receptur w kolejce.
+
+
+## Rysunki kredką — partia 8 (2026-11-05)
+
+- Dodano 10 ilustracji: lasagne alla bolognese, bruschettę z pomidorami, quiche Lorraine, focaccię, calzone, pizzę quattro formaggi, kopytka, tortillę española, falafel i ratatouille.
+- Test układu 5×2: źródłowy kadr każdej ilustracji ma ok. 396 × 396 px i pozostaje czytelny w miniaturze.
+- Naczynia są matowoczarne z cienkim miedzianym rantem; styl rysowany kredką.
+- Każdy przepis ma osobny plik i mapowanie. Status: **oczekuje na ocenę stylu**.
+- Galeria: 38 ilustracji oczekuje na ocenę, 187 przepisów w kolejce.

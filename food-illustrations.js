@@ -38,6 +38,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'tortilla-espanola', name: 'Tortilla española', filename: 'tortilla-espanola-kredka.png', path: 'assets/food-illustrations/tortilla-espanola-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
   { key: 'falafel', name: 'Falafel', filename: 'falafel-kredka.png', path: 'assets/food-illustrations/falafel-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
   { key: 'ratatouille', name: 'Ratatouille', filename: 'ratatouille-kredka.png', path: 'assets/food-illustrations/ratatouille-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'lasagne-bolognese', name: 'Lasagne alla bolognese', filename: 'lasagne-bolognese-kredka.png', path: 'assets/food-illustrations/lasagne-bolognese-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'bruschetta-pomidory', name: 'Bruschetta z pomidorami', filename: 'bruschetta-pomidory-kredka.png', path: 'assets/food-illustrations/bruschetta-pomidory-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'quiche-lorraine', name: 'Quiche Lorraine', filename: 'quiche-lorraine-kredka.png', path: 'assets/food-illustrations/quiche-lorraine-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'focaccia', name: 'Focaccia', filename: 'focaccia-kredka.png', path: 'assets/food-illustrations/focaccia-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'calzone', name: 'Calzone', filename: 'calzone-kredka.png', path: 'assets/food-illustrations/calzone-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'pizza-quattro-formaggi', name: 'Pizza quattro formaggi', filename: 'pizza-quattro-formaggi-kredka.png', path: 'assets/food-illustrations/pizza-quattro-formaggi-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'kopytka', name: 'Kopytka', filename: 'kopytka-kredka.png', path: 'assets/food-illustrations/kopytka-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'tortilla-espanola', name: 'Tortilla española', filename: 'tortilla-espanola-kredka.png', path: 'assets/food-illustrations/tortilla-espanola-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'falafel', name: 'Falafel', filename: 'falafel-kredka.png', path: 'assets/food-illustrations/falafel-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'ratatouille', name: 'Ratatouille', filename: 'ratatouille-kredka.png', path: 'assets/food-illustrations/ratatouille-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

@@ -7,6 +7,15 @@ export const CHANGELOG = Object.freeze({
     intro: 'Kuchnik 1.4.60 — partia 10 ilustracji na czarnych talerzach.',
     items: [
       'Dodano 10 osobnych rysunków kredką: lasagne, bruschettę, quiche, focaccię, calzone, pizzę quattro formaggi, kopytka, tortillę española, falafel i ratatouille.',
+      'Matowe czarne talerze mają cienki miedziany rant. Każda ilustracja ma około 396 × 396 px źródłowej rozdzielczości.',
+      'Galeria: 38 ilustracji czeka na ocenę stylu, 187 receptur pozostaje do wykonania.'
+    ],
+    footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
+  }),
+  '1.4.60': Object.freeze({
+    intro: 'Kuchnik 1.4.60 — partia 10 ilustracji na czarnych talerzach.',
+    items: [
+      'Dodano 10 osobnych rysunków kredką: lasagne, bruschettę, quiche, focaccię, calzone, pizzę quattro formaggi, kopytka, tortillę española, falafel i ratatouille.',
       'Czarne matowe talerze mają cienki miedziany rant. Każdy kadr ma około 396 × 396 px przed przygotowaniem miniatury.',
       'Galeria: 38 ilustracji oczekuje na ocenę stylu, 187 receptur pozostaje do wykonania.'
     ],
