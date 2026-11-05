@@ -381,3 +381,9 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Zaktualizowano `tests/food-photos.test.mjs`: stare mapowania SVG pozostają testowalne, ale nie są fallbackiem widocznym w kartach.
 - Dodano potwierdzenie, że nowa ilustracja kredkowa oraz własne zdjęcia użytkownika pozostają dostępne.
 - Wersja aplikacji i Service Workera: 1.4.65.
+
+
+## Synchronizacja wersji i testów — 2026-11-05
+
+- Zsynchronizowano APP_VERSION, wersję Service Workera, README, changelog i test regresji.
+- Nowe rysunki oczekujące: 58; do wykonania: 167.
