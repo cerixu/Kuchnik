@@ -168,6 +168,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'gyoza', name: 'Gyoza', filename: 'gyoza-kredka.png', path: 'assets/food-illustrations/gyoza-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
   { key: 'kung-pao-z-kurczakiem', name: 'Kung pao z kurczakiem', filename: 'kung-pao-z-kurczakiem-kredka.png', path: 'assets/food-illustrations/kung-pao-z-kurczakiem-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
   { key: 'zupa-miso', name: 'Zupa miso', filename: 'zupa-miso-kredka.png', path: 'assets/food-illustrations/zupa-miso-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'satay-z-kurczaka-sos-orzechowy', name: 'Satay z kurczaka z sosem orzechowym', filename: 'satay-z-kurczaka-sos-orzechowy-kredka.png', path: 'assets/food-illustrations/satay-z-kurczaka-sos-orzechowy-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'dal-z-soczewicy', name: 'Dal z soczewicy', filename: 'dal-z-soczewicy-kredka.png', path: 'assets/food-illustrations/dal-z-soczewicy-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'biryani-z-kurczakiem', name: 'Biryani z kurczakiem', filename: 'biryani-z-kurczakiem-kredka.png', path: 'assets/food-illustrations/biryani-z-kurczakiem-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'tabbouleh', name: 'Tabbouleh', filename: 'tabbouleh-kredka.png', path: 'assets/food-illustrations/tabbouleh-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'baba-ganoush', name: 'Baba ganoush', filename: 'baba-ganoush-kredka.png', path: 'assets/food-illustrations/baba-ganoush-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'kofta-z-jagnieciny', name: 'Kofta z jagnięciny', filename: 'kofta-z-jagnieciny-kredka.png', path: 'assets/food-illustrations/kofta-z-jagnieciny-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'shawarma-z-kurczaka', name: 'Shawarma z kurczaka', filename: 'shawarma-z-kurczaka-kredka.png', path: 'assets/food-illustrations/shawarma-z-kurczaka-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'spatzle-z-serem', name: 'Spätzle z serem', filename: 'spatzle-z-serem-kredka.png', path: 'assets/food-illustrations/spatzle-z-serem-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'currywurst', name: 'Currywurst', filename: 'currywurst-kredka.png', path: 'assets/food-illustrations/currywurst-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
+  { key: 'leczo', name: 'Leczo', filename: 'leczo-kredka.png', path: 'assets/food-illustrations/leczo-kredka.png', batch: 'Partia kredkowa 22', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

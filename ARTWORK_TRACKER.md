@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **168**
-- Do wykonania: **57**
-- Status 168 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **178**
+- Do wykonania: **47**
+- Status 178 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -179,17 +179,17 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 163 — Gyoza (PNG w repo; pending)
 - [x] 164 — Kung pao z kurczakiem (PNG w repo; pending)
 - [x] 165 — Zupa miso (PNG w repo; pending)
-- [ ] 166 — Satay z kurczaka z sosem orzechowym (do narysowania)
-- [ ] 167 — Dal z soczewicy (do narysowania)
-- [ ] 168 — Biryani z kurczakiem (do narysowania)
+- [x] 166 — Satay z kurczaka z sosem orzechowym (PNG w repo; pending)
+- [x] 167 — Dal z soczewicy (PNG w repo; pending)
+- [x] 168 — Biryani z kurczakiem (PNG w repo; pending)
 - [x] 169 — Falafel (PNG w repo; pending)
-- [ ] 170 — Tabbouleh (do narysowania)
-- [ ] 171 — Baba ganoush (do narysowania)
-- [ ] 172 — Kofta z jagnięciny (do narysowania)
-- [ ] 173 — Shawarma z kurczaka (do narysowania)
-- [ ] 174 — Spätzle z serem (do narysowania)
-- [ ] 175 — Currywurst (do narysowania)
-- [ ] 176 — Leczo (do narysowania)
+- [x] 170 — Tabbouleh (PNG w repo; pending)
+- [x] 171 — Baba ganoush (PNG w repo; pending)
+- [x] 172 — Kofta z jagnięciny (PNG w repo; pending)
+- [x] 173 — Shawarma z kurczaka (PNG w repo; pending)
+- [x] 174 — Spätzle z serem (PNG w repo; pending)
+- [x] 175 — Currywurst (PNG w repo; pending)
+- [x] 176 — Leczo (PNG w repo; pending)
 - [ ] 177 — Langosz (do narysowania)
 - [ ] 178 — Boeuf Stroganow (do narysowania)
 - [ ] 179 — Chaczapuri adżarskie (do narysowania)
