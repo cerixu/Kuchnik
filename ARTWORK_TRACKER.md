@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **198**
-- Do wykonania: **27**
-- Status 198 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **208**
+- Do wykonania: **17**
+- Status 208 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -212,16 +212,16 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 196 — Muffinki czekoladowe (PNG w repo; pending)
 - [x] 197 — Ciastka owsiane z żurawiną (PNG w repo; pending)
 - [x] 198 — Lody waniliowe domowe (PNG w repo; pending)
-- [ ] 199 — Mus czekoladowy (do narysowania)
-- [ ] 200 — Sernik nowojorski (do narysowania)
-- [ ] 201 — Tarta cytrynowa (do narysowania)
-- [ ] 202 — Ciasto czekoladowe bez mąki (do narysowania)
-- [ ] 203 — Biszkopt (do narysowania)
-- [ ] 204 — Bulion warzywny (do narysowania)
-- [ ] 205 — Sos BBQ domowy (do narysowania)
-- [ ] 206 — Sos czosnkowy (do narysowania)
-- [ ] 207 — Dżem truskawkowy (do narysowania)
-- [ ] 208 — Kruche ciasto uniwersalne (do narysowania)
+- [x] 199 — Mus czekoladowy (PNG w repo; pending)
+- [x] 200 — Sernik nowojorski (PNG w repo; pending)
+- [x] 201 — Tarta cytrynowa (PNG w repo; pending)
+- [x] 202 — Ciasto czekoladowe bez mąki (PNG w repo; pending)
+- [x] 203 — Biszkopt (PNG w repo; pending)
+- [x] 204 — Bulion warzywny (PNG w repo; pending)
+- [x] 205 — Sos BBQ domowy (PNG w repo; pending)
+- [x] 206 — Sos czosnkowy (PNG w repo; pending)
+- [x] 207 — Dżem truskawkowy (PNG w repo; pending)
+- [x] 208 — Kruche ciasto uniwersalne (PNG w repo; pending)
 - [ ] 209 — Ciasto na pierogi (do narysowania)
 - [ ] 210 — Zakwas żytni (zaczyn na chleb) (do narysowania)
 - [ ] 211 — Marynata do kurczaka (do narysowania)

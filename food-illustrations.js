@@ -198,6 +198,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'muffinki-czekoladowe', name: 'Muffinki czekoladowe', filename: 'muffinki-czekoladowe-kredka.png', path: 'assets/food-illustrations/muffinki-czekoladowe-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
   { key: 'ciastka-owsiane-z-zurawina', name: 'Ciastka owsiane z żurawiną', filename: 'ciastka-owsiane-z-zurawina-kredka.png', path: 'assets/food-illustrations/ciastka-owsiane-z-zurawina-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
   { key: 'lody-waniliowe-domowe', name: 'Lody waniliowe domowe', filename: 'lody-waniliowe-domowe-kredka.png', path: 'assets/food-illustrations/lody-waniliowe-domowe-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'mus-czekoladowy', name: 'Mus czekoladowy', filename: 'mus-czekoladowy-kredka.png', path: 'assets/food-illustrations/mus-czekoladowy-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'sernik-nowojorski', name: 'Sernik nowojorski', filename: 'sernik-nowojorski-kredka.png', path: 'assets/food-illustrations/sernik-nowojorski-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'tarta-cytrynowa', name: 'Tarta cytrynowa', filename: 'tarta-cytrynowa-kredka.png', path: 'assets/food-illustrations/tarta-cytrynowa-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'ciasto-czekoladowe-bez-maki', name: 'Ciasto czekoladowe bez mąki', filename: 'ciasto-czekoladowe-bez-maki-kredka.png', path: 'assets/food-illustrations/ciasto-czekoladowe-bez-maki-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'biszkopt', name: 'Biszkopt', filename: 'biszkopt-kredka.png', path: 'assets/food-illustrations/biszkopt-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'bulion-warzywny', name: 'Bulion warzywny', filename: 'bulion-warzywny-kredka.png', path: 'assets/food-illustrations/bulion-warzywny-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'sos-bbq-domowy', name: 'Sos BBQ domowy', filename: 'sos-bbq-domowy-kredka.png', path: 'assets/food-illustrations/sos-bbq-domowy-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'sos-czosnkowy', name: 'Sos czosnkowy', filename: 'sos-czosnkowy-kredka.png', path: 'assets/food-illustrations/sos-czosnkowy-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'dzem-truskawkowy', name: 'Dżem truskawkowy', filename: 'dzem-truskawkowy-kredka.png', path: 'assets/food-illustrations/dzem-truskawkowy-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'kruche-ciasto-uniwersalne', name: 'Kruche ciasto uniwersalne', filename: 'kruche-ciasto-uniwersalne-kredka.png', path: 'assets/food-illustrations/kruche-ciasto-uniwersalne-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
