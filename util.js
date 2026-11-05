@@ -3,7 +3,7 @@
    Liczby, jednostki, daty, formatowanie po polsku.
    ========================================================================== */
 
-export const APP_VERSION = '1.4.51';
+export const APP_VERSION = '1.4.52';
 
 /** Stabilne ID z prefiksem (rcp_, sec_, ing_, stp_, cat_, shp_, his_). */
 export function uid(prefix = '') {
@@ -206,3 +206,4 @@ export function plural(n, one, few, many) {
 export const plPortions = (n) => `${fmtNum(n, 1)} ${Number.isInteger(n) ? plural(n, 'porcja', 'porcje', 'porcji') : 'porcji'}`;
 export const plRecipes = (n) => `${n} ${plural(n, 'receptura', 'receptury', 'receptur')}`;
 export const plItems = (n) => `${n} ${plural(n, 'pozycja', 'pozycje', 'pozycji')}`;
+

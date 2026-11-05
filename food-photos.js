@@ -5,7 +5,7 @@
    Własne zdjęcia użytkownika zawsze mają pierwszeństwo.
    ========================================================================== */
 
-const PHOTO_FILES = Object.freeze({
+export const PHOTO_FILES = Object.freeze({
   pizza: 'food-pizza.jpg',
   'pizza-diavola': 'food-pizza-diavola.jpg',
   carbonara: 'food-carbonara.jpg',
@@ -89,7 +89,7 @@ const RECIPE_RULES = [
   ['seafood', /\b(frutti di mare|mule marinara|mussels marinara|owoce morza na parze)\b/],
 ];
 
-const SVG_FILES = Object.freeze({
+export const SVG_FILES = Object.freeze({
   carbonara: 'carbonara.svg',
   margherita: 'margherita.svg',
   'tomato-soup': 'tomato-soup.svg',
@@ -308,3 +308,4 @@ export function attachCategoryPhoto(img, categoryId) {
 export function hasFoodPhoto(recipe) {
   return !!(recipe && (recipe.thumb || recipe.photo || recipePhotoKey(recipe) || recipeSvgKey(recipe)));
 }
+

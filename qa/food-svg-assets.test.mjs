@@ -180,10 +180,10 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.match(util, /APP_VERSION = '1\.4\.51'/);
-  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.51'/);
-  assert.ok(changelog.includes("'1.4.51'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.51'), 'README version missing');
+  assert.match(util, /APP_VERSION = '1\.4\.52'/);
+  assert.match(sw, /VERSION = 'kucharzyna-1\.4\.52'/);
+  assert.ok(changelog.includes("'1.4.52'"), 'changelog entry missing');
+  assert.ok(readme.includes('1.4.52'), 'README version missing');
 });
 
 
@@ -208,3 +208,4 @@ test('new dish names resolve to their dedicated SVG and minestrone avoids generi
   assert.equal(recipeSvgKey({ name: 'Pita ze szpinakiem' }), null);
   assert.equal(recipeSvgKey({ name: 'Gnocchi z pesto' }), null);
 });
+

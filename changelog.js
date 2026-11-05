@@ -3,6 +3,16 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.52': Object.freeze({
+    intro: 'Kuchnik 1.4.52 — centralna galeria ilustracji repozytorium.',
+    items: [
+      'Podgląd pokazuje lokalne pliki ilustracji, zdjęcia, przypisane receptury, numer partii i status zatwierdzenia.',
+      'Lista brakujących grafik powstaje bezpośrednio z aktualnej bazy 225 receptur i reguł mapowania.',
+      'Pięć niepodpiętych ilustracji review pozostaje oznaczonych jako oczekujące; zaakceptowane wzorce Carbonara i Bruschetta są opisane osobno.',
+      'Dodano obsługę galerii w Service Workerze, tak aby otwarcie tej strony nie było przekierowane do powłoki aplikacji.'
+    ],
+    footer: 'Galeria czyta lokalne pliki repozytorium i nie pobiera grafik z zewnętrznych źródeł.'
+  }),
   '1.4.51': Object.freeze({
     intro: 'Kuchnik 1.4.51 — cztery nowe ilustracje SVG w malarskim kierunku grafitowo-miedzianym.',
     items: [
@@ -248,3 +258,4 @@ export const CHANGELOG = Object.freeze({
     footer: 'Receptury, stany magazynowe i historia operacji pozostają bez zmian.'
   })
 });
+

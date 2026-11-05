@@ -9,13 +9,14 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.51';
+const VERSION = 'kucharzyna-1.4.52';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
 const CORE = [
   './',
   'index.html',
+  'art-preview-1-4-52.html',
   'styles.css',
   'manifest.webmanifest',
   'assets/food-svg/carbonara.svg', 'assets/food-svg/margherita.svg', 'assets/food-svg/tomato-soup.svg',
@@ -169,6 +170,15 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;   // nic spoza własnej domeny
 
   if (req.mode === 'navigate') {
+    // The standalone artwork gallery is a real HTML page, not an SPA route.
+    if (url.pathname.endsWith('/art-preview-1-4-52.html')) {
+      const preview = scopeUrl('art-preview-1-4-52.html');
+      event.respondWith(networkFirst(event, preview, preview).catch(async () => {
+        const cache = await caches.open(VERSION);
+        return (await cache.match(preview)) || Response.error();
+      }));
+      return;
+    }
     // Aplikacja jednostronicowa (trasy po #): każda nawigacja = index.html.
     event.respondWith(networkFirst(event, INDEX(), INDEX()).catch(async () => {
       const cache = await caches.open(VERSION);
@@ -188,3 +198,4 @@ self.addEventListener('fetch', (event) => {
     return (await cache.match(req, { ignoreSearch: true })) || Response.error();
   }));
 });
+

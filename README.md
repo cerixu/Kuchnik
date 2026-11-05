@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Aktualna wersja aplikacji: 1.4.51**. Dodano cztery szczegółowe ilustracje SVG: Spaghetti all’amatriciana, Panzanella, Saltimbocca alla romana i Spanakopita. Dodano precyzyjne mapowania, lokalny precache, testy regresyjne i dokumentację pochodzenia grafik.
+> **Aktualna wersja aplikacji: 1.4.52**. Dodano centralną galerię lokalnych ilustracji z listą statusów, mapowań i braków; galeria otwiera się również pod kontrolą Service Workera.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
@@ -12,7 +12,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. W wersji 1.4.43 dodano cztery
 - **Nowe menu główne i dok (1.3):** nagłówek jak „We have special offer”, karuzela dużych kart „Polecane na dziś 🔥”, okrągłe przyciski akcji, „Skąd jest przepis” (kuchnie świata z flagami), kategorie; pływający dok z unoszoną aktywną ikoną.
 - **Karty z opisem i pochodzeniem (1.3):** każda receptura ma krótki opis, 🇵🇱 kraj pochodzenia i źródło (Kucharzyna, strona, TheMealDB…); filtr po kraju. W szczegółach: chipy z krajem i źródłem oraz pływający przycisk GOTUJĘ po rozwinięciu.
 - **Wygląd z makiety (1.2):** ciemny grafit, szare karty z miedzianą krawędzią i światłem u dołu, **okrągłe zdjęcia dań**, ocena ★ i kalorie po prawej stronie karty, pasek ikon bez podpisów, font Poppins. Szczegóły receptury: duże okrągłe zdjęcie, tytuł z oceną, **składniki na łuku** (okrągłe ikony) i „Pokaż szczegóły ⌄”. Jasny motyw, tryb Amator i suwak „Przezroczystość szkła” nadal są w Ustawieniach, podpisy pod ikonami paska włączysz tam jednym przełącznikiem.
-- **228 przykładowych receptur:** polska kuchnia (zupy, mięsa, pierogi, ciasta, wigilijne), kuchnie świata (Włochy, Francja, Hiszpania, Grecja, Meksyk, USA, Azja, Bliski Wschód…), śniadania, wege i wegańskie, desery, sosy bazowe, prep, przetwory, ponad 20 drinków. Tradycyjne są oznaczone gwiazdką i flagą kraju. Każdą receptura możesz edytować lub usunąć; usunięta nie wraca po aktualizacji, a „Przywróć przykładowe receptury” w Ustawieniach przywraca brakujące.
+- **225 przykładowych receptur:** polska kuchnia (zupy, mięsa, pierogi, ciasta, wigilijne), kuchnie świata (Włochy, Francja, Hiszpania, Grecja, Meksyk, USA, Azja, Bliski Wschód…), śniadania, wege i wegańskie, desery, sosy bazowe, prep, przetwory, ponad 20 drinków. Tradycyjne są oznaczone gwiazdką i flagą kraju. Każdą recepturę możesz edytować lub usunąć; usunięta nie wraca po aktualizacji, a „Przywróć przykładowe receptury” w Ustawieniach przywraca brakujące.
 - **Ilustracje dań** rysowane w kodzie (ok. 90 wariantów: zupy, makarony, mięsa, desery, drinki…) na ciemnej porcelanie — wszędzie tam, gdzie receptura nie ma własnego zdjęcia. Własne zdjęcie dodajesz w edytorze (kompresowane lokalnie).
 - **Szacunek kalorii na porcję** z tabel wartości odżywczej (pokazywany tylko, gdy rozpoznano ≥ 70% składników; to przybliżenie).
 - **Lista receptur:** kafelki lub lista, wczytywanie partiami po 40, wyszukiwarka bez względu na polskie znaki, kategorie, tagi (stuknij tag w recepturze), filtry, sortowanie, ulubione, ostatnie, „Polecane na dziś”, kategorie na Starcie.
@@ -26,8 +26,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. W wersji 1.4.43 dodano cztery
 
 ## Struktura plików
 
-Repozytorium jest **płaskie — wszystkie pliki leżą w jednym katalogu głównym, bez żadnych folderów**
-(dzięki temu da się je wgrać z iPhone'a, który nie przesyła folderów). Aplikacja nigdzie nie szuka podkatalogów.
+Główne pliki aplikacji leżą w katalogu głównym. Ilustracje znajdują się w `assets/food-svg`, a testy i kontrola jakości w `tests` oraz `qa`. Zachowaj te ścieżki przy publikacji z iPhone'a — aplikacja używa ich do lokalnych grafik i walidacji.
 
 ```
 index.html              powłoka aplikacji, meta tagi iOS, wczesne ustawienie motywu
@@ -69,6 +68,7 @@ views-settings.js       ustawienia
 views-inventory.js     magazyn: stany, terminy, straty
 apple-touch-icon.png    ikona na ekran początkowy iPhone'a (180×180)
 icon-192.png, icon-512.png, icon-maskable-512.png    ikony PWA
+art-preview-1-4-52.html galeria lokalnych ilustracji, statusów i braków
 README.md               ten plik
 ```
 
@@ -142,7 +142,7 @@ Skutki: dane jednego telefonu nie pojawią się na drugim (przenoś kopią JSON)
 
 ## Aktualizacje aplikacji
 
-1. Zmień pliki, podbij wersję w **`sw.js`** (`VERSION = 'kucharzyna-1.3.1'`) i w **`util.js`** (`APP_VERSION = '1.3.1'`) — muszą być zgodne.
+1. Zmień pliki, podbij zgodnie numer w **`sw.js`** (`VERSION = 'kucharzyna-X.Y.Z'`) i **`util.js`** (`APP_VERSION = 'X.Y.Z'`), a następnie dodaj wpis w `changelog.js` i zaktualizuj wersję w README.
 2. Wypchnij zmiany na GitHub.
 3. Telefon wykryje nową wersję i pokaże: **„Nowa wersja Kucharzyny jest dostępna” → Odśwież**. Ręcznie: Ustawienia → Sprawdź aktualizacje.
 
@@ -159,3 +159,4 @@ Service worker pobiera pliki z sieci w pierwszej kolejności (z krótkim limitem
 ## Prywatność
 
 Brak kont, reklam, analityki i śledzenia. Internet jest używany wyłącznie wtedy, gdy sam użyjesz „Szukaj w sieci” (zapytania idą do wybranego źródła: Google API, TheMealDB, MyMemory lub pośrednika CORS), albo gdy aplikacja sprawdza własne aktualizacje na hostingu, z którego jest serwowana.
+
