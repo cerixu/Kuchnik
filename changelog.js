@@ -3,6 +3,15 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.53': Object.freeze({
+    intro: 'Kuchnik 1.4.53 — start wymiany zdjęć na rysunki kredką.',
+    items: [
+      'Dodano pierwszą partię czterech osobnych, rysowanych ilustracji: rosół z kury, kotlet schabowy, pierogi ruskie i zupę pomidorową.',
+      'Nowa galeria pokazuje status ilustracji dla wszystkich 225 przepisów; cztery pliki czekają na ocenę, a pozostałe pozycje są w kolejce.',
+      'Domyślne JPG przestały zastępować rysunki. Własne zdjęcia użytkownika zachowują pierwszeństwo, a istniejące SVG pozostają przejściowym fallbackiem.'
+    ],
+    footer: 'Pliki są lokalne i uwzględnione w cache offline.'
+  }),
   '1.4.52': Object.freeze({
     intro: 'Kuchnik 1.4.52 — centralna galeria ilustracji repozytorium.',
     items: [

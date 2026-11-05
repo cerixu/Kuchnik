@@ -266,3 +266,14 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 4. Po akceptacji dodaj pliki, dokładne mapowania, cache offline i regresję; sprawdź galerię na GitHub Pages.
 5. Zaktualizuj ten tracker i oznacz wykonaną pozycję dopiero po zweryfikowaniu plików w `main`.
 
+
+
+## Wymiana na rysunki kredką — partia 1 (2026-11-05)
+
+- Dodano do repo cztery osobne pliki PNG: Rosół z kury, Kotlet schabowy, Pierogi ruskie i Zupa pomidorowa.
+- Styl: ręcznie rysowana ilustracja 2D z konturem, ograniczoną paletą i kredkowym wypełnieniem; przezroczyste tło.
+- Każda grafika ma własne dokładne mapowanie; nie przypisano grafiki do innych wariantów dania.
+- Status wszystkich czterech: **oczekuje na ocenę stylu**. Nie są oznaczane jako zatwierdzone.
+- Nowa galeria: `galeria-kredkowa.html`; pokazuje 225 przepisów, 4 pliki w partii i 221 ilustracji do wykonania.
+- Domyślne JPG nie są już używane jako ilustracje receptur. Własne fotografie użytkownika pozostają bez zmian. Dotychczasowe SVG są przejściowym fallbackiem do czasu ich wymiany.
+- Pozostało przygotować rysunki kredką dla 221 receptur; przy kolejnych partiach sprawdzaj nazwy i brak powtórzeń w galerii.

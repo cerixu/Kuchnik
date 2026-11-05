@@ -1,6 +1,6 @@
 /* ==========================================================================
-   food-photos.js — lokalna biblioteka zdjęć przeniesiona z Zaruok-App.
-   Zdjęcia są pobierane na żądanie i cache'owane przez service workera.
+   food-photos.js — mapowanie lokalnych ilustracji Kuchnika.
+   Nowe ilustracje są lokalne i cache'owane przez service workera.
    Brak sieci/zdjęcia nie blokuje receptury: zostaje ilustracja SVG.
    Własne zdjęcia użytkownika zawsze mają pierwszeństwo.
    ========================================================================== */
@@ -288,24 +288,34 @@ export function recipePhotoKey(recipe) {
   return null;
 }
 
+import { illustrationForRecipe } from './food-illustrations.js';
+
 export function attachRecipePhoto(img, recipe) {
-  // Własne zdjęcia użytkownika zawsze mają pierwszeństwo.
   if (!img || !recipe || recipe.thumb || recipe.photo) return;
-  const photoKey = recipePhotoKey(recipe);
-  const svgKey = recipeSvgKey(recipe);
-  if (photoKey) {
-    // Preferuj zdjęcie, ale w razie braku pliku pokaż lokalną ilustrację wektorową.
-    attach(img, photoKey, svgKey);
+  const illustration = illustrationForRecipe(recipe);
+  if (illustration) {
+    img.dataset.photoRequested = 'illustration:' + illustration.key;
+    img.dataset.photoSource = 'illustration:' + illustration.key;
+    img.classList.remove('art');
+    img.src = new URL('./' + illustration.path, import.meta.url).href;
     return;
   }
+  // Nie używaj dawnych JPG; istniejące SVG zostają przejściowym fallbackiem.
+  const svgKey = recipeSvgKey(recipe);
   if (svgKey) attachSvg(img, svgKey);
 }
-
+const CATEGORY_ILLUSTRATIONS = Object.freeze({
+  'cat-zupy': 'Rosół z kury',
+  'cat-mieso': 'Kotlet schabowy',
+  'cat-inne': 'Pierogi ruskie',
+});
 export function attachCategoryPhoto(img, categoryId) {
-  attach(img, CATEGORY_PHOTOS[categoryId] || null);
+  const name = CATEGORY_ILLUSTRATIONS[categoryId];
+  const illustration = name ? illustrationForRecipe({ name }) : null;
+  if (!img || !illustration) return;
+  img.dataset.photoSource = 'illustration:' + illustration.key;
+  img.src = new URL('./' + illustration.path, import.meta.url).href;
 }
-
 export function hasFoodPhoto(recipe) {
-  return !!(recipe && (recipe.thumb || recipe.photo || recipePhotoKey(recipe) || recipeSvgKey(recipe)));
+  return !!(recipe && (recipe.thumb || recipe.photo || illustrationForRecipe(recipe) || recipeSvgKey(recipe)));
 }
-

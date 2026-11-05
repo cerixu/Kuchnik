@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.52';
+const VERSION = 'kucharzyna-1.4.53';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -17,6 +17,9 @@ const CORE = [
   './',
   'index.html',
   'art-preview-1-4-52.html',
+  'galeria-kredkowa.html', 'food-illustrations.js',
+  'assets/food-illustrations/rosol-kredka.png', 'assets/food-illustrations/kotlet-schabowy-kredka.png',
+  'assets/food-illustrations/pierogi-ruskie-kredka.png', 'assets/food-illustrations/zupa-pomidorowa-kredka.png',
   'styles.css',
   'manifest.webmanifest',
   'assets/food-svg/carbonara.svg', 'assets/food-svg/margherita.svg', 'assets/food-svg/tomato-soup.svg',
@@ -171,6 +174,14 @@ self.addEventListener('fetch', (event) => {
 
   if (req.mode === 'navigate') {
     // The standalone artwork gallery is a real HTML page, not an SPA route.
+    if (url.pathname.endsWith('/galeria-kredkowa.html')) {
+      const gallery = scopeUrl('galeria-kredkowa.html');
+      event.respondWith(networkFirst(event, gallery, gallery).catch(async () => {
+        const cache = await caches.open(VERSION);
+        return (await cache.match(gallery)) || Response.error();
+      }));
+      return;
+    }
     if (url.pathname.endsWith('/art-preview-1-4-52.html')) {
       const preview = scopeUrl('art-preview-1-4-52.html');
       event.respondWith(networkFirst(event, preview, preview).catch(async () => {

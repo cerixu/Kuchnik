@@ -1,6 +1,6 @@
 # Kucharzyna 👨‍🍳
 
-> **Aktualna wersja aplikacji: 1.4.52**. Dodano centralną galerię lokalnych ilustracji z listą statusów, mapowań i braków; galeria otwiera się również pod kontrolą Service Workera.
+> **Aktualna wersja aplikacji: 1.4.53**. Dodano centralną galerię lokalnych ilustracji z listą statusów, mapowań i braków; galeria otwiera się również pod kontrolą Service Workera.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
@@ -68,7 +68,7 @@ views-settings.js       ustawienia
 views-inventory.js     magazyn: stany, terminy, straty
 apple-touch-icon.png    ikona na ekran początkowy iPhone'a (180×180)
 icon-192.png, icon-512.png, icon-maskable-512.png    ikony PWA
-art-preview-1-4-52.html galeria lokalnych ilustracji, statusów i braków
+galeria-kredkowa.html nowa galeria rysunków kredką dla 225 receptur
 README.md               ten plik
 ```
 
