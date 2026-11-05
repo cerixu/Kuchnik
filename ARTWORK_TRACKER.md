@@ -277,3 +277,11 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Nowa galeria: `galeria-kredkowa.html`; pokazuje 225 przepisów, 4 pliki w partii i 221 ilustracji do wykonania.
 - Domyślne JPG nie są już używane jako ilustracje receptur. Własne fotografie użytkownika pozostają bez zmian. Dotychczasowe SVG są przejściowym fallbackiem do czasu ich wymiany.
 - Pozostało przygotować rysunki kredką dla 221 receptur; przy kolejnych partiach sprawdzaj nazwy i brak powtórzeń w galerii.
+
+
+## Rysunki kredką — partia 2 (2026-11-05)
+
+- Dodano cztery nowe pliki PNG: Żurek na zakwasie, Barszcz czerwony, Krem z dyni i Kapuśniak.
+- Dania są różne od partii 1; każde ma osobny plik i ścisłe dopasowanie nazwy.
+- Status: **oczekuje na ocenę stylu**. Nie oznaczono jako zatwierdzone.
+- Galeria pokazuje 8 plików w repo i 217 receptur do wykonania.
