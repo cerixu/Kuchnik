@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **208**
-- Do wykonania: **17**
-- Status 208 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **218**
+- Do wykonania: **7**
+- Status 218 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -222,16 +222,16 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 206 — Sos czosnkowy (PNG w repo; pending)
 - [x] 207 — Dżem truskawkowy (PNG w repo; pending)
 - [x] 208 — Kruche ciasto uniwersalne (PNG w repo; pending)
-- [ ] 209 — Ciasto na pierogi (do narysowania)
-- [ ] 210 — Zakwas żytni (zaczyn na chleb) (do narysowania)
-- [ ] 211 — Marynata do kurczaka (do narysowania)
-- [ ] 212 — Nachos z serem (do narysowania)
-- [ ] 213 — Frytki z piekarnika (do narysowania)
-- [ ] 214 — Kanapka club (do narysowania)
-- [ ] 215 — Cosmopolitan (do narysowania)
-- [ ] 216 — Daiquiri (do narysowania)
-- [ ] 217 — Moscow Mule (do narysowania)
-- [ ] 218 — Piña colada (do narysowania)
+- [x] 209 — Ciasto na pierogi (PNG w repo; pending)
+- [x] 210 — Zakwas żytni (zaczyn na chleb) (PNG w repo; pending)
+- [x] 211 — Marynata do kurczaka (PNG w repo; pending)
+- [x] 212 — Nachos z serem (PNG w repo; pending)
+- [x] 213 — Frytki z piekarnika (PNG w repo; pending)
+- [x] 214 — Kanapka club (PNG w repo; pending)
+- [x] 215 — Cosmopolitan (PNG w repo; pending)
+- [x] 216 — Daiquiri (PNG w repo; pending)
+- [x] 217 — Moscow Mule (PNG w repo; pending)
+- [x] 218 — Piña colada (PNG w repo; pending)
 - [ ] 219 — Whisky sour (do narysowania)
 - [ ] 220 — Gin tonic (do narysowania)
 - [ ] 221 — Caipirinha (do narysowania)

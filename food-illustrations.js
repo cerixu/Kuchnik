@@ -208,6 +208,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'sos-czosnkowy', name: 'Sos czosnkowy', filename: 'sos-czosnkowy-kredka.png', path: 'assets/food-illustrations/sos-czosnkowy-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
   { key: 'dzem-truskawkowy', name: 'Dżem truskawkowy', filename: 'dzem-truskawkowy-kredka.png', path: 'assets/food-illustrations/dzem-truskawkowy-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
   { key: 'kruche-ciasto-uniwersalne', name: 'Kruche ciasto uniwersalne', filename: 'kruche-ciasto-uniwersalne-kredka.png', path: 'assets/food-illustrations/kruche-ciasto-uniwersalne-kredka.png', batch: 'Partia kredkowa 25', status: 'pending' },
+  { key: 'ciasto-na-pierogi', name: 'Ciasto na pierogi', filename: 'ciasto-na-pierogi-kredka.png', path: 'assets/food-illustrations/ciasto-na-pierogi-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'zakwas-zytni', name: 'Zakwas żytni (zaczyn na chleb)', filename: 'zakwas-zytni-kredka.png', path: 'assets/food-illustrations/zakwas-zytni-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'marynata-do-kurczaka', name: 'Marynata do kurczaka', filename: 'marynata-do-kurczaka-kredka.png', path: 'assets/food-illustrations/marynata-do-kurczaka-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'nachos-z-serem', name: 'Nachos z serem', filename: 'nachos-z-serem-kredka.png', path: 'assets/food-illustrations/nachos-z-serem-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'frytki-z-piekarnika', name: 'Frytki z piekarnika', filename: 'frytki-z-piekarnika-kredka.png', path: 'assets/food-illustrations/frytki-z-piekarnika-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'kanapka-club', name: 'Kanapka club', filename: 'kanapka-club-kredka.png', path: 'assets/food-illustrations/kanapka-club-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'cosmopolitan', name: 'Cosmopolitan', filename: 'cosmopolitan-kredka.png', path: 'assets/food-illustrations/cosmopolitan-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'daiquiri', name: 'Daiquiri', filename: 'daiquiri-kredka.png', path: 'assets/food-illustrations/daiquiri-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'moscow-mule', name: 'Moscow Mule', filename: 'moscow-mule-kredka.png', path: 'assets/food-illustrations/moscow-mule-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
+  { key: 'pina-colada', name: 'Piña colada', filename: 'pina-colada-kredka.png', path: 'assets/food-illustrations/pina-colada-kredka.png', batch: 'Partia kredkowa 26', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

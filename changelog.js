@@ -3,6 +3,11 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.84': Object.freeze({
+    intro: 'Kuchnik 1.4.84 — partia 26 ilustracji kredkowych.',
+    items: ['Dodano ciasto na pierogi, zakwas żytni, marynatę do kurczaka, nachos z serem, frytki z piekarnika, kanapkę club, Cosmopolitan, Daiquiri, Moscow Mule i Piña coladę.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
+    footer: 'Galeria: 218 ilustracji w repo, 7 przepisów do wykonania.'
+  }),
   '1.4.83': Object.freeze({
     intro: 'Kuchnik 1.4.83 — partia 25 ilustracji kredkowych.',
     items: ['Dodano mus czekoladowy, sernik nowojorski, tartę cytrynową, ciasto czekoladowe bez mąki, biszkopt, bulion warzywny, sos BBQ, sos czosnkowy, dżem truskawkowy i kruche ciasto.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
