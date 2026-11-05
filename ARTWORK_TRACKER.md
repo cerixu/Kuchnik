@@ -387,3 +387,8 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 
 - Zsynchronizowano APP_VERSION, wersję Service Workera, README, changelog i test regresji.
 - Nowe rysunki oczekujące: 58; do wykonania: 167.
+
+
+## Synchronizacja QA — 2026-11-05
+
+- Wersja testu `qa/food-svg-assets.test.mjs` została podbita razem z wersją aplikacji i Service Workera do 1.4.67.
