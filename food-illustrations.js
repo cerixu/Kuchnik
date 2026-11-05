@@ -188,6 +188,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'granola-domowa', name: 'Granola domowa', filename: 'granola-domowa-kredka.png', path: 'assets/food-illustrations/granola-domowa-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
   { key: 'tost-awokado-jajko', name: 'Tost z awokado i jajkiem', filename: 'tost-awokado-jajko-kredka.png', path: 'assets/food-illustrations/tost-awokado-jajko-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
   { key: 'smoothie-bowl-truskawkowy', name: 'Smoothie bowl truskawkowy', filename: 'smoothie-bowl-truskawkowy-kredka.png', path: 'assets/food-illustrations/smoothie-bowl-truskawkowy-kredka.png', batch: 'Partia kredkowa 23', status: 'pending' },
+  { key: 'placuszki-bananowe', name: 'Placuszki bananowe', filename: 'placuszki-bananowe-kredka.png', path: 'assets/food-illustrations/placuszki-bananowe-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'curry-ciecierzyca-szpinak', name: 'Curry z ciecierzycy i szpinaku', filename: 'curry-ciecierzyca-szpinak-kredka.png', path: 'assets/food-illustrations/curry-ciecierzyca-szpinak-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'kotlety-z-soczewicy', name: 'Kotlety z soczewicy', filename: 'kotlety-z-soczewicy-kredka.png', path: 'assets/food-illustrations/kotlety-z-soczewicy-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'burger-weganski-czarna-fasola', name: 'Burger wegański z czarnej fasoli', filename: 'burger-weganski-czarna-fasola-kredka.png', path: 'assets/food-illustrations/burger-weganski-czarna-fasola-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'tofu-z-warzywami-wok', name: 'Tofu z warzywami na woku', filename: 'tofu-z-warzywami-wok-kredka.png', path: 'assets/food-illustrations/tofu-z-warzywami-wok-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'krem-z-brokulow', name: 'Krem z brokułów', filename: 'krem-z-brokulow-kredka.png', path: 'assets/food-illustrations/krem-z-brokulow-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'zapiekanka-makaronowa-warzywna', name: 'Zapiekanka makaronowa z warzywami', filename: 'zapiekanka-makaronowa-warzywna-kredka.png', path: 'assets/food-illustrations/zapiekanka-makaronowa-warzywna-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'muffinki-czekoladowe', name: 'Muffinki czekoladowe', filename: 'muffinki-czekoladowe-kredka.png', path: 'assets/food-illustrations/muffinki-czekoladowe-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'ciastka-owsiane-z-zurawina', name: 'Ciastka owsiane z żurawiną', filename: 'ciastka-owsiane-z-zurawina-kredka.png', path: 'assets/food-illustrations/ciastka-owsiane-z-zurawina-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
+  { key: 'lody-waniliowe-domowe', name: 'Lody waniliowe domowe', filename: 'lody-waniliowe-domowe-kredka.png', path: 'assets/food-illustrations/lody-waniliowe-domowe-kredka.png', batch: 'Partia kredkowa 24', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

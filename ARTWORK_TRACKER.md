@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **188**
-- Do wykonania: **37**
-- Status 188 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **198**
+- Do wykonania: **27**
+- Status 198 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -202,16 +202,16 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 186 — Granola domowa (PNG w repo; pending)
 - [x] 187 — Tost z awokado i jajkiem (PNG w repo; pending)
 - [x] 188 — Smoothie bowl truskawkowy (PNG w repo; pending)
-- [ ] 189 — Placuszki bananowe (do narysowania)
-- [ ] 190 — Curry z ciecierzycy i szpinaku (do narysowania)
-- [ ] 191 — Kotlety z soczewicy (do narysowania)
-- [ ] 192 — Burger wegański z czarnej fasoli (do narysowania)
-- [ ] 193 — Tofu z warzywami na woku (do narysowania)
-- [ ] 194 — Krem z brokułów (do narysowania)
-- [ ] 195 — Zapiekanka makaronowa z warzywami (do narysowania)
-- [ ] 196 — Muffinki czekoladowe (do narysowania)
-- [ ] 197 — Ciastka owsiane z żurawiną (do narysowania)
-- [ ] 198 — Lody waniliowe domowe (do narysowania)
+- [x] 189 — Placuszki bananowe (PNG w repo; pending)
+- [x] 190 — Curry z ciecierzycy i szpinaku (PNG w repo; pending)
+- [x] 191 — Kotlety z soczewicy (PNG w repo; pending)
+- [x] 192 — Burger wegański z czarnej fasoli (PNG w repo; pending)
+- [x] 193 — Tofu z warzywami na woku (PNG w repo; pending)
+- [x] 194 — Krem z brokułów (PNG w repo; pending)
+- [x] 195 — Zapiekanka makaronowa z warzywami (PNG w repo; pending)
+- [x] 196 — Muffinki czekoladowe (PNG w repo; pending)
+- [x] 197 — Ciastka owsiane z żurawiną (PNG w repo; pending)
+- [x] 198 — Lody waniliowe domowe (PNG w repo; pending)
 - [ ] 199 — Mus czekoladowy (do narysowania)
 - [ ] 200 — Sernik nowojorski (do narysowania)
 - [ ] 201 — Tarta cytrynowa (do narysowania)
