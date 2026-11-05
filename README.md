@@ -1,10 +1,10 @@
 # Kucharzyna 👨‍🍳
 
-> **Aktualna wersja aplikacji: 1.4.55**. Dodano centralną galerię lokalnych ilustracji z listą statusów, mapowań i braków; galeria otwiera się również pod kontrolą Service Workera.
+> **Aktualna wersja aplikacji: 1.4.56**. Dodano centralną galerię lokalnych ilustracji z listą statusów, mapowań i braków; galeria otwiera się również pod kontrolą Service Workera.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
-Wszystkie dane są w pamięci Twojego urządzenia. W wersji 1.4.43 dodano cztery nowe lokalne ilustracje; zatwierdzone wzorce Carbonary i Bruschetty pozostają niezmienione. Nowe ilustracje muszą zachować ich realistyczny, malarski charakter, tekstury składników, ciemną zastawę i dopracowane oświetlenie; nie dodawać uproszczonych, schematycznych ikon. Własne zdjęcia użytkownika nadal mają pierwszeństwo.
+Wszystkie dane są w pamięci Twojego urządzenia. W wersji 1.4.43 dodano cztery nowe lokalne ilustracje; zatwierdzone wzorce Carbonary i Bruschetty pozostają niezmienione. Nowe ilustracje powstają jako ręcznie rysowane obrazy kredką: wyraźna kreska, ograniczona paleta i lekkie cieniowanie, zgodnie z referencją użytkownika. Własne zdjęcia użytkownika nadal mają pierwszeństwo.
 
 ## Co potrafi
 
@@ -13,7 +13,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. W wersji 1.4.43 dodano cztery
 - **Karty z opisem i pochodzeniem (1.3):** każda receptura ma krótki opis, 🇵🇱 kraj pochodzenia i źródło (Kucharzyna, strona, TheMealDB…); filtr po kraju. W szczegółach: chipy z krajem i źródłem oraz pływający przycisk GOTUJĘ po rozwinięciu.
 - **Wygląd z makiety (1.2):** ciemny grafit, szare karty z miedzianą krawędzią i światłem u dołu, **okrągłe zdjęcia dań**, ocena ★ i kalorie po prawej stronie karty, pasek ikon bez podpisów, font Poppins. Szczegóły receptury: duże okrągłe zdjęcie, tytuł z oceną, **składniki na łuku** (okrągłe ikony) i „Pokaż szczegóły ⌄”. Jasny motyw, tryb Amator i suwak „Przezroczystość szkła” nadal są w Ustawieniach, podpisy pod ikonami paska włączysz tam jednym przełącznikiem.
 - **225 przykładowych receptur:** polska kuchnia (zupy, mięsa, pierogi, ciasta, wigilijne), kuchnie świata (Włochy, Francja, Hiszpania, Grecja, Meksyk, USA, Azja, Bliski Wschód…), śniadania, wege i wegańskie, desery, sosy bazowe, prep, przetwory, ponad 20 drinków. Tradycyjne są oznaczone gwiazdką i flagą kraju. Każdą recepturę możesz edytować lub usunąć; usunięta nie wraca po aktualizacji, a „Przywróć przykładowe receptury” w Ustawieniach przywraca brakujące.
-- **Ilustracje dań** rysowane w kodzie (ok. 90 wariantów: zupy, makarony, mięsa, desery, drinki…) na ciemnej porcelanie — wszędzie tam, gdzie receptura nie ma własnego zdjęcia. Własne zdjęcie dodajesz w edytorze (kompresowane lokalnie).
+- **Ilustracje dań** obejmują lokalną bibliotekę SVG i nową serię osobnych rysunków kredką; migracja wszystkich 225 przepisów jest prowadzona partiami w galerii. Własne zdjęcie dodajesz w edytorze (kompresowane lokalnie).
 - **Szacunek kalorii na porcję** z tabel wartości odżywczej (pokazywany tylko, gdy rozpoznano ≥ 70% składników; to przybliżenie).
 - **Lista receptur:** kafelki lub lista, wczytywanie partiami po 40, wyszukiwarka bez względu na polskie znaki, kategorie, tagi (stuknij tag w recepturze), filtry, sortowanie, ulubione, ostatnie, „Polecane na dziś”, kategorie na Starcie.
 - **GOTUJĘ — „Prowadź mnie” krok po kroku:** ekran „Przygotuj” (składniki, zmiana porcji), potem jeden krok na ekranie z potrzebnymi składnikami i wykrytymi minutnikami; przesuwanie palcem, czytanie na głos, wznawianie, ocena 1–5 i notatka na koniec. Obok klasyczna „Lista kontrolna”.

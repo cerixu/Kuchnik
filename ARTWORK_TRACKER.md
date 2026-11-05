@@ -293,3 +293,12 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Każdy przepis ma odrębny PNG i własne mapowanie; nie powielono dań z wcześniejszych partii.
 - Status: **oczekuje na ocenę stylu**.
 - Galeria: 12 plików w repo, 213 receptur w kolejce.
+
+
+## Rysunki kredką — partia 4 (2026-11-05)
+
+- Dodano osobne PNG dla Sałatki greckiej, Sałatki caprese, Sałatki Cezar i Mizerii.
+- Kadry sprawdzone po wycięciu z planszy; nie zawierają sąsiednich dań. Każdy przepis ma własny plik i dokładne mapowanie.
+- Styl: rysunek kredką z ograniczoną paletą, wyraźną kreską i przezroczystym tłem.
+- Status: **oczekuje na ocenę stylu**.
+- Galeria: 16 plików w repo, 209 receptur w kolejce.
