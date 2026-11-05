@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.85';
+const VERSION = 'kucharzyna-1.4.86';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -298,6 +298,9 @@ const CORE = [
   'assets/food-illustrations/hugo-kredka.png',
   'assets/food-illustrations/grzaniec-kredka.png',
   'assets/food-illustrations/lemoniada-domowa-kredka.png',
+  'assets/food-illustrations/carbonara-kredka.png',
+  'assets/food-illustrations/pizza-napoletana-kredka.png',
+  'assets/food-illustrations/sos-pomidorowy-kredka.png',
 ];
 
 const scopeUrl = (p) => new URL(p, self.registration.scope).href;

@@ -1,13 +1,13 @@
 # Kuchnik — rejestr ilustracji potraw
 
-Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą weryfikuję nazwy oraz już istniejące mapowania. Każda zaznaczona receptura ma jeden własny plik PNG.
+Lista kontrolna obejmuje 228 receptur aplikacji: 225 z bazy startowej oraz 3 dodatkowe klasyki zgłoszone po przeglądzie strony. Przed każdą planszą weryfikuję nazwy oraz już istniejące mapowania. Każda zaznaczona receptura ma jeden własny plik PNG.
 
 ## Stan — 2026-11-05
 
-- Przepisów: **225**
-- Nowe ilustracje w repo: **225**
+- Przepisów aplikacji: **228**
+- Nowe ilustracje w repo: **228**
 - Do wykonania: **0**
-- Status 225 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Status 228 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -259,3 +259,7 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 15. Zupa koperkowa · Flaki wołowe · Chłodnik litewski · Zupa szczawiowa · Grochówka · Zupa fasolowa · Zrazy zawijane · Wątróbka z cebulą · Żeberka w miodzie · Schab pieczony w sosie własnym
 
 Kontynuuję tylko z pozycji [ ]. Po sprawdzeniu nazwy dodaję osobny obraz, mapowanie i odhaczenie. Nie powtarzam zaznaczonych potraw.
+
+- [x] 226 — Carbonara (PNG w repo; pending)
+- [x] 227 — Pizza Napoletana (PNG w repo; pending)
+- [x] 228 — Sos pomidorowy (PNG w repo; pending)

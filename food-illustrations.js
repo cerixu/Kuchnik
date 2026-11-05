@@ -225,6 +225,9 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'hugo', name: 'Hugo', filename: 'hugo-kredka.png', path: 'assets/food-illustrations/hugo-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
   { key: 'grzaniec', name: 'Grzaniec', filename: 'grzaniec-kredka.png', path: 'assets/food-illustrations/grzaniec-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
   { key: 'lemoniada-domowa', name: 'Lemoniada domowa', filename: 'lemoniada-domowa-kredka.png', path: 'assets/food-illustrations/lemoniada-domowa-kredka.png', batch: 'Partia kredkowa 27', status: 'pending' },
+  { key: 'carbonara', name: 'Carbonara', filename: 'carbonara-kredka.png', path: 'assets/food-illustrations/carbonara-kredka.png', batch: 'Grafiki dodatkowe 1', status: 'pending' },
+  { key: 'pizza-napoletana', name: 'Pizza Napoletana', filename: 'pizza-napoletana-kredka.png', path: 'assets/food-illustrations/pizza-napoletana-kredka.png', batch: 'Grafiki dodatkowe 1', status: 'pending' },
+  { key: 'sos-pomidorowy', name: 'Sos pomidorowy', filename: 'sos-pomidorowy-kredka.png', path: 'assets/food-illustrations/sos-pomidorowy-kredka.png', batch: 'Grafiki dodatkowe 1', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

@@ -3,6 +3,11 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.86': Object.freeze({
+    intro: 'Kuchnik 1.4.86 — uzupełnienie ilustracji widocznych na stronie.',
+    items: ['Dodano rysunki kredką dla Carbonary, Pizza Napoletana i sosu pomidorowego.', 'Baza aplikacji obejmuje teraz 228 mapowań i osobnych grafik.'],
+    footer: 'Galeria: 228 ilustracji, 0 brakujących.'
+  }),
   '1.4.85': Object.freeze({
     intro: 'Kuchnik 1.4.85 — komplet ilustracji dla wszystkich 225 przepisów.',
     items: ['Dodano ostatnie siedem rysunków: Whisky sour, Gin tonic, Caipirinha, Bloody Mary, Hugo, Grzaniec i Lemonada domowa.', 'Każdy przepis w bazie ma teraz własny plik PNG oraz mapowanie; lista braków jest pusta.'],
