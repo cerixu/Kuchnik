@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **148**
-- Do wykonania: **77**
-- Status 148 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **158**
+- Do wykonania: **67**
+- Status 158 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -156,17 +156,17 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 140 — Paella z owocami morza (PNG w repo; pending)
 - [x] 141 — Patatas bravas (PNG w repo; pending)
 - [x] 142 — Albóndigas w sosie pomidorowym (PNG w repo; pending)
-- [ ] 143 — Mussaka (do narysowania)
-- [ ] 144 — Souvlaki z kurczaka (do narysowania)
-- [ ] 145 — Spanakopita (do narysowania)
+- [x] 143 — Mussaka (PNG w repo; pending)
+- [x] 144 — Souvlaki z kurczaka (PNG w repo; pending)
+- [x] 145 — Spanakopita (PNG w repo; pending)
 - [x] 146 — Tacos al pastor (PNG w repo; pending)
-- [ ] 147 — Quesadilla z serem i kurczakiem (do narysowania)
-- [ ] 148 — Enchiladas z kurczakiem (do narysowania)
-- [ ] 149 — Pico de gallo (do narysowania)
-- [ ] 150 — Burrito bowl (do narysowania)
-- [ ] 151 — Mac and cheese (do narysowania)
-- [ ] 152 — BBQ ribs (do narysowania)
-- [ ] 153 — Pulled pork (do narysowania)
+- [x] 147 — Quesadilla z serem i kurczakiem (PNG w repo; pending)
+- [x] 148 — Enchiladas z kurczakiem (PNG w repo; pending)
+- [x] 149 — Pico de gallo (PNG w repo; pending)
+- [x] 150 — Burrito bowl (PNG w repo; pending)
+- [x] 151 — Mac and cheese (PNG w repo; pending)
+- [x] 152 — BBQ ribs (PNG w repo; pending)
+- [x] 153 — Pulled pork (PNG w repo; pending)
 - [ ] 154 — Skrzydełka buffalo (do narysowania)
 - [ ] 155 — Sałatka Cobb (do narysowania)
 - [x] 156 — Ramen shoyu (PNG w repo; pending)

@@ -148,6 +148,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'crepes', name: 'Crêpes', filename: 'crepes-kredka.png', path: 'assets/food-illustrations/crepes-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
   { key: 'patatas-bravas', name: 'Patatas bravas', filename: 'patatas-bravas-kredka.png', path: 'assets/food-illustrations/patatas-bravas-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
   { key: 'albondigas-w-sosie-pomidorowym', name: 'Albóndigas w sosie pomidorowym', filename: 'albondigas-w-sosie-pomidorowym-kredka.png', path: 'assets/food-illustrations/albondigas-w-sosie-pomidorowym-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'mussaka', name: 'Mussaka', filename: 'mussaka-kredka.png', path: 'assets/food-illustrations/mussaka-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'souvlaki-z-kurczaka', name: 'Souvlaki z kurczaka', filename: 'souvlaki-z-kurczaka-kredka.png', path: 'assets/food-illustrations/souvlaki-z-kurczaka-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'spanakopita', name: 'Spanakopita', filename: 'spanakopita-kredka.png', path: 'assets/food-illustrations/spanakopita-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'quesadilla-z-serem-kurczakiem', name: 'Quesadilla z serem i kurczakiem', filename: 'quesadilla-z-serem-kurczakiem-kredka.png', path: 'assets/food-illustrations/quesadilla-z-serem-kurczakiem-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'enchiladas-z-kurczakiem', name: 'Enchiladas z kurczakiem', filename: 'enchiladas-z-kurczakiem-kredka.png', path: 'assets/food-illustrations/enchiladas-z-kurczakiem-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'pico-de-gallo', name: 'Pico de gallo', filename: 'pico-de-gallo-kredka.png', path: 'assets/food-illustrations/pico-de-gallo-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'burrito-bowl', name: 'Burrito bowl', filename: 'burrito-bowl-kredka.png', path: 'assets/food-illustrations/burrito-bowl-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'mac-and-cheese', name: 'Mac and cheese', filename: 'mac-and-cheese-kredka.png', path: 'assets/food-illustrations/mac-and-cheese-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'bbq-ribs', name: 'BBQ ribs', filename: 'bbq-ribs-kredka.png', path: 'assets/food-illustrations/bbq-ribs-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'pulled-pork', name: 'Pulled pork', filename: 'pulled-pork-kredka.png', path: 'assets/food-illustrations/pulled-pork-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
