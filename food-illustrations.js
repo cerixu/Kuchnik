@@ -98,6 +98,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'mojito', name: 'Mojito', filename: 'mojito-kredka.png', path: 'assets/food-illustrations/mojito-kredka.png', batch: 'Partia kredkowa 14', status: 'pending' },
   { key: 'espresso-martini', name: 'Espresso Martini', filename: 'espresso-martini-kredka.png', path: 'assets/food-illustrations/espresso-martini-kredka.png', batch: 'Partia kredkowa 14', status: 'pending' },
   { key: 'krupnik-z-kasza-jezyczmienna', name: 'Krupnik z kaszą jęczmienną', filename: 'krupnik-kredka.png', path: 'assets/food-illustrations/krupnik-kredka.png', batch: 'Partia kredkowa 14', status: 'pending' },
+  { key: 'zupa-koperkowa', name: 'Zupa koperkowa', filename: 'zupa-koperkowa-kredka.png', path: 'assets/food-illustrations/zupa-koperkowa-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'flaki-wolowe', name: 'Flaki wołowe', filename: 'flaki-wolowe-kredka.png', path: 'assets/food-illustrations/flaki-wolowe-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'chlodnik-litewski', name: 'Chłodnik litewski', filename: 'chlodnik-litewski-kredka.png', path: 'assets/food-illustrations/chlodnik-litewski-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'zupa-szczawiowa', name: 'Zupa szczawiowa', filename: 'zupa-szczawiowa-kredka.png', path: 'assets/food-illustrations/zupa-szczawiowa-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'grochowka', name: 'Grochówka', filename: 'grochowka-kredka.png', path: 'assets/food-illustrations/grochowka-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'zupa-fasolowa', name: 'Zupa fasolowa', filename: 'zupa-fasolowa-kredka.png', path: 'assets/food-illustrations/zupa-fasolowa-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'zrazy-zawijane', name: 'Zrazy zawijane', filename: 'zrazy-zawijane-kredka.png', path: 'assets/food-illustrations/zrazy-zawijane-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'watrobka-z-cebula', name: 'Wątróbka z cebulą', filename: 'watrobka-z-cebula-kredka.png', path: 'assets/food-illustrations/watrobka-z-cebula-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'zeberka-w-miodzie', name: 'Żeberka w miodzie', filename: 'zeberka-w-miodzie-kredka.png', path: 'assets/food-illustrations/zeberka-w-miodzie-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'schab-pieczony-sos-wlasny', name: 'Schab pieczony w sosie własnym', filename: 'schab-pieczony-sos-wlasny-kredka.png', path: 'assets/food-illustrations/schab-pieczony-sos-wlasny-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

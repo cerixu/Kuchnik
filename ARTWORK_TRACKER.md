@@ -1,18 +1,18 @@
 # Kuchnik — rejestr ilustracji potraw
 
-Lista kontrolna odpowiada 225 nazwom w bazie startowej. Każdy zaznaczony przepis ma dokładnie jeden PNG w repozytorium. Przed każdą nową planszą sprawdzam ten rejestr i `food-illustrations.js`.
+Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą weryfikuję nazwy oraz już istniejące mapowania. Każda zaznaczona receptura ma jeden własny plik PNG.
 
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Osobnych ilustracji w `main`: **98**
-- Pozostało bez nowego rysunku: **127**
-- Status wszystkich dodanych: `pending`, oczekują na ocenę stylu.
-- Od partii 8 naczynia są matowoczarne z cienkim miedzianym rantem.
-- [x] oznacza obecność osobnego pliku i mapowania. [ ] oznacza do wykonania.
-- Stare SVG nie zastępują nowych rysunków. Własne zdjęcia użytkownika pozostają bez zmian.
+- Nowe ilustracje w repo: **108**
+- Do wykonania: **117**
+- Status 108 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
+- [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
+- Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
 
-## Wszystkie przepisy
+## Lista wszystkich przepisów
 
 - [x] 001 — Rosół z kury (PNG w repo; pending)
 - [x] 002 — Żurek na zakwasie (PNG w repo; pending)
@@ -80,22 +80,22 @@ Lista kontrolna odpowiada 225 nazwom w bazie startowej. Każdy zaznaczony przepi
 - [x] 064 — Zupa grzybowa (PNG w repo; pending)
 - [x] 065 — Kapuśniak (PNG w repo; pending)
 - [x] 066 — Krupnik z kaszą jęczmienną (PNG w repo; pending)
-- [ ] 067 — Zupa koperkowa (do narysowania)
-- [ ] 068 — Flaki wołowe (do narysowania)
-- [ ] 069 — Chłodnik litewski (do narysowania)
-- [ ] 070 — Zupa szczawiowa (do narysowania)
-- [ ] 071 — Grochówka (do narysowania)
-- [ ] 072 — Zupa fasolowa (do narysowania)
+- [x] 067 — Zupa koperkowa (PNG w repo; pending)
+- [x] 068 — Flaki wołowe (PNG w repo; pending)
+- [x] 069 — Chłodnik litewski (PNG w repo; pending)
+- [x] 070 — Zupa szczawiowa (PNG w repo; pending)
+- [x] 071 — Grochówka (PNG w repo; pending)
+- [x] 072 — Zupa fasolowa (PNG w repo; pending)
 - [x] 073 — Kotlet mielony (PNG w repo; pending)
 - [x] 074 — Pieczeń rzymska (PNG w repo; pending)
-- [ ] 075 — Zrazy zawijane (do narysowania)
+- [x] 075 — Zrazy zawijane (PNG w repo; pending)
 - [x] 076 — Karkówka pieczona (PNG w repo; pending)
 - [x] 077 — Kaczka pieczona z jabłkami (PNG w repo; pending)
 - [x] 078 — Kurczak pieczony (PNG w repo; pending)
 - [x] 079 — Pulpety w sosie koperkowym (PNG w repo; pending)
-- [ ] 080 — Wątróbka z cebulą (do narysowania)
-- [ ] 081 — Żeberka w miodzie (do narysowania)
-- [ ] 082 — Schab pieczony w sosie własnym (do narysowania)
+- [x] 080 — Wątróbka z cebulą (PNG w repo; pending)
+- [x] 081 — Żeberka w miodzie (PNG w repo; pending)
+- [x] 082 — Schab pieczony w sosie własnym (PNG w repo; pending)
 - [x] 083 — Kopytka (PNG w repo; pending)
 - [x] 084 — Kluski śląskie (PNG w repo; pending)
 - [x] 085 — Pierogi z kapustą i grzybami (PNG w repo; pending)
@@ -256,5 +256,6 @@ Lista kontrolna odpowiada 225 nazwom w bazie startowej. Każdy zaznaczony przepi
 12. Wiener Schnitzel · Kurczak tikka masala · Coq au vin · Naleśniki · Spaghetti aglio e olio · Cacio e pepe · Pad thai z krewetkami · Pesto genovese · Guacamole · Tzatziki
 13. Sos beszamel · Sos holenderski · Majonez domowy · Vinaigrette · Bulion drobiowy (fond) · Masło ziołowe · Cebula karmelizowana · Marynowana czerwona cebula · Gambas al ajillo · Crème brûlée
 14. Pancakes amerykańskie · Chleb na zakwasie · Chleb pszenny na drożdżach · Margarita · Negroni · Aperol Spritz · Old Fashioned · Mojito · Espresso Martini · Krupnik z kaszą jęczmienną
+15. Zupa koperkowa · Flaki wołowe · Chłodnik litewski · Zupa szczawiowa · Grochówka · Zupa fasolowa · Zrazy zawijane · Wątróbka z cebulą · Żeberka w miodzie · Schab pieczony w sosie własnym
 
-Kolejne grafiki wybieram wyłącznie z [ ] i sprawdzam każdą nazwę przed generowaniem. Odhaczam dopiero po dodaniu osobnego pliku i mapowania. Nie powtarzam zaznaczonych dań.
+Kontynuuję tylko z pozycji [ ]. Po sprawdzeniu nazwy dodaję osobny obraz, mapowanie i odhaczenie. Nie powtarzam zaznaczonych potraw.
