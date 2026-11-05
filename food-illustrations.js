@@ -158,6 +158,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'mac-and-cheese', name: 'Mac and cheese', filename: 'mac-and-cheese-kredka.png', path: 'assets/food-illustrations/mac-and-cheese-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
   { key: 'bbq-ribs', name: 'BBQ ribs', filename: 'bbq-ribs-kredka.png', path: 'assets/food-illustrations/bbq-ribs-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
   { key: 'pulled-pork', name: 'Pulled pork', filename: 'pulled-pork-kredka.png', path: 'assets/food-illustrations/pulled-pork-kredka.png', batch: 'Partia kredkowa 20', status: 'pending' },
+  { key: 'skrzydelka-buffalo', name: 'Skrzydełka buffalo', filename: 'skrzydelka-buffalo-kredka.png', path: 'assets/food-illustrations/skrzydelka-buffalo-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'salatka-cobb', name: 'Sałatka Cobb', filename: 'salatka-cobb-kredka.png', path: 'assets/food-illustrations/salatka-cobb-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'sushi-maki-ogorek-losos', name: 'Sushi maki z ogórkiem i łososiem', filename: 'sushi-maki-ogorek-losos-kredka.png', path: 'assets/food-illustrations/sushi-maki-ogorek-losos-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'zielone-curry-tajskie', name: 'Zielone curry tajskie', filename: 'zielone-curry-tajskie-kredka.png', path: 'assets/food-illustrations/zielone-curry-tajskie-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'kurczak-teriyaki', name: 'Kurczak teriyaki', filename: 'kurczak-teriyaki-kredka.png', path: 'assets/food-illustrations/kurczak-teriyaki-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'smazony-ryz-z-jajkiem', name: 'Smażony ryż z jajkiem', filename: 'smazony-ryz-z-jajkiem-kredka.png', path: 'assets/food-illustrations/smazony-ryz-z-jajkiem-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'pho-bo', name: 'Pho bo', filename: 'pho-bo-kredka.png', path: 'assets/food-illustrations/pho-bo-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'gyoza', name: 'Gyoza', filename: 'gyoza-kredka.png', path: 'assets/food-illustrations/gyoza-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'kung-pao-z-kurczakiem', name: 'Kung pao z kurczakiem', filename: 'kung-pao-z-kurczakiem-kredka.png', path: 'assets/food-illustrations/kung-pao-z-kurczakiem-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
+  { key: 'zupa-miso', name: 'Zupa miso', filename: 'zupa-miso-kredka.png', path: 'assets/food-illustrations/zupa-miso-kredka.png', batch: 'Partia kredkowa 21', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

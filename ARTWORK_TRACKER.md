@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **158**
-- Do wykonania: **67**
-- Status 158 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **168**
+- Do wykonania: **57**
+- Status 168 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -167,18 +167,18 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 151 — Mac and cheese (PNG w repo; pending)
 - [x] 152 — BBQ ribs (PNG w repo; pending)
 - [x] 153 — Pulled pork (PNG w repo; pending)
-- [ ] 154 — Skrzydełka buffalo (do narysowania)
-- [ ] 155 — Sałatka Cobb (do narysowania)
+- [x] 154 — Skrzydełka buffalo (PNG w repo; pending)
+- [x] 155 — Sałatka Cobb (PNG w repo; pending)
 - [x] 156 — Ramen shoyu (PNG w repo; pending)
-- [ ] 157 — Sushi maki z ogórkiem i łososiem (do narysowania)
-- [ ] 158 — Zielone curry tajskie (do narysowania)
-- [ ] 159 — Kurczak teriyaki (do narysowania)
-- [ ] 160 — Smażony ryż z jajkiem (do narysowania)
-- [ ] 161 — Pho bo (do narysowania)
+- [x] 157 — Sushi maki z ogórkiem i łososiem (PNG w repo; pending)
+- [x] 158 — Zielone curry tajskie (PNG w repo; pending)
+- [x] 159 — Kurczak teriyaki (PNG w repo; pending)
+- [x] 160 — Smażony ryż z jajkiem (PNG w repo; pending)
+- [x] 161 — Pho bo (PNG w repo; pending)
 - [x] 162 — Bibimbap (PNG w repo; pending)
-- [ ] 163 — Gyoza (do narysowania)
-- [ ] 164 — Kung pao z kurczakiem (do narysowania)
-- [ ] 165 — Zupa miso (do narysowania)
+- [x] 163 — Gyoza (PNG w repo; pending)
+- [x] 164 — Kung pao z kurczakiem (PNG w repo; pending)
+- [x] 165 — Zupa miso (PNG w repo; pending)
 - [ ] 166 — Satay z kurczaka z sosem orzechowym (do narysowania)
 - [ ] 167 — Dal z soczewicy (do narysowania)
 - [ ] 168 — Biryani z kurczakiem (do narysowania)
