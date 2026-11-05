@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.60';
+const VERSION = 'kucharzyna-1.4.61';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -42,6 +42,16 @@ const CORE = [
   'assets/food-illustrations/tortilla-espanola-kredka.png',
   'assets/food-illustrations/falafel-kredka.png',
   'assets/food-illustrations/ratatouille-kredka.png',
+  'assets/food-illustrations/pierogi-kapusta-grzyby-kredka.png',
+  'assets/food-illustrations/pierogi-jagody-kredka.png',
+  'assets/food-illustrations/pierogi-leniwe-kredka.png',
+  'assets/food-illustrations/ryba-po-grecku-kredka.png',
+  'assets/food-illustrations/kurczak-pieczony-kredka.png',
+  'assets/food-illustrations/pstrag-maslo-migdalami-kredka.png',
+  'assets/food-illustrations/karkowka-pieczona-kredka.png',
+  'assets/food-illustrations/pulpety-koperkowe-kredka.png',
+  'assets/food-illustrations/salatka-jarzynowa-kredka.png',
+  'assets/food-illustrations/surowka-marchew-jablko-kredka.png',
   'assets/food-illustrations/lasagne-bolognese-kredka.png',
   'assets/food-illustrations/bruschetta-pomidory-kredka.png',
   'assets/food-illustrations/quiche-lorraine-kredka.png',

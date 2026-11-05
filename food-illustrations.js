@@ -48,6 +48,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'tortilla-espanola', name: 'Tortilla española', filename: 'tortilla-espanola-kredka.png', path: 'assets/food-illustrations/tortilla-espanola-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
   { key: 'falafel', name: 'Falafel', filename: 'falafel-kredka.png', path: 'assets/food-illustrations/falafel-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
   { key: 'ratatouille', name: 'Ratatouille', filename: 'ratatouille-kredka.png', path: 'assets/food-illustrations/ratatouille-kredka.png', batch: 'Partia kredkowa 8', status: 'pending' },
+  { key: 'pierogi-kapusta-grzyby', name: 'Pierogi z kapustą i grzybami', filename: 'pierogi-kapusta-grzyby-kredka.png', path: 'assets/food-illustrations/pierogi-kapusta-grzyby-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'pierogi-jagody', name: 'Pierogi z jagodami', filename: 'pierogi-jagody-kredka.png', path: 'assets/food-illustrations/pierogi-jagody-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'pierogi-leniwe', name: 'Pierogi leniwe', filename: 'pierogi-leniwe-kredka.png', path: 'assets/food-illustrations/pierogi-leniwe-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'ryba-po-grecku', name: 'Ryba po grecku', filename: 'ryba-po-grecku-kredka.png', path: 'assets/food-illustrations/ryba-po-grecku-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'kurczak-pieczony', name: 'Kurczak pieczony', filename: 'kurczak-pieczony-kredka.png', path: 'assets/food-illustrations/kurczak-pieczony-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'pstrag-maslo-migdaly', name: 'Pstrąg z masłem i migdałami', filename: 'pstrag-maslo-migdalami-kredka.png', path: 'assets/food-illustrations/pstrag-maslo-migdalami-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'karkowka-pieczona', name: 'Karkówka pieczona', filename: 'karkowka-pieczona-kredka.png', path: 'assets/food-illustrations/karkowka-pieczona-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'pulpety-koperkowe', name: 'Pulpety w sosie koperkowym', filename: 'pulpety-koperkowe-kredka.png', path: 'assets/food-illustrations/pulpety-koperkowe-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'salatka-jarzynowa', name: 'Sałatka jarzynowa', filename: 'salatka-jarzynowa-kredka.png', path: 'assets/food-illustrations/salatka-jarzynowa-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
+  { key: 'surowka-marchew-jablko', name: 'Surówka z marchewki i jabłka', filename: 'surowka-marchew-jablko-kredka.png', path: 'assets/food-illustrations/surowka-marchew-jablko-kredka.png', batch: 'Partia kredkowa 9', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

@@ -344,3 +344,11 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Naczynia są matowoczarne z cienkim miedzianym rantem; styl rysowany kredką.
 - Każdy przepis ma osobny plik i mapowanie. Status: **oczekuje na ocenę stylu**.
 - Galeria: 38 ilustracji oczekuje na ocenę, 187 przepisów w kolejce.
+
+
+## Rysunki kredką — partia 9 (2026-11-05)
+
+- Dodano 10 odrębnych ilustracji: pierogi z kapustą i grzybami, z jagodami, pierogi leniwe, rybę po grecku, kurczaka pieczonego, pstrąga z migdałami, karkówkę, pulpety koperkowe, sałatkę jarzynową i surówkę marchewkowo-jabłkową.
+- Czarne talerze z miedzianym rantem i rysunkowa kreska kredkowa są wspólne dla całej partii.
+- Status: **oczekuje na ocenę stylu**.
+- Galeria: 48 ilustracji oczekuje na ocenę, 177 przepisów w kolejce.
