@@ -108,6 +108,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'watrobka-z-cebula', name: 'Wątróbka z cebulą', filename: 'watrobka-z-cebula-kredka.png', path: 'assets/food-illustrations/watrobka-z-cebula-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
   { key: 'zeberka-w-miodzie', name: 'Żeberka w miodzie', filename: 'zeberka-w-miodzie-kredka.png', path: 'assets/food-illustrations/zeberka-w-miodzie-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
   { key: 'schab-pieczony-sos-wlasny', name: 'Schab pieczony w sosie własnym', filename: 'schab-pieczony-sos-wlasny-kredka.png', path: 'assets/food-illustrations/schab-pieczony-sos-wlasny-kredka.png', batch: 'Partia kredkowa 15', status: 'pending' },
+  { key: 'lazanki-z-kapusta', name: 'Łazanki z kapustą', filename: 'lazanki-z-kapusta-kredka.png', path: 'assets/food-illustrations/lazanki-z-kapusta-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'kapusta-zasmazana', name: 'Kapusta zasmażana', filename: 'kapusta-zasmazana-kredka.png', path: 'assets/food-illustrations/kapusta-zasmazana-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'buraczki-zasmazane', name: 'Buraczki zasmażane', filename: 'buraczki-zasmazane-kredka.png', path: 'assets/food-illustrations/buraczki-zasmazane-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'ogorki-kiszone', name: 'Ogórki kiszone', filename: 'ogorki-kiszone-kredka.png', path: 'assets/food-illustrations/ogorki-kiszone-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'fasolka-szparagowa-bulka-tarta', name: 'Fasolka szparagowa z bułką tartą', filename: 'fasolka-szparagowa-bulka-tarta-kredka.png', path: 'assets/food-illustrations/fasolka-szparagowa-bulka-tarta-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'sernik-na-zimno-galaretka', name: 'Sernik na zimno z galaretką', filename: 'sernik-na-zimno-galaretka-kredka.png', path: 'assets/food-illustrations/sernik-na-zimno-galaretka-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'drozdzowka-z-serem', name: 'Drożdżówka z serem', filename: 'drozdzowka-z-serem-kredka.png', path: 'assets/food-illustrations/drozdzowka-z-serem-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'babka-piaskowa', name: 'Babka piaskowa', filename: 'babka-piaskowa-kredka.png', path: 'assets/food-illustrations/babka-piaskowa-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'mazurek-kajmakowy', name: 'Mazurek kajmakowy', filename: 'mazurek-kajmakowy-kredka.png', path: 'assets/food-illustrations/mazurek-kajmakowy-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
+  { key: 'paczek', name: 'Pączki', filename: 'paczek-kredka.png', path: 'assets/food-illustrations/paczek-kredka.png', batch: 'Partia kredkowa 16', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

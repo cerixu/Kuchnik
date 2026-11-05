@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **108**
-- Do wykonania: **117**
-- Status 108 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **118**
+- Do wykonania: **107**
+- Status 118 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -104,22 +104,22 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 088 — Naleśniki z serem (PNG w repo; pending)
 - [x] 089 — Racuchy z jabłkami (PNG w repo; pending)
 - [x] 090 — Knedle ze śliwkami (PNG w repo; pending)
-- [ ] 091 — Łazanki z kapustą (do narysowania)
+- [x] 091 — Łazanki z kapustą (PNG w repo; pending)
 - [x] 092 — Śledź w oleju z cebulą (PNG w repo; pending)
 - [x] 093 — Ryba po grecku (PNG w repo; pending)
 - [x] 094 — Karp smażony (PNG w repo; pending)
 - [x] 095 — Pstrąg z masłem i migdałami (PNG w repo; pending)
-- [ ] 096 — Kapusta zasmażana (do narysowania)
+- [x] 096 — Kapusta zasmażana (PNG w repo; pending)
 - [x] 097 — Surówka z marchewki i jabłka (PNG w repo; pending)
-- [ ] 098 — Buraczki zasmażane (do narysowania)
-- [ ] 099 — Ogórki kiszone (do narysowania)
-- [ ] 100 — Fasolka szparagowa z bułką tartą (do narysowania)
+- [x] 098 — Buraczki zasmażane (PNG w repo; pending)
+- [x] 099 — Ogórki kiszone (PNG w repo; pending)
+- [x] 100 — Fasolka szparagowa z bułką tartą (PNG w repo; pending)
 - [x] 101 — Makowiec (PNG w repo; pending)
-- [ ] 102 — Sernik na zimno z galaretką (do narysowania)
-- [ ] 103 — Drożdżówka z serem (do narysowania)
-- [ ] 104 — Babka piaskowa (do narysowania)
-- [ ] 105 — Mazurek kajmakowy (do narysowania)
-- [ ] 106 — Pączki (do narysowania)
+- [x] 102 — Sernik na zimno z galaretką (PNG w repo; pending)
+- [x] 103 — Drożdżówka z serem (PNG w repo; pending)
+- [x] 104 — Babka piaskowa (PNG w repo; pending)
+- [x] 105 — Mazurek kajmakowy (PNG w repo; pending)
+- [x] 106 — Pączki (PNG w repo; pending)
 - [ ] 107 — Faworki (do narysowania)
 - [ ] 108 — Kisiel żurawinowy (do narysowania)
 - [ ] 109 — Ciasto marchewkowe (do narysowania)
