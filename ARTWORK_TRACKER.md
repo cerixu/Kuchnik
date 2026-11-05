@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **138**
-- Do wykonania: **87**
-- Status 138 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **148**
+- Do wykonania: **77**
+- Status 148 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -141,21 +141,21 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 125 — Bruschetta z pomidorami (PNG w repo; pending)
 - [x] 126 — Panzanella (PNG w repo; pending)
 - [x] 127 — Saltimbocca alla romana (PNG w repo; pending)
-- [ ] 128 — Parmigiana di melanzane (do narysowania)
+- [x] 128 — Parmigiana di melanzane (PNG w repo; pending)
 - [x] 129 — Pizza pepperoni (PNG w repo; pending)
 - [x] 130 — Pizza quattro formaggi (PNG w repo; pending)
 - [x] 131 — Calzone (PNG w repo; pending)
-- [ ] 132 — Zupa cebulowa (do narysowania)
+- [x] 132 — Zupa cebulowa (PNG w repo; pending)
 - [x] 133 — Quiche Lorraine (PNG w repo; pending)
-- [ ] 134 — Boeuf bourguignon (do narysowania)
-- [ ] 135 — Croque monsieur (do narysowania)
-- [ ] 136 — Moules marinières (do narysowania)
-- [ ] 137 — Sałatka niçoise (do narysowania)
-- [ ] 138 — Tarte tatin (do narysowania)
-- [ ] 139 — Crêpes (do narysowania)
+- [x] 134 — Boeuf bourguignon (PNG w repo; pending)
+- [x] 135 — Croque monsieur (PNG w repo; pending)
+- [x] 136 — Moules marinières (PNG w repo; pending)
+- [x] 137 — Sałatka niçoise (PNG w repo; pending)
+- [x] 138 — Tarte tatin (PNG w repo; pending)
+- [x] 139 — Crêpes (PNG w repo; pending)
 - [x] 140 — Paella z owocami morza (PNG w repo; pending)
-- [ ] 141 — Patatas bravas (do narysowania)
-- [ ] 142 — Albóndigas w sosie pomidorowym (do narysowania)
+- [x] 141 — Patatas bravas (PNG w repo; pending)
+- [x] 142 — Albóndigas w sosie pomidorowym (PNG w repo; pending)
 - [ ] 143 — Mussaka (do narysowania)
 - [ ] 144 — Souvlaki z kurczaka (do narysowania)
 - [ ] 145 — Spanakopita (do narysowania)

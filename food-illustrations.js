@@ -138,6 +138,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'minestrone', name: 'Minestrone', filename: 'minestrone-kredka.png', path: 'assets/food-illustrations/minestrone-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
   { key: 'panzanella', name: 'Panzanella', filename: 'panzanella-kredka.png', path: 'assets/food-illustrations/panzanella-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
   { key: 'saltimbocca-alla-romana', name: 'Saltimbocca alla romana', filename: 'saltimbocca-alla-romana-kredka.png', path: 'assets/food-illustrations/saltimbocca-alla-romana-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'parmigiana-di-melanzane', name: 'Parmigiana di melanzane', filename: 'parmigiana-di-melanzane-kredka.png', path: 'assets/food-illustrations/parmigiana-di-melanzane-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'zupa-cebulowa', name: 'Zupa cebulowa', filename: 'zupa-cebulowa-kredka.png', path: 'assets/food-illustrations/zupa-cebulowa-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'boeuf-bourguignon', name: 'Boeuf bourguignon', filename: 'boeuf-bourguignon-kredka.png', path: 'assets/food-illustrations/boeuf-bourguignon-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'croque-monsieur', name: 'Croque monsieur', filename: 'croque-monsieur-kredka.png', path: 'assets/food-illustrations/croque-monsieur-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'moules-marinieres', name: 'Moules marinières', filename: 'moules-marinieres-kredka.png', path: 'assets/food-illustrations/moules-marinieres-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'salatka-nicoise', name: 'Sałatka niçoise', filename: 'salatka-nicoise-kredka.png', path: 'assets/food-illustrations/salatka-nicoise-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'tarte-tatin', name: 'Tarte tatin', filename: 'tarte-tatin-kredka.png', path: 'assets/food-illustrations/tarte-tatin-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'crepes', name: 'Crêpes', filename: 'crepes-kredka.png', path: 'assets/food-illustrations/crepes-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'patatas-bravas', name: 'Patatas bravas', filename: 'patatas-bravas-kredka.png', path: 'assets/food-illustrations/patatas-bravas-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
+  { key: 'albondigas-w-sosie-pomidorowym', name: 'Albóndigas w sosie pomidorowym', filename: 'albondigas-w-sosie-pomidorowym-kredka.png', path: 'assets/food-illustrations/albondigas-w-sosie-pomidorowym-kredka.png', batch: 'Partia kredkowa 19', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
