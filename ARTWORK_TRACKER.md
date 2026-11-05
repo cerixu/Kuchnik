@@ -318,3 +318,11 @@ Uwaga: istniejące pliki są oznaczone jako `legacy`. Nie są zaliczone jako uko
 - Kadry sprawdzone; każde danie ma osobny plik PNG i własne mapowanie.
 - Status: **oczekuje na ocenę stylu**.
 - Galeria: 24 pliki w repo, 201 receptur w kolejce.
+
+
+## Rysunki kredką — partia 7 (2026-11-05)
+
+- Dodano kaczkę pieczoną z jabłkami, łososia pieczonego z cytryną, pizzę pepperoni i panna cottę z truskawkami.
+- Pliki są osobne, kadry sprawdzone, mapowania dokładnie dopasowane do nazw przepisów.
+- Status: **oczekuje na ocenę stylu**.
+- Galeria: 28 plików w repo, 197 receptur w kolejce.

@@ -24,6 +24,10 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'gazpacho', name: 'Gazpacho', filename: 'gazpacho-kredka.png', path: 'assets/food-illustrations/gazpacho-kredka.png', batch: 'Partia kredkowa 6', status: 'pending' },
   { key: 'chili-con-carne', name: 'Chili con carne', filename: 'chili-con-carne-kredka.png', path: 'assets/food-illustrations/chili-con-carne-kredka.png', batch: 'Partia kredkowa 6', status: 'pending' },
   { key: 'burger-domowy', name: 'Burger domowy', filename: 'burger-domowy-kredka.png', path: 'assets/food-illustrations/burger-domowy-kredka.png', batch: 'Partia kredkowa 6', status: 'pending' },
+  { key: 'kaczka-pieczona-jablka', name: 'Kaczka pieczona z jabłkami', filename: 'kaczka-pieczona-jablka-kredka.png', path: 'assets/food-illustrations/kaczka-pieczona-jablka-kredka.png', batch: 'Partia kredkowa 7', status: 'pending' },
+  { key: 'losos-pieczony-cytryna', name: 'Łosoś pieczony z cytryną', filename: 'losos-pieczony-cytryna-kredka.png', path: 'assets/food-illustrations/losos-pieczony-cytryna-kredka.png', batch: 'Partia kredkowa 7', status: 'pending' },
+  { key: 'pizza-pepperoni', name: 'Pizza pepperoni', filename: 'pizza-pepperoni-kredka.png', path: 'assets/food-illustrations/pizza-pepperoni-kredka.png', batch: 'Partia kredkowa 7', status: 'pending' },
+  { key: 'panna-cotta-truskawki', name: 'Panna cotta z truskawkami', filename: 'panna-cotta-truskawki-kredka.png', path: 'assets/food-illustrations/panna-cotta-truskawki-kredka.png', batch: 'Partia kredkowa 7', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
