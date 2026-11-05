@@ -4,27 +4,27 @@
 
 /* ---------- Tokeny kolorów ---------- */
 :root {
-  --bg: #f4f4f1;
-  --surface: #ffffff;
-  --surface-2: #ebebe6;
-  --line: #dcdcd5;
-  --text: #17181a;
-  --muted: #5d6168;
-  --accent: #f5b400;
-  --on-accent: #1a1400;
-  --accent-text: #8a5d00;
-  --accent-soft: #fff3cc;
-  --danger: #b3261e;
-  --danger-solid: #c62828;
-  --danger-soft: #fdeaea;
-  --warn: #9a5b00;
-  --warn-soft: #fff1dc;
-  --focus: #0a64d6;
-  --toast-bg: #1f2023;
-  --toast-fg: #f4f4f1;
-  --toast-act: #ffc21a;
-  --heart: #d6245c;
-  --shadow: 0 1px 2px rgba(20,20,10,.06), 0 6px 18px rgba(20,20,10,.06);
+  --bg: #151517;
+  --surface: #202023;
+  --surface-2: #29292c;
+  --line: rgba(235,202,174,.14);
+  --text: #f5eee7;
+  --muted: #b7a99e;
+  --accent: #bd704a;
+  --on-accent: #1c1410;
+  --accent-text: #e2a27c;
+  --accent-soft: rgba(189,112,74,.15);
+  --danger: #e28b82;
+  --danger-solid: #a63f37;
+  --danger-soft: #351e1c;
+  --warn: #d9a867;
+  --warn-soft: #332819;
+  --focus: #e6aa83;
+  --toast-bg: #302a27;
+  --toast-fg: #fff5ec;
+  --toast-act: #e7aa83;
+  --heart: #dc8a83;
+  --shadow: 0 14px 36px rgba(0,0,0,.30);
   color-scheme: dark;
 }
 
@@ -868,8 +868,8 @@ body.kb-open .guidebar { padding-bottom: 10px; }
   --font: "Poppins", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
   --r: 28px; --r-sm: 20px; --r-lg: 38px;
   --copper: #c27a3e; --tab-h: 60px; --tab-gap: env(safe-area-inset-bottom, 0px);
-  --card-a: #ffffff; --card-b: #f8f7f4; --rim: rgba(194, 122, 62, .30); --orb-bg: #ebe8e2;
-  --tab-bg: linear-gradient(180deg, rgba(255,255,255,.9), rgba(246,244,240,.97));
+  --card-a: #29272a; --card-b: #1f1e21; --rim: rgba(217, 156, 119, .20); --orb-bg: #272529;
+  --tab-bg: linear-gradient(180deg, rgba(35, 33, 35, .96), rgba(23, 23, 25, .98));
 }
 body { font-weight: 400; }
 #app::before { background: radial-gradient(80% 45% at 50% 0%, var(--glow2), transparent 70%), radial-gradient(70% 40% at -5% 108%, var(--glow1), transparent 72%), radial-gradient(60% 36% at 108% 100%, var(--glow3), transparent 72%); }
@@ -1246,3 +1246,118 @@ img.hero-photo { max-height:300px; width:min(100%,560px); height:auto; aspect-ra
 input[type="range"].range { accent-color:#cb8057; min-height:28px; }
 @media(max-width:370px){.tab-ico{width:40px}.tab-label{font-size:9px}#tabbar{gap:0;padding-left:4px;padding-right:4px}.hero-circle{width:min(78vw,300px)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+
+/* ==========================================================================
+   ŻARŁOK 1.4.88 — spójna, ciemna oprawa kart i sterowania.
+   ========================================================================== */
+:root {
+  --bg:#151517;
+  --surface:#202023;
+  --surface-2:#29292d;
+  --line:rgba(235,202,174,.14);
+  --text:#f5eee7;
+  --muted:#b7a99e;
+  --accent:#bd704a;
+  --on-accent:#17110e;
+  --accent-text:#e2a27c;
+  --accent-soft:rgba(189,112,74,.15);
+  --danger:#e28b82;
+  --danger-solid:#a63f37;
+  --danger-soft:#351e1c;
+  --warn:#d9a867;
+  --warn-soft:#332819;
+  --focus:#e6aa83;
+  --toast-bg:#302a27;
+  --toast-fg:#fff5ec;
+  --toast-act:#e7aa83;
+  --heart:#dc8a83;
+  --shadow:0 14px 36px rgba(0,0,0,.30);
+  --card-a:#29272a;
+  --card-b:#1f1e21;
+  --rim:rgba(217,156,119,.20);
+  --orb-bg:#272529;
+  --tab-bg:linear-gradient(180deg,rgba(35,33,35,.96),rgba(23,23,25,.98));
+  --hairline:rgba(235,202,174,.14);
+  --glass-tint:31,29,30;
+  --glass-line:rgba(239,211,192,.13);
+  --glass-hi:rgba(255,245,236,.045);
+  --glass-bg:rgba(35,33,35,.88);
+  --glass-strong:rgba(29,28,30,.96);
+  --glass-shadow:0 12px 30px rgba(0,0,0,.30);
+  --glow1:rgba(185,104,72,.10);
+  --glow2:rgba(136,92,74,.05);
+  --glow3:rgba(93,74,65,.06);
+}
+body {
+  background-size:auto,auto,256px 256px,auto;
+}
+.card,.tile,.bigcard,.rcard,.sr-card,.shop-list,.result,.rtile,.stat,.ing-edit,.step-edit,.sec-card {
+  color:var(--text);
+  background-color:var(--surface);
+  background-image:linear-gradient(155deg,var(--card-a),var(--card-b));
+  border-color:var(--line);
+  box-shadow:0 14px 34px rgba(0,0,0,.27),inset 0 1px 0 rgba(255,245,236,.035),inset 0 -1px 0 var(--rim);
+}
+.rtile,.deck-item .rtile {
+  background-image:linear-gradient(155deg,var(--card-a),var(--card-b));
+  border-radius:30px;
+}
+.tile.primary {
+  color:#fff2e8;
+  background-color:transparent;
+  background-image:url("assets/zarlock-hatch.svg"),linear-gradient(145deg,#88533b,#59382e);
+  border-color:rgba(226,162,124,.34);
+  box-shadow:0 14px 28px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,245,236,.07);
+}
+.btn {
+  color:var(--text);
+  background-color:transparent;
+  background-image:url("assets/zarlock-hatch.svg"),linear-gradient(145deg,#302a29,#222225);
+  background-size:256px 256px,auto;
+  border-color:var(--line);
+  box-shadow:inset 0 1px 0 rgba(255,245,236,.045),0 8px 20px rgba(0,0,0,.22);
+}
+.btn.primary {
+  color:#fff4eb;
+  background-image:url("assets/zarlock-hatch.svg"),linear-gradient(145deg,#92583d,#633d30);
+  border-color:rgba(232,172,138,.34);
+  box-shadow:0 10px 24px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,245,236,.07);
+}
+.qa-ico {
+  background-image:url("assets/zarlock-hatch.svg"),linear-gradient(155deg,#2c292b,#202023);
+  background-size:256px 256px,auto;
+  border:1px solid var(--line);
+  color:var(--accent-text);
+  box-shadow:0 12px 24px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,245,236,.04);
+}
+.qa.primary .qa-ico {
+  background-image:url("assets/zarlock-hatch.svg"),linear-gradient(145deg,#88533b,#59382e);
+  border-color:rgba(226,162,124,.36);
+  color:#fff2e8;
+}
+.seg { background:rgba(255,245,236,.055); border:1px solid var(--line); }
+.seg button { color:var(--muted); }
+.seg button.on {
+  background:linear-gradient(145deg,#88533b,#653e30);
+  color:#fff3e9;
+  box-shadow:inset 0 1px 0 rgba(255,245,236,.08),0 4px 12px rgba(0,0,0,.22);
+}
+.from-origin { background:rgba(189,112,74,.10); color:#f0c4a7; }
+.from-chip { background:rgba(189,112,74,.10); }
+.from-chip.soft { background:rgba(255,245,236,.045); }
+.rt-rate .star { color:var(--accent-text); }
+.rtile-img,.rthumb,.hero-circle,.ctile-img {
+  background-color:#1b1a1c;
+  border-color:rgba(217,156,119,.20);
+}
+#tabbar {
+  background:rgba(25,24,26,.96);
+  border-top-color:rgba(235,202,174,.15);
+}
+.tab.on .tab-ico {
+  background:rgba(189,112,74,.15);
+  box-shadow:inset 0 0 0 1px rgba(226,162,124,.25);
+}
+input,textarea,select,option { color-scheme:dark; }
+::selection { color:#fff4eb; background:rgba(189,112,74,.38); }
