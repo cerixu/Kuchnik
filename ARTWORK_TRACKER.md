@@ -5,9 +5,9 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 ## Stan — 2026-11-05
 
 - Przepisów: **225**
-- Nowe ilustracje w repo: **128**
-- Do wykonania: **97**
-- Status 128 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Nowe ilustracje w repo: **138**
+- Do wykonania: **87**
+- Status 138 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.
@@ -130,17 +130,17 @@ Lista kontrolna odpowiada 225 nazwom z bazy startowej. Przed każdą planszą we
 - [x] 114 — Pasta jajeczna (PNG w repo; pending)
 - [x] 115 — Smalec ze skwarkami (PNG w repo; pending)
 - [x] 116 — Uszka do barszczu (PNG w repo; pending)
-- [ ] 117 — Risotto alla milanese (do narysowania)
-- [ ] 118 — Gnocchi z masłem szałwiowym (do narysowania)
-- [ ] 119 — Spaghetti alla puttanesca (do narysowania)
-- [ ] 120 — Spaghetti all'amatriciana (do narysowania)
-- [ ] 121 — Ragù alla bolognese (do narysowania)
-- [ ] 122 — Penne all'arrabbiata (do narysowania)
-- [ ] 123 — Fettuccine Alfredo (do narysowania)
-- [ ] 124 — Minestrone (do narysowania)
+- [x] 117 — Risotto alla milanese (PNG w repo; pending)
+- [x] 118 — Gnocchi z masłem szałwiowym (PNG w repo; pending)
+- [x] 119 — Spaghetti alla puttanesca (PNG w repo; pending)
+- [x] 120 — Spaghetti all'amatriciana (PNG w repo; pending)
+- [x] 121 — Ragù alla bolognese (PNG w repo; pending)
+- [x] 122 — Penne all'arrabbiata (PNG w repo; pending)
+- [x] 123 — Fettuccine Alfredo (PNG w repo; pending)
+- [x] 124 — Minestrone (PNG w repo; pending)
 - [x] 125 — Bruschetta z pomidorami (PNG w repo; pending)
-- [ ] 126 — Panzanella (do narysowania)
-- [ ] 127 — Saltimbocca alla romana (do narysowania)
+- [x] 126 — Panzanella (PNG w repo; pending)
+- [x] 127 — Saltimbocca alla romana (PNG w repo; pending)
 - [ ] 128 — Parmigiana di melanzane (do narysowania)
 - [x] 129 — Pizza pepperoni (PNG w repo; pending)
 - [x] 130 — Pizza quattro formaggi (PNG w repo; pending)

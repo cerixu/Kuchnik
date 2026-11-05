@@ -128,6 +128,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'pasta-jajeczna', name: 'Pasta jajeczna', filename: 'pasta-jajeczna-kredka.png', path: 'assets/food-illustrations/pasta-jajeczna-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
   { key: 'smalec-ze-skwarami', name: 'Smalec ze skwarkami', filename: 'smalec-ze-skwarami-kredka.png', path: 'assets/food-illustrations/smalec-ze-skwarami-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
   { key: 'uszka-do-barszczu', name: 'Uszka do barszczu', filename: 'uszka-do-barszczu-kredka.png', path: 'assets/food-illustrations/uszka-do-barszczu-kredka.png', batch: 'Partia kredkowa 17', status: 'pending' },
+  { key: 'risotto-alla-milanese', name: 'Risotto alla milanese', filename: 'risotto-alla-milanese-kredka.png', path: 'assets/food-illustrations/risotto-alla-milanese-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'gnocchi-maslo-szalwiowe', name: 'Gnocchi z masłem szałwiowym', filename: 'gnocchi-maslo-szalwiowe-kredka.png', path: 'assets/food-illustrations/gnocchi-maslo-szalwiowe-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'spaghetti-alla-puttanesca', name: 'Spaghetti alla puttanesca', filename: 'spaghetti-alla-puttanesca-kredka.png', path: 'assets/food-illustrations/spaghetti-alla-puttanesca-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'spaghetti-all-amatriciana', name: 'Spaghetti all'amatriciana', filename: 'spaghetti-all-amatriciana-kredka.png', path: 'assets/food-illustrations/spaghetti-all-amatriciana-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'ragu-alla-bolognese', name: 'Ragù alla bolognese', filename: 'ragu-alla-bolognese-kredka.png', path: 'assets/food-illustrations/ragu-alla-bolognese-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'penne-allarrabbiata', name: 'Penne all'arrabbiata', filename: 'penne-allarrabbiata-kredka.png', path: 'assets/food-illustrations/penne-allarrabbiata-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'fettuccine-alfredo', name: 'Fettuccine Alfredo', filename: 'fettuccine-alfredo-kredka.png', path: 'assets/food-illustrations/fettuccine-alfredo-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'minestrone', name: 'Minestrone', filename: 'minestrone-kredka.png', path: 'assets/food-illustrations/minestrone-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'panzanella', name: 'Panzanella', filename: 'panzanella-kredka.png', path: 'assets/food-illustrations/panzanella-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
+  { key: 'saltimbocca-alla-romana', name: 'Saltimbocca alla romana', filename: 'saltimbocca-alla-romana-kredka.png', path: 'assets/food-illustrations/saltimbocca-alla-romana-kredka.png', batch: 'Partia kredkowa 18', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
