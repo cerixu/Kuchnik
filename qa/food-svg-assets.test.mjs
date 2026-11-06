@@ -261,3 +261,14 @@ test('new dish names resolve to their dedicated SVG and minestrone avoids generi
   assert.equal(recipeSvgKey({ name: 'Gnocchi z pesto' }), null);
 });
 
+
+test('custom recipes without a mapped illustration use a neutral fallback', () => {
+  const cookHome = fs.readFileSync('views-cook-home.js', 'utf8');
+  const components = fs.readFileSync('components.js', 'utf8');
+  const detail = fs.readFileSync('views-detail.js', 'utf8');
+
+  assert.equal(cookHome.includes('recipeArtUrl'), false, 'cook entry must not show generic category artwork');
+  for (const [file, source] of [['views-cook-home.js', cookHome], ['components.js', components], ['views-detail.js', detail]]) {
+    assert.ok(source.includes('Brak przypisanej ilustracji'), file + ' should explain that no art is mapped');
+  }
+});

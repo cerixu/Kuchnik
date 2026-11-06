@@ -2,7 +2,7 @@
 
 Data: 6 listopada 2026  
 Audytowany stan bazowy: `main` — `45148d26a268e38506668ff1211c75f9fe4f9e8c` (wersja 1.4.96).  
-Aktualizacja po audycie: wersja 1.4.98; szczegóły zmian są w historii repozytorium.
+Aktualizacja po audycie: wersja 1.4.99; szczegóły zmian są w historii repozytorium.
 
 ## Podsumowanie
 
@@ -45,7 +45,7 @@ W aktualnym repo nie ma listy, która wskazywałaby te 25 nazw lub oznaczała je
 - Manifest ma `display: standalone` oraz ikony maskable.
 - Service Worker używa cache-first dla mediów i fontów, stale-while-revalidate dla statycznych modułów JS/CSS, network-first z limitem dla nawigacji i pozostałych żądań same-origin oraz zapasu offline.
 - Przed poprawką lista instalacyjna obejmowała 228 ilustracji dań, razem około **98,4 MB**. Skutkiem było ryzyko długiego pierwszego uruchomienia i nadmiernego transferu na iPhonie.
-- W wersji 1.4.98 pliki JS/CSS korzystają ze strategii stale-while-revalidate. Nowe instalacje zapisują powłokę i mniejsze grafiki; rysunki dań zapisują się przy pierwszym użyciu. Ustawienia oferują pobranie całego pakietu (~94 MiB), licznik postępu i przerwanie. Wcześniej pobrane rysunki w starym cache są nadal dostępne i wykrywane przez licznik.
+- W wersji 1.4.99 usunięto generyczny obraz kategorii z ekranu „Gotuję” dla własnych receptur bez ilustracji; wszystkie takie miejsca pokazują neutralny komunikat, a zdjęcia użytkownika pozostają bez zmian. W wersji 1.4.99 pliki JS/CSS korzystają ze strategii stale-while-revalidate. Nowe instalacje zapisują powłokę i mniejsze grafiki; rysunki dań zapisują się przy pierwszym użyciu. Ustawienia oferują pobranie całego pakietu (~94 MiB), licznik postępu i przerwanie. Wcześniej pobrane rysunki w starym cache są nadal dostępne i wykrywane przez licznik.
 - Po czystej instalacji pełny zestaw ilustracji offline wymaga pobrania pakietu z Ustawień albo wcześniejszego otwarcia potrzebnych przepisów.
 
 ## Znalezione długi i dalsze kroki
@@ -55,18 +55,17 @@ W aktualnym repo nie ma listy, która wskazywałaby te 25 nazw lub oznaczała je
 1. **Status akceptacji ilustracji.** Brakuje mapy 25 zaakceptowanych rysunków i spójnego przeglądu wszystkich 228 prac. Rejestr i galeria obecnie pokazują wszystkie jako oczekujące.
 2. **Manualny test iPhone.** Skaner EAN i kamera wymagają sprawdzenia na fizycznym iPhonie; automatyczny smoke test nie zastępuje zgody aparatu i rzeczywistej kamery.
 3. **Starsze obrazy.** 28 JPG i historyczne SVG pozostają w repozytorium. Przed usunięciem trzeba potwierdzić, że nie są potrzebne dla zgodności i niestandardowych receptur.
-4. **Fallback własnych przepisów.** Moduł `art.js` nadal dostarcza generyczny fallback w części ścieżek gotowania; warto sprawdzić go na przepisie użytkownika bez mapowania.
 
 ### Do wykonania
 
 - Odtworzyć listę zaakceptowanych 25 grafik z wiarygodnego źródła i zapisać statusy w trackerze oraz galerii.
 - Ręcznie przejść główne trasy i gotowanie na iPhonie; sprawdzić aparat, safe area i klawiaturę.
 - Ocenić obrazy na ekranie i uzupełnić pliki, jeśli kontrola wizualna wykaże braki (pliki i mapowania są kompletne).
-- Sprawdzić fallback przy przepisach użytkownika oraz zdecydować, czy archiwalne JPG/SVG można bezpiecznie usunąć.
+- Zdecydować, czy archiwalne JPG/SVG można bezpiecznie usunąć.
 
 ## Tracker postępu
 
-- **Gotowe:** audyt gałęzi i commitów; spis funkcji; kontrola 228 przepisów, 228 plików PNG, 84 ikon i 567 mapowań składników; poprawa strategii instalacji; galeria działa z lokalnych plików; dokumentacja wersji 1.4.98.
+- **Gotowe:** audyt gałęzi i commitów; spis funkcji; kontrola 228 przepisów, 228 plików PNG, 84 ikon i 567 mapowań składników; poprawa strategii instalacji; neutralny fallback dla własnych przepisów bez ilustracji; dokumentacja wersji 1.4.99.
 - **W trakcie:** przegląd statusu wizualnego i odnajdywanie 25 wcześniej zaakceptowanych rysunków w wiarygodnym źródle.
-- **Do poprawy:** weryfikacja fizycznej kamery i generycznego fallbacku przy niestandardowym przepisie.
+- **Do poprawy:** weryfikacja fizycznej kamery.
 - **Do wykonania:** ręczny przegląd PWA i UI na iPhonie oraz uzupełnienie statusów ilustracji po potwierdzeniu listy.

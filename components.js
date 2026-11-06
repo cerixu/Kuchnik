@@ -88,7 +88,7 @@ function recipeImage(r, alt = '') {
   if (custom) return h('img', { src: custom, alt, loading: 'lazy', decoding: 'async' });
   const img = h('img', { class: 'art', alt, loading: 'lazy', decoding: 'async' });
   if (attachRecipePhoto(img, r)) return img;
-  return h('div', { class: 'recipe-art-pending', role: 'img', 'aria-label': 'Ilustracja w przygotowaniu: ' + (r.name || 'przepis') }, 'Rysunek w przygotowaniu');
+  return h('div', { class: 'recipe-art-pending', role: 'img', 'aria-label': 'Brak przypisanej ilustracji: ' + (r.name || 'przepis') }, 'Brak ilustracji');
 }
 
 export function thumbEl(r, cls = '') {

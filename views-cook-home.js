@@ -6,7 +6,6 @@ import { h, icon, screen, iconBtn, textInput, emptyState, button } from './ui.js
 import { listRecipes, searchText, catName, subscribe } from './recipes.js';
 import { navigate } from './router.js';
 import { openTimersSheet } from './timers.js';
-import { recipeArtUrl } from './art.js';
 import { attachRecipePhoto } from './food-photos.js';
 import { norm, fmtMinutes } from './util.js';
 
@@ -33,14 +32,27 @@ export function cookEntryView() {
 
   function recipeCard(r) {
     const custom = r.thumb || r.photo;
-    const img = h('img', {
-      class: custom ? '' : 'art',
-      src: custom || recipeArtUrl(r),
-      alt: r.name ? 'Zdjęcie: ' + r.name : '',
-      loading: 'lazy',
-      decoding: 'async',
-    });
-    if (!custom) attachRecipePhoto(img, r);
+    const visual = custom
+      ? h('img', {
+        src: custom,
+        alt: r.name ? 'Zdjęcie: ' + r.name : '',
+        loading: 'lazy',
+        decoding: 'async',
+      })
+      : (() => {
+        const art = h('img', {
+          class: 'art',
+          alt: r.name ? 'Ilustracja: ' + r.name : '',
+          loading: 'lazy',
+          decoding: 'async',
+        });
+        if (attachRecipePhoto(art, r)) return art;
+        return h('span', {
+          class: 'recipe-art-pending',
+          role: 'img',
+          'aria-label': 'Brak przypisanej ilustracji: ' + (r.name || 'przepis'),
+        }, 'Brak ilustracji');
+      })();
     const active = (r.prepTime || 0) + (r.cookTime || 0);
     return h('button', {
       type: 'button',
@@ -48,7 +60,7 @@ export function cookEntryView() {
       onClick: () => navigate('/cook/' + encodeURIComponent(r.id)),
       'aria-label': 'Rozpocznij gotowanie: ' + r.name,
     },
-      h('span', { class: 'cook-entry-art' }, img),
+      h('span', { class: 'cook-entry-art' }, visual),
       h('span', { class: 'cook-entry-copy' },
         h('strong', null, r.name),
         h('span', { class: 'muted small' }, catName(r.category)),

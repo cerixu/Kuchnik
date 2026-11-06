@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.99': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.4.99 — spójny, uczciwy wygląd własnych przepisów.',
+    items: ['W „Gotuję” brak ilustracji własnego przepisu pokazuje teraz neutralny komunikat zamiast ogólnego rysunku kategorii.', 'Karty i szczegóły przepisu używają takiego samego komunikatu o braku przypisanej ilustracji.', 'Zdjęcia dodane przez użytkownika i przypisane ilustracje potraw pozostają bez zmian.'],
+    footer: 'Lokalne rysunki są przypisane tylko do właściwych receptur.'
+  }),
+
   '1.4.98': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.4.98 — szybsze odświeżanie statycznych plików i lekki start PWA.',
     items: ['Pliki JavaScript i CSS korzystają z cache od razu, a nowa kopia pobiera się w tle.', 'Pierwsza instalacja nie ściąga już całej biblioteki 228 ilustracji dań.', 'W Ustawieniach można pobrać cały pakiet offline, śledzić postęp i bezpiecznie przerwać.'],

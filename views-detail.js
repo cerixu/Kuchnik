@@ -395,7 +395,7 @@ export function detailView({ id }) {
     } else {
       const heroImg = h('img', { class: 'art', alt: '', loading: 'lazy', decoding: 'async' });
       heroVisual = attachRecipePhoto(heroImg, rr) ? heroImg
-        : h('div', { class: 'recipe-art-pending', role: 'img', 'aria-label': 'Ilustracja w przygotowaniu: ' + (r.name || 'przepis') }, 'Rysunek w przygotowaniu');
+        : h('div', { class: 'recipe-art-pending', role: 'img', 'aria-label': 'Brak przypisanej ilustracji: ' + (r.name || 'przepis') }, 'Brak ilustracji');
     }
     kids.push(h('div', { class: 'detail-hero' }, h('div', { class: 'hero-circle' }, heroVisual)));
     kids.push(h('div', { class: 'detail-title-row' },
