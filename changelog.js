@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.3': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.5.3 — osobna kategoria dla PREGO! Kamienna Góra.',
+    items: ['Dodano kategorię PREGO! z własnym rysowanym znakiem.', 'Istniejące instalacje otrzymują kategorię bez usuwania własnych kategorii i receptur.'],
+    footer: 'Kolekcję restauracji uzupełnimy po spisaniu wszystkich pozycji z aktualnej karty.'
+  }),
+
   '1.5.2': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.5.2 — równe, wycentrowane znaki kuchni i kategorii.',
     items: ['Przesunąłem flagi do optycznego środka okrągłych odznak.', 'Dopasowałem wielkość znaków krajów i kategorii do wspólnego rozmiaru.', 'Ustawiłem rysunki kategorii osobno, aby ich różne kształty były równo wyważone.'],

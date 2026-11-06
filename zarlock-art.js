@@ -26,7 +26,7 @@ const CATEGORY_BY_ID = Object.freeze({
   'cat-mieso': 'steak', 'cat-ryby': 'fish', 'cat-owoce-morza': 'seafood',
   'cat-warzywa': 'vegetables', 'cat-desery': 'dessert', 'cat-pieczywo': 'bread',
   'cat-zupy': 'soup', 'cat-salatki': 'salad', 'cat-cocktaile': 'cocktail',
-  'cat-prep': 'prep', 'cat-sosy-bazowe': 'saucepot', 'cat-inne': 'plate',
+  'cat-prep': 'prep', 'cat-sosy-bazowe': 'saucepot', 'cat-inne': 'plate', 'cat-prego': 'restaurant',
 });
 
 export const CATEGORY_MARK_OPTIONS = Object.freeze([
@@ -34,7 +34,7 @@ export const CATEGORY_MARK_OPTIONS = Object.freeze([
   ['steak', 'Mięso'], ['fish', 'Ryba'], ['seafood', 'Owoce morza'],
   ['vegetables', 'Warzywa'], ['dessert', 'Deser'], ['bread', 'Pieczywo'],
   ['soup', 'Zupa'], ['salad', 'Sałatka'], ['cocktail', 'Koktajl'],
-  ['prep', 'Przygotowanie'], ['saucepot', 'Sos bazowy'], ['plate', 'Talerz'],
+  ['prep', 'Przygotowanie'], ['saucepot', 'Sos bazowy'], ['plate', 'Talerz'], ['restaurant', 'Restauracja'],
 ]);
 
 const CATEGORY_DRAWINGS = Object.freeze({
@@ -53,6 +53,7 @@ const CATEGORY_DRAWINGS = Object.freeze({
   prep: '<path d="M18 26q1-4 5-4h34q5 1 5 5v31q-1 4-5 4H23q-5-1-5-5Z" fill="#49342b" stroke="#d9a783"/><path d="M24 29q15-5 31 0m-31 4q12-4 24-1m-21 5 2 2m4-3 2 2m4-3 2 2" stroke="#bd8060" stroke-width="1.3"/><path d="m46 28 13-12q3-2 5 0l-13 14-6 3Z" fill="#d9d4c9" stroke="#f0e4d4"/><path d="m45 30-5 8 8-4" fill="#b56c4b" stroke="#eed9c6"/><path d="M25 48q5 2 10 0" stroke="#e8d1ba" stroke-width="1.2"/>',
   saucepot: '<path d="M23 29h34l-3 27q-1 4-5 4H31q-5 0-5-4Z" fill="#3a302d" stroke="#e2c7ae"/><path d="M21 29h38m-28-5h18m-15 0v5m12-5v5" stroke="#d1a27b" stroke-width="2"/><path d="M27 40h26m-24 4h22" stroke="#a85c49" stroke-width="1.5"/><path d="M33 24q-3-5 1-8m8 8q-3-5 1-8" stroke="#d3c5b6" stroke-width="1.3"/><circle cx="34" cy="37" r="1.5" fill="#e3c486"/><circle cx="45" cy="37" r="1.5" fill="#e3c486"/>',
   plate: '<circle cx="40" cy="40" r="23" fill="#202023" stroke="#ead7c4" stroke-width="1.7"/><circle cx="40" cy="40" r="16" fill="none" stroke="#bd7958" stroke-width="1.5"/><path d="M29 42q6-10 14-4 6 4 9-2m-21 9q8 5 16 0" fill="none" stroke="#d3b46f" stroke-width="2"/><path d="M31 35l3-3m11 15 3-3" stroke="#778364" stroke-width="1.8"/>',
+  restaurant: '<path d="M20 33h40l-4-11H24Z" fill="#744536" stroke="#e2c3a5" stroke-width="1.5"/><path d="M20 33h40" stroke="#e7d5c2" stroke-width="1.5"/><path d="M24 34v24h32V34" fill="#272326" stroke="#e2c3a5" stroke-width="1.5"/><path d="M29 34v24m22-24v24" stroke="#bd7958" stroke-width="1.2"/><path d="M34 43q6-9 12 0v8H34Z" fill="#49342b" stroke="#e2c3a5" stroke-width="1.4"/><circle cx="43" cy="48" r=".8" fill="#d8b875"/><path d="M25 27h30M30 24v6m9-6v6m9-6v6" stroke="#d8b875" stroke-width="1.4"/>',
 });
 
 export function categoryMarkKey(categoryId, storedKey) {
@@ -65,7 +66,7 @@ const CATEGORY_ART_LAYOUT = Object.freeze({
   steak: [0, -1, .84], fish: [3.5, .5, .84], seafood: [-2, 2.5, .92],
   vegetables: [0, 2, .86], dessert: [0, 1, .98], bread: [0, 0, .92],
   soup: [0, 2, .9], salad: [0, 3, 1], cocktail: [0, 5, .98],
-  prep: [-2, 1, .86], saucepot: [0, 2, .92], plate: [0, 0, .9],
+  prep: [-2, 1, .86], saucepot: [0, 2, .92], plate: [0, 0, .9], restaurant: [0, 1, .9],
 });
 
 export function categoryGlyph(categoryId, size, storedKey) {

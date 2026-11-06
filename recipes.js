@@ -20,6 +20,7 @@ export const DEFAULT_CATEGORIES = [
   ['cat-warzywa', 'Warzywa', 'vegetables'], ['cat-desery', 'Desery', 'dessert'], ['cat-pieczywo', 'Pieczywo', 'bread'],
   ['cat-zupy', 'Zupy', 'soup'], ['cat-salatki', 'Sałatki', 'salad'], ['cat-cocktaile', 'Cocktaile', 'cocktail'],
   ['cat-prep', 'Prep', 'prep'], ['cat-sosy-bazowe', 'Sosy bazowe', 'saucepot'], ['cat-inne', 'Inne', 'plate'],
+  ['cat-prego', 'PREGO!', 'restaurant'],
 ].map(([id, name, icon], order) => ({ id, name, icon, builtin: true, order }));
 
 export const ORIGINS = [
@@ -150,8 +151,20 @@ export async function loadAll() {
   state.settings = {};
   sets.forEach((s) => { if (!String(s.key).includes(':')) state.settings[s.key] = s.value; });
   state.catalog = new Map(ings.map((i) => [i.id, i]));
-  if (!cats.length) { await db.putMany('categories', DEFAULT_CATEGORIES); state.categories = [...DEFAULT_CATEGORIES]; }
-  else state.categories = cats.sort((a, b) => a.order - b.order);
+  if (!cats.length) {
+    await db.putMany('categories', DEFAULT_CATEGORIES);
+    state.categories = [...DEFAULT_CATEGORIES];
+  } else {
+    const missingPrego = DEFAULT_CATEGORIES.filter((category) =>
+      category.id === 'cat-prego' && !cats.some((stored) => stored.id === category.id));
+    if (missingPrego.length) {
+      const maxOrder = cats.reduce((max, category) => Math.max(max, Number(category.order) || 0), -1);
+      const additions = missingPrego.map((category, index) => ({ ...category, order: maxOrder + index + 1 }));
+      await db.putMany('categories', additions);
+      cats.push(...additions);
+    }
+    state.categories = cats.sort((a, b) => a.order - b.order);
+  }
   if (!getSetting('seeded')) {
     if (!state.recipes.size) await restoreSeeds();
     await setSetting('seeded', true);
