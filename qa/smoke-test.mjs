@@ -69,6 +69,7 @@ try {
   if (!fermentation.includes('8 h') || !fermentation.includes('48 h w lodówce')) {
     throw new Error('Two-stage fermentation was not reflected in the calculator: ' + fermentation);
   }
+  await page.locator('#tabbar a[data-tab="start"]').click();
 
   await page.locator('.qa[aria-label="Gotuję"]').click();
   await page.locator('.cook-entry-hero').waitFor({ timeout: 10000 });
