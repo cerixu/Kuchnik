@@ -35,8 +35,9 @@ export function originLabel(r) { const o = originOf(r.origin); return o ? `${o.f
 /** Skąd jest sam przepis: strona, książka, „Kucharzyna” (przykład) albo „Własny”. */
 export function sourceLabel(r) {
   if (r.sourceUrl) return hostOf(r.sourceUrl) || r.source || 'Internet';
-  const s = String(r.source || '').split(' — ')[0].replace(/\s*\(.*\)\s*$/, '').trim();
-  return s || 'Własny';
+  const raw = String(r.source || '').split(' — ')[0].replace(/\s*\(.*\)\s*$/, '').trim();
+  const source = raw === 'Kucharzyna' ? 'ŻARŁOK · Kuchnik' : raw;
+  return source || 'Własny';
 }
 
 /** Krótki opis do przeglądania: własny albo złożony ze składników. */

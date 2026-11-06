@@ -29,7 +29,7 @@ export function parseSeeds(text, f, opts = {}) {
     if (line.startsWith('# ')) {
       finish();
       const name = line.slice(2).trim();
-      cur = f.blankRecipe({ id: 'rcp_seed_' + slug(name), name, sections: [], steps: [], source: 'Kucharzyna' });
+      cur = f.blankRecipe({ id: 'rcp_seed_' + slug(name), name, sections: [], steps: [], source: 'ŻARŁOK · Kuchnik' });
       sec = null;
     } else if (!cur) continue;
     else if (line.startsWith('@ ')) {

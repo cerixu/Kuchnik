@@ -58,7 +58,7 @@ export const qtyText = (i) => (i.amount != null ? `${fmtAmount(i.amount)}${i.uni
 
 function listAsText(items) {
   const lines = items.filter((i) => !i.done).map((i) => `☐ ${i.name}${qtyText(i) ? ' — ' + qtyText(i) : ''}`);
-  return 'Lista zakupów (Kucharzyna)\n' + lines.join('\n');
+  return 'Lista zakupów (ŻARŁOK / Kuchnik)\n' + lines.join('\n');
 }
 
 /* ---------- Dodawanie z receptury ---------- */

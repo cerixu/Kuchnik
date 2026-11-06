@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Kucharzyna — service worker
+   ŻARŁOK / Kuchnik — service worker
    Strategia: network-first z krótkim limitem czasu i cache jako zapasem.
    Dzięki temu online zawsze dostajesz świeże pliki (brak „starej wersji
    przez kilka dni”), a offline aplikacja otwiera się z pamięci podręcznej.
@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.91';
+const VERSION = 'kucharzyna-1.4.92';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
