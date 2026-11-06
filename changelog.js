@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.10': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.5.10 — poprawka składni galerii PREGO!.',
+    items: ['Poprawiono zapis apostrofu w nazwie Penne all’Arrabbiata, aby moduł ilustracji przechodził kontrolę składni.', 'Zachowano komplet 37 lokalnych ilustracji PREGO! oraz istniejące mapowanie do przepisów.'],
+    footer: 'Galeria pozostaje dostępna pod dotychczasowym adresem.'
+  }),
+
   '1.5.9': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.5.9 — komplet ilustracji karty PREGO!.',
     items: ['Dodano siedem ostatnich rysunków: Penne al Pomodoro, Penne all\'Arrabbiata, Cacio e Pepe, Carbonara, Bolognese, Zimowa herbata King of Ceylon i Pasta Boscaiola.', 'W galerii jest komplet 37 z 37 pozycji PREGO!, każda z własnym plikiem ilustracji.', 'Ilustracje są dostępne lokalnie i mogą być buforowane przez Service Workera po otwarciu.'],
