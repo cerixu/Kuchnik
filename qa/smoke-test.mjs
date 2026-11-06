@@ -50,6 +50,26 @@ try {
   const whatsNew = page.getByRole('button', { name: 'Zaczynamy' });
   if (await whatsNew.count()) await whatsNew.click();
 
+  // Check pizza flour blending and the two-stage fermentation controls on mobile.
+  await page.locator('#tabbar a[data-tab="calc"]').click();
+  await page.locator('a[href="#/calc/pizza"]').click();
+  await page.locator('.flour-blend-editor').waitFor({ timeout: 10000 });
+  await page.getByRole('button', { name: 'Dodaj kolejną mąkę' }).click();
+  const flourParts = page.locator('.flour-blend-row input.num');
+  await flourParts.nth(0).fill('70');
+  await flourParts.nth(1).fill('30');
+  const flourAdvice = await page.locator('.flour-advice').innerText();
+  if (!flourAdvice.includes('Pizzeria 70%') || !flourAdvice.includes('Saccorosso 30%')) {
+    throw new Error('Flour blend shares were not reflected in the calculator: ' + flourAdvice);
+  }
+
+  await page.getByRole('button', { name: 'Wstępna + zimna' }).click();
+  await page.getByRole('button', { name: '8 h' }).click();
+  const fermentation = await page.locator('.fermentation-track').innerText();
+  if (!fermentation.includes('8 h') || !fermentation.includes('48 h w lodówce')) {
+    throw new Error('Two-stage fermentation was not reflected in the calculator: ' + fermentation);
+  }
+
   await page.locator('.qa[aria-label="Gotuję"]').click();
   await page.locator('.cook-entry-hero').waitFor({ timeout: 10000 });
   await page.locator('.cook-entry-search input').fill('carbonara');
@@ -60,7 +80,7 @@ try {
   if (await page.locator('#boot').count()) throw new Error('Boot overlay remained after navigation.');
   if (errors.length) throw new Error('Browser errors:\n' + errors.join('\n'));
 
-  console.log('Smoke test passed: app boot, boot overlay removal, recipe search, and cook view.');
+  console.log('Smoke test passed: app boot, flour blending, split fermentation, recipe search, and cook view.');
 } finally {
   await browser.close();
 }
