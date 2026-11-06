@@ -18,6 +18,9 @@ export function parseSeeds(text, f, opts = {}) {
   const slug = (s) => norm(s).replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
   const finish = () => {
     if (!cur) return;
+    if (cur.category === 'cat-prego' && (cur.tags || []).some((tag) => tag === 'pizza-rosso' || tag === 'pizza-bianca') && !/dodatki.*z karty/i.test(cur.description || '')) {
+      cur.description = `${cur.description || ''} Dodatki do pizzy z karty: mięso +6 zł, burrata +11 zł, krewetki +11 zł, pozostałe +5 zł.`;
+    }
     cur.sections = cur.sections.filter((s) => s.ingredients.length);
     if (!cur.sections.length) cur.sections = [f.blankSection('')];
     if (!cur.origin && opts.origin) cur.origin = opts.origin;

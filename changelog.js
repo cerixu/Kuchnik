@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.5': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.5.5 — pełniejsze menu PREGO! i galeria.',
+    items: ['Cennik dodatków do pizzy z karty jest dostępny w opisach wszystkich 20 pizz PREGO!.', 'Galeria uwzględnia także trzy ręcznie zdefiniowane klasyki: Carbonarę, Pizzę Napoletanę i sos pomidorowy.', 'Pozycje PREGO! nadal mają własne klucze ilustracji, więc nie dostają rysunku innego przepisu.'],
+    footer: 'Brakujące rysunki PREGO! pozostają widoczne jako do wykonania w galerii.'
+  }),
+
   '1.5.4': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.5.4 — pełna karta PREGO! Kamienna Góra.',
     items: ['Dodano 37 pozycji z przekazanej karty: pizze, przystawki, kanapki, sałatki, makarony i pozycje sezonowe.', 'Ceny z karty są zapisane w recepturach. Gramatury i procedury oznaczono jako robocze do sprawdzenia przez kuchnię restauracji.', 'Galeria pokazuje oddzielne pozycje PREGO! i ich brakujące ilustracje; rysunek innego przepisu nie jest podmieniany.'],
