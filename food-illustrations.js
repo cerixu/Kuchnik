@@ -228,6 +228,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'carbonara', name: 'Carbonara', filename: 'carbonara-kredka.png', path: 'assets/food-illustrations/carbonara-kredka.png', batch: 'Grafiki dodatkowe 1', status: 'pending' },
   { key: 'pizza-napoletana', name: 'Pizza Napoletana', filename: 'pizza-napoletana-kredka.png', path: 'assets/food-illustrations/pizza-napoletana-kredka.png', batch: 'Grafiki dodatkowe 1', status: 'pending' },
   { key: 'sos-pomidorowy', name: 'Sos pomidorowy', filename: 'sos-pomidorowy-kredka.png', path: 'assets/food-illustrations/sos-pomidorowy-kredka.png', batch: 'Grafiki dodatkowe 1', status: 'pending' },
+  { key: 'prego-marinara', name: 'Marinara', filename: 'prego-marinara-kredka.png', path: 'assets/food-illustrations/prego-marinara-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-margherita', name: 'Margherita', filename: 'prego-margherita-kredka.png', path: 'assets/food-illustrations/prego-margherita-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-milano-classica', name: 'Milano Classica', filename: 'prego-milano-classica-kredka.png', path: 'assets/food-illustrations/prego-milano-classica-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-capriciosa-mia', name: 'Capriciosa Mia', filename: 'prego-capriciosa-mia-kredka.png', path: 'assets/food-illustrations/prego-capriciosa-mia-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-parma-pizza', name: 'Parma', filename: 'prego-parma-pizza-kredka.png', path: 'assets/food-illustrations/prego-parma-pizza-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-mortadella-reale', name: 'Mortadella Reale', filename: 'prego-mortadella-reale-kredka.png', path: 'assets/food-illustrations/prego-mortadella-reale-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-nduja-lava', name: 'Nduja Lava', filename: 'prego-nduja-lava-kredka.png', path: 'assets/food-illustrations/prego-nduja-lava-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-dolce-roso', name: 'Dolce Roso', filename: 'prego-dolce-roso-kredka.png', path: 'assets/food-illustrations/prego-dolce-roso-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-diavola', name: 'Diavola', filename: 'prego-diavola-kredka.png', path: 'assets/food-illustrations/prego-diavola-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-siciliano', name: 'Siciliano', filename: 'prego-siciliano-kredka.png', path: 'assets/food-illustrations/prego-siciliano-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

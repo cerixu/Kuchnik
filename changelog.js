@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.6': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.5.6 — pierwsza plansza ilustracji PREGO!.',
+    items: ['Dodano 10 odrębnych, ręcznie rysowanych ilustracji pizzy z sekcji Rosso: Marinara, Margherita, Milano Classica, Capriciosa Mia, Parma, Mortadella Reale, Nduja Lava, Dolce Roso, Diavola i Siciliano.', 'Grafiki mają przezroczyste tło i są przypisane tylko do właściwych receptur PREGO!.', 'Galeria pokazuje nowe pliki jako oczekujące na ocenę.'],
+    footer: 'Kolejne pozycje karty PREGO! będą dodawane partiami po 10.'
+  }),
+
   '1.5.5': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.5.5 — pełniejsze menu PREGO! i galeria.',
     items: ['Cennik dodatków do pizzy z karty jest dostępny w opisach wszystkich 20 pizz PREGO!.', 'Galeria uwzględnia także trzy ręcznie zdefiniowane klasyki: Carbonarę, Pizzę Napoletanę i sos pomidorowy.', 'Pozycje PREGO! nadal mają własne klucze ilustracji, więc nie dostają rysunku innego przepisu.'],
