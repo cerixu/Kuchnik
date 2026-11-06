@@ -1,15 +1,15 @@
 /* ==========================================================================
    ŻARŁOK / Kuchnik — service worker
-   Strategia: network-first z krótkim limitem czasu i cache jako zapasem.
-   Dzięki temu online zawsze dostajesz świeże pliki (brak „starej wersji
-   przez kilka dni”), a offline aplikacja otwiera się z pamięci podręcznej.
+   Strategia: Stale-While-Revalidate dla JS/CSS, Cache-First dla mediów,
+   Network-First z limitem dla nawigacji i pozostałych żądań same-origin.
+   Offline aplikacja otwiera się z pamięci podręcznej.
    Nowa wersja NIE przejmuje aplikacji po cichu: strona pokazuje „Odśwież”
    i dopiero wtedy wysyła SKIP_WAITING.
 
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.97';
+const VERSION = 'kucharzyna-1.4.98';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -283,6 +283,31 @@ async function networkFirst(event, url, cacheKey) {
   }
 }
 
+/** Cache-First dla statycznego JS/CSS, z odświeżeniem kopii w tle. */
+async function staleWhileRevalidate(event, request) {
+  const cache = await caches.open(VERSION);
+  const cached = await cache.match(request, { ignoreSearch: true });
+  const refresh = fetch(request, { cache: 'no-cache' }).then(async (response) => {
+    if (response && response.ok && response.type !== 'opaque') {
+      await cache.put(request, response.clone()).catch(() => {});
+    }
+    return response;
+  });
+  const timeout = new Promise((resolve) => setTimeout(() => resolve(null), NETWORK_TIMEOUT));
+  const bounded = Promise.race([refresh, timeout]);
+
+  if (cached) {
+    event.waitUntil(bounded.catch(() => {}));
+    return cached;
+  }
+
+  const response = await bounded;
+  if (response) return response;
+  const fallback = await cache.match(request, { ignoreSearch: true });
+  if (fallback) return fallback;
+  throw new Error('Network timeout without cached response');
+}
+
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
@@ -311,6 +336,13 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(networkFirst(event, INDEX(), INDEX()).catch(async () => {
       const cache = await caches.open(VERSION);
       return (await cache.match(INDEX())) || Response.error();
+    }));
+    return;
+  }
+  if (/\.(?:m?js|css)$/i.test(url.pathname)) {
+    event.respondWith(staleWhileRevalidate(event, req).catch(async () => {
+      const cache = await caches.open(VERSION);
+      return (await cache.match(req, { ignoreSearch: true })) || Response.error();
     }));
     return;
   }

@@ -2,7 +2,7 @@
 
 Data: 6 listopada 2026  
 Audytowany stan bazowy: `main` — `45148d26a268e38506668ff1211c75f9fe4f9e8c` (wersja 1.4.96).  
-Aktualizacja po audycie: wersja 1.4.97; szczegóły zmian są w historii repozytorium.
+Aktualizacja po audycie: wersja 1.4.98; szczegóły zmian są w historii repozytorium.
 
 ## Podsumowanie
 
@@ -43,9 +43,9 @@ W aktualnym repo nie ma listy, która wskazywałaby te 25 nazw lub oznaczała je
 
 - IndexedDB jest główną bazą danych; aplikacja ma odzyskiwanie i awaryjne tryby dla problemów Safari.
 - Manifest ma `display: standalone` oraz ikony maskable.
-- Service Worker używa cache-first dla mediów i fontów, network-first z limitem dla powłoki i pozostałych żądań same-origin oraz zapasu offline.
+- Service Worker używa cache-first dla mediów i fontów, stale-while-revalidate dla statycznych modułów JS/CSS, network-first z limitem dla nawigacji i pozostałych żądań same-origin oraz zapasu offline.
 - Przed poprawką lista instalacyjna obejmowała 228 ilustracji dań, razem około **98,4 MB**. Skutkiem było ryzyko długiego pierwszego uruchomienia i nadmiernego transferu na iPhonie.
-- W wersji 1.4.97 nowe instalacje zapisują powłokę i mniejsze grafiki; rysunki dań zapisują się przy pierwszym użyciu. Ustawienia oferują pobranie całego pakietu (~94 MiB), licznik postępu i przerwanie. Wcześniej pobrane rysunki w starym cache są nadal dostępne i wykrywane przez licznik.
+- W wersji 1.4.98 pliki JS/CSS korzystają ze strategii stale-while-revalidate. Nowe instalacje zapisują powłokę i mniejsze grafiki; rysunki dań zapisują się przy pierwszym użyciu. Ustawienia oferują pobranie całego pakietu (~94 MiB), licznik postępu i przerwanie. Wcześniej pobrane rysunki w starym cache są nadal dostępne i wykrywane przez licznik.
 - Po czystej instalacji pełny zestaw ilustracji offline wymaga pobrania pakietu z Ustawień albo wcześniejszego otwarcia potrzebnych przepisów.
 
 ## Znalezione długi i dalsze kroki
@@ -66,7 +66,7 @@ W aktualnym repo nie ma listy, która wskazywałaby te 25 nazw lub oznaczała je
 
 ## Tracker postępu
 
-- **Gotowe:** audyt gałęzi i commitów; spis funkcji; kontrola 228 przepisów, 228 plików PNG, 84 ikon i 567 mapowań składników; poprawa strategii instalacji; galeria działa z lokalnych plików; dokumentacja wersji 1.4.97.
+- **Gotowe:** audyt gałęzi i commitów; spis funkcji; kontrola 228 przepisów, 228 plików PNG, 84 ikon i 567 mapowań składników; poprawa strategii instalacji; galeria działa z lokalnych plików; dokumentacja wersji 1.4.98.
 - **W trakcie:** przegląd statusu wizualnego i odnajdywanie 25 wcześniej zaakceptowanych rysunków w wiarygodnym źródle.
 - **Do poprawy:** weryfikacja fizycznej kamery i generycznego fallbacku przy niestandardowym przepisie.
 - **Do wykonania:** ręczny przegląd PWA i UI na iPhonie oraz uzupełnienie statusów ilustracji po potwierdzeniu listy.

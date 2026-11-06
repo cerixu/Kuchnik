@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.98': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.4.98 — szybsze odświeżanie statycznych plików i lekki start PWA.',
+    items: ['Pliki JavaScript i CSS korzystają z cache od razu, a nowa kopia pobiera się w tle.', 'Pierwsza instalacja nie ściąga już całej biblioteki 228 ilustracji dań.', 'W Ustawieniach można pobrać cały pakiet offline, śledzić postęp i bezpiecznie przerwać.'],
+    footer: 'Lokalne ilustracje, kopie zapasowe i dane użytkownika są zachowane.'
+  }),
+
   '1.4.97': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.4.97 — szybszy start i pełna biblioteka rysunków offline na życzenie.',
     items: ['Nowa instalacja zapisuje najpierw powłokę aplikacji, a rysunki dań buforuje podczas oglądania przepisów.', 'W Ustawieniach można pobrać wszystkie 228 ilustracji offline, sprawdzić postęp i przerwać pobieranie.', 'Aktualizacja zachowuje wcześniej zapisane ilustracje i udostępnia je nowej wersji bez ponownego transferu.'],

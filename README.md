@@ -1,6 +1,6 @@
 # ŻARŁOK — Kuchnik
 
-> **Aktualna wersja aplikacji: 1.4.97**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
+> **Aktualna wersja aplikacji: 1.4.98**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
@@ -9,6 +9,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur ma loka
 ## Co potrafi
 
 - **Safari (1.3):** baza danych ma ponawianie, limit czasu otwarcia, naprawę magazynów i **tryb awaryjny** (localStorage), więc aplikacja otwiera się nawet gdy iOS zablokuje IndexedDB (tryb prywatny, Lockdown, zawieszenie). Przy awarii pokazuje prawdziwy komunikat błędu, przyciski „Spróbuj ponownie” i „Tryb awaryjny”; stan magazynu widać w Ustawieniach.
+- **PWA (1.4.98):** cache-first dla grafik potraw i składników, stale-while-revalidate dla lokalnych modułów JS/CSS oraz ograniczony network-first dla nawigacji i pozostałych żądań same-origin.
 - **Menu i rysunki (1.4.96):** wyrównane skróty Start, spokojniejsze znaki kategorii i kuchni świata oraz wycentrowany dok Liquid Glass.
 - **Karty z opisem i pochodzeniem:** każda receptura ma krótki opis, rysowany znak kraju pochodzenia i źródło (strona, baza lub własny przepis); filtr po kraju. W szczegółach są chipy z krajem i źródłem oraz pływający przycisk GOTUJĘ.
 - **Wygląd (1.4.96):** ciemny grafit, matowe powierzchnie Liquid Glass, miedziane detale, kreskowane znaki własne i wycentrowane ilustracje. Aplikacja ma stały ciemny motyw oraz pięcioprzyciskową dolną nawigację z podpisami.
@@ -146,7 +147,7 @@ Skutki: dane jednego telefonu nie pojawią się na drugim (przenoś kopią JSON)
 2. Wypchnij zmiany na GitHub.
 3. Telefon wykryje nową wersję i pokaże: **„Nowa wersja Kucharzyny jest dostępna” → Odśwież**. Ręcznie: Ustawienia → Sprawdź aktualizacje.
 
-Service worker używa cache-first dla lokalnych ilustracji, fontów i ikon. Ilustracje potraw zapisuje przy pierwszym wyświetleniu; pełny pakiet można pobrać z Ustawień. Dla powłoki aplikacji sieć ma krótki limit czasu i cache jako zapas.
+Service worker używa cache-first dla lokalnych ilustracji, fontów i ikon. Ilustracje potraw zapisuje przy pierwszym wyświetleniu; pełny pakiet można pobrać z Ustawień. Dla nawigacji i pozostałych żądań same-origin sieć ma krótki limit czasu i cache jako zapas.
 
 ## Czego aplikacja nie robi (świadomie)
 
