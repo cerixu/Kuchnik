@@ -11,6 +11,8 @@ function makeSvg(inner, size, className, viewBox) {
   svg.setAttribute('viewBox', viewBox || '0 0 80 80');
   svg.setAttribute('width', String(size));
   svg.setAttribute('height', String(size));
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
   svg.setAttribute('aria-hidden', 'true');
   svg.setAttribute('focusable', 'false');
   svg.classList.add('zarlock-art');
@@ -58,13 +60,23 @@ export function categoryMarkKey(categoryId, storedKey) {
   return CATEGORY_BY_ID[categoryId] || 'plate';
 }
 
+const CATEGORY_ART_LAYOUT = Object.freeze({
+  pizza: [1.5, -1, .92], pasta: [0, -3, .94], sauce: [0, 1, .94],
+  steak: [0, -1, .84], fish: [3.5, .5, .84], seafood: [-2, 2.5, .92],
+  vegetables: [0, 2, .86], dessert: [0, 1, .98], bread: [0, 0, .92],
+  soup: [0, 2, .9], salad: [0, 3, 1], cocktail: [0, 5, .98],
+  prep: [-2, 1, .86], saucepot: [0, 2, .92], plate: [0, 0, .9],
+});
+
 export function categoryGlyph(categoryId, size, storedKey) {
   const key = categoryMarkKey(categoryId, storedKey);
-  const dish = '<path d="M40 3.8c19.9-.2 35.8 15.7 35.9 35.7.1 20.1-15.8 36.5-35.9 36.5C20.1 76 4.3 59.8 4.2 39.7 4.1 20 19.8 4.2 40 3.8Z" fill="#211f21" stroke="#bd7958" stroke-width="1.35"/>' +
-    '<path d="M15.7 38.8c.4-13.4 10.7-23.8 24.2-23.8 13.4 0 24.1 10.2 24.4 23.6" fill="none" stroke="#e5d3c2" stroke-opacity=".34" stroke-width=".9"/>' +
-    '<path d="M16.3 47.1c3.6 9.6 12.4 15.8 23.7 15.8 10.8 0 19.1-5.3 22.9-15.1" fill="none" stroke="#bd7958" stroke-opacity=".55" stroke-width=".75"/>';
+  const [dx, dy, scale] = CATEGORY_ART_LAYOUT[key] || [0, 0, .9];
+  const medallion = '<circle cx="40" cy="40" r="35.5" fill="#211f21" stroke="#bd7958" stroke-width="1.35"/>' +
+    '<circle cx="40" cy="40" r="31.3" fill="none" stroke="#e5d3c2" stroke-opacity=".16" stroke-width=".8"/>' +
+    '<path d="M16.5 31a25 25 0 0 1 21.8-20" fill="none" stroke="#f1dfd0" stroke-opacity=".3" stroke-width=".85"/>';
   const drawing = CATEGORY_DRAWINGS[key] || CATEGORY_DRAWINGS.plate;
-  return makeSvg(dish + '<g transform="translate(40 40) scale(1.08) translate(-40 -40)">' + drawing + '</g>', size || 76, 'category-art');
+  const artwork = '<g transform="translate(' + dx + ' ' + dy + ') translate(40 40) scale(' + scale + ') translate(-40 -40)">' + drawing + '</g>';
+  return makeSvg(medallion + artwork, size || 76, 'category-art');
 }
 
 const ORIGIN_FLAGS = Object.freeze({
@@ -193,15 +205,15 @@ export function originGlyph(code, size) {
   const c = String(code || '').toUpperCase();
   const spec = ORIGIN_FLAGS[c];
   const uid = 'zarlock-origin-' + (++flagId);
-  const clip = '<defs><clipPath id="' + uid + '"><rect x="12" y="17" width="48" height="32" rx="5"/></clipPath></defs>';
-  const base = '<path d="M40 3.8c10.2-.2 19.7 4.2 26.5 11.7 5.4 6 8.3 14.6 8.3 23.7 0 9.8-3.6 18.3-9.9 24.8-6.4 6.5-15 10-24.9 10C20 74 4.7 58.8 4.8 40 4.7 20.1 20 4.2 40 3.8Z" fill="#222023" stroke="#bc7958" stroke-width="1.35"/>' +
-    '<path d="M13.4 32c2.7-12.3 13.1-21.4 26.1-21.8" fill="none" stroke="#f1dfd0" stroke-opacity=".25" stroke-width=".85"/>';
-  const flag = '<rect x="11.5" y="16.5" width="49" height="33" rx="5.5" fill="#252326" stroke="#e6d3c1" stroke-width="1.15"/>' +
-    '<g clip-path="url(#' + uid + ')">' + flagPattern(c, spec) + '</g>' +
-    '<rect x="12" y="17" width="48" height="32" rx="5" fill="none" stroke="#f3e2d3" stroke-opacity=".52" stroke-width=".85"/>' +
-    '<path d="M16 19h34" stroke="#fff5ec" stroke-opacity=".25" stroke-width=".8"/>';
-  const detail = '<path d="M17 55q4 2 7 0m31 0q3 1 5-1" fill="none" stroke="#cf9876" stroke-opacity=".68" stroke-width="1"/>';
-  return makeSvg(clip + base + flag + detail, size || 64, 'origin-art', '0 0 80 80');
+  const clip = '<defs><clipPath id="' + uid + '" clipPathUnits="userSpaceOnUse"><rect x="16" y="24" width="48" height="32" rx="5"/></clipPath></defs>';
+  const medallion = '<circle cx="40" cy="40" r="35.5" fill="#222023" stroke="#bc7958" stroke-width="1.35"/>' +
+    '<circle cx="40" cy="40" r="31.3" fill="none" stroke="#e5d3c2" stroke-opacity=".16" stroke-width=".8"/>' +
+    '<path d="M16.5 31a25 25 0 0 1 21.8-20" fill="none" stroke="#f1dfd0" stroke-opacity=".3" stroke-width=".85"/>';
+  const flag = '<rect x="15.5" y="23.5" width="49" height="33" rx="5.5" fill="#252326" stroke="#e6d3c1" stroke-width="1.15"/>' +
+    '<svg x="16" y="24" width="48" height="32" viewBox="12 17 48 32" preserveAspectRatio="none" clip-path="url(#' + uid + ')">' + flagPattern(c, spec) + '</svg>' +
+    '<rect x="16" y="24" width="48" height="32" rx="5" fill="none" stroke="#f3e2d3" stroke-opacity=".52" stroke-width=".85"/>' +
+    '<path d="M20 26h34" stroke="#fff5ec" stroke-opacity=".25" stroke-width=".8"/>';
+  return makeSvg(clip + medallion + flag, size || 76, 'origin-art', '0 0 80 80');
 }
 
 const TAB_DRAWINGS = Object.freeze({

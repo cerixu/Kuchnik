@@ -2334,3 +2334,42 @@ body:not(.no-tabs):not(.kb-open) #toasts {
   object-fit: contain;
   border-radius: 8px;
 }
+
+
+/* ŻARŁOK 1.5.2 — wspólna skala i optyczne centrowanie odznak. */
+.cu,
+.ctile {
+  width: 84px;
+  min-width: 84px;
+}
+.cu-flag,
+.ctile-img {
+  width: 76px;
+  height: 76px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  margin-inline: auto;
+}
+.cu-flag .origin-art,
+.ctile-img .category-art {
+  display: block;
+  width: 76px;
+  height: 76px;
+  margin: auto;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .26));
+}
+@media (max-width: 370px) {
+  .cu,
+  .ctile {
+    width: 80px;
+    min-width: 80px;
+  }
+  .cu-flag,
+  .ctile-img,
+  .cu-flag .origin-art,
+  .ctile-img .category-art {
+    width: 72px;
+    height: 72px;
+  }
+}
