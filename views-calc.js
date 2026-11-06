@@ -68,26 +68,70 @@ function hub() {
 /* ---------- Pizza ---------- */
 
 const PIZZA_FLOURS = Object.freeze({
-  'pizzeria-blue': { label: 'Caputo 00 Blue · Pizzeria', kind: '00', protein: '12,5%', w: '260–280', hydration: 63, range: '60–65%', fermentation: '8–12 h w temperaturze pokojowej', why: 'Mąka o średniej sile do klasycznej pizzy neapolitańskiej. Zacznij od umiarkowanej hydracji; chłodniejsza fermentacja i dłuższy czas wymagają spokojnego prowadzenia ciasta.', url: 'https://www.mulinocaputo.it/en/products/pizzeria/' },
-  'saccorosso': { label: 'Caputo 00 Red · Saccorosso', kind: '00', protein: '13%', w: '300–320', hydration: 66, range: '64–70%', fermentation: 'dłuższy odpoczynek, najlepiej z etapem w lodówce', why: 'Mocniejsza mąka lepiej znosi dłuższe dojrzewanie. Nie zwiększaj wody tylko z powodu wyższego W — obserwuj, jak konkretna partia ją wchłania.', url: 'https://www.mulinocaputo.it/en/products/saccorosso-5kg/' },
-  nuvola: { label: 'Caputo Nuvola', kind: '0', protein: '12,5%', w: '270–290', hydration: 70, range: '68–75%', fermentation: 'producent podaje ok. 72 h: 48 h w chłodzie + 24 h w temp. pokojowej', why: 'Nuvola jest przeznaczona do lekkich, obszernych rantów i dużych pęcherzy. Wyższa hydracja jest punktem wyjścia, a nie gwarancją — technika mieszania i temperatura mają znaczenie.', url: 'https://www.mulinocaputo.it/en/products/nuvola/' },
-  'nuvola-super': { label: 'Caputo Nuvola Super', kind: '0', protein: '13,5%', w: '320–340', hydration: 74, range: '70–78%', fermentation: 'długie dojrzewanie lub preferment; dobierz do temperatury i procesu', why: 'Najmocniejsza z tych czterech mąk. Daje większy margines przy długim dojrzewaniu i wyższej hydracji, ale mąka o wysokim W nie wymaga automatycznie większej ilości wody.', url: 'https://www.mulinocaputo.it/en/products/super-cloud/' },
+  'pizzeria-blue': { label: 'Caputo 00 Blue · Pizzeria', short: 'Pizzeria', protein: 12.5, wMin: 260, wMax: 280, hydration: 63, hMin: 60, hMax: 65, why: 'Mąka o średniej sile do klasycznej pizzy neapolitańskiej. Zacznij od umiarkowanej hydracji; dłuższy czas i chłodniejsza fermentacja wymagają spokojnego prowadzenia ciasta.', url: 'https://www.mulinocaputo.it/en/products/pizzeria/' },
+  'saccorosso': { label: 'Caputo 00 Red · Saccorosso', short: 'Saccorosso', protein: 13, wMin: 300, wMax: 320, hydration: 66, hMin: 64, hMax: 70, why: 'Mocniejsza mąka lepiej znosi dłuższe dojrzewanie. Nie zwiększaj wody tylko z powodu wyższego W — obserwuj, jak konkretna partia ją wchłania.', url: 'https://www.mulinocaputo.it/en/products/saccorosso-5kg/' },
+  nuvola: { label: 'Caputo Nuvola', short: 'Nuvola', protein: 12.5, wMin: 270, wMax: 290, hydration: 70, hMin: 68, hMax: 75, why: 'Nuvola jest przeznaczona do lekkich, obszernych rantów i dużych pęcherzy. Wyższa hydracja jest punktem wyjścia, a nie gwarancją — technika mieszania i temperatura mają znaczenie.', url: 'https://www.mulinocaputo.it/en/products/nuvola/' },
+  'nuvola-super': { label: 'Caputo Nuvola Super', short: 'Nuvola Super', protein: 13.5, wMin: 320, wMax: 340, hydration: 74, hMin: 70, hMax: 78, why: 'Mocna mąka daje większy margines przy długim dojrzewaniu i wyższej hydracji, ale wysokie W nie wymaga automatycznie większej ilości wody.', url: 'https://www.mulinocaputo.it/en/products/super-cloud/' },
 });
 
 function pizzaCalculator() {
-  // Zachowujemy dotychczasowe klucze calc:pizza (flour, balls, ballWeight itd.),
-  // aby aktualizacja nie resetowała ustawień zapisanych na urządzeniu.
+  // Zachowujemy dotychczasowe klucze calc:pizza (flour, flourType, balls,
+  // ballWeight itd.), aby aktualizacja nie resetowała ustawień na urządzeniu.
   const { st, save, ready } = memo('pizza', {
-    mode: 'balls', flour: 7500, flourType: 'pizzeria-blue', balls: 4, ballWeight: 250,
-    hydration: 65, salt: 3, oil: 0, yeast: 0.2, yeastType: 'fresh',
-    leavenType: 'yeast', starterPct: 0.65, temp: 20, hours: 24,
+    mode: 'balls', flour: 7500, flourType: 'pizzeria-blue', flourBlend: null,
+    balls: 4, ballWeight: 250, hydration: 65, salt: 3, oil: 0, yeast: 0.2,
+    yeastType: 'fresh', leavenType: 'yeast', starterPct: 0.65, temp: 20, hours: 24,
+    fermentationMode: 'single', roomHours: 7, roomTemp: 20, fridgeTemp: 4,
   });
   const out = h('div', { class: 'results' });
   const form = h('div', { class: 'stack' });
   st.flourType = PIZZA_FLOURS[st.flourType] ? st.flourType : 'pizzeria-blue';
-  const flourProfile = () => PIZZA_FLOURS[st.flourType];
+  st.fermentationMode = st.fermentationMode === 'split' ? 'split' : 'single';
   const s = calcScreen('Pizza i ciasto', form, out);
   let suggestionHost = null;
+
+  function normalizedBlend() {
+    let rows = Array.isArray(st.flourBlend) ? st.flourBlend : [];
+    rows = rows.map((row) => ({
+      type: PIZZA_FLOURS[row && row.type] ? row.type : (PIZZA_FLOURS[st.flourType] ? st.flourType : 'pizzeria-blue'),
+      parts: Math.max(1, Number(row && row.parts) || 1),
+    }));
+    if (!rows.length) rows = [{ type: st.flourType, parts: 100 }];
+    const total = rows.reduce((acc, row) => acc + row.parts, 0);
+    return rows.map((row) => ({ ...row, pct: total > 0 ? row.parts / total * 100 : 100 / rows.length }));
+  }
+
+  function blendProfile() {
+    const blend = normalizedBlend();
+    const sumWeighted = (key) => blend.reduce((acc, row) => acc + PIZZA_FLOURS[row.type][key] * row.pct / 100, 0);
+    const labels = blend.map((row) => PIZZA_FLOURS[row.type].short + ' ' + fmtNum(row.pct, 1) + '%');
+    return {
+      blend,
+      label: labels.join(' + '),
+      protein: sumWeighted('protein'),
+      wMin: sumWeighted('wMin'),
+      wMax: sumWeighted('wMax'),
+      hydration: sumWeighted('hydration'),
+      hMin: sumWeighted('hMin'),
+      hMax: sumWeighted('hMax'),
+      why: blend.length === 1
+        ? PIZZA_FLOURS[blend[0].type].why
+        : 'Parametry mieszanki są średnią ważoną udziałem każdej mąki. To punkt startowy — rzeczywista chłonność i siła ciasta zależą też od partii mąki, temperatury oraz sposobu wyrabiania.',
+    };
+  }
+
+  function fermentationSummary() {
+    if (st.fermentationMode === 'split') {
+      return fmtNum(st.roomHours, 1) + ' h wstępnie w ' + fmtNum(st.roomTemp, 1) + ' °C + 48 h w lodówce (ok. ' + fmtNum(st.fridgeTemp, 1) + ' °C)';
+    }
+    return fmtNum(st.hours, 1) + ' h w ' + fmtNum(st.temp, 1) + ' °C';
+  }
+
+  function fermentationHours() {
+    return st.fermentationMode === 'split'
+      ? Math.max(0, Number(st.roomHours) || 0) + 48
+      : Math.max(0, Number(st.hours) || 0);
+  }
 
   function compute() {
     const sourdough = st.leavenType === 'starter';
@@ -118,6 +162,11 @@ function pizzaCalculator() {
     }
     const sourdough = st.leavenType === 'starter';
     const yeast = YEAST_TYPES[st.yeastType] || YEAST_TYPES.fresh;
+    const profile = blendProfile();
+    const flourParts = profile.blend.map((row) =>
+      PIZZA_FLOURS[row.type].short + ' ' + fmtNum(row.pct, 1) + '% (' +
+      fmtAmount(r.flour * row.pct / 100) + ' g)').join(' · ');
+    const hydrationHint = fmtNum(profile.hydration, 1);
     out.replaceChildren(
       h('div', { class: 'results-grid' },
         result(sourdough ? 'Mąka do ciasta' : 'Mąka', fmtAmount(sourdough ? r.doughFlour : r.flour), 'g', 'big'),
@@ -130,25 +179,48 @@ function pizzaCalculator() {
         st.oil > 0 ? result('Oliwa', fmtAmount(r.oil), 'g') : null,
         result('Masa całkowita', fmtAmount(r.total), 'g', 'total')),
       h('p', { class: 'muted small' }, st.mode === 'flour'
-        ? `Z ${fmtAmount(r.flour)} g łącznej mąki · ok. ${r.ballCount} kulek po ${fmtAmount(st.ballWeight)} g${r.remainder > 0 ? ` + ${fmtAmount(r.remainder)} g reszty` : ''} · suma procentów ${fmtNum(r.pctSum, 2)}% (mąka = 100%)`
-        : `${st.balls} × ${fmtAmount(st.ballWeight)} g · suma procentów ${fmtNum(r.pctSum, 2)}% (mąka = 100%)`),
+        ? 'Z ' + fmtAmount(r.flour) + ' g łącznej mąki · ok. ' + r.ballCount + ' kulek po ' + fmtAmount(st.ballWeight) + ' g' +
+          (r.remainder > 0 ? ' + ' + fmtAmount(r.remainder) + ' g reszty' : '') +
+          ' · suma procentów ' + fmtNum(r.pctSum, 2) + '% (mąka = 100%)'
+        : st.balls + ' × ' + fmtAmount(st.ballWeight) + ' g · suma procentów ' + fmtNum(r.pctSum, 2) + '% (mąka = 100%)'),
       h('section', { class: 'card stack flour-advice' },
-        h('div', { class: 'row between wrap' }, h('strong', null, flourProfile().label), h('span', { class: 'muted small' }, `W ${flourProfile().w} · białko ${flourProfile().protein}`)),
-        h('p', { class: 'muted small' }, `Masz tę mąkę: spróbuj ${fmtNum(st.hydration, 1)}% hydracji (zakres startowy ${flourProfile().range}) i fermentacji: ${flourProfile().fermentation}.`),
-        h('p', { class: 'muted small' }, flourProfile().why),
-        h('a', { href: flourProfile().url, target: '_blank', rel: 'noopener noreferrer' }, 'Parametry mąki u producenta ↗')),
+        h('div', { class: 'row between wrap' },
+          h('strong', null, profile.label),
+          h('span', { class: 'muted small' }, 'W ' + Math.round(profile.wMin) + '–' + Math.round(profile.wMax) +
+            ' · białko ' + fmtNum(profile.protein, 1) + '%')),
+        h('p', { class: 'muted small' }, 'W ' + Math.round(profile.wMin) + '–' + Math.round(profile.wMax) +
+          ' i białko ' + fmtNum(profile.protein, 1) + '% to orientacyjna średnia ważona mieszanki.'),
+        h('p', { class: 'muted small' }, 'Propozycja startowa: ' + hydrationHint + '% hydracji (zakres orientacyjny ' +
+          fmtNum(profile.hMin, 1) + '–' + fmtNum(profile.hMax, 1) + '%). Twoje ustawienie: ' +
+          fmtNum(st.hydration, 1) + '%.'),
+        Math.abs(Number(st.hydration) - profile.hydration) > 0.05
+          ? button('Ustaw hydrację ' + hydrationHint + '%', { sm: true, onClick: () => {
+            st.hydration = profile.hydration; save(); build(); paintOut();
+          } })
+          : null,
+        h('p', { class: 'muted small' }, profile.why),
+        h('p', { class: 'muted small' }, 'Udział w mące: ' + flourParts),
+        ...profile.blend.map((row) => h('a', {
+          href: PIZZA_FLOURS[row.type].url, target: '_blank', rel: 'noopener noreferrer',
+        }, 'Parametry ' + PIZZA_FLOURS[row.type].label + ' u producenta ↗'))),
       sourdough ? h('p', { class: 'muted small' },
-        `${fmtAmount(r.starterSeed)} g zakwasu macierzystego + ${fmtAmount(r.starterFlour)} g mąki + ${fmtAmount(r.starterWater)} g wody = ${fmtAmount(r.starter)} g aktywnego zakwasu (1:1:2).`) : null,
+        fmtAmount(r.starterSeed) + ' g zakwasu macierzystego + ' + fmtAmount(r.starterFlour) +
+        ' g mąki + ' + fmtAmount(r.starterWater) + ' g wody = ' + fmtAmount(r.starter) +
+        ' g aktywnego zakwasu (1:1:2).') : null,
       h('div', { class: 'row wrap gap' },
         button('Zapisz jako recepturę', { icon: 'plus', kind: 'primary', onClick: () => saveAsRecipe(r) }),
         button('Do zakupów', { icon: 'cart', onClick: async () => {
-          const flourToBuy = sourdough ? r.doughFlour + r.starterFlour : r.flour;
-          await addItems([
-            { name: 'Mąka pszenna', amount: Math.round(flourToBuy), unit: 'g' },
-            { name: 'Sól', amount: Math.round(r.salt * 10) / 10, unit: 'g' },
-            ...(!sourdough ? [{ name: `Drożdże ${yeast.label}`, amount: Math.round(r.yeast * 100) / 100, unit: 'g' }] : []),
-            ...(r.oil > 0 ? [{ name: 'Oliwa', amount: Math.round(r.oil), unit: 'g' }] : []),
-          ]);
+          const flourToBuy = sourdough ? r.doughFlour : r.flour;
+          const items = profile.blend.map((row) => ({
+            name: PIZZA_FLOURS[row.type].label,
+            amount: Math.round(flourToBuy * row.pct / 100),
+            unit: 'g',
+          }));
+          if (sourdough && r.starterFlour > 0) items.push({ name: 'Mąka pszenna do zakwasu', amount: Math.round(r.starterFlour), unit: 'g' });
+          items.push({ name: 'Sól', amount: Math.round(r.salt * 10) / 10, unit: 'g' });
+          if (!sourdough) items.push({ name: 'Drożdże ' + yeast.label, amount: Math.round(r.yeast * 100) / 100, unit: 'g' });
+          if (r.oil > 0) items.push({ name: 'Oliwa', amount: Math.round(r.oil), unit: 'g' });
+          await addItems(items);
           toast('Dodano do zakupów', { action: { label: 'Pokaż', fn: () => navigate('/shopping') } });
         } })));
   }
@@ -156,15 +228,21 @@ function pizzaCalculator() {
   async function saveAsRecipe(r) {
     const sourdough = st.leavenType === 'starter';
     const yeast = YEAST_TYPES[st.yeastType] || YEAST_TYPES.fresh;
+    const profile = blendProfile();
     const I = (name, amount, unit, extra = {}) => blankIngredient({ name, amount, unit, ...extra });
     const r1 = (v) => Math.round(v * 10) / 10;
     const doughFlour = sourdough ? r.doughFlour : r.flour;
     const doughWater = sourdough ? r.doughWater : r.water;
-    const ings = [
-      I('Mąka pszenna', r1(doughFlour), 'g', { flour: true, percent: r.flour > 0 ? doughFlour / r.flour * 100 : 100 }),
+    const ings = profile.blend.map((row) => I(
+      PIZZA_FLOURS[row.type].label,
+      r1(doughFlour * row.pct / 100),
+      'g',
+      { flour: true, percent: r.flour > 0 ? doughFlour / r.flour * row.pct : row.pct },
+    ));
+    ings.push(
       I('Woda', r1(doughWater), 'g', { percent: r.flour > 0 ? doughWater / r.flour * 100 : st.hydration }),
       I('Sól', r1(r.salt), 'g', { percent: st.salt }),
-    ];
+    );
     if (sourdough) {
       ings.push(
         I('Zakwas macierzysty', r1(r.starterSeed), 'g'),
@@ -173,29 +251,47 @@ function pizzaCalculator() {
       );
     }
     if (st.oil > 0) ings.push(I('Oliwa', r1(r.oil), 'g', { percent: st.oil }));
-    if (!sourdough) ings.push(I(`Drożdże ${yeast.label}`, Math.round(r.yeast * 100) / 100, 'g', { percent: st.yeast }));
+    if (!sourdough) ings.push(I('Drożdże ' + yeast.label, Math.round(r.yeast * 100) / 100, 'g', { percent: st.yeast }));
     const sec = blankSection('CIASTO'); sec.ingredients = ings;
     const portions = st.mode === 'flour' ? Math.max(1, r.ballCount) : Math.max(1, Math.floor(Number(st.balls) || 0));
+    const portionStep = st.mode === 'flour'
+      ? 'Podziel orientacyjnie na ' + r.ballCount + ' kulek po ' + fmtAmount(st.ballWeight) + ' g' +
+        (r.remainder > 0 ? '; pozostanie ' + fmtAmount(r.remainder) + ' g ciasta' : '') + '.'
+      : 'Podziel na ' + st.balls + ' kulek po ' + fmtAmount(st.ballWeight) + ' g.';
     const steps = sourdough ? [
-      blankStep(`Przygotuj aktywny zakwas 1:1:2: ${fmtAmount(r.starterSeed)} g zakwasu macierzystego, ${fmtAmount(r.starterFlour)} g mąki i ${fmtAmount(r.starterWater)} g wody.`),
+      blankStep('Przygotuj aktywny zakwas 1:1:2: ' + fmtAmount(r.starterSeed) + ' g zakwasu macierzystego, ' +
+        fmtAmount(r.starterFlour) + ' g mąki i ' + fmtAmount(r.starterWater) + ' g wody.'),
       blankStep('Pozostaw zakwas do szczytu aktywności.'),
-      blankStep('Połącz mąkę do ciasta z wodą do ciasta, solą i oliwą; dodaj przygotowany aktywny zakwas. Wyrabiaj do uzyskania gładkiego ciasta.'),
+      blankStep('Połącz mąki do ciasta z wodą, solą i oliwą; dodaj przygotowany aktywny zakwas. Wyrabiaj do uzyskania gładkiego ciasta.'),
     ] : [
       blankStep('Rozpuść sól w wodzie, dodaj drożdże.'),
-      blankStep('Dodaj mąkę i wyrabiaj do gładkiego, elastycznego ciasta.'),
+      blankStep('Połącz wybrane mąki z wodą i wyrabiaj do uzyskania gładkiego, elastycznego ciasta.'),
     ];
-    steps.push(blankStep(st.mode === 'flour'
-      ? `Podziel orientacyjnie na ${r.ballCount} kulek po ${fmtAmount(st.ballWeight)} g${r.remainder > 0 ? `; pozostanie ${fmtAmount(r.remainder)} g ciasta` : ''}.`
-      : `Podziel na ${st.balls} kulek po ${fmtAmount(st.ballWeight)} g.`));
-    steps.push(blankStep(`Fermentuj ok. ${fmtNum(st.hours, 1)} h w ${st.temp} °C.`));
+    if (st.fermentationMode === 'split') {
+      steps.push(blankStep('Fermentuj wstępnie masę przez ' + fmtNum(st.roomHours, 1) + ' h w temperaturze pokojowej (' +
+        fmtNum(st.roomTemp, 1) + ' °C).'));
+      steps.push(blankStep(portionStep));
+      steps.push(blankStep('Uformowane kulki fermentuj na zimno przez 48 h w lodówce (około ' +
+        fmtNum(st.fridgeTemp, 1) + ' °C).'));
+    } else {
+      steps.push(blankStep(portionStep));
+      steps.push(blankStep('Fermentuj ok. ' + fmtNum(st.hours, 1) + ' h w ' + fmtNum(st.temp, 1) + ' °C.'));
+    }
+    const fermentTotal = fermentationHours();
+    const fermentLabel = fermentationSummary();
+    const blendLabel = profile.blend.map((row) => PIZZA_FLOURS[row.type].label + ' ' + fmtNum(row.pct, 1) + '%').join(' + ');
+    const baseDesc = 'Mąki: ' + blendLabel + '. Hydracja ' + st.hydration + '%, sól ' + st.salt + '%' +
+      (st.oil ? ', oliwa ' + st.oil + '%' : '') + '. Fermentacja: ' + fermentLabel + '.';
     const rec = blankRecipe({
-      name: `Ciasto na pizzę (${st.mode === 'flour' ? fmtAmount(r.flour) + ' g mąki' : st.balls + ' × ' + fmtAmount(st.ballWeight) + ' g'})`,
+      name: 'Ciasto na pizzę (' + (st.mode === 'flour'
+        ? fmtAmount(r.flour) + ' g mąki'
+        : st.balls + ' × ' + fmtAmount(st.ballWeight) + ' g') + ')',
       category: 'cat-pizza', servings: portions, yieldAmount: Math.round(r.total), yieldUnit: 'g',
-      fermentTime: Math.round((st.hours || 0) * 60), temperature: `fermentacja w ${st.temp} °C`,
+      fermentTime: Math.round(fermentTotal * 60), temperature: 'Fermentacja: ' + fermentLabel,
       bakers: true, sections: [sec],
       description: sourdough
-        ? `Hydracja ${st.hydration}%, sól ${st.salt}%, aktywny zakwas 1:1:2, zakwas macierzysty ${st.starterPct}% mąki.`
-        : `Hydracja ${st.hydration}%, sól ${st.salt}%${st.oil ? `, oliwa ${st.oil}%` : ''}, drożdże ${st.yeast}%.`,
+        ? baseDesc + ' Aktywny zakwas 1:1:2, zakwas macierzysty ' + st.starterPct + '% mąki.'
+        : baseDesc + ' Drożdże ' + st.yeast + '%.',
       tags: ['ciasto', 'kalkulator'],
       steps,
     });
@@ -205,23 +301,101 @@ function pizzaCalculator() {
 
   function paintSuggestion() {
     if (!suggestionHost) return;
-    const sug = yeastSuggestion(st.temp, st.hours);
+    let sug;
+    let label;
+    if (st.fermentationMode === 'split') {
+      const room = Math.max(0, Number(st.roomHours) || 0);
+      const roomTemp = Number(st.roomTemp) || 20;
+      const fridgeTemp = Number(st.fridgeTemp) || 4;
+      const equivalent = room * Math.pow(2, (roomTemp - 20) / 10) + 48 * Math.pow(2, (fridgeTemp - 20) / 10);
+      sug = yeastSuggestion(20, equivalent);
+      label = 'Orientacyjnie dla ' + fmtNum(room, 1) + ' h w ' + fmtNum(roomTemp, 1) +
+        ' °C + 48 h w lodówce (' + fmtNum(fridgeTemp, 1) + ' °C; ok. ' +
+        fmtNum(equivalent, 1) + ' h równoważnych w 20 °C): ';
+    } else {
+      sug = yeastSuggestion(st.temp, st.hours);
+      label = 'Orientacyjnie dla ' + fmtNum(st.temp, 1) + ' °C i ' + fmtNum(st.hours, 1) + ' h: ';
+    }
     if (sug == null || st.leavenType === 'starter') { suggestionHost.replaceChildren(); return; }
     const yeast = YEAST_TYPES[st.yeastType] || YEAST_TYPES.fresh;
     suggestionHost.replaceChildren(h('div', { class: 'suggest' },
-      h('span', null, `Orientacyjnie dla ${fmtNum(st.temp, 1)} °C i ${fmtNum(st.hours, 1)} h: `,
-        h('strong', { class: 'num' }, fmtNum(sug * yeast.f, 2) + '%'), ` (${yeast.label})`),
+      h('span', null, label, h('strong', { class: 'num' }, fmtNum(sug * yeast.f, 2) + '%'), ' (' + yeast.label + ')'),
       button('Użyj', { sm: true, onClick: () => {
         st.yeast = Math.round(sug * yeast.f * 100) / 100;
         save(); paintOut(); paintSuggestion();
       } })));
   }
 
+  function flourBlendEditor() {
+    const holder = h('section', { class: 'card stack flour-blend-editor' });
+    const summary = h('p', { class: 'muted small' });
+    const paintSummary = () => {
+      const profile = blendProfile();
+      summary.textContent = 'Wyliczony udział: ' + profile.blend.map((row) =>
+        PIZZA_FLOURS[row.type].short + ' ' + fmtNum(row.pct, 1) + '%').join(' · ') +
+        ' (łącznie 100%). Proporcje wpisujesz w częściach.';
+    };
+    const rowsHost = h('div', { class: 'stack' });
+    const rebuildRows = () => {
+      const rows = normalizedBlend();
+      rowsHost.replaceChildren(...rows.map((row, index) => {
+        const usedByOthers = new Set(rows.filter((_, otherIndex) => otherIndex !== index).map((other) => other.type));
+        const flourSelect = selectEl(Object.entries(PIZZA_FLOURS)
+          .filter(([key]) => key === row.type || !usedByOthers.has(key))
+          .map(([key, item]) => [key, item.label]), row.type, (value) => {
+            const next = normalizedBlend().map(({ type, parts }) => ({ type, parts }));
+            next[index] = { ...next[index], type: value };
+            st.flourBlend = next;
+            st.flourType = next[0].type;
+            save(); build(); paintOut();
+          }, { label: 'Mąka ' + (index + 1) });
+        const partsInput = numInput({
+          value: row.parts, label: 'Części mąki ' + (index + 1), dec: 1,
+          onInput: (value) => {
+            if (!(Number(value) > 0)) return;
+            const next = normalizedBlend().map(({ type, parts }) => ({ type, parts }));
+            next[index] = { ...next[index], parts: Number(value) };
+            st.flourBlend = next;
+            st.flourType = next[0].type;
+            save(); paintSummary(); paintOut();
+          },
+        });
+        return h('div', { class: 'card stack flour-blend-row' },
+          h('div', { class: 'row gap' },
+            col(field('Mąka ' + (index + 1), flourSelect)),
+            col(field('Części', partsInput))),
+          rows.length > 1 ? button('Usuń tę mąkę', { sm: true, kind: 'ghost', onClick: () => {
+            st.flourBlend = normalizedBlend().filter((_, removeIndex) => removeIndex !== index)
+              .map(({ type, parts }) => ({ type, parts }));
+            st.flourType = st.flourBlend[0].type;
+            save(); build(); paintOut();
+          } }) : null);
+      }));
+      paintSummary();
+    };
+    const used = new Set(normalizedBlend().map((row) => row.type));
+    const unused = Object.keys(PIZZA_FLOURS).find((key) => !used.has(key));
+    holder.append(
+      h('h2', { class: 'card-title' }, icon('pizza', 20), 'Mieszanka mąk'),
+      h('p', { class: 'muted small' }, 'Dodaj różne mąki i ustaw ich części, np. 70 części Pizzeria + 30 części Nuvola. Kalkulator przelicza proporcje na udział procentowy.'),
+      rowsHost,
+      unused ? button('Dodaj kolejną mąkę', { icon: 'plus', kind: 'ghost', onClick: () => {
+        const next = normalizedBlend().map(({ type, parts }) => ({ type, parts }));
+        next.push({ type: unused, parts: 20 });
+        st.flourBlend = next;
+        st.flourType = next[0].type;
+        save(); build(); paintOut();
+      } }) : null,
+      summary);
+    rebuildRows();
+    return holder;
+  }
+
   function build() {
     const upd = (key) => (value) => { st[key] = value; save(); paintOut(); };
     const chips = (key, values, suffix = '') => h('div', { class: 'chips wrap' }, values.map((value) => h('button', {
       type: 'button', class: 'chip' + (st[key] === value ? ' on' : ''),
-      onClick: () => { st[key] = value; save(); build(); paintOut(); },
+      onClick: () => { st[key] = value; save(); build(); paintOut(); paintSuggestion(); },
     }, String(value).replace('.', ',') + suffix)));
     suggestionHost = h('div', { class: 'suggestion-host' });
     form.replaceChildren(
@@ -231,11 +405,6 @@ function pizzaCalculator() {
         }, { label: 'Sposób obliczania' }),
         st.mode === 'flour'
           ? h('div', { class: 'stack' },
-            field('Rodzaj mąki', selectEl(Object.entries(PIZZA_FLOURS).map(([key, flour]) => [key, flour.label]), st.flourType, (value) => {
-              st.flourType = value;
-              st.hydration = PIZZA_FLOURS[value].hydration;
-              save(); build(); paintOut();
-            }, { label: 'Rodzaj mąki Caputo' })),
             (() => {
               const range = h('input', { type: 'range', min: 250, max: 10000, step: 50, value: Math.min(10000, Math.max(250, st.flour)), class: 'range', 'aria-label': 'Ilość mąki — suwak' });
               const amount = numInput({ value: st.flour, label: 'Ilość mąki (g)', dec: 0, onInput: (value) => {
@@ -252,6 +421,7 @@ function pizzaCalculator() {
               col(field('Liczba kulek', numInput({ value: st.balls, label: 'Liczba kulek', dec: 0, onInput: upd('balls') }))),
               col(field('Waga kulki (g)', numInput({ value: st.ballWeight, label: 'Waga kulki', dec: 1, onInput: upd('ballWeight') })))),
             chips('ballWeight', [200, 250, 280, 320, 350], ' g'))),
+      flourBlendEditor(),
       h('section', { class: 'card stack' },
         h('div', { class: 'row gap' },
           col((() => {
@@ -260,7 +430,9 @@ function pizzaCalculator() {
               if (value == null) return;
               st.hydration = value; range.value = String(Math.min(85, Math.max(50, value))); save(); paintOut();
             } });
-            range.addEventListener('input', () => { st.hydration = Number(range.value); amount.value = String(st.hydration); amount.classList.remove('invalid'); save(); paintOut(); });
+            range.addEventListener('input', () => {
+              st.hydration = Number(range.value); amount.value = String(st.hydration); amount.classList.remove('invalid'); save(); paintOut();
+            });
             return field('Hydracja %', h('div', { class: 'flour-amount-controls' }, amount, range));
           })()),
           col(field('Sól %', numInput({ value: st.salt, label: 'Sól', dec: 2, onInput: upd('salt') })))),
@@ -268,15 +440,32 @@ function pizzaCalculator() {
         field('Oliwa % (opcjonalnie)', numInput({ value: st.oil, label: 'Oliwa', dec: 2, onInput: upd('oil') }))),
       h('section', { class: 'card stack' },
         h('h2', { class: 'card-title' }, icon('thermo', 20), 'Drożdże i fermentacja'),
-        h('div', { class: 'row gap' },
-          col(field('Temperatura (°C)', numInput({ value: st.temp, label: 'Temperatura fermentacji', dec: 1, onInput: (value) => {
-            st.temp = value; save(); paintOut(); paintSuggestion();
-          } }))),
-          col(field('Czas (godz.)', numInput({ value: st.hours, label: 'Czas fermentacji w godzinach', dec: 1, onInput: (value) => {
-            st.hours = value; save(); paintOut(); paintSuggestion();
-          } })))),
+        segmented([['single', 'Jeden etap'], ['split', 'Wstępna + zimna']], st.fermentationMode, (value) => {
+          st.fermentationMode = value; save(); build(); paintOut(); paintSuggestion();
+        }, { label: 'Schemat fermentacji' }),
+        st.fermentationMode === 'split'
+          ? h('div', { class: 'stack' },
+            h('div', { class: 'row gap' },
+              col(field('Wstępna (godz.)', numInput({ value: st.roomHours, label: 'Fermentacja wstępna w godzinach', dec: 1, onInput: (value) => {
+                st.roomHours = value; save(); paintOut(); paintSuggestion();
+              } }))),
+              col(field('Temperatura pokoju (°C)', numInput({ value: st.roomTemp, label: 'Temperatura fermentacji wstępnej', dec: 1, onInput: (value) => {
+                st.roomTemp = value; save(); paintOut(); paintSuggestion();
+              } })))),
+            chips('roomHours', [6, 7, 8], ' h'),
+            h('div', { class: 'fermentation-track card' },
+              h('strong', null, 'WSTĘPNA · ' + fmtNum(st.roomHours, 1) + ' h · ' + fmtNum(st.roomTemp, 1) + ' °C'),
+              h('span', { class: 'muted small' }, 'Następnie: ZIMNA · 48 h w lodówce · około ' + fmtNum(st.fridgeTemp, 1) + ' °C')),
+            h('p', { class: 'muted small' }, 'Punkty startowe: 6, 7 lub 8 godzin w temperaturze pokojowej, potem 48 godzin w lodówce. Rzeczywiste tempo zależy od temperatury ciasta, ilości drożdży i mąki.'))
+          : h('div', { class: 'row gap' },
+            col(field('Temperatura (°C)', numInput({ value: st.temp, label: 'Temperatura fermentacji', dec: 1, onInput: (value) => {
+              st.temp = value; save(); paintOut(); paintSuggestion();
+            } }))),
+            col(field('Czas (godz.)', numInput({ value: st.hours, label: 'Czas fermentacji w godzinach', dec: 1, onInput: (value) => {
+              st.hours = value; save(); paintOut(); paintSuggestion();
+            } })))),
         field('Rodzaj zaczynu', selectEl([['yeast', 'Drożdże'], ['starter', 'Aktywny zakwas 1:1:2']], st.leavenType, (value) => {
-          st.leavenType = value; save(); build(); paintOut();
+          st.leavenType = value; save(); build(); paintOut(); paintSuggestion();
         })),
         st.leavenType === 'starter'
           ? h('div', { class: 'stack' },
@@ -288,15 +477,20 @@ function pizzaCalculator() {
             h('p', { class: 'muted small' }, 'Zakwas macierzysty ma 100% hydracji. Dokarmienie 1:1:2; używaj maksymalnie 1% mąki. Mąka i woda zakwasu wliczają się do hydracji ciasta.'))
           : h('div', { class: 'row gap' },
             col(field('Rodzaj drożdży', selectEl(Object.entries(YEAST_TYPES).map(([key, value]) => [key, value.label]), st.yeastType, (value) => {
-              st.yeastType = value; save(); build(); paintOut();
+              st.yeastType = value; save(); build(); paintOut(); paintSuggestion();
             }))),
             col(field('Drożdże %', numInput({ value: st.yeast, label: 'Drożdże procent', dec: 2, onInput: upd('yeast') })))),
         suggestionHost,
-        h('p', { class: 'muted small' }, 'Wskazówka fermentacji jest orientacyjna — mąka, temperatura ciasta i proces zmieniają tempo dojrzewania.')));
+        h('p', { class: 'muted small' }, 'Wskazówka ilości drożdży jest orientacyjna — mąka, temperatura ciasta i proces zmieniają tempo dojrzewania.')));
     paintSuggestion();
   }
 
-  ready.then(() => { build(); paintOut(); });
+  ready.then(() => {
+    if (!Array.isArray(st.flourBlend) || !st.flourBlend.length) {
+      st.flourBlend = [{ type: PIZZA_FLOURS[st.flourType] ? st.flourType : 'pizzeria-blue', parts: 100 }];
+    }
+    build(); paintOut();
+  });
   build(); paintOut();
   return { el: s.el };
 }

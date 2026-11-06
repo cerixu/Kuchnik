@@ -3,6 +3,11 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.94': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.4.94 — mieszanki mąk i dwustopniowa fermentacja pizzy.',
+    items: ['Kalkulator pozwala łączyć mąki Caputo w dowolnych proporcjach części, pokazuje przeliczone udziały oraz średnie ważone W, białka i hydracji.', 'Dodano fermentację w dwóch etapach: wybierz 6, 7 lub 8 godzin w temperaturze pokojowej, a następnie 48 godzin w lodówce; podpowiedź drożdży uwzględnia oba etapy.', 'Zapis receptury i lista zakupów zachowują wybrane mąki oraz ich proporcje.'],
+    footer: 'Dotychczasowe ustawienia kalkulatora i dane użytkownika pozostają zachowane.'
+  }),
   '1.4.93': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.4.93 — autorskie rysunki i odświeżony szklany dok.',
     items: ['Dolna nawigacja została wycentrowana i otrzymała pięć ręcznie narysowanych znaków oraz wielowarstwową powierzchnię Liquid Glass.', 'Kuchnie świata i kategorie korzystają teraz z własnych wektorowych rysunków w grafitowej, kremowej i miedzianej palecie.', 'Ozdobne emoji usunięto z widocznych części aplikacji; stare ikony zapisane przy kategoriach pozostają zgodne i wyświetlają nowy rysunek.'],

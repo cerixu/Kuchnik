@@ -1,6 +1,6 @@
 # ŻARŁOK — Kuchnik
 
-> **Aktualna wersja aplikacji: 1.4.93**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
+> **Aktualna wersja aplikacji: 1.4.94**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
@@ -9,7 +9,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. Biblioteka potraw jest stopni
 ## Co potrafi
 
 - **Safari (1.3):** baza danych ma ponawianie, limit czasu otwarcia, naprawę magazynów i **tryb awaryjny** (localStorage), więc aplikacja otwiera się nawet gdy iOS zablokuje IndexedDB (tryb prywatny, Lockdown, zawieszenie). Przy awarii pokazuje prawdziwy komunikat błędu, przyciski „Spróbuj ponownie” i „Tryb awaryjny”; stan magazynu widać w Ustawieniach.
-- **Menu główne i dok (1.4.93):** zachowana karuzela dań, autorskie rysowane skróty, własne znaki kategorii i kuchni świata oraz wycentrowany dok Liquid Glass z pięcioma ręcznie narysowanymi ikonami.
+- **Menu główne i dok (1.4.94):** zachowana karuzela dań, autorskie rysowane skróty, własne znaki kategorii i kuchni świata oraz wycentrowany dok Liquid Glass z pięcioma ręcznie narysowanymi ikonami.
 - **Karty z opisem i pochodzeniem:** każda receptura ma krótki opis, rysowany znak kraju pochodzenia i źródło (strona, baza lub własny przepis); filtr po kraju. W szczegółach są chipy z krajem i źródłem oraz pływający przycisk GOTUJĘ.
 - **Wygląd z makiety (1.2):** ciemny grafit, szare karty z miedzianą krawędzią i światłem u dołu, **okrągłe zdjęcia dań**, ocena ★ i kalorie po prawej stronie karty, pasek ikon bez podpisów, font Poppins. Szczegóły receptury: duże okrągłe zdjęcie, tytuł z oceną, **składniki na łuku** (okrągłe ikony) i „Pokaż szczegóły ⌄”. Aplikacja ma stały ciemny motyw, rysowane kredką ilustracje i pięcioprzyciskową nawigację z podpisami.
 - **225 przykładowych receptur:** polska kuchnia (zupy, mięsa, pierogi, ciasta, wigilijne), kuchnie świata (Włochy, Francja, Hiszpania, Grecja, Meksyk, USA, Azja, Bliski Wschód…), śniadania, wege i wegańskie, desery, sosy bazowe, prep, przetwory, ponad 20 drinków. Tradycyjne są oznaczone gwiazdką i autorskim znakiem kraju. Każdą recepturę możesz edytować lub usunąć; usunięta nie wraca po aktualizacji, a „Przywróć przykładowe receptury” w Ustawieniach przywraca brakujące.
@@ -21,7 +21,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. Biblioteka potraw jest stopni
 - **Szukaj w sieci — w samej aplikacji** (patrz niżej).
 - **Start i diagnostyka:** jeśli ładowanie modułów albo bazy się zawiesi, aplikacja pokaże ekran diagnostyczny z przyciskiem odświeżenia zamiast bez końca wyświetlać animację startową. Limit czasu rozruchu wykrywa problem z bazą.
 - **Magazyn:** osobny ekran dostępny ze Startu; wyszukiwanie, filtrowanie po lokalizacji, dodawanie i edycja produktów, szybkie zwiększanie stanów, zapisywanie strat i podgląd ich kosztu. Po pełnym zakończeniu trybu GOTUJĘ aplikacja może po potwierdzeniu odjąć dostępne składniki od stanu magazynu, zgodnie z przeliczoną liczbą porcji. Skaner EAN uruchamia kamerę, automatycznie wykrywa kod i opcjonalnie pobiera nazwę produktu z Open Food Facts. Testy kamery na fizycznym iPhonie pozostają do wykonania.
-- **Narzędzia kuchenne** (zakładka Kalkulatory): pizza/ciasto z procentami piekarskimi — obliczanie od liczby i masy kulek albo bezpośrednio od ilości mąki (np. 7,5 kg), procenty, przeliczanie receptury, koszt i food cost, sól i solanki, zakwas, forma do pieczenia, przelicznik jednostek (także g ↔ ml), temperatury mięs, czasy gotowania z minutnikiem, zamienniki, „Co mam w lodówce?”, „Co dziś gotujemy?”.
+- **Narzędzia kuchenne** (zakładka Kalkulatory): pizza/ciasto z procentami piekarskimi — obliczanie od liczby i masy kulek albo bezpośrednio od ilości mąki (np. 7,5 kg), mieszanie mąk w różnych proporcjach, hydrację oraz fermentację jednoetapową lub podzieloną na 6/7/8 h w temperaturze pokojowej + 48 h w lodówce, procenty, przeliczanie receptury, koszt i food cost, sól i solanki, zakwas, forma do pieczenia, przelicznik jednostek (także g ↔ ml), temperatury mięs, czasy gotowania z minutnikiem, zamienniki, „Co mam w lodówce?”, „Co dziś gotujemy?”.
 - **Przelicz**, **procenty piekarskie**, **food cost**, **zakupy** (z alejkami), **import z tekstu**, **historia zmian** z przywracaniem wersji, **kopia zapasowa JSON** — jak w poprzednich wersjach.
 
 ## Struktura plików
