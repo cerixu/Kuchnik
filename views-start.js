@@ -27,10 +27,13 @@ export function startView() {
   searchIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); searchIn.blur(); go(); } });
   const searchBox = h('div', { class: 'start-searchbox' }, icon('search', 20), searchIn);
 
-  const action = (label, ico, path, { badge = 0, primary = false, fn } = {}) =>
-    h('button', { type: 'button', class: 'qa' + (primary ? ' primary' : ''), onClick: fn || (() => navigate(path)), 'aria-label': label },
-      h('span', { class: 'qa-ico' }, icon(ico, 26), badge ? h('span', { class: 'badge' }, String(badge > 99 ? '99+' : badge)) : null),
-      h('span', { class: 'qa-label' }, label));
+  const action = (label, ico, path, { badge = 0, primary = false, fn, wide = false, hint = '' } = {}) => {
+    const copy = wide
+      ? h('span', { class: 'qa-copy' }, h('span', { class: 'qa-label' }, label), h('span', { class: 'qa-hint' }, hint))
+      : h('span', { class: 'qa-label' }, label);
+    return h('button', { type: 'button', class: 'qa' + (primary ? ' primary' : '') + (wide ? ' qa-wide' : ''), onClick: fn || (() => navigate(path)), 'aria-label': label },
+      h('span', { class: 'qa-ico' }, icon(ico, 26), badge ? h('span', { class: 'badge' }, String(badge > 99 ? '99+' : badge)) : null), copy);
+  };
 
   /** Karuzela „coverflow”: środkowa karta największa, sąsiednie mniejsze i przygaszone. */
   function deck(list) {
@@ -77,11 +80,18 @@ export function startView() {
       kids.push(sectionHead('Co dziś gotujemy?', { action: 'Losuj', onAction: () => navigate('/calc/random') }), deck(inspire));
     }
 
-    kids.push(sectionHead('Na skróty'));
-    kids.push(h('div', { class: 'qa-row', role: 'group', 'aria-label': 'Szybkie akcje' },
-      action('Nowa receptura', 'plus', '/new', { primary: true }), action('Gotuję', 'pot', '/cook'), action('Moje receptury', 'pot', '/recipes'), action('Ostatnio używane', 'clock', '/recipes?f=recent'),
-      action('Ulubione', 'heart', '/recipes?f=fav'), action('Kalkulatory', 'calc', '/calc'), action('Lista zakupów', 'cart', '/shopping', { badge: n }),
-      action('Szukaj w sieci', 'globe', '/search'), action('Magazyn', 'fridge', '/inventory'), action('Minutnik', 'timer', null, { fn: () => openTimersSheet() })));
+    const menuGroup = (title, size, actions) => h('section', { class: 'home-menu-group' },
+      h('h3', { class: 'home-menu-title' }, title),
+      h('div', { class: 'qa-row qa-' + size, role: 'group', 'aria-label': title }, ...actions));
+    kids.push(sectionHead('Menu kucharza'));
+    kids.push(menuGroup('Gotowanie', '4',
+      [action('Nowa receptura', 'plus', '/new', { primary: true }), action('Gotuję', 'chef', '/cook'), action('Kalkulatory', 'calc', '/calc'), action('Minutnik', 'timer', null, { fn: () => openTimersSheet() })]));
+    kids.push(menuGroup('Twoja biblioteka', '3',
+      [action('Moje receptury', 'book', '/recipes'), action('Ostatnio używane', 'clock', '/recipes?f=recent'), action('Ulubione', 'heart', '/recipes?f=fav')]));
+    kids.push(menuGroup('Zapasy i zakupy', '2',
+      [action('Lista zakupów', 'basket', '/shopping', { badge: n }), action('Magazyn', 'fridge', '/inventory')]));
+    kids.push(menuGroup('Odkrywaj', 'wide',
+      [action('Szukaj w sieci', 'search', '/search', { wide: true, hint: 'Znajdź przepis albo nową inspirację' })]));
 
     if (backupDue()) {
       const d = daysSinceBackup();
