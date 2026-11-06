@@ -238,6 +238,16 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
   { key: 'prego-dolce-roso', name: 'Dolce Roso', filename: 'prego-dolce-roso-kredka.png', path: 'assets/food-illustrations/prego-dolce-roso-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
   { key: 'prego-diavola', name: 'Diavola', filename: 'prego-diavola-kredka.png', path: 'assets/food-illustrations/prego-diavola-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
   { key: 'prego-siciliano', name: 'Siciliano', filename: 'prego-siciliano-kredka.png', path: 'assets/food-illustrations/prego-siciliano-kredka.png', batch: 'PREGO! · plansza 1/4 — pizze rosso', status: 'pending' },
+  { key: 'prego-sole-e-mare', name: 'Sole e Mare', filename: 'prego-sole-e-mare-kredka.png', path: 'assets/food-illustrations/prego-sole-e-mare-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
+  { key: 'prego-verde-spinachi', name: 'Verde Spinachi', filename: 'prego-verde-spinachi-kredka.png', path: 'assets/food-illustrations/prego-verde-spinachi-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
+  { key: 'prego-tonno-e-cipolla', name: 'Tonno e Cipolla', filename: 'prego-tonno-e-cipolla-kredka.png', path: 'assets/food-illustrations/prego-tonno-e-cipolla-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
+  { key: 'prego-bosco-bianco', name: 'Bosco Bianco', filename: 'prego-bosco-bianco-kredka.png', path: 'assets/food-illustrations/prego-bosco-bianco-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
+  { key: 'prego-pera-divina', name: 'Pera Divina', filename: 'prego-pera-divina-kredka.png', path: 'assets/food-illustrations/prego-pera-divina-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
+  { key: 'prego-pancetta', name: 'Pancetta', filename: 'prego-pancetta-kredka.png', path: 'assets/food-illustrations/prego-pancetta-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
+  { key: 'prego-quattro-formaggi', name: 'Quattro Formaggi', filename: 'prego-quattro-formaggi-kredka.png', path: 'assets/food-illustrations/prego-quattro-formaggi-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
+  { key: 'prego-delicata', name: 'Delicata', filename: 'prego-delicata-kredka.png', path: 'assets/food-illustrations/prego-delicata-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
+  { key: 'prego-liguria', name: 'Liguria', filename: 'prego-liguria-kredka.png', path: 'assets/food-illustrations/prego-liguria-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
+  { key: 'prego-dolce', name: 'Dolce', filename: 'prego-dolce-kredka.png', path: 'assets/food-illustrations/prego-dolce-kredka.png', batch: 'PREGO! · plansza 2/4 — pizze Rosso i Bianca', status: 'pending' },
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));

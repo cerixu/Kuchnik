@@ -1,6 +1,6 @@
 # ŻARŁOK — Kuchnik
 
-> **Aktualna wersja aplikacji: 1.5.6**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
+> **Aktualna wersja aplikacji: 1.5.7**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
@@ -11,7 +11,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur bazowyc
 - **Safari (1.3):** baza danych ma ponawianie, limit czasu otwarcia, naprawę magazynów i **tryb awaryjny** (localStorage), więc aplikacja otwiera się nawet gdy iOS zablokuje IndexedDB (tryb prywatny, Lockdown, zawieszenie). Przy awarii pokazuje prawdziwy komunikat błędu, przyciski „Spróbuj ponownie” i „Tryb awaryjny”; stan magazynu widać w Ustawieniach.
 - **Własne przepisy (1.4.99):** jeśli przepis nie ma przypisanej ilustracji, aplikacja pokazuje neutralny komunikat zamiast generycznego rysunku kategorii. Własne zdjęcia pozostają zachowane.
 - **Ikony kuchni i kategorii (1.5.2):** flagi i rysunki korzystają z tej samej wielkości odznaki; rysunki są optycznie wycentrowane na wspólnym, spokojnym pierścieniu.
-- **PREGO! (1.5.6):** osobna kategoria zawiera wszystkie 37 pozycji z karty; pierwsze 10 ilustracji pizzy Rosso jest już w galerii, a pozostałe czekają na kolejne plansze. Gramatury i techniki to robocze szkice do zatwierdzenia w restauracji.
+- **PREGO! (1.5.7):** osobna kategoria zawiera wszystkie 37 pozycji z karty; 20 ilustracji pizz Rosso i Bianca jest już w galerii, a kolejne pozycje są przygotowywane partiami. Gramatury i techniki to robocze szkice do zatwierdzenia w restauracji.
 - **Składniki (1.5.1):** lokalne rysunki widoczne są w „Gotuję”, przygotowaniu „Prowadź mnie” i przy składnikach wykrywanych dla danego kroku.
 - **Nawigacja (1.5.0):** pływający dock uwzględnia safe area, zostawia miejsce na ostatnią kartę i dopasowuje się do niskiego ekranu poziomego; animacja zaznaczenia szanuje ograniczenie ruchu.
 - **PWA (1.4.98):** cache-first dla grafik potraw i składników, stale-while-revalidate dla lokalnych modułów JS/CSS oraz ograniczony network-first dla nawigacji i pozostałych żądań same-origin.
