@@ -29,13 +29,16 @@ export function parseSeeds(text, f, opts = {}) {
     if (line.startsWith('# ')) {
       finish();
       const name = line.slice(2).trim();
-      cur = f.blankRecipe({ id: 'rcp_seed_' + slug(name), name, sections: [], steps: [], source: 'ŻARŁOK · Kuchnik' });
+      cur = f.blankRecipe({ id: 'rcp_seed_' + slug(name), name, sections: [], steps: [], source: opts.source || 'ŻARŁOK · Kuchnik' });
       sec = null;
     } else if (!cur) continue;
     else if (line.startsWith('@ ')) {
       for (const m of line.slice(2).matchAll(/(\w+)(?:=("[^"]*"|\S+))?/g)) {
         const k = m[1], v = (m[2] || '').replace(/^"|"$/g, '').replace(/_/g, ' ');
         if (k === 'cat') cur.category = 'cat-' + v;
+        else if (k === 'id') cur.id = (opts.idPrefix || 'rcp_seed_') + v;
+        else if (k === 'price') cur.salePrice = parseNum(v);
+        else if (k === 'illustration') cur.illustrationKey = v;
         else if (k === 'origin') cur.origin = v;
         else if (k === 'trad') cur.traditional = true;
         else if (k === 'bakers') cur.bakers = true;

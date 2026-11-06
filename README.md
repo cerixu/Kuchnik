@@ -1,24 +1,24 @@
 # ŻARŁOK — Kuchnik
 
-> **Aktualna wersja aplikacji: 1.5.3**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
+> **Aktualna wersja aplikacji: 1.5.4**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
-Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur ma lokalny rysunek kredką z matowym czarnym naczyniem i cienkim miedzianym rantem. Własne zdjęcia pozostają bez zmian; status akceptacji ilustracji jest osobno oznaczany w rejestrze.
+Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur bazowych ma lokalny rysunek kredką z matowym czarnym naczyniem i cienkim miedzianym rantem. Własne zdjęcia pozostają bez zmian; status akceptacji ilustracji jest osobno oznaczany w rejestrze. 37 szkiców PREGO! ma osobną kolejkę ilustracji i nie używa rysunków innych potraw.
 
 ## Co potrafi
 
 - **Safari (1.3):** baza danych ma ponawianie, limit czasu otwarcia, naprawę magazynów i **tryb awaryjny** (localStorage), więc aplikacja otwiera się nawet gdy iOS zablokuje IndexedDB (tryb prywatny, Lockdown, zawieszenie). Przy awarii pokazuje prawdziwy komunikat błędu, przyciski „Spróbuj ponownie” i „Tryb awaryjny”; stan magazynu widać w Ustawieniach.
 - **Własne przepisy (1.4.99):** jeśli przepis nie ma przypisanej ilustracji, aplikacja pokazuje neutralny komunikat zamiast generycznego rysunku kategorii. Własne zdjęcia pozostają zachowane.
 - **Ikony kuchni i kategorii (1.5.2):** flagi i rysunki korzystają z tej samej wielkości odznaki; rysunki są optycznie wycentrowane na wspólnym, spokojnym pierścieniu.
-- **PREGO! (1.5.3):** dodano osobną kategorię restauracji; gotowa kolekcja przepisów zostanie uzupełniona z aktualnej karty.
+- **PREGO! (1.5.4):** osobna kategoria zawiera wszystkie 37 pozycji z przekazanej karty. Ceny są zapisane; gramatury i techniki to robocze szkice do zatwierdzenia w restauracji.
 - **Składniki (1.5.1):** lokalne rysunki widoczne są w „Gotuję”, przygotowaniu „Prowadź mnie” i przy składnikach wykrywanych dla danego kroku.
 - **Nawigacja (1.5.0):** pływający dock uwzględnia safe area, zostawia miejsce na ostatnią kartę i dopasowuje się do niskiego ekranu poziomego; animacja zaznaczenia szanuje ograniczenie ruchu.
 - **PWA (1.4.98):** cache-first dla grafik potraw i składników, stale-while-revalidate dla lokalnych modułów JS/CSS oraz ograniczony network-first dla nawigacji i pozostałych żądań same-origin.
 - **Menu i rysunki (1.4.96):** wyrównane skróty Start, spokojniejsze znaki kategorii i kuchni świata oraz wycentrowany dok Liquid Glass.
 - **Karty z opisem i pochodzeniem:** każda receptura ma krótki opis, rysowany znak kraju pochodzenia i źródło (strona, baza lub własny przepis); filtr po kraju. W szczegółach są chipy z krajem i źródłem oraz pływający przycisk GOTUJĘ.
 - **Wygląd (1.4.96):** ciemny grafit, matowe powierzchnie Liquid Glass, miedziane detale, kreskowane znaki własne i wycentrowane ilustracje. Aplikacja ma stały ciemny motyw oraz pięcioprzyciskową dolną nawigację z podpisami.
-- **228 receptur:** 225 w bazie startowej oraz 3 dodatkowe klasyki (Carbonara, Pizza Napoletana i Sos pomidorowy). polska kuchnia (zupy, mięsa, pierogi, ciasta, wigilijne), kuchnie świata (Włochy, Francja, Hiszpania, Grecja, Meksyk, USA, Azja, Bliski Wschód…), śniadania, wege i wegańskie, desery, sosy bazowe, prep, przetwory, ponad 20 drinków. Tradycyjne są oznaczone gwiazdką i autorskim znakiem kraju. Każdą recepturę możesz edytować lub usunąć; usunięta nie wraca po aktualizacji, a „Przywróć przykładowe receptury” w Ustawieniach przywraca brakujące.
+- **265 receptur (228 bazowych i 37 PREGO!):** 225 w bazie startowej oraz 3 dodatkowe klasyki (Carbonara, Pizza Napoletana i Sos pomidorowy). polska kuchnia (zupy, mięsa, pierogi, ciasta, wigilijne), kuchnie świata (Włochy, Francja, Hiszpania, Grecja, Meksyk, USA, Azja, Bliski Wschód…), śniadania, wege i wegańskie, desery, sosy bazowe, prep, przetwory, ponad 20 drinków. Kolekcja PREGO! obejmuje 20 pizz, 5 przystawek, 2 kanapki, 3 sałatki, 5 makaronów i 2 pozycje sezonowe. Tradycyjne są oznaczone gwiazdką i autorskim znakiem kraju. Każdą recepturę możesz edytować lub usunąć; usunięta nie wraca po aktualizacji, a „Przywróć przykładowe receptury” w Ustawieniach przywraca brakujące.
 - **Ilustracje dań** są lokalnymi plikami PNG przypisanymi indywidualnie do przepisów. Stare SVG nie zastępują brakujących rysunków; nowa grafika pojawia się po dodaniu osobnego pliku. Własne zdjęcia dodane w edytorze pozostają zachowane.
 - **Szacunek kalorii na porcję** z tabel wartości odżywczej (pokazywany tylko, gdy rozpoznano ≥ 70% składników; to przybliżenie).
 - **Lista receptur:** kafelki lub lista, wczytywanie partiami po 40, wyszukiwarka bez względu na polskie znaki, kategorie, tagi (stuknij tag w recepturze), filtry, sortowanie, ulubione, ostatnie, „Polecane na dziś”, kategorie na Starcie.

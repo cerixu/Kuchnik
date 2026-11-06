@@ -3,10 +3,16 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.4': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.5.4 — pełna karta PREGO! Kamienna Góra.',
+    items: ['Dodano 37 pozycji z przekazanej karty: pizze, przystawki, kanapki, sałatki, makarony i pozycje sezonowe.', 'Ceny z karty są zapisane w recepturach. Gramatury i procedury oznaczono jako robocze do sprawdzenia przez kuchnię restauracji.', 'Galeria pokazuje oddzielne pozycje PREGO! i ich brakujące ilustracje; rysunek innego przepisu nie jest podmieniany.'],
+    footer: 'Każdą roboczą recepturę można edytować. Przed użyciem produkcyjnym trzeba zatwierdzić gramatury i procedury w restauracji.'
+  }),
+
   '1.5.3': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.3 — osobna kategoria dla PREGO! Kamienna Góra.',
+    intro: 'ŻARŁOK / Kuchnik 1.5.3 — przygotowanie osobnej kategorii dla PREGO! Kamienna Góra.',
     items: ['Dodano kategorię PREGO! z własnym rysowanym znakiem.', 'Istniejące instalacje otrzymują kategorię bez usuwania własnych kategorii i receptur.'],
-    footer: 'Kolekcję restauracji uzupełnimy po spisaniu wszystkich pozycji z aktualnej karty.'
+    footer: 'Kolekcja dań z karty została dodana w wersji 1.5.4.'
   }),
 
   '1.5.2': Object.freeze({

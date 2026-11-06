@@ -231,7 +231,9 @@ export const FOOD_ILLUSTRATIONS = Object.freeze([
 ]);
 const normalise = (value) => String(value || '').toLocaleLowerCase('pl').replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const RECIPE_NAMES = new Map(FOOD_ILLUSTRATIONS.map((item) => [normalise(item.name), item]));
+const RECIPE_KEYS = new Map(FOOD_ILLUSTRATIONS.map((item) => [item.key, item]));
 export function illustrationForRecipe(recipe) {
   if (!recipe || !recipe.name) return null;
+  if (recipe.illustrationKey) return RECIPE_KEYS.get(recipe.illustrationKey) || null;
   return RECIPE_NAMES.get(normalise(recipe.name)) || null;
 }
