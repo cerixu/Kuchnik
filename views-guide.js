@@ -10,6 +10,7 @@ import { navigate, goBack } from './router.js';
 import { getRecipe, kv, patchRecipe, getSetting, setSetting, allIngredients } from './recipes.js';
 import { scaleRecipe } from './calculator.js';
 import { qtyParts } from './components.js';
+import { ingIconUrl } from './ingredient-icons.js';
 import { ingredientsInText } from './kitchen.js';
 import { findTimes } from './views-cook.js';
 import { startTimer, openTimersSheet } from './timers.js';
@@ -126,8 +127,9 @@ export function guideView({ id }) {
         if (!list.length) return [];
         return [sec.name ? h('div', { class: 'tape' }, sec.name) : null, ...list.map((i) => {
           const q = qtyParts(i);
-          const row = h('div', { class: 'cook-row' + (st.have[i.id] ? ' on' : ''), role: 'checkbox', tabindex: '0', 'aria-checked': !!st.have[i.id] },
+          const row = h('div', { class: 'cook-row ingredient-row' + (st.have[i.id] ? ' on' : ''), role: 'checkbox', tabindex: '0', 'aria-checked': !!st.have[i.id] },
             h('span', { class: 'cbox' }, icon('check', 22)),
+            h('img', { class: 'cook-ing-ico', src: ingIconUrl(i.name), alt: '', loading: 'lazy', decoding: 'async' }),
             h('span', { class: 'cook-text' }, h('span', { class: 'cook-name' }, i.name), h('span', { class: 'cook-qty' }, h('span', { class: 'amt num' }, q.num), h('span', { class: 'unit' }, q.unit))));
           const tgl = () => { st.have[i.id] = !st.have[i.id]; if (!st.have[i.id]) delete st.have[i.id]; saveSt(); paint(false); };
           row.addEventListener('click', tgl);
@@ -149,7 +151,7 @@ export function guideView({ id }) {
       h('div', { class: 'guide-kicker' }, `Krok ${st.page} z ${stepsCount()}`),
       h('p', { class: 'guide-text' }, step.text),
       ings.length ? h('div', null, h('div', { class: 'guide-sub' }, 'Potrzebne w tym kroku'),
-        h('div', { class: 'guide-chips' }, ings.map((i) => { const q = qtyParts(i); return h('span', { class: 'gchip' }, h('span', null, i.name.replace(/\s*\(.*\)\s*/, '')), h('strong', { class: 'num' }, [q.num, q.unit].filter(Boolean).join('\u00a0'))); }))) : null,
+        h('div', { class: 'guide-chips' }, ings.map((i) => { const q = qtyParts(i); return h('span', { class: 'gchip' }, h('img', { class: 'guide-ing-ico', src: ingIconUrl(i.name), alt: '', loading: 'lazy', decoding: 'async' }), h('span', null, i.name.replace(/\s*\(.*\)\s*/, '')), h('strong', { class: 'num' }, [q.num, q.unit].filter(Boolean).join('\u00a0'))); }))) : null,
       times.length ? h('div', { class: 'guide-timers' }, times.map((t) => button(`Minutnik: ${t.label}`, { icon: 'timer', kind: 'primary', block: true,
         onClick: () => { startTimer(t.sec, `krok ${st.page} · ${base().name}`); toast(`Minutnik: ${t.label}`); } }))) : null,
       speechSupported() ? button('Czytaj ten krok', { icon: 'volume', kind: 'ghost', onClick: () => speak(`Krok ${st.page}. ${step.text}`) }) : null);

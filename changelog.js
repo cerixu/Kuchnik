@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.1': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.5.1 — rysunki składników towarzyszą przygotowaniu i gotowaniu.',
+    items: ['Własne ilustracje 84 składników pojawiają się również na liście w „Gotuję” i w przygotowaniu „Prowadź mnie”.', 'Składniki rozpoznane dla poszczególnych kroków mają małe rysunki w kapsułkach.', 'Grafiki są lokalne, ładowane leniwie i dostępne offline zgodnie z pakietem ikon.'],
+    footer: 'Mapowanie 567 nazw składników do lokalnych ikon pozostaje bez zmian.'
+  }),
+
   '1.5.0': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.5.0 — dopracowany dolny dock i wygodne przewijanie na iPhonie.',
     items: ['Ostatnie karty przewijają się w całości nad pływającym paskiem nawigacji.', 'Wysokość i odsunięcie doku korzystają z safe area; w niskim trybie poziomym ikony i podpisy układają się w jednym rzędzie.', 'Zmiana zakładki otrzymała krótką animację, która respektuje ustawienie ograniczenia ruchu.'],

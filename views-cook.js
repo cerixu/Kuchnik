@@ -8,6 +8,7 @@ import { navigate, goBack } from './router.js';
 import { getRecipe, kv, patchRecipe, getSetting } from './recipes.js';
 import { scaleRecipe, factorFromServings } from './calculator.js';
 import { qtyParts } from './components.js';
+import { ingIconUrl } from './ingredient-icons.js';
 import { fmtNum, debounce, parseNum } from './util.js';
 import { startTimer, openTimersSheet } from './timers.js';
 import { hasInventory, availability, deductRecipe } from './inventory.js';
@@ -98,9 +99,9 @@ export function cookView({ id }) {
     if (prog.tab === 'steps') markCurrent();
   }
 
-  function checkRow(key, map, inner, cls = '') {
+  function checkRow(key, map, inner, cls = '', leading = null) {
     const row = h('div', { class: `cook-row ${cls} ${map[key] ? 'on' : ''}`, role: 'checkbox', tabindex: '0', 'aria-checked': !!map[key] },
-      h('span', { class: 'cbox' }, icon('check', 22)), inner);
+      h('span', { class: 'cbox' }, icon('check', 22)), leading, inner);
     row.addEventListener('click', (e) => { if (e.target.closest('.step-timer')) return; toggle(map, key, row); });
     row.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(map, key, row); } });
     return row;
@@ -122,7 +123,8 @@ export function cookView({ id }) {
         const q = qtyParts(i);
         kids.push(checkRow(i.id, prog.ing, h('span', { class: 'cook-text' },
           h('span', { class: 'cook-name' }, i.name),
-          h('span', { class: 'cook-qty' }, h('span', { class: 'amt num' }, q.num), h('span', { class: 'unit' }, q.unit)))));
+          h('span', { class: 'cook-qty' }, h('span', { class: 'amt num' }, q.num), h('span', { class: 'unit' }, q.unit))), 'ingredient-row',
+          h('img', { class: 'cook-ing-ico', src: ingIconUrl(i.name), alt: '', loading: 'lazy', decoding: 'async' })));
       });
     });
     if (!kids.length) kids.push(h('p', { class: 'muted' }, 'Brak składników.'));

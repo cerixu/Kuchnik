@@ -2,7 +2,7 @@
 
 Data: 6 listopada 2026  
 Audytowany stan bazowy: `main` — `45148d26a268e38506668ff1211c75f9fe4f9e8c` (wersja 1.4.96).  
-Aktualizacja po audycie: wersja 1.5.0; dolna nawigacja uwzględnia safe area, a przewijana treść kończy się ponad dokiem.
+Aktualizacja po audycie: wersja 1.5.1; ilustracje składników są widoczne także w checklistach i etapach gotowania.
 
 ## Podsumowanie
 
@@ -65,7 +65,7 @@ W aktualnym repo nie ma listy, która wskazywałaby te 25 nazw lub oznaczała je
 
 ## Tracker postępu
 
-- **Gotowe:** audyt gałęzi i commitów; spis funkcji; kontrola 228 przepisów, 228 plików PNG, 84 ikon i 567 mapowań składników; poprawa strategii instalacji; neutralny fallback dla własnych przepisów bez ilustracji; dokumentacja wersji 1.4.99 i poprawa odstępu treści nad dolnym dokiem w 1.5.0.
+- **Gotowe:** audyt gałęzi i commitów; spis funkcji; kontrola 228 przepisów, 228 plików PNG, 84 ikon i 567 mapowań składników; poprawa strategii instalacji; neutralny fallback dla własnych przepisów bez ilustracji; dokumentacja wersji 1.4.99, odstępu treści nad dolnym dokiem w 1.5.0 i ilustracji składników w ekranach gotowania w 1.5.1.
 - **W trakcie:** przegląd statusu wizualnego i odnajdywanie 25 wcześniej zaakceptowanych rysunków w wiarygodnym źródle.
 - **Do poprawy:** weryfikacja fizycznej kamery.
 - **Do wykonania:** ręczny przegląd PWA i UI na iPhonie oraz uzupełnienie statusów ilustracji po potwierdzeniu listy.
