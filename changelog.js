@@ -3,6 +3,11 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.91': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.4.91 — spokojne, grafitowe tło.',
+    items: ['Usunięto starą rasterową teksturę z tła ekranu, która przykrywała treść kreskami.', 'Pozostawiono subtelną miedzianą poświatę i delikatny własny wzór na przyciskach.'],
+    footer: 'Nowe menu i ekran Start z 1.4.90 pozostają bez zmian.'
+  }),
   '1.4.90': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.4.90 — nowe menu i spokojniejszy ekran startowy.',
     items: ['Przebudowano dolny pasek: wyśrodkowana szklana kapsuła, własne piktogramy i wyraźny aktywny widok.', 'Ekran Start dostał widoczny znak ŻARŁOK / Kuchnik, przycisk losowania i czytelniejszą sekcję skrótów; karuzela dań została zachowana.', 'Ustawienia mają teraz spójne nagłówki z ikonami i nie pokazują pustej informacji o motywie.', 'Przyciszono fakturę kreskową tła, zachowując ją jako subtelny akcent na przyciskach.'],

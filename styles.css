@@ -1486,3 +1486,22 @@ body { background-size:auto,auto,520px 520px,auto; }
 @media (prefers-reduced-motion:reduce) {
   .fire-btn,.tab,.tab-ico { transition:none!important; }
 }
+
+
+/* ==========================================================================
+   ŻARŁOK 1.4.91 — spokojne tło bez starej rastrowej faktury.
+   ========================================================================== */
+body {
+  background:
+    radial-gradient(ellipse 80% 48% at 14% 0%,rgba(148,84,58,.065),transparent 72%),
+    radial-gradient(ellipse 58% 36% at 96% 92%,rgba(91,68,57,.045),transparent 75%),
+    var(--bg);
+  background-repeat:no-repeat;
+  background-size:auto;
+}
+#app::before {
+  background:
+    radial-gradient(80% 45% at 50% 0%,var(--glow2),transparent 70%),
+    radial-gradient(70% 40% at -5% 108%,var(--glow1),transparent 72%),
+    radial-gradient(60% 36% at 108% 100%,var(--glow3),transparent 72%);
+}
