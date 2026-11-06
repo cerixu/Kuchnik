@@ -16,7 +16,7 @@ const HEADLINE = 'Gotuj. Próbuj. Powtarzaj.';
 const plural = (n) => `${n} ${n === 1 ? 'receptura' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'receptury' : 'receptur'}`;
 
 export function startView() {
-  const fire = h('button', { type: 'button', class: 'fire-btn', 'aria-label': 'Wylosuj coś na dziś', onClick: () => navigate('/calc/random') }, '🔥');
+  const fire = h('button', { type: 'button', class: 'fire-btn', 'aria-label': 'Losuj przepis', title: 'Losuj przepis', onClick: () => navigate('/calc/random') }, icon('shuffle', 20));
   const s = screen({ title: 'ŻARŁOK', large: 'hero', right: fire, cls: 'start' });
   const c = s.content;
   let unsub;
@@ -57,8 +57,12 @@ export function startView() {
     const n = pendingCount();
     const kids = [
       h('div', { class: 'start-head' },
-        h('p', { class: 'eyebrow' }, 'KUCHNIK · WARSZTAT KUCHARZA'),
-        h('h1', { class: 'hero-line' }, HEADLINE),
+        h('div', { class: 'brand-lockup' },
+          h('span', { class: 'brand-mark', 'aria-hidden': 'true' }, h('img', { src: 'icon-192.png', alt: '' })),
+          h('div', { class: 'brand-copy' },
+            h('h1', { class: 'brand-name' }, 'ŻARŁOK'),
+            h('span', { class: 'brand-caption' }, 'Kuchnik · warsztat kucharza'))),
+        h('p', { class: 'hero-line' }, HEADLINE),
         h('p', { class: 'muted hero-sub' }, `${plural(all.length)} w Twojej kuchni · działa offline`)),
       searchBox,
     ];
@@ -69,9 +73,10 @@ export function startView() {
     } else {
       const day = Math.floor(Date.now() / 86400000);
       const inspire = all.map((r, i) => ({ r, k: (i * 7919 + day * 104729) % 1009 })).sort((a, b) => a.k - b.k).slice(0, 9).map((x) => x.r);
-      kids.push(sectionHead('Polecane na dziś 🔥', { action: 'Losuj', onAction: () => navigate('/calc/random') }), deck(inspire));
+      kids.push(sectionHead('Co dziś gotujemy?', { action: 'Losuj', onAction: () => navigate('/calc/random') }), deck(inspire));
     }
 
+    kids.push(sectionHead('Na skróty'));
     kids.push(h('div', { class: 'qa-row', role: 'group', 'aria-label': 'Szybkie akcje' },
       action('Nowa receptura', 'plus', '/new', { primary: true }), action('Gotuję', 'pot', '/cook'), action('Moje receptury', 'pot', '/recipes'), action('Ostatnio używane', 'clock', '/recipes?f=recent'),
       action('Ulubione', 'heart', '/recipes?f=fav'), action('Kalkulatory', 'calc', '/calc'), action('Lista zakupów', 'cart', '/shopping', { badge: n }),

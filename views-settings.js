@@ -20,7 +20,22 @@ const mb = (b) => (b == null ? '—' : b < 1048576 ? Math.max(1, Math.round(b / 
 export function settingsView() {
   const s = screen({ title: 'Ustawienia', cls: 'settings' });
   const c = s.content;
-  const group = (title, ...kids) => h('section', { class: 'card stack' }, h('h2', { class: 'card-title' }, title), ...kids);
+  const SETTINGS_ICONS = Object.freeze({
+  'Interfejs': 'sliders',
+  'Receptury': 'book',
+  'Gotowanie': 'chef',
+  'Wyszukiwanie w sieci': 'globe',
+  'Kopia zapasowa (JSON)': 'copy',
+  'Aplikacja i pamięć': 'info',
+  'Instalacja': 'download',
+  'Strefa ryzyka': 'trash',
+  'Prywatność': 'eye',
+});
+const group = (title, ...kids) => h('section', { class: 'card stack settings-card' },
+  h('div', { class: 'settings-head' },
+    h('span', { class: 'settings-mark', 'aria-hidden': 'true' }, icon(SETTINGS_ICONS[title] || 'chef', 18)),
+    h('h2', { class: 'card-title' }, title)),
+  ...kids);
 
   const set = (k) => async (v) => { await setSetting(k, v); };
 
@@ -35,14 +50,12 @@ export function settingsView() {
   glassRange.addEventListener('input', () => { glassVal.textContent = glassRange.value + '%'; document.documentElement.style.setProperty('--glass', String(glassRange.value / 100)); });
   glassRange.addEventListener('change', () => setSetting('glass', +glassRange.value));
 
-  const appearance = group('Wygląd',
-    h('div', null, h('div', { class: 'field-label' }, 'Motyw aplikacji'),
-      h('p', { class: 'muted small' }, 'ŻARŁOK używa stałego, ciemnego motywu z grafitowym tłem i miedzianymi detalami.')),
+  const appearance = group('Interfejs',
     h('div', null, h('div', { class: 'field-label' }, 'Wielkość przycisków'),
       segmented([['normal', 'Normalne'], ['large', 'Duże'], ['xl', 'Bardzo duże']], getSetting('tapSize'), set('tapSize'), { label: 'Wielkość przycisków' }),
       h('p', { class: 'muted small' }, 'Większe pola ułatwiają obsługę telefonu w kuchni.')),
     h('div', null, h('div', { class: 'row between' }, h('span', { class: 'field-label' }, 'Wielkość tekstu'), scaleVal), range),
-    h('p', { class: 'muted small' }, 'Dolny pasek zawsze pokazuje podpisy pod ikonami.'),
+    h('p', { class: 'muted small' }, 'Podpisy pomagają szybko trafić w dobrą zakładkę.'),
     h('div', null, h('div', { class: 'row between' }, h('span', { class: 'field-label' }, 'Przezroczystość powierzchni'), glassVal), glassRange,
       h('p', { class: 'muted small' }, 'Dostosuj delikatne rozmycie kart i paneli.')));
 
@@ -201,7 +214,7 @@ export function settingsView() {
     } }));
 
   const about = group('Prywatność',
-    h('p', { class: 'muted' }, 'Kucharzyna nie ma konta, reklam, śledzenia ani analityki. Wszystkie dane są w pamięci tego urządzenia (IndexedDB) i nigdzie nie są wysyłane. Internet jest używany tylko wtedy, gdy sam otworzysz wyszukiwarkę Google lub Google Tłumacz.'));
+    h('p', { class: 'muted' }, 'ŻARŁOK / Kuchnik nie ma konta, reklam, śledzenia ani analityki. Wszystkie dane są w pamięci tego urządzenia (IndexedDB) i nigdzie nie są wysyłane. Internet jest używany tylko wtedy, gdy sam otworzysz wyszukiwarkę Google lub Google Tłumacz.'));
 
   c.append(appearance, recipes, cooking, search, backup, app, install, danger, about);
   void state;

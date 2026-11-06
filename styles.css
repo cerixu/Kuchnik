@@ -1361,3 +1361,128 @@ body {
 }
 input,textarea,select,option { color-scheme:dark; }
 ::selection { color:#fff4eb; background:rgba(189,112,74,.38); }
+
+
+/* ==========================================================================
+   ŻARŁOK 1.4.90 — menu, ekran startowy i spokojniejsza kreskowa oprawa.
+   ========================================================================== */
+:root {
+  --tab-h: 70px;
+  --tab-gap: calc(env(safe-area-inset-bottom, 0px) + 12px);
+}
+body { background-size:auto,auto,520px 520px,auto; }
+
+.start-head { display:flex; flex-direction:column; gap:8px; padding:12px 2px 10px; }
+.brand-lockup { display:flex; align-items:center; gap:11px; min-height:48px; }
+.brand-mark {
+  flex:none; width:48px; height:48px; display:grid; place-items:center; overflow:hidden;
+  border:1px solid rgba(224,157,117,.30); border-radius:16px;
+  background:radial-gradient(circle at 50% 42%,rgba(196,117,76,.17),rgba(34,31,31,.94) 72%);
+  box-shadow:inset 0 1px 0 rgba(255,245,236,.07),0 8px 20px rgba(0,0,0,.25);
+}
+.brand-mark img { width:82%; height:82%; object-fit:contain; display:block; }
+.brand-copy { min-width:0; display:flex; flex-direction:column; gap:2px; }
+.brand-name { margin:0; color:#f7e9df; font-size:1.08rem; font-weight:800; line-height:1.1; letter-spacing:.16em; }
+.brand-caption { color:var(--accent-text); font-size:.68rem; font-weight:650; letter-spacing:.10em; text-transform:uppercase; }
+.start-head .hero-line {
+  max-width:15ch; margin:4px 0 0; color:#fbf1e8; font-size:clamp(1.65rem,6.4vw,2.05rem);
+  font-weight:650; line-height:1.13; letter-spacing:-.035em; text-wrap:balance;
+}
+.start-head .hero-sub { margin:0; font-size:.88rem; }
+.fire-btn {
+  width:46px; height:46px; margin-right:4px; display:grid; place-items:center; border-radius:15px;
+  color:var(--accent-text); background:linear-gradient(155deg,rgba(46,40,38,.96),rgba(29,28,30,.96));
+  border:1px solid rgba(224,157,117,.24); box-shadow:inset 0 1px 0 rgba(255,245,236,.06),0 8px 18px rgba(0,0,0,.28);
+}
+.fire-btn svg { stroke-width:1.8; }
+.fire-btn:active { transform:scale(.93) rotate(-4deg); }
+
+.start-searchbox .input {
+  min-height:54px; padding-left:50px; border-radius:20px;
+  background:linear-gradient(155deg,rgba(38,36,37,.96),rgba(29,28,30,.96));
+  border-color:rgba(235,202,174,.15); box-shadow:inset 0 1px 0 rgba(255,245,236,.045);
+}
+.start-searchbox:focus-within .input { border-color:rgba(226,162,124,.52); box-shadow:0 0 0 3px rgba(189,112,74,.11); }
+.sechead { margin-top:4px; }
+.sechead h2 { font-size:1rem; letter-spacing:-.01em; }
+.sechead .btn { min-height:38px; }
+
+.qa { border:0!important; background:transparent!important; box-shadow:none!important; padding:0 2px; }
+.qa-row { gap:16px 8px; padding:7px 0 10px; }
+.qa-ico {
+  width:56px; height:56px; border-radius:18px; color:#e4ad8a;
+  background:linear-gradient(150deg,#302b2a,#202023);
+  border:1px solid rgba(226,162,124,.17); box-shadow:inset 0 1px 0 rgba(255,245,236,.06),0 8px 18px rgba(0,0,0,.22);
+}
+.qa-ico svg { stroke-width:1.7; }
+.qa.primary .qa-ico {
+  color:#f5d6c3; background-image:url("assets/zarlock-hatch.svg"),linear-gradient(150deg,#88533a,#59382e);
+  background-size:240px 240px,auto; border-color:rgba(232,172,138,.35);
+  box-shadow:inset 0 1px 0 rgba(255,245,236,.08),0 9px 20px rgba(0,0,0,.28);
+}
+.qa-label { max-width:82px; color:var(--muted); font-size:.7rem; font-weight:600; line-height:1.25; text-wrap:balance; }
+.qa.primary .qa-label { color:#f0c9b0; }
+
+.settings-card { gap:15px; }
+.settings-head { display:flex; align-items:center; gap:10px; margin-bottom:2px; }
+.settings-mark {
+  flex:none; width:34px; height:34px; display:grid; place-items:center; border-radius:12px;
+  color:var(--accent-text); background:rgba(189,112,74,.12); border:1px solid rgba(224,157,117,.16);
+}
+.settings-mark svg { stroke-width:1.7; }
+.settings-head .card-title { margin:0; }
+
+#tabbar {
+  position:absolute; left:50%; right:auto; bottom:calc(env(safe-area-inset-bottom,0px) + 10px);
+  transform:translateX(-50%); width:min(calc(100% - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)),560px);
+  height:auto; min-height:70px; margin:0; padding:6px;
+  display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); align-items:center; gap:3px;
+  border:1px solid rgba(226,162,124,.22); border-radius:25px;
+  background:linear-gradient(155deg,rgba(39,36,37,.97),rgba(23,22,24,.97));
+  box-shadow:0 14px 34px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,245,236,.07),inset 0 -1px 0 rgba(189,112,74,.11);
+  -webkit-backdrop-filter:blur(24px) saturate(1.15); backdrop-filter:blur(24px) saturate(1.15);
+}
+.tab {
+  position:relative; flex:none; width:100%; min-width:0; min-height:56px; padding:4px 1px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  border:1px solid transparent; border-radius:18px; color:#a99d95; overflow:visible;
+}
+.tab-ico {
+  width:42px; height:31px; display:grid; place-items:center; border-radius:11px; background:transparent!important;
+  color:inherit; transition:transform .18s cubic-bezier(.2,.8,.2,1),color .18s ease;
+}
+.tab-ico svg { width:22px; height:22px; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.tab-label {
+  display:block!important; visibility:visible!important; opacity:1!important; max-width:100%; overflow:hidden;
+  color:inherit; font-size:clamp(9px,2.7vw,10.5px); font-weight:560; line-height:1.1; letter-spacing:-.02em;
+  text-align:center; text-overflow:ellipsis; white-space:nowrap;
+}
+.tab.on {
+  color:#f2c7ad; border-color:rgba(224,157,117,.22);
+  background:linear-gradient(155deg,rgba(189,112,74,.17),rgba(105,66,51,.11));
+  box-shadow:inset 0 1px 0 rgba(255,245,236,.06),0 4px 14px rgba(0,0,0,.16);
+}
+.tab.on .tab-ico { color:#e8a984; transform:translateY(-1px); box-shadow:none; }
+.tab.on .tab-label { color:#f4d2bd; font-weight:700; }
+.tab.on::after { display:none!important; content:none!important; }
+.tab:active { transform:scale(.96); }
+.tab .badge { top:-1px; right:1px; border-color:#242122; }
+
+@media (max-width:370px) {
+  #tabbar { width:calc(100% - 14px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)); padding:5px; gap:1px; }
+  .tab { min-height:54px; }
+  .tab-ico { width:36px; height:28px; }
+  .tab-ico svg { width:20px; height:20px; }
+  .tab-label { font-size:9px; }
+}
+@media (orientation:landscape) and (max-height:520px) {
+  :root { --tab-h:56px; --tab-gap:calc(env(safe-area-inset-bottom,0px) + 6px); }
+  #tabbar { width:min(calc(100% - 24px),460px); min-height:54px; bottom:calc(env(safe-area-inset-bottom,0px) + 5px); padding:4px; }
+  .tab { min-height:44px; flex-direction:row; gap:6px; }
+  .tab-ico { width:25px; height:26px; }
+  .tab-ico svg { width:19px; height:19px; }
+  .tab-label { font-size:9px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .fire-btn,.tab,.tab-ico { transition:none!important; }
+}

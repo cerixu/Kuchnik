@@ -55,11 +55,11 @@ function applyAppearance() {
 /* ---------- Dolna nawigacja ---------- */
 
 const TABS = [
-  ['start', 'Start', 'home2', '/'],
-  ['recipes', 'Receptury', 'pot', '/recipes'],
+  ['start', 'Start', 'chef', '/'],
+  ['recipes', 'Receptury', 'book', '/recipes'],
   ['calc', 'Kalkulatory', 'calc', '/calc'],
   ['shopping', 'Zakupy', 'basket', '/shopping'],
-  ['settings', 'Ustawienia', 'gear', '/settings'],
+  ['settings', 'Ustawienia', 'sliders', '/settings'],
 ];
 
 function buildTabbar() {
