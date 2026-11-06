@@ -182,10 +182,12 @@ test('food SVGs are mapped to recipes and precached offline', () => {
 });
 
 test('app and service worker versions are synchronized', () => {
-  assert.ok(util.includes("APP_VERSION = '1.4.96'"));
-  assert.ok(sw.includes("VERSION = 'kucharzyna-1.4.96'"));
-  assert.ok(changelog.includes("'1.4.96'"), 'changelog entry missing');
-  assert.ok(readme.includes('1.4.96'), 'README version missing');
+  const appVersion = util.match(/APP_VERSION = ['"]([^'"]+)['"]/)?.[1];
+  const workerVersion = sw.match(/VERSION = ['"]kucharzyna-([^'"]+)['"]/)?.[1];
+  assert.ok(appVersion, 'APP_VERSION missing');
+  assert.equal(workerVersion, appVersion, 'service worker version should match the app');
+  assert.ok(changelog.includes(`'${appVersion}'`), 'changelog entry missing');
+  assert.ok(readme.includes(appVersion), 'README version missing');
 });
 
 

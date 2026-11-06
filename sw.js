@@ -232,8 +232,8 @@ async function cacheFirst(request) {
     return bundled;
   }
 
-  // Zachowaj też rysunki pobrane przez poprzednie wydania, zanim nowa wersja
-  // przeniesie je do trwałego cache mediów.
+  // Odczytaj rysunki zapisane przez poprzednie wydania. Wybór pełnego pakietu
+  // w Ustawieniach może dodatkowo zapisać je do trwałego cache mediów.
   const legacyNames = (await caches.keys()).filter((name) =>
     name.startsWith('kucharzyna-') && name !== VERSION && name !== MEDIA_CACHE
   );
