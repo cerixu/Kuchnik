@@ -7,9 +7,10 @@ import {
 } from './ui.js';
 import { navigate } from './router.js';
 import {
-  state, subscribe, listRecipes, searchText, allTags, saveCategory, deleteCategory, reorderCategories, getSetting, setSetting, catIcon, ORIGINS,
+  state, subscribe, listRecipes, searchText, allTags, saveCategory, deleteCategory, reorderCategories, getSetting, setSetting, ORIGINS,
 } from './recipes.js';
 import { norm, debounce, uid } from './util.js';
+import { CATEGORY_MARK_OPTIONS, categoryGlyph, categoryMarkKey, originGlyph } from './zarlock-art.js';
 import { recipeCard, recipeTile } from './components.js';
 
 const SORTS = [
@@ -97,12 +98,12 @@ export function recipesView(query) {
       onClick: () => { vs.chip = id; vs.shown = PAGE; paint(); } }, label, n != null ? h('span', { class: 'chip-n' }, String(n)) : null);
     const oInfo = vs.origin ? ORIGINS.find((o) => o.code === vs.origin) : null;
     const kids = [
-      ...(oInfo ? [h('button', { type: 'button', class: 'chip on', 'aria-label': `Usuń filtr: ${oInfo.name}`, onClick: () => { vs.origin = ''; vs.shown = PAGE; paint(); } }, `${oInfo.flag} ${oInfo.name}`, icon('x', 14))] : []),
+      ...(oInfo ? [h('button', { type: 'button', class: 'chip on', 'aria-label': `Usuń filtr: ${oInfo.name}`, onClick: () => { vs.origin = ''; vs.shown = PAGE; paint(); } }, h('span', { class: 'chip-origin' }, originGlyph(oInfo.code, 20), h('span', null, oInfo.name)), icon('x', 14))] : []),
       mk('all', 'Wszystkie', all.length),
-      mk('fav', '★ Ulubione', all.filter((r) => r.favorite).length),
+      mk('fav', h('span', { class: 'chip-mark-label' }, icon('star', 15), h('span', null, 'Ulubione')), all.filter((r) => r.favorite).length),
       mk('recent', 'Ostatnie', all.filter((r) => r.lastOpenedAt).length),
       mk('trad', 'Tradycyjne', all.filter((r) => r.traditional).length),
-      ...state.categories.filter((c) => used.has(c.id) || vs.chip === c.id).map((c) => mk(c.id, `${c.icon || ''} ${c.name}`.trim(), all.filter((r) => r.category === c.id).length)),
+      ...state.categories.filter((c) => used.has(c.id) || vs.chip === c.id).map((c) => mk(c.id, h('span', { class: 'cat-chip-label' }, categoryGlyph(c.id, 20, c.icon), h('span', null, c.name)), all.filter((r) => r.category === c.id).length)),
       h('button', { type: 'button', class: 'chip ghost', 'aria-label': 'Zarządzaj kategoriami', onClick: () => openCategoryManager() }, icon('sliders', 16), 'Kategorie'),
     ];
     chips.replaceChildren(...kids);
@@ -119,11 +120,11 @@ export function recipesView(query) {
     const { trad, rest, total } = matches();
     const kids = [];
     if (!state.recipes.size) {
-      kids.push(emptyState('📒', 'Brak receptur', 'Dodaj swoją pierwszą recepturę albo wklej przepis z internetu.',
+      kids.push(emptyState('book', 'Brak receptur', 'Dodaj swoją pierwszą recepturę albo wklej przepis z internetu.',
         button('Nowa receptura', { kind: 'primary', icon: 'plus', onClick: () => navigate('/new') }),
         button('Importuj', { icon: 'upload', onClick: () => navigate('/import') })));
     } else if (!total) {
-      kids.push(emptyState('🔎', 'Nic nie znaleziono', vs.q ? `Brak wyników dla „${vs.q}”.` : 'Zmień filtry lub wyszukiwanie.',
+      kids.push(emptyState('search', 'Nic nie znaleziono', vs.q ? `Brak wyników dla „${vs.q}”.` : 'Zmień filtry lub wyszukiwanie.',
         button('Wyczyść filtry', { onClick: () => { Object.assign(vs, { q: '', chip: 'all', tag: '', origin: '', maxTime: 0, favOnly: false }); search.value = ''; paint(); } }),
         button('Szukaj w internecie', { icon: 'globe', onClick: () => navigate('/search?q=' + encodeURIComponent(vs.q || '')) })));
     } else {
@@ -158,7 +159,7 @@ export function recipesView(query) {
       body: h('div', { class: 'stack' },
         h('div', { class: 'optlist' }, SORTS.map(([v, l]) => h('button', { type: 'button', class: 'opt' + ((getSetting('sort') || 'name') === v ? ' on' : ''),
           onClick: async () => { await setSetting('sort', v); sh.close(); paint(); } }, l, icon('check', 20)))),
-        switchEl(!!getSetting('pinTraditional'), async (v) => { await setSetting('pinTraditional', v); paint(); }, 'Tradycyjne zawsze na górze', 'Oznaczone gwiazdką i flagą kraju')),
+        switchEl(!!getSetting('pinTraditional'), async (v) => { await setSetting('pinTraditional', v); paint(); }, 'Tradycyjne zawsze na górze', 'Oznaczone gwiazdką i znakiem kraju')),
     });
   }
 
@@ -171,7 +172,7 @@ export function recipesView(query) {
       title: 'Filtry', variant: 'sheet',
       body: h('div', { class: 'stack' },
         switchEl(favOnly, (v) => { favOnly = v; }, 'Tylko ulubione'),
-        field('Kraj pochodzenia', selectEl([['', 'Dowolny'], ...origins.map((o) => [o.code, `${o.flag} ${o.name} (${counts.get(o.code)})`])], origin, (v) => { origin = v; })),
+        field('Kraj pochodzenia', selectEl([['', 'Dowolny'], ...origins.map((o) => [o.code, `${o.name} (${counts.get(o.code)})`])], origin, (v) => { origin = v; })),
         field('Tag', selectEl([['', 'Dowolny'], ...tags.map((t) => [t, t])], tag, (v) => { tag = v; })),
         field('Czas czynny (przygotowanie + gotowanie)', selectEl([[0, 'Dowolny'], [15, 'do 15 min'], [30, 'do 30 min'], [60, 'do 1 h'], [120, 'do 2 h']], maxTime, (v) => { maxTime = +v; }))),
       actions: [
@@ -193,20 +194,26 @@ export function openCategoryManager() {
   const count = (id) => listRecipes().filter((r) => r.category === id).length;
 
   function editCat(cat) {
-    let name = cat ? cat.name : '', ico = cat ? cat.icon : '🍽️';
+    let name = cat ? cat.name : '', ico = cat ? categoryMarkKey(cat.id, cat.icon) : 'plate';
     const isNew = !cat;
+    const preview = h('div', { class: 'cat-mark-preview' }, categoryGlyph(cat ? cat.id : 'cat-nowa', 64, ico));
+    const markSelect = selectEl(CATEGORY_MARK_OPTIONS.map(([key, label]) => [key, label]), ico, (v) => {
+      ico = v;
+      preview.replaceChildren(categoryGlyph(cat ? cat.id : 'cat-nowa', 64, ico));
+    });
     openSheet({
       title: isNew ? 'Nowa kategoria' : 'Edytuj kategorię', variant: 'center',
       body: h('div', { class: 'stack' },
         field('Nazwa', textInput({ value: name, label: 'Nazwa kategorii', placeholder: 'np. Śniadania', onInput: (v) => { name = v; } })),
-        field('Ikona (emoji)', textInput({ value: ico, label: 'Ikona', onInput: (v) => { ico = v; }, cls: 'emoji-input' }))),
+        field('Rysunek kategorii', markSelect),
+        h('div', { class: 'cat-mark-control' }, preview, h('span', { class: 'muted small' }, 'Autorski rysunek w grafitach i miedzi'))),
       actions: [
         { label: 'Anuluj', kind: 'ghost' },
         { label: 'Zapisz', kind: 'primary', onClick: async () => {
           const n = name.trim();
           if (!n) { toast('Podaj nazwę kategorii', { type: 'error' }); return false; }
           if (state.categories.some((c) => norm(c.name) === norm(n) && (!cat || c.id !== cat.id))) { toast('Taka kategoria już istnieje', { type: 'error' }); return false; }
-          await saveCategory(isNew ? { id: 'cat-' + uid(''), name: n, icon: [...(ico || '🍽️')].slice(0, 2).join('') } : { ...cat, name: n, icon: [...(ico || '🍽️')].slice(0, 2).join('') });
+          await saveCategory(isNew ? { id: 'cat-' + uid(''), name: n, icon: ico || 'plate' } : { ...cat, name: n, icon: ico || 'plate' });
           toast(isNew ? 'Dodano kategorię' : 'Zapisano kategorię'); paint();
         } },
       ],
@@ -237,7 +244,7 @@ export function openCategoryManager() {
 
   function paint() {
     list.replaceChildren(...state.categories.map((c, i) => h('div', { class: 'catrow' },
-      h('span', { class: 'cat-emoji', 'aria-hidden': 'true' }, catIcon(c.id)),
+      h('span', { class: 'cat-mark', 'aria-hidden': 'true' }, categoryGlyph(c.id, 42, c.icon)),
       h('button', { type: 'button', class: 'cat-name', onClick: () => editCat(c), 'aria-label': `Edytuj kategorię ${c.name}` }, h('span', null, c.name), h('small', { class: 'muted' }, `${count(c.id)} receptur`)),
       iconBtn('up', 'Wyżej', () => move(i, -1), 'quiet'),
       iconBtn('down', 'Niżej', () => move(i, 1), 'quiet'),

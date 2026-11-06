@@ -3,7 +3,7 @@
    Liczby, jednostki, daty, formatowanie po polsku.
    ========================================================================== */
 
-export const APP_VERSION = '1.4.92';
+export const APP_VERSION = '1.4.93';
 
 /** Stabilne ID z prefiksem (rcp_, sec_, ing_, stp_, cat_, shp_, his_). */
 export function uid(prefix = '') {
@@ -144,12 +144,6 @@ export function norm(s) {
   return String(s == null ? '' : s).toLowerCase().replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 export const capFirst = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
-
-/** Flaga kraju (emoji) z kodu ISO-3166 alfa-2. */
-export function flagEmoji(code) {
-  if (!code || code.length !== 2) return '';
-  return String.fromCodePoint(...[...code.toUpperCase()].map((c) => 0x1f1e6 + c.charCodeAt(0) - 65));
-}
 
 /* ---------- Jednostki ---------- */
 

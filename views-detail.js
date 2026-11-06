@@ -15,7 +15,7 @@ import {
   priceForFoodCost,
 } from './calculator.js';
 import { fmtAmount, fmtNum, fmtPct, fmtMoney, fmtMinutes, fmtDateTime, fmtDate, copyText, debounce, uid, plPortions } from './util.js';
-import { heartBtn, tradMark, qtyParts, recipeToText, originOf, sideInfo, originLabel, sourceLabel } from './components.js';
+import { heartBtn, tradMark, qtyParts, recipeToText, originOf, originToken, sideInfo, sourceLabel } from './components.js';
 import { ingIconUrl } from './ingredient-icons.js';
 import { hasInventory, availability, shoppingGaps, fmtStock, findItemFor } from './inventory.js';
 import { estimateKcal } from './nutrition.js';
@@ -29,7 +29,7 @@ export function detailView({ id }) {
   const base0 = getRecipe(id);
   if (!base0) {
     const s = screen({ title: 'Receptura', left: iconBtn('left', 'Wstecz', () => goBack('/recipes')) },
-      emptyState('🤷', 'Nie ma takiej receptury', 'Mogła zostać usunięta.', button('Wszystkie receptury', { kind: 'primary', onClick: () => navigate('/recipes', { replace: true }) })));
+      emptyState('info', 'Nie ma takiej receptury', 'Mogła zostać usunięta.', button('Wszystkie receptury', { kind: 'primary', onClick: () => navigate('/recipes', { replace: true }) })));
     return { el: s.el };
   }
   markOpened(id);
@@ -260,7 +260,7 @@ export function detailView({ id }) {
   async function openHistory() {
     const list = await getHistory(id);
     const body = h('div', { class: 'stack' });
-    if (!list.length) body.append(emptyState('🕓', 'Brak historii', 'Każda zapisana zmiana pojawi się tutaj, z możliwością przywrócenia.'));
+    if (!list.length) body.append(emptyState('history', 'Brak historii', 'Każda zapisana zmiana pojawi się tutaj, z możliwością przywrócenia.'));
     list.forEach((e) => {
       const detail = h('div', { class: 'hist-detail', hidden: true });
       const btnPrev = button('Podgląd', { sm: true, kind: 'ghost', onClick: () => {
@@ -401,9 +401,8 @@ export function detailView({ id }) {
     kids.push(h('div', { class: 'detail-title-row' },
       h('h1', { class: 'detail-title' }, r.name || 'Receptura'),
       sideInfo({ ...rr, servings: r.servings, sections: r.sections })));
-    const orgL = originLabel(rr);
     kids.push(h('div', { class: 'detail-from' },
-      orgL ? h('a', { class: 'from-chip', href: '#/recipes?origin=' + rr.origin, onClick: (e) => { e.preventDefault(); navigate('/recipes?origin=' + rr.origin); } }, orgL) : null,
+      rr.origin ? h('a', { class: 'from-chip', href: '#/recipes?origin=' + rr.origin, onClick: (e) => { e.preventDefault(); navigate('/recipes?origin=' + rr.origin); } }, originToken(rr.origin, 20)) : null,
       h('span', { class: 'from-chip soft' }, icon('book', 14), rr.sourceUrl ? h('a', { href: rr.sourceUrl, target: '_blank', rel: 'noopener noreferrer' }, sourceLabel(rr)) : sourceLabel(rr)),
       h('span', { class: 'from-chip soft' }, catName(rr.category))));
     if (hasInventory()) {

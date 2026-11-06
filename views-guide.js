@@ -43,7 +43,7 @@ export function guideView({ id }) {
   const r0 = getRecipe(id);
   if (!r0) {
     const s = screen({ title: 'Prowadź mnie', large: false, left: iconBtn('x', 'Zamknij', () => goBack('/recipes')) },
-      emptyState('🤷', 'Nie ma takiej receptury', '', button('Receptury', { kind: 'primary', onClick: () => navigate('/recipes', { replace: true }) })));
+      emptyState('info', 'Nie ma takiej receptury', '', button('Receptury', { kind: 'primary', onClick: () => navigate('/recipes', { replace: true }) })));
     return { el: s.el };
   }
 
@@ -162,7 +162,7 @@ export function guideView({ id }) {
       role: 'radio', 'aria-checked': st.rating === n, 'aria-label': `${n} z 5`, onClick: () => { st.rating = st.rating === n ? 0 : n; saveSt(); paint(false); } }, icon('star', 34))));
     const ta = textArea({ value: notes, label: 'Notatka po gotowaniu', rows: 3, placeholder: 'Co poprawić następnym razem? (zapisze się w uwagach)', onInput: (v) => { notes = v; saveNotes(v); } });
     return h('div', { class: 'guide-card center' },
-      h('div', { class: 'guide-done' }, '🍽️'),
+      h('div', { class: 'guide-done' }, icon('check', 42)),
       h('h2', { class: 'guide-title' }, 'Smacznego!'),
       h('p', { class: 'muted' }, `${base().name} gotowe.${base().cookCount ? ` Gotowane już ${base().cookCount} ${base().cookCount === 1 ? 'raz' : 'razy'}.` : ''}`),
       h('div', { class: 'guide-sub' }, 'Jak wyszło?'), stars, ta);
@@ -189,7 +189,7 @@ export function guideView({ id }) {
     await patchRecipe(id, { cookCount: (b.cookCount || 0) + 1, lastCookedAt: Date.now(), rating: st.rating || b.rating || 0 });
     await kv.del('guide:' + id).catch(() => {});
     st = { page: 0, factor: 1, have: {}, rating: 0 };
-    toast('Zapisano. Smacznego! 👨‍🍳');
+    toast('Zapisano. Smacznego!');
     goBack('/recipe/' + id);
   }
 

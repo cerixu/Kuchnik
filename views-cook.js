@@ -35,7 +35,7 @@ export function cookView({ id }) {
   const r0 = getRecipe(id);
   if (!r0) {
     const s = screen({ title: 'Gotuję', left: iconBtn('left', 'Wstecz', () => goBack('/recipes')) },
-      emptyState('🤷', 'Nie ma takiej receptury', '', button('Receptury', { kind: 'primary', onClick: () => navigate('/recipes', { replace: true }) })));
+      emptyState('info', 'Nie ma takiej receptury', '', button('Receptury', { kind: 'primary', onClick: () => navigate('/recipes', { replace: true }) })));
     return { el: s.el };
   }
 
@@ -225,7 +225,7 @@ export function cookView({ id }) {
         if (result.short.length) {
           toast('Gotowanie zapisane. Niepełne stany: ' + result.short.slice(0, 3).join(', '), { type: 'error' });
         } else {
-          toast('Składniki odjęte z magazynu ✓');
+          toast('Składniki odjęte z magazynu');
         }
       } catch (e) {
         console.error('Nie udało się rozliczyć magazynu po gotowaniu', e);
@@ -233,7 +233,7 @@ export function cookView({ id }) {
       }
     }
 
-    if (all) { prog.ing = {}; prog.steps = {}; prog.tab = 'ing'; saveProg.flush(); if (getSetting('invAutoDeduct') === false || !hasInventory()) toast('Smacznego! 👨‍🍳'); }
+    if (all) { prog.ing = {}; prog.steps = {}; prog.tab = 'ing'; saveProg.flush(); if (getSetting('invAutoDeduct') === false || !hasInventory()) toast('Smacznego!'); }
     goBack('/recipe/' + id);
   }
 

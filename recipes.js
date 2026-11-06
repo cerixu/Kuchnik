@@ -6,7 +6,7 @@
    lustro do szybkiego renderowania — każda zmiana najpierw trafia do bazy.
    ========================================================================== */
 import { db, kv } from './db.js';
-import { uid, norm, fmtAmount, fmtMinutes, fmtDateTime, flagEmoji } from './util.js';
+import { uid, norm, fmtAmount, fmtMinutes, fmtDateTime } from './util.js';
 import { SEED_TEXT, parseSeeds } from './seeds.js';
 import { SEED_PL } from './seeds-pl.js';
 import { SEED_WORLD } from './seeds-world.js';
@@ -15,11 +15,11 @@ import { SEED_MORE } from './seeds-more.js';
 /* ---------- Kategorie i kraje ---------- */
 
 export const DEFAULT_CATEGORIES = [
-  ['cat-pizza', 'Pizza', '🍕'], ['cat-pasta', 'Pasta', '🍝'], ['cat-sosy', 'Sosy', '🥫'],
-  ['cat-mieso', 'Mięso', '🥩'], ['cat-ryby', 'Ryby', '🐟'], ['cat-owoce-morza', 'Owoce morza', '🦐'],
-  ['cat-warzywa', 'Warzywa', '🥕'], ['cat-desery', 'Desery', '🍰'], ['cat-pieczywo', 'Pieczywo', '🥖'],
-  ['cat-zupy', 'Zupy', '🍲'], ['cat-salatki', 'Sałatki', '🥗'], ['cat-cocktaile', 'Cocktaile', '🍸'],
-  ['cat-prep', 'Prep', '🔪'], ['cat-sosy-bazowe', 'Sosy bazowe', '🍅'], ['cat-inne', 'Inne', '🍽️'],
+  ['cat-pizza', 'Pizza', 'pizza'], ['cat-pasta', 'Pasta', 'pasta'], ['cat-sosy', 'Sosy', 'sauce'],
+  ['cat-mieso', 'Mięso', 'steak'], ['cat-ryby', 'Ryby', 'fish'], ['cat-owoce-morza', 'Owoce morza', 'seafood'],
+  ['cat-warzywa', 'Warzywa', 'vegetables'], ['cat-desery', 'Desery', 'dessert'], ['cat-pieczywo', 'Pieczywo', 'bread'],
+  ['cat-zupy', 'Zupy', 'soup'], ['cat-salatki', 'Sałatki', 'salad'], ['cat-cocktaile', 'Cocktaile', 'cocktail'],
+  ['cat-prep', 'Prep', 'prep'], ['cat-sosy-bazowe', 'Sosy bazowe', 'saucepot'], ['cat-inne', 'Inne', 'plate'],
 ].map(([id, name, icon], order) => ({ id, name, icon, builtin: true, order }));
 
 export const ORIGINS = [
@@ -30,7 +30,7 @@ export const ORIGINS = [
   ['US', 'USA'], ['MX', 'Meksyk'], ['PE', 'Peru'], ['BR', 'Brazylia'], ['AR', 'Argentyna'],
   ['LT', 'Litwa'], ['RU', 'Rosja'], ['CU', 'Kuba'], ['PR', 'Portoryko'], ['UA', 'Ukraina'], ['NL', 'Holandia'], ['IE', 'Irlandia'], ['CH', 'Szwajcaria'],
   ['HR', 'Chorwacja'], ['DK', 'Dania'], ['NO', 'Norwegia'], ['FI', 'Finlandia'], ['AU', 'Australia'], ['EG', 'Egipt'], ['ID', 'Indonezja'], ['PH', 'Filipiny'],
-].map(([code, name]) => ({ code, name, flag: flagEmoji(code) }));
+].map(([code, name]) => ({ code, name }));
 
 /* ---------- Ustawienia domyślne ---------- */
 
@@ -164,10 +164,9 @@ export async function loadAll() {
 /* ---------- Kategorie ---------- */
 
 export const catName = (id) => (state.categories.find((c) => c.id === id) || { name: 'Inne' }).name;
-export const catIcon = (id) => (state.categories.find((c) => c.id === id) || { icon: '🍽️' }).icon || '🍽️';
 
 export async function saveCategory(cat) {
-  const c = { builtin: false, icon: '🍽️', ...cat };
+  const c = { builtin: false, icon: 'plate', ...cat };
   if (c.order == null) c.order = state.categories.length ? Math.max(...state.categories.map((x) => x.order)) + 1 : 0;
   await db.put('categories', c);
   const i = state.categories.findIndex((x) => x.id === c.id);

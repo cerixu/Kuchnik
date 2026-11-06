@@ -3,10 +3,10 @@
    ========================================================================== */
 import { h, icon, toast } from './ui.js';
 import { navigate } from './router.js';
-import { catName, catIcon, ORIGINS, toggleFavorite } from './recipes.js';
+import { catName, ORIGINS, toggleFavorite } from './recipes.js';
 import { fmtMinutes, fmtAmount, fmtKitchenAmount, fmtNum, fmtUnit } from './util.js';
-import { categoryArtUrl } from './art.js';
-import { attachRecipePhoto, attachCategoryPhoto } from './food-photos.js';
+import { categoryGlyph, originGlyph } from './zarlock-art.js';
+import { attachRecipePhoto } from './food-photos.js';
 import { estimateKcal } from './nutrition.js';
 import { hostOf } from './importer.js';
 
@@ -29,8 +29,20 @@ export function metaLine(r) {
   return parts.join(' · ');
 }
 
-/** „🇮🇹 Włochy” — skąd pochodzi potrawa (albo null, gdy nie wiadomo). */
-export function originLabel(r) { const o = originOf(r.origin); return o ? `${o.flag} ${o.name}` : null; }
+/** Kraj pochodzenia potrawy (albo null, gdy nie wiadomo). */
+export function originLabel(r) { const o = originOf(r.origin); return o ? o.name : null; }
+
+export function originToken(code, size = 18) {
+  const o = originOf(code);
+  return o ? h('span', { class: 'origin-token' }, originGlyph(o.code, size), h('span', null, o.name)) : null;
+}
+
+function recipeOriginToken(r, size = 20) {
+  const origin = originOf(r.origin);
+  return origin
+    ? h('span', { class: 'from-origin' }, originGlyph(origin.code, size), h('span', null, origin.name))
+    : h('span', { class: 'from-origin' }, categoryGlyph(r.category, size), h('span', null, catName(r.category)));
+}
 
 /** Skąd jest sam przepis: strona, książka, „Kucharzyna” (przykład) albo „Własny”. */
 export function sourceLabel(r) {
@@ -50,12 +62,12 @@ export function shortDesc(r) {
   return t ? `${head} ${fmtMinutes(t)}.` : head;
 }
 
-/** Gwiazdka + flaga dla receptur tradycyjnych. */
+/** Wyróżnienie i rysunek kraju dla receptur tradycyjnych. */
 export function tradMark(r) {
   if (!r.traditional) return null;
   const o = originOf(r.origin);
   return h('span', { class: 'trad', title: o ? `Tradycyjna — ${o.name}` : 'Tradycyjna', 'aria-label': o ? `Tradycyjna, ${o.name}` : 'Tradycyjna' },
-    icon('star', 16), o ? h('span', { class: 'flag', 'aria-hidden': 'true' }, o.flag) : null);
+    icon('star', 16), o ? originGlyph(o.code, 18) : null);
 }
 
 export function heartBtn(r, onToggle) {
@@ -87,7 +99,7 @@ export function thumbEl(r, cls = '') {
 export function sideInfo(r) {
   const k = estimateKcal(r);
   const t = (r.prepTime || 0) + (r.cookTime || 0);
-  const top = r.rating ? h('span', { class: 'rt-rate' }, String(r.rating).replace('.', ','), h('span', { class: 'star' }, '★'))
+  const top = r.rating ? h('span', { class: 'rt-rate' }, String(r.rating).replace('.', ','), icon('star', 14))
     : t ? h('span', { class: 'rt-rate' }, fmtMinutes(t)) : null;
   const sub = k ? h('span', { class: 'rt-sub' }, `${k.perServing} kcal`) : r.servings ? h('span', { class: 'rt-sub' }, `${r.servings} porc.`) : null;
   return h('div', { class: 'rt-side' }, top, sub);
@@ -96,7 +108,6 @@ export function sideInfo(r) {
 /** Duża karta receptury z okrągłym zdjęciem (Start, siatka) — styl z makiety: zdjęcie, tytuł, ocena/kalorie, krótki opis i pochodzenie. */
 export function recipeTile(r, { onFav } = {}) {
   const href = '/recipe/' + encodeURIComponent(r.id);
-  const org = originLabel(r);
   return h('div', { class: 'rtile' + (r.traditional ? ' trad-tile' : '') },
     h('a', { class: 'rtile-link', href: '#' + href, 'aria-label': r.name, onClick: (e) => { e.preventDefault(); navigate(href); } },
       h('div', { class: 'rtile-img' }, recipeImage(r)),
@@ -104,22 +115,19 @@ export function recipeTile(r, { onFav } = {}) {
         h('div', { class: 'rtile-name' }, r.traditional ? h('span', { class: 'rtile-trad' }, h('span', { class: 'trad-star' }, icon('star', 14))) : null, r.name || 'Bez nazwy'),
         sideInfo(r)),
       h('p', { class: 'rtile-desc' }, shortDesc(r)),
-      h('div', { class: 'rtile-from' }, org ? h('span', { class: 'from-origin' }, org) : h('span', { class: 'from-origin' }, `${catIcon(r.category)} ${catName(r.category)}`), h('span', { class: 'from-src' }, sourceLabel(r)))),
+      h('div', { class: 'rtile-from' }, recipeOriginToken(r, 20), h('span', { class: 'from-src' }, sourceLabel(r)))),
     h('div', { class: 'rtile-heart' }, heartBtn(r, onFav)));
 }
 
 /** Okrągła kafelka kategorii (ilustracja + nazwa + liczba). */
 export function catTile(cat, count, onClick) {
-  const img = h('img', { class: 'art', src: categoryArtUrl(cat.id), alt: '', loading: 'lazy', decoding: 'async' });
-  attachCategoryPhoto(img, cat.id);
   return h('button', { type: 'button', class: 'ctile', onClick, 'aria-label': `${cat.name}: ${count}` },
-    h('span', { class: 'ctile-img' }, img),
+    h('span', { class: 'ctile-img' }, categoryGlyph(cat.id, 76, cat.icon)),
     h('span', { class: 'ctile-name' }, cat.name), h('span', { class: 'ctile-n' }, String(count)));
 }
 
 /** Wiersz receptury (widok listy): miniatura, tytuł, opis, kraj i źródło. */
 export function recipeCard(r, { onFav } = {}) {
-  const org = originLabel(r);
   return h('div', { class: 'rcard' + (r.traditional ? ' trad-card' : '') },
     h('a', { class: 'rcard-main', href: '#/recipe/' + encodeURIComponent(r.id), 'aria-label': r.name,
       onClick: (e) => { e.preventDefault(); navigate('/recipe/' + encodeURIComponent(r.id)); } },
@@ -127,7 +135,7 @@ export function recipeCard(r, { onFav } = {}) {
       h('div', { class: 'rbody' },
         h('div', { class: 'rtitle' }, r.traditional ? h('span', { class: 'trad-star' }, icon('star', 14)) : null, h('span', { class: 'rname' }, r.name || 'Bez nazwy')),
         h('div', { class: 'rdesc' }, shortDesc(r)),
-        h('div', { class: 'rmeta' }, h('span', { class: 'from-origin' }, org || `${catIcon(r.category)} ${catName(r.category)}`), h('span', { class: 'from-src' }, sourceLabel(r)), h('span', null, metaLine(r).split(' · ').slice(1).join(' · ')))),
+        h('div', { class: 'rmeta' }, recipeOriginToken(r, 18), h('span', { class: 'from-src' }, sourceLabel(r)), h('span', null, metaLine(r).split(' · ').slice(1).join(' · ')))),
     ),
     heartBtn(r, onFav));
 }

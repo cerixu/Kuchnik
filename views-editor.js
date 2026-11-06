@@ -64,7 +64,7 @@ export function editorView({ id }, query) {
   const existing = id ? getRecipe(id) : null;
   if (id && !existing) {
     const s = screen({ title: 'Edytor', left: iconBtn('left', 'Wstecz', () => goBack('/recipes')) },
-      emptyState('🤷', 'Nie ma takiej receptury', 'Mogła zostać usunięta.', button('Receptury', { kind: 'primary', onClick: () => navigate('/recipes', { replace: true }) })));
+      emptyState('info', 'Nie ma takiej receptury', 'Mogła zostać usunięta.', button('Receptury', { kind: 'primary', onClick: () => navigate('/recipes', { replace: true }) })));
     return { el: s.el };
   }
 
@@ -168,9 +168,9 @@ export function editorView({ id }, query) {
   function basics() {
     const name = textInput({ value: work.name, label: 'Nazwa receptury', placeholder: 'Nazwa receptury', capitalize: 'sentences', onInput: (v) => { work.name = v; touch(); } });
     name.dataset.f = 'name';
-    const cat = selectEl(state.categories.map((c) => [c.id, `${c.icon || ''} ${c.name}`.trim()]), work.category, (v) => { work.category = v; touch(); }, { label: 'Kategoria' });
-    const originSel = selectEl([['', '— wybierz kraj —'], ...ORIGINS.map((o) => [o.code, `${o.flag} ${o.name}`])], work.origin || '', (v) => { work.origin = v; touch(); }, { label: 'Kraj pochodzenia' });
-    const originWrap = h('div', { class: 'field-wrap', hidden: !work.traditional }, field('Kraj pochodzenia (flaga)', originSel));
+    const cat = selectEl(state.categories.map((c) => [c.id, c.name]), work.category, (v) => { work.category = v; touch(); }, { label: 'Kategoria' });
+    const originSel = selectEl([['', '— wybierz kraj —'], ...ORIGINS.map((o) => [o.code, o.name])], work.origin || '', (v) => { work.origin = v; touch(); }, { label: 'Kraj pochodzenia' });
+    const originWrap = h('div', { class: 'field-wrap', hidden: !work.traditional }, field('Kraj pochodzenia', originSel));
     const col = (el) => h('div', { class: 'grow' }, el);
     return h('section', { class: 'card stack' },
       field('Nazwa', name),
@@ -181,7 +181,7 @@ export function editorView({ id }, query) {
       h('div', { class: 'row gap' },
         col(field('Wydajność', numInput({ value: work.yieldAmount, label: 'Wydajność', onInput: (v) => { work.yieldAmount = v; touch(); } }))),
         col(field('Jednostka', selectEl(['g', 'kg', 'ml', 'l', 'szt.', 'porcja'], work.yieldUnit || 'g', (v) => { work.yieldUnit = v; touch(); })))),
-      switchEl(!!work.traditional, (v) => { work.traditional = v; originWrap.hidden = !v; touch(); }, 'Tradycyjna receptura', 'Zostanie przypięta na górze z gwiazdką i flagą'),
+      switchEl(!!work.traditional, (v) => { work.traditional = v; originWrap.hidden = !v; touch(); }, 'Tradycyjna receptura', 'Zostanie wyróżniona jako receptura tradycyjna'),
       originWrap);
   }
 

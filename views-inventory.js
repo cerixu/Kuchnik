@@ -70,7 +70,7 @@ export function inventoryView() {
           button('Strata', { sm: true, icon: 'minus', onClick: () => adjustStock(item.id, 'waste') }),
           button('Edytuj', { sm: true, icon: 'edit', onClick: () => openEditor(getItem(item.id)) }),
           button('Usuń', { sm: true, kind: 'ghost', onClick: () => removeItem(item.id) })));
-    }) : [emptyState('📦', 'Brak produktów', q ? 'Zmień wyszukiwanie.' : 'Dodaj pierwszy produkt, aby prowadzić stany i straty.', button('Dodaj produkt', { kind: 'primary', icon: 'plus', onClick: () => openEditor() }))]));
+    }) : [emptyState('fridge', 'Brak produktów', q ? 'Zmień wyszukiwanie.' : 'Dodaj pierwszy produkt, aby prowadzić stany i straty.', button('Dodaj produkt', { kind: 'primary', icon: 'plus', onClick: () => openEditor() }))]));
   }
 
   function paint() { paintStats(); paintList(); }

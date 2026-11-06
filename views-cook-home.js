@@ -66,7 +66,7 @@ export function cookEntryView() {
     const recipes = matches.slice(0, 24);
     count.textContent = matches.length > recipes.length ? `Pokazuję ${recipes.length} z ${matches.length}` : `${matches.length} receptur`;
     if (!recipes.length) {
-      list.replaceChildren(emptyState('🍽️', 'Nie znaleziono receptury', 'Zmień nazwę lub wpisz składnik.',
+      list.replaceChildren(emptyState('pot', 'Nie znaleziono receptury', 'Zmień nazwę lub wpisz składnik.',
         button('Otwórz wszystkie receptury', { icon: 'book', onClick: () => navigate('/recipes') })));
       return;
     }

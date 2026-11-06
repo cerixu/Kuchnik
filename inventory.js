@@ -17,7 +17,7 @@ import { inventoryNamesMatch } from './inventory-matching.js';
 import { pieceGrams } from './nutrition.js';
 
 export const INV_CATS = ['Nabiał i jaja', 'Mięso i ryby', 'Warzywa i owoce', 'Sypkie i pieczywo', 'Przyprawy, oleje, sosy', 'Napoje', 'Mrożonki', 'Inne'];
-export const LOCATIONS = [['fridge', 'Lodówka', '🧊'], ['freezer', 'Zamrażarka', '❄️'], ['pantry', 'Spiżarnia', '🫙']];
+export const LOCATIONS = [['fridge', 'Lodówka'], ['freezer', 'Zamrażarka'], ['pantry', 'Spiżarnia']];
 export const locName = (k) => (LOCATIONS.find((l) => l[0] === k) || LOCATIONS[2])[1];
 
 const store = { items: new Map(), moves: [], loaded: false };

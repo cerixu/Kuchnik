@@ -215,7 +215,7 @@ export function shoppingView() {
     const todo = items.filter((i) => !i.done), done = items.filter((i) => i.done);
     const kids = [];
     if (!items.length) {
-      kids.push(emptyState('🛒', 'Lista jest pusta', 'Dodaj pozycję powyżej albo wrzuć składniki z receptury (przycisk „Do zakupów” przy recepturze).',
+      kids.push(emptyState('basket', 'Lista jest pusta', 'Dodaj pozycję powyżej albo wrzuć składniki z receptury (przycisk „Do zakupów” przy recepturze).',
         button('Otwórz receptury', { icon: 'book', onClick: () => navigate('/recipes') })));
     } else {
       kids.push(h('p', { class: 'muted counter' }, `Do kupienia: ${todo.length}${done.length ? ` · kupione: ${done.length}` : ''}`));

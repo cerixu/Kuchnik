@@ -52,28 +52,6 @@ export function pantryScore(recipe, haveList) {
   return { have, missing, score: have.length / ings.length };
 }
 
-/* ---------- Emoji składników (okrągłe ikony składników jak na makiecie) ---------- */
-const EMOJI = [
-  [/jaj|zoltk|bialk/, '🥚'], [/boczek|guanciale|pancetta|szynk/, '🥓'], [/kielbas|salami|parowk/, '🌭'], [/kurczak|drob|udk|skrzydel|piers|indyk|kaczk/, '🍗'],
-  [/wolow|wieprz|schab|karkow|zebr|mieso|mielon|lopatk|cielec|jagnie|policzk|stek|polędw|poledw/, '🥩'], [/krewetk|kalmar/, '🍤'], [/malz|ostryg/, '🦪'],
-  [/losos|dorsz|sledz|pstrag|karp|tunczyk|ryba|ryby|anchois|morszczuk|mintaj/, '🐟'], [/makaron|spaghetti|penne|tagliatelle|fettuccine|lasagne|gnocchi|ditalini/, '🍝'],
-  [/ryz|risotto|komosa|bulgur|kasza|pszenica/, '🍚'], [/ziemniak|puree|frytk/, '🥔'], [/marchew/, '🥕'], [/cebul|szalot|por\b|szczypior/, '🧅'], [/czosnek/, '🧄'],
-  [/pomidor|passata|pelati|koncentrat|keczup/, '🍅'], [/papryk|jalape|chili/, '🌶️'], [/ogorek|ogorki/, '🥒'], [/salat|szpinak|rukola|kapust|szczaw|botwin|jarmuz/, '🥬'], [/brokul/, '🥦'],
-  [/grzyb|pieczark|borowik/, '🍄'], [/jablk/, '🍎'], [/cytryn|limonk/, '🍋'], [/pomarancz/, '🍊'], [/truskawk|malin|zurawin|wisni/, '🍓'], [/jagod|boroweck|porzeczk/, '🫐'],
-  [/banan/, '🍌'], [/awokado/, '🥑'], [/ananas/, '🍍'], [/kokos/, '🥥'], [/morel|sliwk|brzoskw/, '🍑'], [/dyni/, '🎃'], [/baklazan/, '🍆'], [/kukurydz/, '🌽'], [/cukini/, '🥒'],
-  [/oliw|olej|smalec|tluszcz/, '🫒'], [/miod|syrop/, '🍯'], [/czekolad|kakao|brownie/, '🍫'], [/orzech|migdal|pistacj|ziemne|piniow/, '🥜'], [/fasol|groch|soczewic|ciecierzyc|bob/, '🫘'],
-  [/maslo|margaryn/, '🧈'], [/ser\b|serek|mozzarell|parmezan|pecorino|feta|cheddar|gorgonzol|ricott|mascarpone|twarog|gruyere|kajmak/, '🧀'], [/mleko|smietan|jogurt|kefir|maslank|smietank|krem kokosowy/, '🥛'],
-  [/mak\b|mak$/, '🌰'], [/maka|mąka|skrobia|platki|bulka tarta|panko|kasza manna/, '🌾'], [/chleb|bulk|bagiet|ciabatt|tortill|pita|grzank|tosty|tostow|herbatnik|biszkopt|savoiardi|ciasto/, '🍞'],
-  [/wino|prosecco|sherry|marsala/, '🍷'], [/piwo/, '🍺'], [/wodka|whisk|bourbon|rum|gin\b|tequil|cachaca|likier|triple|campari|aperol|vermouth/, '🥃'], [/kawa|espresso/, '☕'], [/lod\b|lod$|lody/, '🧊'],
-  [/bazyli|natka|koper|tymianek|rozmaryn|mieta|kolendr|oregano|szalwi|lubczyk|zioł|zioła|ziola|majeranek|liscie|liść|lisc/, '🌿'], [/imbir/, '🫚'], [/sol\b|sol$|pieprz|kmin|cynamon|papryka mielona|przypraw|curry|kurkuma|gozdzik|anyz|szafran|gałka|galka/, '🧂'],
-  [/ocet|sos |sojowy|musztard|majonez|tahini|pasta/, '🫙'], [/woda|wod\b|bulion|rosol/, '💧'], [/cukier/, '🍬'], [/droz|proszek|soda|zelatyn|agar/, '🥄'], [/tofu/, '🧊'], [/sok /, '🧃'],
-];
-export function ingEmoji(name) {
-  const n = norm(name);
-  for (const [re, em] of EMOJI) if (re.test(n)) return em;
-  return '🍽️';
-}
-
 /* ---------- Alejki sklepowe / kategorie produktów (zgadywane po nazwie) ---------- */
 
 

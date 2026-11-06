@@ -1,6 +1,6 @@
 /* ==========================================================================
    views-start.js — ekran Start w stylu makiety: duży nagłówek, wyszukiwarka,
-   karuzela dużych kart „Polecane na dziś 🔥”, okrągłe przyciski akcji,
+   karuzela dużych kart „Polecane na dziś”, okrągłe przyciski akcji,
    kuchnie świata (skąd jest przepis), kategorie i półki z recepturami.
    ========================================================================== */
 import { h, icon, screen, button, emptyState } from './ui.js';
@@ -11,6 +11,7 @@ import { pendingCount } from './shopping.js';
 import { backupDue, daysSinceBackup } from './backup.js';
 import { openTimersSheet } from './timers.js';
 import { ORIGINS } from './recipes.js';
+import { originGlyph } from './zarlock-art.js';
 
 const HEADLINE = 'Gotuj. Próbuj. Powtarzaj.';
 const plural = (n) => `${n} ${n === 1 ? 'receptura' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'receptury' : 'receptur'}`;
@@ -68,7 +69,7 @@ export function startView() {
     ];
 
     if (!all.length) {
-      kids.push(emptyState('📒', 'Pusto w książce', 'Dodaj pierwszą recepturę albo wklej przepis z internetu.',
+      kids.push(emptyState('book', 'Pusto w książce', 'Dodaj pierwszą recepturę albo wklej przepis z internetu.',
         button('Nowa receptura', { kind: 'primary', icon: 'plus', onClick: () => navigate('/new') }), button('Importuj', { icon: 'upload', onClick: () => navigate('/import') })));
     } else {
       const day = Math.floor(Date.now() / 86400000);
@@ -97,7 +98,7 @@ export function startView() {
       if (cuisines.length) {
         kids.push(sectionHead('Skąd jest przepis', { action: 'Wszystkie', onAction: () => navigate('/recipes') }),
           h('div', { class: 'rail cuisines' }, cuisines.map((o) => h('button', { type: 'button', class: 'cu', onClick: () => navigate('/recipes?origin=' + o.code), 'aria-label': `${o.name}: ${byOrigin.get(o.code)}` },
-            h('span', { class: 'cu-flag' }, o.flag), h('span', { class: 'cu-name' }, o.name), h('span', { class: 'cu-n' }, String(byOrigin.get(o.code)))))));
+            h('span', { class: 'cu-flag' }, originGlyph(o.code, 64)), h('span', { class: 'cu-name' }, o.name), h('span', { class: 'cu-n' }, String(byOrigin.get(o.code)))))));
       }
       const used = new Map();
       all.forEach((r) => used.set(r.category, (used.get(r.category) || 0) + 1));

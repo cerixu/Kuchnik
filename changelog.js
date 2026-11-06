@@ -3,6 +3,11 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.93': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.4.93 — autorskie rysunki i odświeżony szklany dok.',
+    items: ['Dolna nawigacja została wycentrowana i otrzymała pięć ręcznie narysowanych znaków oraz wielowarstwową powierzchnię Liquid Glass.', 'Kuchnie świata i kategorie korzystają teraz z własnych wektorowych rysunków w grafitowej, kremowej i miedzianej palecie.', 'Ozdobne emoji usunięto z widocznych części aplikacji; stare ikony zapisane przy kategoriach pozostają zgodne i wyświetlają nowy rysunek.'],
+    footer: 'Przepisy, ilustracje, ustawienia i dane w IndexedDB pozostają bez zmian.'
+  }),
   '1.4.92': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.4.92 — spójne nazwy aplikacji.',
     items: ['Komunikat aktualizacji Service Workera, źródło przykładowych receptur i eksport listy zakupów używają teraz nazwy ŻARŁOK / Kuchnik.', 'Starsze receptury ze źródłem „Kucharzyna” są wyświetlane pod nową nazwą.'],

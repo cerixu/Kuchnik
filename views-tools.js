@@ -117,7 +117,7 @@ export function subsTool() {
     const w = norm(input.value).split(/\s+/).filter(Boolean);
     const items = SUBSTITUTES.filter(([a, b, c]) => { const t = norm(a + ' ' + b + ' ' + c); return w.every((x) => t.includes(x)); });
     list.replaceChildren(...(items.length ? items.map(([a, b, c]) => h('div', { class: 'card sub-card' }, h('div', { class: 'sub-from' }, a), h('div', { class: 'sub-to' }, icon('swap', 18), h('span', null, b)), c ? h('p', { class: 'muted small' }, c) : null))
-      : [emptyState('🔎', 'Brak zamiennika', 'Spróbuj innego słowa.')]));
+      : [emptyState('search', 'Brak zamiennika', 'Spróbuj innego słowa.')]));
   };
   input.addEventListener('input', paint);
   paint();
@@ -256,7 +256,7 @@ export function pantryTool() {
     const ranked = listRecipes().map((r) => ({ r, m: pantryScore(r, st.have) })).filter((x) => x.m.have.length > 0).sort((a, b) => b.m.score - a.m.score || a.m.missing.length - b.m.missing.length).slice(0, 15);
     results.replaceChildren(...(ranked.length ? [h('p', { class: 'muted counter' }, `Pasujące receptury: ${ranked.length}`), ...ranked.map(({ r, m }) => h('div', { class: 'pantry-item' }, recipeCard(r),
       h('div', { class: 'pantry-meta' }, h('span', { class: 'pill' }, `${Math.round(m.score * 100)}% składników`), m.missing.length ? h('span', { class: 'muted small' }, `Brakuje: ${m.missing.slice(0, 4).map((i) => i.name.replace(/\s*\(.*\)/, '')).join(', ')}${m.missing.length > 4 ? '…' : ''}`) : h('span', { class: 'small ok' }, 'Masz wszystko!'))))]
-      : [emptyState('🤔', 'Nic nie pasuje', 'Dodaj więcej składników albo importuj nowe receptury.', button('Szukaj w sieci', { icon: 'globe', onClick: () => navigate('/search') }))]));
+      : [emptyState('bulb', 'Nic nie pasuje', 'Dodaj więcej składników albo importuj nowe receptury.', button('Szukaj w sieci', { icon: 'globe', onClick: () => navigate('/search') }))]));
   }
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); add(input.value); } });
   ready.then(paint);
@@ -283,11 +283,11 @@ export function randomTool() {
     const used = new Set(listRecipes().map((r) => r.category));
     holder.replaceChildren(
       h('section', { class: 'card stack' },
-        h('div', { class: 'row gap' }, col(field('Kategoria', selectEl([['', 'Dowolna'], ...state.categories.filter((c) => used.has(c.id)).map((c) => [c.id, `${c.icon} ${c.name}`])], st.cat, (v) => { st.cat = v; save(); roll(); }))),
+        h('div', { class: 'row gap' }, col(field('Kategoria', selectEl([['', 'Dowolna'], ...state.categories.filter((c) => used.has(c.id)).map((c) => [c.id, c.name])], st.cat, (v) => { st.cat = v; save(); roll(); }))),
           col(field('Czas czynny', selectEl([[0, 'Dowolny'], [15, 'do 15 min'], [30, 'do 30 min'], [60, 'do 1 h']], st.max, (v) => { st.max = +v; save(); roll(); }))))),
       pick ? h('div', { class: 'stack' }, recipeCard(pick),
         h('div', { class: 'row gap wrap' }, button('Prowadź mnie', { kind: 'primary', icon: 'chef', onClick: () => navigate('/guide/' + pick.id) }), button('Podgląd', { onClick: () => navigate('/recipe/' + pick.id) }), button('Inny', { icon: 'shuffle', kind: 'ghost', onClick: roll })))
-        : emptyState('🤷', 'Brak pasujących receptur', 'Zmień filtry.'));
+        : emptyState('info', 'Brak pasujących receptur', 'Zmień filtry.'));
   }
   ready.then(roll);
   roll();

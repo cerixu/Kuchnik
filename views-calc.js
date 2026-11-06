@@ -359,7 +359,7 @@ function scaleCalculator() {
   const s = calcScreen('Przeliczanie receptury', holder);
 
   function build() {
-    if (!state.recipes.size) { holder.replaceChildren(emptyState('📒', 'Brak receptur', 'Dodaj recepturę, żeby ją przeliczyć.', button('Nowa receptura', { kind: 'primary', onClick: () => navigate('/new') }))); return; }
+    if (!state.recipes.size) { holder.replaceChildren(emptyState('book', 'Brak receptur', 'Dodaj recepturę, żeby ją przeliczyć.', button('Nowa receptura', { kind: 'primary', onClick: () => navigate('/new') }))); return; }
     const sel = recipeSelect(st, 'id', () => { st.servings = st.yAmt = st.ingAmt = null; st.ingId = ''; save(); build(); });
     const r = getRecipe(st.id);
     const y = effectiveYield(r);
@@ -417,7 +417,7 @@ function costCalculator() {
   const cur$ = () => getSetting('currency') || 'zł';
 
   function build() {
-    if (!state.recipes.size) { holder.replaceChildren(emptyState('📒', 'Brak receptur', 'Dodaj recepturę, żeby policzyć jej koszt.', button('Nowa receptura', { kind: 'primary', onClick: () => navigate('/new') }))); return; }
+    if (!state.recipes.size) { holder.replaceChildren(emptyState('book', 'Brak receptur', 'Dodaj recepturę, żeby policzyć jej koszt.', button('Nowa receptura', { kind: 'primary', onClick: () => navigate('/new') }))); return; }
     const sel = recipeSelect(st, 'id', () => { save(); build(); });
     const base = getRecipe(st.id);
     // Praca na kopii — zapis dopiero po kliknięciu „Zapisz w recepturze”.

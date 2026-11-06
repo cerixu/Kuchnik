@@ -153,8 +153,8 @@ export function screen({ title, left, right, sub, cls = '', large = true }, ...c
   return { el, top, scroll, content: inner, setTitle };
 }
 
-export const emptyState = (emoji, title, text, ...actions) =>
-  h('div', { class: 'empty' }, h('div', { class: 'empty-emoji', 'aria-hidden': 'true' }, emoji), h('h2', null, title),
+export const emptyState = (mark, title, text, ...actions) =>
+  h('div', { class: 'empty' }, h('div', { class: 'empty-mark', 'aria-hidden': 'true' }, icon(mark, 44)), h('h2', null, title),
     text ? h('p', { class: 'muted' }, text) : null, actions.length ? h('div', { class: 'row wrap center' }, actions) : null);
 
 /* ---------- Toast ---------- */

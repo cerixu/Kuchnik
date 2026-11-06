@@ -2,7 +2,7 @@
    router.js — prosty router oparty o hash (#/ścieżka), działa na GitHub Pages
    bez konfiguracji serwera. Pamięta pozycję przewijania każdej ścieżki.
    ========================================================================== */
-import { closeAllOverlays } from './ui.js';
+import { closeAllOverlays, h, icon } from './ui.js';
 
 const routes = [];
 const scrollMemory = new Map();
@@ -72,7 +72,7 @@ function render(keepScroll) {
     console.error(e);
     const d = document.createElement('div');
     d.className = 'screen';
-    d.innerHTML = '<div class="empty"><div class="empty-emoji">⚠️</div><h2>Ups, coś poszło nie tak</h2><p class="muted">Dane są bezpieczne. Wróć na ekran startowy.</p><a class="btn primary" href="#/">Start</a></div>';
+    d.replaceChildren(h('div', { class: 'empty' }, h('div', { class: 'empty-mark', 'aria-hidden': 'true' }, icon('info', 44)), h('h2', null, 'Ups, coś poszło nie tak'), h('p', { class: 'muted' }, 'Dane są bezpieczne. Wróć na ekran startowy.'), h('a', { class: 'btn primary', href: '#/' }, 'Start')));
     view = { el: d };
   }
   current = { path, view, meta: matched.meta };

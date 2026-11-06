@@ -183,7 +183,7 @@ export function searchView(query) {
       if (vs.source === 'google' && vs.more && vs.more < 91) kids.push(button('Więcej wyników', { block: true, onClick: () => run(true) }));
       if (vs.source === 'mealdb') kids.push(h('p', { class: 'muted small' }, 'Baza TheMealDB zawiera kilkaset przepisów (po angielsku). Przepisy są tłumaczone na polski przy dodawaniu.'));
     } else if (vs.searched && vs.source !== 'url') {
-      kids.push(emptyState('🔎', 'Brak wyników', `Nic nie znalazłem dla „${vs.q}”. Spróbuj innego słowa${vs.source === 'mealdb' ? ' (baza jest angielska — działają np. kurczak, makaron, sernik)' : ''}.`));
+      kids.push(emptyState('search', 'Brak wyników', `Nic nie znalazłem dla „${vs.q}”. Spróbuj innego słowa${vs.source === 'mealdb' ? ' (baza jest angielska — działają np. kurczak, makaron, sernik)' : ''}.`));
     } else if (!(vs.source === 'google' && !googleConfigured()) && vs.source !== 'url') {
       const hist = getSetting('searchHistory') || [];
       kids.push(h('h3', { class: 'group-title' }, 'Spróbuj'), h('div', { class: 'chips wrap' }, [...hist.slice(0, 6), ...SUGGESTIONS.filter((x) => !hist.includes(x))].slice(0, 12).map((x) => h('button', { type: 'button', class: 'chip', onClick: () => { input.value = x; run(); } }, x))));

@@ -7,6 +7,7 @@ import { loadAll, state, subscribe, getSetting } from './recipes.js';
 import { loadInventory } from './inventory.js';
 import { h, icon, toast, $, openSheet } from './ui.js';
 import { APP_VERSION } from './util.js';
+import { tabGlyph } from './zarlock-art.js';
 import { CHANGELOG } from './changelog.js';
 import { setSetting } from './recipes.js';
 import { route, startRouter, navigate } from './router.js';
@@ -55,19 +56,19 @@ function applyAppearance() {
 /* ---------- Dolna nawigacja ---------- */
 
 const TABS = [
-  ['start', 'Start', 'chef', '/'],
-  ['recipes', 'Receptury', 'book', '/recipes'],
+  ['start', 'Start', 'start', '/'],
+  ['recipes', 'Receptury', 'recipes', '/recipes'],
   ['calc', 'Kalkulatory', 'calc', '/calc'],
-  ['shopping', 'Zakupy', 'basket', '/shopping'],
-  ['settings', 'Ustawienia', 'sliders', '/settings'],
+  ['shopping', 'Zakupy', 'shopping', '/shopping'],
+  ['settings', 'Ustawienia', 'settings', '/settings'],
 ];
 
 function buildTabbar() {
   const bar = $('#tabbar');
-  bar.replaceChildren(...TABS.map(([id, label, ico, path]) => {
+  bar.replaceChildren(...TABS.map(([id, label, mark, path]) => {
     const a = h('a', { href: '#' + path, class: 'tab', dataset: { tab: id }, 'aria-label': label,
       onClick: (e) => { e.preventDefault(); if (id === 'recipes') resetRecipeFilters(); navigate(path, { replace: true }); } },
-      h('span', { class: 'tab-ico' }, icon(ico, 24), id === 'shopping' ? h('span', { class: 'badge', id: 'cart-badge', hidden: true }) : null),
+      h('span', { class: 'tab-ico' }, tabGlyph(mark, 30), id === 'shopping' ? h('span', { class: 'badge', id: 'cart-badge', hidden: true }) : null),
       h('span', { class: 'tab-label' }, label));
     return a;
   }));
@@ -166,7 +167,7 @@ function fatal(err) {
   const retry = () => location.reload();
   const fallback = () => { try { sessionStorage.setItem('k:forceFallback', '1'); } catch (_) { /* */ } location.reload(); };
   $('#view').replaceChildren(h('div', { class: 'screen' }, h('div', { class: 'scroll' }, h('div', { class: 'content' },
-    h('div', { class: 'empty' }, h('div', { class: 'empty-emoji' }, '⚠️'), h('h2', null, 'Nie mogę otworzyć danych'),
+    h('div', { class: 'empty' }, h('div', { class: 'empty-mark' }, icon('info', 44)), h('h2', null, 'Nie mogę otworzyć danych'),
       h('p', { class: 'muted' }, 'Safari zablokowało albo zawiesiło pamięć aplikacji. Spróbuj ponownie; jeśli to nie pomaga, uruchom tryb awaryjny (dane w pamięci strony).'),
       h('div', { class: 'row wrap center gap' },
         h('button', { type: 'button', class: 'btn primary', onClick: retry }, 'Spróbuj ponownie'),
