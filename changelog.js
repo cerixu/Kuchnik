@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.0': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.5.0 — dopracowany dolny dock i wygodne przewijanie na iPhonie.',
+    items: ['Ostatnie karty przewijają się w całości nad pływającym paskiem nawigacji.', 'Wysokość i odsunięcie doku korzystają z safe area; w niskim trybie poziomym ikony i podpisy układają się w jednym rzędzie.', 'Zmiana zakładki otrzymała krótką animację, która respektuje ustawienie ograniczenia ruchu.'],
+    footer: 'Wszystkie pięć własnych ikon i skrótów nawigacji pozostaje dostępnych.'
+  }),
+
   '1.4.99': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.4.99 — spójny, uczciwy wygląd własnych przepisów.',
     items: ['W „Gotuję” brak ilustracji własnego przepisu pokazuje teraz neutralny komunikat zamiast ogólnego rysunku kategorii.', 'Karty i szczegóły przepisu używają takiego samego komunikatu o braku przypisanej ilustracji.', 'Zdjęcia dodane przez użytkownika i przypisane ilustracje potraw pozostają bez zmian.'],

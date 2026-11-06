@@ -2248,3 +2248,63 @@ body {
 .settings-art-progress::-webkit-progress-bar { background: rgba(255, 245, 236, .08); border-radius: 999px; }
 .settings-art-progress::-webkit-progress-value { background: linear-gradient(90deg, #9c6348, #e0a680); border-radius: 999px; }
 .settings-art-progress::-moz-progress-bar { background: linear-gradient(90deg, #9c6348, #e0a680); border-radius: 999px; }
+
+
+/* ==========================================================================
+   ŻARŁOK 1.5.0 — pełny obszar przewijania nad pływającym dokiem.
+   ========================================================================== */
+:root {
+  --dock-h: 78px;
+  --dock-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  --dock-clearance: calc(var(--dock-h) + var(--dock-bottom) + 18px);
+}
+#tabbar {
+  bottom: var(--dock-bottom);
+  height: var(--dock-h);
+  min-height: var(--dock-h);
+  isolation: isolate;
+}
+#tabbar::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 1px;
+  left: 9%;
+  right: 9%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 245, 236, .34), rgba(226, 162, 124, .22), transparent);
+}
+#tabbar .tab { position: relative; z-index: 1; }
+body:not(.no-tabs):not(.kb-open) .screen .scroll {
+  padding-bottom: var(--dock-clearance);
+  scroll-padding-bottom: var(--dock-clearance);
+}
+body:not(.no-tabs):not(.kb-open) #toasts {
+  bottom: calc(var(--dock-clearance) - 6px);
+}
+@keyframes zar-tab-arrive {
+  0% { opacity: .72; transform: translateY(2px) scale(.9); }
+  65% { opacity: 1; transform: translateY(-2px) scale(1.055); }
+  100% { opacity: 1; transform: translateY(-1px) scale(1); }
+}
+#tabbar .tab.on .tab-ico {
+  animation: zar-tab-arrive .34s cubic-bezier(.2, .8, .2, 1) both;
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  :root {
+    --dock-h: 62px;
+    --dock-bottom: max(6px, env(safe-area-inset-bottom, 0px));
+  }
+  #tabbar {
+    width: min(500px, calc(100% - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+    padding: 4px;
+    gap: 2px;
+  }
+  #tabbar .tab { flex-direction: row; gap: 6px; }
+  #tabbar .tab-ico { width: 34px; height: 34px; }
+  #tabbar .tab-label { width: auto; max-width: none; font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #tabbar .tab.on .tab-ico { animation: none; }
+}

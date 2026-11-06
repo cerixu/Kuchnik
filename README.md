@@ -1,6 +1,6 @@
 # ŻARŁOK — Kuchnik
 
-> **Aktualna wersja aplikacji: 1.4.99**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
+> **Aktualna wersja aplikacji: 1.5.0**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
@@ -10,6 +10,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur ma loka
 
 - **Safari (1.3):** baza danych ma ponawianie, limit czasu otwarcia, naprawę magazynów i **tryb awaryjny** (localStorage), więc aplikacja otwiera się nawet gdy iOS zablokuje IndexedDB (tryb prywatny, Lockdown, zawieszenie). Przy awarii pokazuje prawdziwy komunikat błędu, przyciski „Spróbuj ponownie” i „Tryb awaryjny”; stan magazynu widać w Ustawieniach.
 - **Własne przepisy (1.4.99):** jeśli przepis nie ma przypisanej ilustracji, aplikacja pokazuje neutralny komunikat zamiast generycznego rysunku kategorii. Własne zdjęcia pozostają zachowane.
+- **Nawigacja (1.5.0):** pływający dock uwzględnia safe area, zostawia miejsce na ostatnią kartę i dopasowuje się do niskiego ekranu poziomego; animacja zaznaczenia szanuje ograniczenie ruchu.
 - **PWA (1.4.98):** cache-first dla grafik potraw i składników, stale-while-revalidate dla lokalnych modułów JS/CSS oraz ograniczony network-first dla nawigacji i pozostałych żądań same-origin.
 - **Menu i rysunki (1.4.96):** wyrównane skróty Start, spokojniejsze znaki kategorii i kuchni świata oraz wycentrowany dok Liquid Glass.
 - **Karty z opisem i pochodzeniem:** każda receptura ma krótki opis, rysowany znak kraju pochodzenia i źródło (strona, baza lub własny przepis); filtr po kraju. W szczegółach są chipy z krajem i źródłem oraz pływający przycisk GOTUJĘ.
