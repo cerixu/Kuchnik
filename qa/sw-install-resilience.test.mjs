@@ -58,6 +58,7 @@ test('missing optional image/font does not block service-worker installation', a
   assert.ok(calls.required.includes('index.html'), 'HTML shell remains required');
   assert.ok(calls.required.includes('app.js'), 'application entry remains required');
   assert.ok(calls.optional.includes('icon-512.png'), 'missing icon is attempted as optional');
+  assert.equal(calls.optional.some((path) => path.startsWith('assets/food-illustrations/')), false, 'large dish art is cached on demand, not fetched during installation');
   assert.ok(calls.optional.some((path) => path.endsWith('.svg')), 'SVG illustrations are optional');
   assert.ok(calls.optional.some((path) => path.endsWith('.woff')), 'fonts are optional');
 });

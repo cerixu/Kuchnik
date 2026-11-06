@@ -2,12 +2,13 @@
 
 Lista kontrolna obejmuje 228 receptur aplikacji: 225 z bazy startowej oraz 3 dodatkowe klasyki zgłoszone po przeglądzie strony. Przed każdą planszą weryfikuję nazwy oraz już istniejące mapowania. Każda zaznaczona receptura ma jeden własny plik PNG.
 
-## Stan — 2026-11-05
+## Stan — 2026-11-06
 
 - Przepisów aplikacji: **228**
 - Nowe ilustracje w repo: **228**
 - Do wykonania: **0**
 - Status 228 grafik: `pending`, dodane i przypisane, oczekują na ocenę stylu.
+- Repozytorium nie zawiera listy nazw dla 25 wcześniej zaakceptowanych rysunków; nie oznaczaj żadnej pozycji jako zaakceptowanej bez potwierdzonego przypisania.
 - Od partii 8: matowe czarne naczynia z cienkim miedzianym rantem.
 - [x] oznacza plik PNG w repo i mapowanie. [ ] oznacza rysunek do wykonania.
 - Stare SVG nie są zastępczymi ilustracjami. Zdjęcia dodane przez użytkownika są zachowane.

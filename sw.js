@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.4.96';
+const VERSION = 'kucharzyna-1.4.97';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -18,60 +18,6 @@ const CORE = [
   'index.html',
   'art-preview-1-4-52.html',
   'galeria-kredkowa.html', 'food-illustrations.js',
-  'assets/food-illustrations/rosol-kredka.png', 'assets/food-illustrations/kotlet-schabowy-kredka.png',
-  'assets/food-illustrations/pierogi-ruskie-kredka.png', 'assets/food-illustrations/zupa-pomidorowa-kredka.png',
-  'assets/food-illustrations/zurek-kredka.png', 'assets/food-illustrations/barszcz-czerwony-kredka.png',
-  'assets/food-illustrations/krem-z-dyni-kredka.png', 'assets/food-illustrations/kapusniak-kredka.png',
-  'assets/food-illustrations/bigos-staropolski-kredka.png', 'assets/food-illustrations/golabki-pomidorowe-kredka.png',
-  'assets/food-illustrations/gulasz-wegierski-kredka.png', 'assets/food-illustrations/szakszuka-kredka.png',
-  'assets/food-illustrations/salatka-grecka-kredka.png', 'assets/food-illustrations/salatka-caprese-kredka.png',
-  'assets/food-illustrations/salatka-cezar-kredka.png', 'assets/food-illustrations/mizeria-kredka.png',
-  'assets/food-illustrations/kotlet-mielony-kredka.png', 'assets/food-illustrations/nalesniki-z-serem-kredka.png',
-  'assets/food-illustrations/placki-ziemniaczane-kredka.png', 'assets/food-illustrations/zupa-grzybowa-kredka.png',
-  'assets/food-illustrations/tom-yum-kredka.png', 'assets/food-illustrations/gazpacho-kredka.png',
-  'assets/food-illustrations/chili-con-carne-kredka.png', 'assets/food-illustrations/burger-domowy-kredka.png',
-  'assets/food-illustrations/kaczka-pieczona-jablka-kredka.png', 'assets/food-illustrations/losos-pieczony-cytryna-kredka.png',
-  'assets/food-illustrations/pizza-pepperoni-kredka.png', 'assets/food-illustrations/panna-cotta-truskawki-kredka.png',
-  'assets/food-illustrations/lasagne-bolognese-kredka.png',
-  'assets/food-illustrations/bruschetta-pomidory-kredka.png',
-  'assets/food-illustrations/quiche-lorraine-kredka.png',
-  'assets/food-illustrations/focaccia-kredka.png',
-  'assets/food-illustrations/calzone-kredka.png',
-  'assets/food-illustrations/pizza-quattro-formaggi-kredka.png',
-  'assets/food-illustrations/kopytka-kredka.png',
-  'assets/food-illustrations/tortilla-espanola-kredka.png',
-  'assets/food-illustrations/falafel-kredka.png',
-  'assets/food-illustrations/ratatouille-kredka.png',
-  'assets/food-illustrations/pierogi-kapusta-grzyby-kredka.png',
-  'assets/food-illustrations/pierogi-jagody-kredka.png',
-  'assets/food-illustrations/pierogi-leniwe-kredka.png',
-  'assets/food-illustrations/ryba-po-grecku-kredka.png',
-  'assets/food-illustrations/kurczak-pieczony-kredka.png',
-  'assets/food-illustrations/pstrag-maslo-migdalami-kredka.png',
-  'assets/food-illustrations/karkowka-pieczona-kredka.png',
-  'assets/food-illustrations/pulpety-koperkowe-kredka.png',
-  'assets/food-illustrations/salatka-jarzynowa-kredka.png',
-  'assets/food-illustrations/surowka-marchew-jablko-kredka.png',
-  'assets/food-illustrations/jajecznica-kredka.png',
-  'assets/food-illustrations/jajka-w-koszulkach-kredka.png',
-  'assets/food-illustrations/racuchy-z-jablkami-kredka.png',
-  'assets/food-illustrations/knedle-ze-sliwkami-kredka.png',
-  'assets/food-illustrations/makowiec-kredka.png',
-  'assets/food-illustrations/sernik-klasyczny-kredka.png',
-  'assets/food-illustrations/brownie-czekoladowe-kredka.png',
-  'assets/food-illustrations/fish-and-chips-kredka.png',
-  'assets/food-illustrations/sledz-w-oleju-kredka.png',
-  'assets/food-illustrations/hummus-kredka.png',
-  'assets/food-illustrations/lasagne-bolognese-kredka.png',
-  'assets/food-illustrations/bruschetta-pomidory-kredka.png',
-  'assets/food-illustrations/quiche-lorraine-kredka.png',
-  'assets/food-illustrations/focaccia-kredka.png',
-  'assets/food-illustrations/calzone-kredka.png',
-  'assets/food-illustrations/pizza-quattro-formaggi-kredka.png',
-  'assets/food-illustrations/kopytka-kredka.png',
-  'assets/food-illustrations/tortilla-espanola-kredka.png',
-  'assets/food-illustrations/falafel-kredka.png',
-  'assets/food-illustrations/ratatouille-kredka.png',
   'styles.css',
   'manifest.webmanifest',
   'assets/food-svg/carbonara.svg', 'assets/food-svg/margherita.svg', 'assets/food-svg/tomato-soup.svg',
@@ -131,177 +77,7 @@ const CORE = [
   'views-start.js', 'views-recipes.js', 'views-detail.js', 'views-editor.js', 'views-cook.js', 'views-cook-home.js', 'views-calc.js', 'views-tools.js', 'views-guide.js', 'views-search.js', 'views-import.js', 'views-settings.js', 'views-inventory.js',
   'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png',
   'bg-texture.png', 'poppins-300.woff', 'poppins-400.woff', 'poppins-500.woff', 'poppins-700.woff',
-  'assets/food-illustrations/zupa-ogorkowa-kredka.png',
-  'assets/food-illustrations/pieczen-rzymska-kredka.png',
-  'assets/food-illustrations/kluski-slaskie-kredka.png',
-  'assets/food-illustrations/karp-smazony-kredka.png',
-  'assets/food-illustrations/szarlotka-kredka.png',
-  'assets/food-illustrations/tiramisu-kredka.png',
-  'assets/food-illustrations/paella-owoce-morza-kredka.png',
-  'assets/food-illustrations/tacos-al-pastor-kredka.png',
-  'assets/food-illustrations/ramen-shoyu-kredka.png',
-  'assets/food-illustrations/bibimbap-kredka.png',
-  'assets/food-illustrations/wiener-schnitzel-kredka.png',
-  'assets/food-illustrations/kurczak-tikka-masala-kredka.png',
-  'assets/food-illustrations/coq-au-vin-kredka.png',
-  'assets/food-illustrations/nalesniki-kredka.png',
-  'assets/food-illustrations/spaghetti-aglio-olio-kredka.png',
-  'assets/food-illustrations/cacio-e-pepe-kredka.png',
-  'assets/food-illustrations/pad-thai-kredka.png',
-  'assets/food-illustrations/pesto-genovese-kredka.png',
-  'assets/food-illustrations/guacamole-kredka.png',
-  'assets/food-illustrations/tzatziki-kredka.png',
-  'assets/food-illustrations/sos-beszamel-kredka.png',
-  'assets/food-illustrations/sos-holenderski-kredka.png',
-  'assets/food-illustrations/majonez-domowy-kredka.png',
-  'assets/food-illustrations/vinaigrette-kredka.png',
-  'assets/food-illustrations/bulion-drobiowy-fond-kredka.png',
-  'assets/food-illustrations/maslo-ziolowe-kredka.png',
-  'assets/food-illustrations/cebula-karmelizowana-kredka.png',
-  'assets/food-illustrations/marynowana-czerwona-cebula-kredka.png',
-  'assets/food-illustrations/gambas-al-ajillo-kredka.png',
-  'assets/food-illustrations/creme-brulee-kredka.png',
-  'assets/food-illustrations/pancakes-amerykanskie-kredka.png',
-  'assets/food-illustrations/chleb-na-zakwasie-kredka.png',
-  'assets/food-illustrations/chleb-pszenny-drozdze-kredka.png',
-  'assets/food-illustrations/margarita-kredka.png',
-  'assets/food-illustrations/negroni-kredka.png',
-  'assets/food-illustrations/aperol-spritz-kredka.png',
-  'assets/food-illustrations/old-fashioned-kredka.png',
-  'assets/food-illustrations/mojito-kredka.png',
-  'assets/food-illustrations/espresso-martini-kredka.png',
-  'assets/food-illustrations/krupnik-kredka.png',
-  'assets/food-illustrations/zupa-koperkowa-kredka.png',
-  'assets/food-illustrations/flaki-wolowe-kredka.png',
-  'assets/food-illustrations/chlodnik-litewski-kredka.png',
-  'assets/food-illustrations/zupa-szczawiowa-kredka.png',
-  'assets/food-illustrations/grochowka-kredka.png',
-  'assets/food-illustrations/zupa-fasolowa-kredka.png',
-  'assets/food-illustrations/zrazy-zawijane-kredka.png',
-  'assets/food-illustrations/watrobka-z-cebula-kredka.png',
-  'assets/food-illustrations/zeberka-w-miodzie-kredka.png',
-  'assets/food-illustrations/schab-pieczony-sos-wlasny-kredka.png',
-  'assets/food-illustrations/lazanki-z-kapusta-kredka.png',
-  'assets/food-illustrations/kapusta-zasmazana-kredka.png',
-  'assets/food-illustrations/buraczki-zasmazane-kredka.png',
-  'assets/food-illustrations/ogorki-kiszone-kredka.png',
-  'assets/food-illustrations/fasolka-szparagowa-bulka-tarta-kredka.png',
-  'assets/food-illustrations/sernik-na-zimno-galaretka-kredka.png',
-  'assets/food-illustrations/drozdzowka-z-serem-kredka.png',
-  'assets/food-illustrations/babka-piaskowa-kredka.png',
-  'assets/food-illustrations/mazurek-kajmakowy-kredka.png',
-  'assets/food-illustrations/paczek-kredka.png',
-  'assets/food-illustrations/faworki-kredka.png',
-  'assets/food-illustrations/kisiel-zurawinowy-kredka.png',
-  'assets/food-illustrations/ciasto-marchewkowe-kredka.png',
-  'assets/food-illustrations/placek-drozdzowy-sliwki-kredka.png',
-  'assets/food-illustrations/kutia-kredka.png',
-  'assets/food-illustrations/pierniczki-kredka.png',
-  'assets/food-illustrations/sledzie-w-smietanie-kredka.png',
-  'assets/food-illustrations/pasta-jajeczna-kredka.png',
-  'assets/food-illustrations/smalec-ze-skwarami-kredka.png',
-  'assets/food-illustrations/uszka-do-barszczu-kredka.png',
-  'assets/food-illustrations/risotto-alla-milanese-kredka.png',
-  'assets/food-illustrations/gnocchi-maslo-szalwiowe-kredka.png',
-  'assets/food-illustrations/spaghetti-alla-puttanesca-kredka.png',
-  'assets/food-illustrations/spaghetti-all-amatriciana-kredka.png',
-  'assets/food-illustrations/ragu-alla-bolognese-kredka.png',
-  'assets/food-illustrations/penne-allarrabbiata-kredka.png',
-  'assets/food-illustrations/fettuccine-alfredo-kredka.png',
-  'assets/food-illustrations/minestrone-kredka.png',
-  'assets/food-illustrations/panzanella-kredka.png',
-  'assets/food-illustrations/saltimbocca-alla-romana-kredka.png',
-  'assets/food-illustrations/parmigiana-di-melanzane-kredka.png',
-  'assets/food-illustrations/zupa-cebulowa-kredka.png',
-  'assets/food-illustrations/boeuf-bourguignon-kredka.png',
-  'assets/food-illustrations/croque-monsieur-kredka.png',
-  'assets/food-illustrations/moules-marinieres-kredka.png',
-  'assets/food-illustrations/salatka-nicoise-kredka.png',
-  'assets/food-illustrations/tarte-tatin-kredka.png',
-  'assets/food-illustrations/crepes-kredka.png',
-  'assets/food-illustrations/patatas-bravas-kredka.png',
-  'assets/food-illustrations/albondigas-w-sosie-pomidorowym-kredka.png',
-  'assets/food-illustrations/mussaka-kredka.png',
-  'assets/food-illustrations/souvlaki-z-kurczaka-kredka.png',
-  'assets/food-illustrations/spanakopita-kredka.png',
-  'assets/food-illustrations/quesadilla-z-serem-kurczakiem-kredka.png',
-  'assets/food-illustrations/enchiladas-z-kurczakiem-kredka.png',
-  'assets/food-illustrations/pico-de-gallo-kredka.png',
-  'assets/food-illustrations/burrito-bowl-kredka.png',
-  'assets/food-illustrations/mac-and-cheese-kredka.png',
-  'assets/food-illustrations/bbq-ribs-kredka.png',
-  'assets/food-illustrations/pulled-pork-kredka.png',
-  'assets/food-illustrations/skrzydelka-buffalo-kredka.png',
-  'assets/food-illustrations/salatka-cobb-kredka.png',
-  'assets/food-illustrations/sushi-maki-ogorek-losos-kredka.png',
-  'assets/food-illustrations/zielone-curry-tajskie-kredka.png',
-  'assets/food-illustrations/kurczak-teriyaki-kredka.png',
-  'assets/food-illustrations/smazony-ryz-z-jajkiem-kredka.png',
-  'assets/food-illustrations/pho-bo-kredka.png',
-  'assets/food-illustrations/gyoza-kredka.png',
-  'assets/food-illustrations/kung-pao-z-kurczakiem-kredka.png',
-  'assets/food-illustrations/zupa-miso-kredka.png',
-  'assets/food-illustrations/satay-z-kurczaka-sos-orzechowy-kredka.png',
-  'assets/food-illustrations/dal-z-soczewicy-kredka.png',
-  'assets/food-illustrations/biryani-z-kurczakiem-kredka.png',
-  'assets/food-illustrations/tabbouleh-kredka.png',
-  'assets/food-illustrations/baba-ganoush-kredka.png',
-  'assets/food-illustrations/kofta-z-jagnieciny-kredka.png',
-  'assets/food-illustrations/shawarma-z-kurczaka-kredka.png',
-  'assets/food-illustrations/spatzle-z-serem-kredka.png',
-  'assets/food-illustrations/currywurst-kredka.png',
-  'assets/food-illustrations/leczo-kredka.png',
-  'assets/food-illustrations/langosz-kredka.png',
-  'assets/food-illustrations/boeuf-stroganow-kredka.png',
-  'assets/food-illustrations/chaczapuri-adzarskie-kredka.png',
-  'assets/food-illustrations/tagine-z-kurczakiem-morele-kredka.png',
-  'assets/food-illustrations/shepherds-pie-kredka.png',
-  'assets/food-illustrations/owsianka-z-owocami-orzechami-kredka.png',
-  'assets/food-illustrations/tosty-francuskie-kredka.png',
-  'assets/food-illustrations/granola-domowa-kredka.png',
-  'assets/food-illustrations/tost-awokado-jajko-kredka.png',
-  'assets/food-illustrations/smoothie-bowl-truskawkowy-kredka.png',
-  'assets/food-illustrations/placuszki-bananowe-kredka.png',
-  'assets/food-illustrations/curry-ciecierzyca-szpinak-kredka.png',
-  'assets/food-illustrations/kotlety-z-soczewicy-kredka.png',
-  'assets/food-illustrations/burger-weganski-czarna-fasola-kredka.png',
-  'assets/food-illustrations/tofu-z-warzywami-wok-kredka.png',
-  'assets/food-illustrations/krem-z-brokulow-kredka.png',
-  'assets/food-illustrations/zapiekanka-makaronowa-warzywna-kredka.png',
-  'assets/food-illustrations/muffinki-czekoladowe-kredka.png',
-  'assets/food-illustrations/ciastka-owsiane-z-zurawina-kredka.png',
-  'assets/food-illustrations/lody-waniliowe-domowe-kredka.png',
-  'assets/food-illustrations/mus-czekoladowy-kredka.png',
-  'assets/food-illustrations/sernik-nowojorski-kredka.png',
-  'assets/food-illustrations/tarta-cytrynowa-kredka.png',
-  'assets/food-illustrations/ciasto-czekoladowe-bez-maki-kredka.png',
-  'assets/food-illustrations/biszkopt-kredka.png',
-  'assets/food-illustrations/bulion-warzywny-kredka.png',
-  'assets/food-illustrations/sos-bbq-domowy-kredka.png',
-  'assets/food-illustrations/sos-czosnkowy-kredka.png',
-  'assets/food-illustrations/dzem-truskawkowy-kredka.png',
-  'assets/food-illustrations/kruche-ciasto-uniwersalne-kredka.png',
-  'assets/food-illustrations/ciasto-na-pierogi-kredka.png',
-  'assets/food-illustrations/zakwas-zytni-kredka.png',
-  'assets/food-illustrations/marynata-do-kurczaka-kredka.png',
-  'assets/food-illustrations/nachos-z-serem-kredka.png',
-  'assets/food-illustrations/frytki-z-piekarnika-kredka.png',
-  'assets/food-illustrations/kanapka-club-kredka.png',
-  'assets/food-illustrations/cosmopolitan-kredka.png',
-  'assets/food-illustrations/daiquiri-kredka.png',
-  'assets/food-illustrations/moscow-mule-kredka.png',
-  'assets/food-illustrations/pina-colada-kredka.png',
-  'assets/food-illustrations/whisky-sour-kredka.png',
-  'assets/food-illustrations/gin-tonic-kredka.png',
-  'assets/food-illustrations/caipirinha-kredka.png',
-  'assets/food-illustrations/bloody-mary-kredka.png',
-  'assets/food-illustrations/hugo-kredka.png',
-  'assets/food-illustrations/grzaniec-kredka.png',
-  'assets/food-illustrations/lemoniada-domowa-kredka.png',
-  'assets/food-illustrations/carbonara-kredka.png',
-  'assets/food-illustrations/pizza-napoletana-kredka.png',
-  'assets/food-illustrations/sos-pomidorowy-kredka.png',
-'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png',
+  'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png',
   'assets/zarlock-hatch.svg',
   'assets/ingredient-illustrations/egg.png',
   'assets/ingredient-illustrations/bacon.png',
@@ -411,11 +187,31 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter((k) => k.startsWith('kucharzyna-') && k !== VERSION && k !== MEDIA_CACHE).map((k) => caches.delete(k)));
+    const previousVersions = keys.filter((k) =>
+      k.startsWith('kucharzyna-') && k !== VERSION && k !== MEDIA_CACHE
+    );
+
+    // Zachowaj tylko stare ilustracje, które były zapisane w cache wydania.
+    // Pozostałe pliki starej wersji można usunąć po aktywacji nowego wydania.
+    for (const name of previousVersions) {
+      try {
+        const oldCache = await caches.open(name);
+        let hasArtwork = false;
+        for (const request of await oldCache.keys()) {
+          const path = new URL(request.url).pathname;
+          if (path.includes('/assets/food-illustrations/') && /\.png$/i.test(path)) {
+            hasArtwork = true;
+          } else {
+            await oldCache.delete(request);
+          }
+        }
+        if (!hasArtwork) await caches.delete(name);
+      } catch (_) { /* Czyszczenie starej pamięci nie może zablokować aktywacji. */ }
+    }
+
     await self.clients.claim();
   })());
 });
-
 self.addEventListener('message', (event) => {
   const msg = event.data || {};
   if (msg.type === 'SKIP_WAITING') self.skipWaiting();
@@ -434,6 +230,19 @@ async function cacheFirst(request) {
   if (bundled) {
     await media.put(request, bundled.clone()).catch(() => {});
     return bundled;
+  }
+
+  // Zachowaj też rysunki pobrane przez poprzednie wydania, zanim nowa wersja
+  // przeniesie je do trwałego cache mediów.
+  const legacyNames = (await caches.keys()).filter((name) =>
+    name.startsWith('kucharzyna-') && name !== VERSION && name !== MEDIA_CACHE
+  );
+  for (const name of legacyNames) {
+    try {
+      const legacy = await caches.open(name);
+      const saved = await legacy.match(request, { ignoreSearch: true });
+      if (saved) return saved;
+    } catch (_) { /* */ }
   }
 
   const response = await fetch(request, { cache: 'no-cache' });

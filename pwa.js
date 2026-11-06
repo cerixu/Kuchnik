@@ -117,3 +117,71 @@ export async function storageInfo() {
   } catch (_) { /* */ }
   return out;
 }
+
+
+/** Zwraca pliki rysunków, które są już dostępne w cache bieżącym lub poprzednim. */
+async function findCachedArtworkPaths(paths) {
+  const unique = [...new Set(paths)];
+  const wanted = new Set(unique.map((path) => new URL(path, document.baseURI).pathname));
+  const cached = new Set();
+  const names = (await caches.keys()).filter((name) =>
+    name === 'kucharzyna-media-v1' || name.startsWith('kucharzyna-')
+  );
+
+  for (const name of names) {
+    try {
+      const cache = await caches.open(name);
+      for (const request of await cache.keys()) {
+        const path = new URL(request.url).pathname;
+        if (wanted.has(path)) cached.add(path);
+      }
+    } catch (_) { /* Pomijaj nieczytelny cache; próba pobrania nadal możliwa. */ }
+  }
+  return cached;
+}
+
+/** Liczba ilustracji dań zapisanych w cache i dostępnych offline. */
+export async function cachedArtworkCount(paths) {
+  if (!('caches' in window)) return null;
+  const cachedPaths = await findCachedArtworkPaths(paths);
+  return new Set(paths).size === 0 ? 0 : [...new Set(paths)].filter((path) =>
+    cachedPaths.has(new URL(path, document.baseURI).pathname)
+  ).length;
+}
+
+/** Pobiera do 3 rysunków naraz; wywołujący dostaje postęp i może przerwać pobieranie. */
+export async function downloadArtworkPack(paths, { signal, onProgress = () => {} } = {}) {
+  if (!('caches' in window)) throw new Error('Pamięć offline nie jest dostępna w tej przeglądarce.');
+  const uniquePaths = [...new Set(paths)];
+  const media = await caches.open('kucharzyna-media-v1');
+  const cachedPaths = await findCachedArtworkPaths(uniquePaths);
+  const total = uniquePaths.length;
+  let processed = uniquePaths.filter((path) => cachedPaths.has(new URL(path, document.baseURI).pathname)).length;
+  let downloaded = 0;
+  let failed = 0;
+  let cursor = 0;
+  onProgress({ processed, total, downloaded, failed });
+
+  async function worker() {
+    while (cursor < total && !signal?.aborted) {
+      const path = uniquePaths[cursor++];
+      const url = new URL(path, document.baseURI);
+      if (cachedPaths.has(url.pathname)) continue;
+      try {
+        const response = await fetch(url.href, { cache: 'no-cache', signal });
+        if (!response.ok || response.type === 'opaque') throw new Error('Nie udało się pobrać ' + path);
+        await media.put(url.href, response.clone());
+        cachedPaths.add(url.pathname);
+        downloaded++;
+      } catch (_) {
+        if (signal?.aborted) break;
+        failed++;
+      }
+      processed++;
+      onProgress({ processed, total, downloaded, failed });
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(3, total) }, () => worker()));
+  return { processed, total, downloaded, failed, cancelled: !!signal?.aborted };
+}

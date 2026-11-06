@@ -9,11 +9,12 @@ import { navigate, rerender } from './router.js';
 import { state, getSetting, setSetting, restoreSeeds, listRecipes } from './recipes.js';
 import { openCategoryManager } from './views-recipes.js';
 import { exportBackup, readBackupFile, importBackup, wipeAll, daysSinceBackup } from './backup.js';
-import { checkForUpdate, swVersion, storageInfo, requestPersist, isStandalone, isIOS, swSupported } from './pwa.js';
+import { checkForUpdate, swVersion, storageInfo, requestPersist, isStandalone, isIOS, swSupported, cachedArtworkCount, downloadArtworkPack } from './pwa.js';
 import { searchGoogle, googleConfigured } from './search.js';
 import { textInput } from './ui.js';
 import { APP_VERSION, fmtDateTime } from './util.js';
 import { storageStatus } from './db.js';
+import { FOOD_ILLUSTRATIONS } from './food-illustrations.js';
 
 const mb = (b) => (b == null ? '—' : b < 1048576 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1).replace('.', ',') + ' MB');
 
@@ -27,6 +28,7 @@ export function settingsView() {
   'Wyszukiwanie w sieci': 'globe',
   'Kopia zapasowa (JSON)': 'copy',
   'Aplikacja i pamięć': 'info',
+  'Ilustracje offline': 'download',
   'Instalacja': 'download',
   'Strefa ryzyka': 'trash',
   'Prywatność': 'eye',
@@ -183,6 +185,85 @@ const group = (title, ...kids) => h('section', { class: 'card stack settings-car
   }
   paintStorage();
 
+  /* ----- Ilustracje potraw offline ----- */
+  const artworkPaths = [...new Set(FOOD_ILLUSTRATIONS.map((item) => item.path))];
+  const artworkStatus = h('p', { class: 'muted small', 'aria-live': 'polite' }, 'Sprawdzam zapisane ilustracje…');
+  const artworkProgress = h('progress', {
+    class: 'settings-art-progress',
+    max: artworkPaths.length,
+    value: 0,
+    hidden: true,
+    'aria-label': 'Postęp pobierania ilustracji potraw',
+  });
+  let artworkController = null;
+  async function paintArtworkStatus() {
+    try {
+      const count = await cachedArtworkCount(artworkPaths);
+      if (count == null) {
+        artworkStatus.textContent = 'Ta przeglądarka nie udostępnia pamięci offline.';
+      } else if (count === artworkPaths.length) {
+        artworkStatus.textContent = `Wszystkie rysunki zapisane offline: ${count}/${artworkPaths.length}.`;
+      } else {
+        artworkStatus.textContent = `Zapisane offline: ${count}/${artworkPaths.length}. Pozostałe rysunki pobiorą się przy otwarciu przepisu.`;
+      }
+    } catch (_) {
+      artworkStatus.textContent = 'Nie udało się odczytać pamięci rysunków.';
+    }
+  }
+  const artworkCancel = button('Anuluj pobieranie', {
+    block: true,
+    kind: 'ghost',
+    onClick: () => artworkController?.abort(),
+  });
+  artworkCancel.hidden = true;
+  const artworkDownload = button('Pobierz wszystkie ilustracje', {
+    icon: 'download',
+    block: true,
+    kind: 'ghost',
+    onClick: async () => {
+      if (!navigator.onLine) {
+        toast('Połącz się z internetem, aby pobrać rysunki.', { type: 'error' });
+        return;
+      }
+      artworkDownload.disabled = true;
+      artworkController = new AbortController();
+      artworkProgress.hidden = false;
+      artworkCancel.hidden = false;
+      try {
+        const result = await downloadArtworkPack(artworkPaths, {
+          signal: artworkController.signal,
+          onProgress: ({ processed, total, failed }) => {
+            artworkProgress.value = processed;
+            artworkProgress.setAttribute('aria-valuenow', String(processed));
+            artworkStatus.textContent = `Pobieranie rysunków: ${processed}/${total}${failed ? ` · błędy: ${failed}` : ''}.`;
+          },
+        });
+        if (result.cancelled) {
+          artworkStatus.textContent = `Pobieranie przerwane. Zapisane: ${result.processed}/${result.total}; można wznowić później.`;
+        } else if (result.failed) {
+          artworkStatus.textContent = `Zapisano ${result.processed}/${result.total}. Nie udało się pobrać ${result.failed}; możesz spróbować ponownie.`;
+        } else {
+          artworkProgress.value = result.total;
+          artworkStatus.textContent = `Wszystkie rysunki zapisane offline: ${result.total}/${result.total}.`;
+        }
+      } catch (error) {
+        artworkStatus.textContent = error.message || 'Nie udało się pobrać ilustracji.';
+      } finally {
+        artworkController = null;
+        artworkCancel.hidden = true;
+        artworkDownload.disabled = false;
+        await paintArtworkStatus();
+      }
+    },
+  });
+  const artworkOffline = group('Ilustracje offline',
+    h('p', { class: 'muted small' }, `Rysunki zapisują się automatycznie, gdy oglądasz przepisy. Możesz też pobrać wszystkie ${artworkPaths.length} plików (około 94 MiB), aby mieć całą bibliotekę bez internetu. Przy pierwszym pobraniu najlepiej użyć Wi-Fi.`),
+    artworkStatus,
+    artworkProgress,
+    artworkDownload,
+    artworkCancel);
+  paintArtworkStatus();
+
   const app = group('Aplikacja i pamięć',
     storageBox,
     h('div', { class: 'kv' }, h('div', { class: 'kv-row' }, h('span', null, 'Wersja aplikacji'), h('span', { class: 'num' }, APP_VERSION)), h('div', { class: 'kv-row' }, h('span', null, 'Service worker'), swRow)),
@@ -216,7 +297,7 @@ const group = (title, ...kids) => h('section', { class: 'card stack settings-car
   const about = group('Prywatność',
     h('p', { class: 'muted' }, 'ŻARŁOK / Kuchnik nie ma konta, reklam, śledzenia ani analityki. Wszystkie dane są w pamięci tego urządzenia (IndexedDB) i nigdzie nie są wysyłane. Internet jest używany tylko wtedy, gdy sam otworzysz wyszukiwarkę Google lub Google Tłumacz.'));
 
-  c.append(appearance, recipes, cooking, search, backup, app, install, danger, about);
+  c.append(appearance, recipes, cooking, search, backup, artworkOffline, app, install, danger, about);
   void state;
   return { el: s.el };
 }
