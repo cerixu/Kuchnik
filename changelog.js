@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.4.96': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.4.96 — wyrównane menu i spokojniejsze ilustracje kategorii.',
+    items: ['Nagłówek po przewinięciu zakrywa karty równą, ciemną taflą szkła, a pasek przewijania nie odciąga uwagi od treści.', 'Kuchnie świata i kategorie mają prostsze, spójne obramowania oraz większe, wyśrodkowane własne rysunki.', 'Ilustracje dań w karuzeli są powiększone i wycentrowane; dolne zakładki mają równe pola i podpisy.'],
+    footer: 'Zachowano dotychczasowe przepisy, funkcje i własne ilustracje.'
+  }),
+
   '1.4.95': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.4.95 — uporządkowane menu i spójne ekrany.',
     items: ['Skróty na ekranie Start zostały podzielone na Gotowanie, Twoją bibliotekę, Zapasy i zakupy oraz Odkrywaj.', 'Przyciski, karty, pola i nagłówki dostały wspólną grafitowo-miedzianą oprawę z ręcznie kreskowanymi detalami.', 'Dolny pasek ma równy układ pięciu zakładek i wycentrowane podpisy na iPhonie.'],

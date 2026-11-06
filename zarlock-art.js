@@ -60,10 +60,11 @@ export function categoryMarkKey(categoryId, storedKey) {
 
 export function categoryGlyph(categoryId, size, storedKey) {
   const key = categoryMarkKey(categoryId, storedKey);
-  const dish = '<circle cx="40" cy="40" r="37" fill="#211f21" stroke="#bd7958" stroke-width="1.4"/>' +
-    '<path d="M9 38a31 31 0 0 1 59-9" fill="none" stroke="#f0dfd0" stroke-opacity=".28" stroke-width="1"/>' +
-    '<circle cx="40" cy="40" r="27" fill="#171719" stroke="#d9c5b2" stroke-opacity=".68" stroke-width="1.2"/>';
-  return makeSvg(dish + (CATEGORY_DRAWINGS[key] || CATEGORY_DRAWINGS.plate), size || 76, 'category-art');
+  const dish = '<path d="M40 3.8c19.9-.2 35.8 15.7 35.9 35.7.1 20.1-15.8 36.5-35.9 36.5C20.1 76 4.3 59.8 4.2 39.7 4.1 20 19.8 4.2 40 3.8Z" fill="#211f21" stroke="#bd7958" stroke-width="1.35"/>' +
+    '<path d="M15.7 38.8c.4-13.4 10.7-23.8 24.2-23.8 13.4 0 24.1 10.2 24.4 23.6" fill="none" stroke="#e5d3c2" stroke-opacity=".34" stroke-width=".9"/>' +
+    '<path d="M16.3 47.1c3.6 9.6 12.4 15.8 23.7 15.8 10.8 0 19.1-5.3 22.9-15.1" fill="none" stroke="#bd7958" stroke-opacity=".55" stroke-width=".75"/>';
+  const drawing = CATEGORY_DRAWINGS[key] || CATEGORY_DRAWINGS.plate;
+  return makeSvg(dish + '<g transform="translate(40 40) scale(1.08) translate(-40 -40)">' + drawing + '</g>', size || 76, 'category-art');
 }
 
 const ORIGIN_FLAGS = Object.freeze({
@@ -193,8 +194,8 @@ export function originGlyph(code, size) {
   const spec = ORIGIN_FLAGS[c];
   const uid = 'zarlock-origin-' + (++flagId);
   const clip = '<defs><clipPath id="' + uid + '"><rect x="12" y="17" width="48" height="32" rx="5"/></clipPath></defs>';
-  const base = '<circle cx="40" cy="40" r="37" fill="#222023" stroke="#bc7958" stroke-width="1.45"/>' +
-    '<circle cx="40" cy="40" r="32.5" fill="none" stroke="#f1dfd0" stroke-opacity=".20" stroke-width=".8"/>';
+  const base = '<path d="M40 3.8c10.2-.2 19.7 4.2 26.5 11.7 5.4 6 8.3 14.6 8.3 23.7 0 9.8-3.6 18.3-9.9 24.8-6.4 6.5-15 10-24.9 10C20 74 4.7 58.8 4.8 40 4.7 20.1 20 4.2 40 3.8Z" fill="#222023" stroke="#bc7958" stroke-width="1.35"/>' +
+    '<path d="M13.4 32c2.7-12.3 13.1-21.4 26.1-21.8" fill="none" stroke="#f1dfd0" stroke-opacity=".25" stroke-width=".85"/>';
   const flag = '<rect x="11.5" y="16.5" width="49" height="33" rx="5.5" fill="#252326" stroke="#e6d3c1" stroke-width="1.15"/>' +
     '<g clip-path="url(#' + uid + ')">' + flagPattern(c, spec) + '</g>' +
     '<rect x="12" y="17" width="48" height="32" rx="5" fill="none" stroke="#f3e2d3" stroke-opacity=".52" stroke-width=".85"/>' +

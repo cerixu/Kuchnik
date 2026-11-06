@@ -2112,3 +2112,123 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .home-menu-group .qa, #tabbar, .tab-ico, .rtile, .btn { transition: none !important; animation: none !important; }
 }
+
+/* ==========================================================================
+   ŻARŁOK 1.4.96 — wyrównanie menu i rysowanych znaków.
+   ========================================================================== */
+.topbar { z-index: 8; }
+.topbar.scrolled {
+  background: rgba(24, 23, 25, .985);
+  border-bottom-color: rgba(239, 211, 192, .13);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .18);
+  -webkit-backdrop-filter: blur(26px) saturate(145%);
+  backdrop-filter: blur(26px) saturate(145%);
+}
+.scroll { scrollbar-width: none; }
+.scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+.home-menu-group .qa-row { width: 100%; align-items: stretch; }
+.home-menu-group .qa { width: 100%; }
+.qa-wide { width: 100%; }
+.rail.cuisines, .rail.cats {
+  align-items: flex-start;
+  gap: 12px;
+  scroll-padding-inline: 16px;
+  scroll-snap-type: x mandatory;
+}
+.cu, .ctile {
+  width: 84px;
+  min-width: 84px;
+  align-self: flex-start;
+  scroll-snap-align: center;
+  text-align: center;
+}
+.cu-flag, .ctile-img {
+  display: grid;
+  place-items: center;
+  margin-inline: auto;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.cu-flag { width: 70px; height: 70px; }
+.cu-flag .origin-art {
+  display: block;
+  width: 68px;
+  height: 68px;
+  margin: auto;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .26));
+}
+.ctile-img { width: 76px; height: 76px; }
+.ctile-img .category-art {
+  display: block;
+  width: 76px;
+  height: 76px;
+  margin: auto;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .26));
+}
+.cu-name, .ctile-name {
+  width: 100%;
+  min-height: 2.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-wrap: balance;
+  line-height: 1.15;
+  font-weight: 600;
+}
+.cu-n, .ctile-n { min-height: 1.2em; font-variant-numeric: tabular-nums; }
+.rtile-img { display: grid; place-items: center; }
+.rtile-img img {
+  width: 94%;
+  height: 94%;
+  max-width: 94%;
+  max-height: 94%;
+  margin: auto;
+  object-fit: contain;
+  object-position: 50% 50%;
+}
+.rtile-img .recipe-art-pending {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+#tabbar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: stretch;
+  justify-content: stretch;
+}
+#tabbar .tab {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding-inline: 1px;
+  text-align: center;
+}
+#tabbar .tab-ico { flex: none; margin-inline: auto; }
+#tabbar .tab-label {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding-inline: 0;
+  text-align: center;
+  line-height: 1.1;
+  text-overflow: clip;
+}
+@media (max-width: 370px) {
+  .cu, .ctile { width: 80px; min-width: 80px; }
+  .rail.cuisines, .rail.cats { gap: 10px; }
+  .cu-flag { width: 66px; height: 66px; }
+  .cu-flag .origin-art { width: 64px; height: 64px; }
+  .ctile-img, .ctile-img .category-art { width: 72px; height: 72px; }
+  #tabbar .tab-label { font-size: 9px; }
+}
