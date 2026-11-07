@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.12': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.5.12 — poprawka dopasowania mąk w magazynie.',
+    items: ['Poprawiono import normalizacji nazw używany przy rozpoznawaniu mąk w magazynie.'],
+    footer: 'Wskazówki kalkulatora pozostają częścią wydania 1.5.11.'
+  }),
+
   '1.5.11': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.5.11 — mądrzejsze wskazówki do pizzy.',
     items: ['Kalkulator pokazuje mąki Caputo rozpoznane w magazynie, szacuje zużycie i pozwala dodać zapasową mąkę do mieszanki jednym stuknięciem.', 'Podpowiedzi tłumaczą hydrację i siłę mąki względem wybranego czasu dojrzewania.', 'Dodanie kolejnej mąki zaczyna teraz od dokładnie 20% mieszanki; ustawienia kalkulatora i podział fermentacji pozostają zachowane.'],

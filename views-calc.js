@@ -13,7 +13,7 @@ import {
 import {
   pizzaCalc, pizzaCalcFromFlour, yeastSuggestion, YEAST_TYPES, scaleRecipe, factorFromServings, factorFromYield, factorFromIngredient, effectiveYield, recipeCost, priceForFoodCost,
 } from './calculator.js';
-import { fmtAmount, fmtNum, fmtMoney, debounce } from './util.js';
+import { fmtAmount, fmtNum, fmtMoney, debounce, norm } from './util.js';
 import { inventoryItems, inventoryLoaded } from './inventory.js';
 import { qtyParts } from './components.js';
 import { addItems, openAddToShopping } from './shopping.js';
