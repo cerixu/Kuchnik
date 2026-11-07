@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.14': Object.freeze({
+    intro: 'ŻARŁOK 1.5.14 — dopracowane przeglądanie receptur.',
+    items: ['Pasek wyszukiwania i filtry mają czytelniejszy, równy układ na małych ekranach.', 'Kafelki receptur wycentrowują rysunki, utrzymują stałą wysokość opisów i spokojniej prezentują kategorię lub kraj pochodzenia.'],
+    footer: 'Wyszukiwanie, filtry, sortowanie, ulubione i dane użytkownika działają jak dotychczas.'
+  }),
+
   '1.5.13': Object.freeze({
     intro: 'ŻARŁOK 1.5.13 — uporządkowany ekran Start.',
     items: ['Wycentrowano główny nagłówek, wyszukiwarkę, nagłówki sekcji i elementy menu.', 'Skrócono publiczną nazwę aplikacji do ŻARŁOK w ekranie startowym, tytule strony, manifeście i historii zmian.', 'Zachowano rotacyjną karuzelę receptur, a skróty na iPhonie układają się w równe, czytelne karty.'],
