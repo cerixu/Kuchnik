@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "ŻARŁOK — Kuchnik",
+  "name": "ŻARŁOK",
   "short_name": "ŻARŁOK",
-  "description": "ŻARŁOK — Kuchnik: kreskowany warsztat kucharza, receptury i kalkulatory działające offline.",
+  "description": "ŻARŁOK — rysowany warsztat kucharza: receptury, kalkulatory i zakupy działające offline.",
   "lang": "pl",
   "dir": "ltr",
   "start_url": "./",

@@ -2373,3 +2373,187 @@ body:not(.no-tabs):not(.kb-open) #toasts {
     height: 72px;
   }
 }
+
+
+/* ==========================================================================
+   ŻARŁOK 1.5.13 — uporządkowany, wycentrowany ekran Start.
+   ========================================================================== */
+.start .content {
+  width: min(100%, 640px);
+  padding: 16px clamp(16px, 4.5vw, 24px) 32px;
+  gap: 24px;
+}
+.start-head {
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 8px 4px 2px;
+}
+.brand-lockup {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 0;
+}
+.brand-mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+}
+.brand-copy { align-items: center; text-align: center; }
+.brand-name {
+  margin: 0;
+  color: #f7e9df;
+  font-size: clamp(1.38rem, 6vw, 1.62rem);
+  font-weight: 820;
+  line-height: 1.05;
+  letter-spacing: .14em;
+  text-align: center;
+}
+.start-head .hero-line {
+  max-width: 24ch;
+  margin: 2px auto 0;
+  font-size: clamp(1.45rem, 6.2vw, 1.8rem);
+  line-height: 1.13;
+  text-align: center;
+  text-wrap: balance;
+}
+.start-head .hero-sub {
+  max-width: 32ch;
+  margin: 0 auto;
+  line-height: 1.45;
+  text-align: center;
+}
+.start-searchbox {
+  width: min(100%, 580px);
+  margin-inline: auto;
+}
+.start .sechead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+}
+.start .sechead h2 {
+  grid-column: 2;
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(.96rem, 3.9vw, 1.08rem);
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+.start .sechead > .linkbtn {
+  grid-column: 3;
+  justify-self: end;
+  min-height: 40px;
+  padding-inline: 5px 0;
+  white-space: nowrap;
+}
+.start .deck {
+  margin-top: -8px;
+  padding-top: 10px;
+  padding-bottom: 18px;
+}
+.start .home-menu-group {
+  gap: 12px;
+  width: 100%;
+}
+.start .home-menu-title {
+  padding: 0;
+  text-align: center;
+}
+.start .home-menu-group .qa-row.qa-4,
+.start .home-menu-group .qa-row.qa-3 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0;
+}
+.start .home-menu-group .qa-row.qa-3 > .qa:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: calc(50% - 6px);
+}
+.start .home-menu-group .qa {
+  width: 100%;
+  min-height: 112px;
+  justify-content: center;
+  padding: 13px 8px 12px;
+  gap: 9px;
+  border-radius: 22px;
+  text-align: center;
+}
+.start .home-menu-group .qa-ico {
+  width: 52px;
+  height: 52px;
+  border-radius: 17px;
+}
+.start .home-menu-group .qa-label {
+  max-width: 100%;
+  font-size: .78rem;
+  line-height: 1.22;
+  text-align: center;
+}
+.start .qa-wide {
+  justify-content: center;
+  text-align: center;
+}
+.start .qa-copy {
+  align-items: center;
+  text-align: center;
+}
+.start .qa-hint { text-align: center; }
+.start .notice {
+  width: min(100%, 580px);
+  margin-inline: auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px;
+  border: 1px solid rgba(226, 162, 124, .16);
+  border-radius: 22px;
+  background:
+    radial-gradient(90% 100% at 50% 0%, rgba(189, 112, 74, .13), transparent 78%),
+    linear-gradient(150deg, rgba(47, 39, 36, .94), rgba(29, 27, 28, .98));
+  box-shadow: inset 0 1px 0 rgba(255, 245, 236, .07), 0 12px 24px rgba(0, 0, 0, .19);
+  text-align: center;
+}
+.start .notice > svg { margin-inline: auto; }
+.start .notice-text {
+  flex: none;
+  align-items: center;
+  text-align: center;
+}
+.start .notice-text strong { color: #f3e7dd; }
+.start .notice-text .muted { line-height: 1.4; }
+.start .notice .btn { align-self: center; }
+.start .rail.cuisines,
+.start .rail.cats {
+  justify-content: safe center;
+  padding-inline: 18px;
+  scroll-padding-inline: 18px;
+}
+.start .cu,
+.start .ctile { text-align: center; }
+@media (min-width: 700px) {
+  .start .home-menu-group .qa-row.qa-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .start .home-menu-group .qa-row.qa-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .start .home-menu-group .qa-row.qa-3 > .qa:last-child:nth-child(odd) {
+    grid-column: auto;
+    justify-self: stretch;
+    width: 100%;
+  }
+}
+@media (max-width: 370px) {
+  .start .content { padding-inline: 13px; gap: 20px; }
+  .start .home-menu-group .qa { min-height: 104px; }
+  .start .sechead { gap: 4px; }
+  .start .sechead h2 { font-size: .92rem; }
+  .start .sechead > .linkbtn { font-size: .78rem; }
+}

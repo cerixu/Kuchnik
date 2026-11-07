@@ -2,9 +2,9 @@
 <html lang="pl" data-theme="dark">
 <head>
   <meta charset="utf-8">
-  <title>ŻARŁOK — Kuchnik</title>
+  <title>ŻARŁOK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="ŻARŁOK — Kuchnik: kreskowany warsztat kucharza: receptury, przeliczanie, procenty piekarskie, food cost, zakupy. Działa offline.">
+  <meta name="description" content="ŻARŁOK — rysowany warsztat kucharza: receptury, kalkulatory, zakupy i inspiracje. Działa offline.">
 
   <!-- Kolor systemowego paska stanu -->
   <meta name="theme-color" content="#171719">
@@ -46,7 +46,7 @@
   <div id="toasts" aria-live="polite"></div>
   <div id="overlays"></div>
   <noscript><p style="padding:24px;font:16px system-ui">ŻARŁOK wymaga włączonego JavaScriptu.</p></noscript>
-  <div id="boot" class="boot" aria-hidden="true"><img class="boot-mark" src="icon-192.png" alt=""><div class="boot-name">ŻARŁOK</div><div class="boot-sub">Kuchnik · warsztat kucharza</div></div>
+  <div id="boot" class="boot" aria-hidden="true"><img class="boot-mark" src="icon-192.png" alt=""><div class="boot-name">ŻARŁOK</div><div class="boot-sub">Receptury · narzędzia · inspiracje</div></div>
   <script>
     // Diagnostyka startu: błąd ładowania modułu lub zawieszony rozruch nie może zostawić samej animacji.
     (function () {
@@ -60,7 +60,7 @@
         boot.setAttribute('aria-hidden', 'false');
         boot.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;background:#171719;color:#f5f5f5;font:16px system-ui;text-align:center;gap:14px';
         boot.replaceChildren();
-        var title = document.createElement('strong'); title.textContent = 'Kuchnik nie uruchomił się poprawnie';
+        var title = document.createElement('strong'); title.textContent = 'ŻARŁOK nie uruchomił się poprawnie';
         var detail = document.createElement('p'); detail.textContent = message || 'Uruchamianie trwa zbyt długo. Możliwe, że Safari zachowało starą wersję aplikacji.';
         var retry = document.createElement('button'); retry.type = 'button'; retry.textContent = 'Odśwież aplikację'; retry.style.cssText = 'padding:14px 20px;border:0;border-radius:14px;background:#e4a66a;color:#171719;font:600 16px system-ui';
         retry.addEventListener('click', function () { location.reload(); });

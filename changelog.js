@@ -1,223 +1,229 @@
 /* ==========================================================================
-   Kuchnik — dziennik zmian per wersja, wzorowany na sprawdzonym rozwiązaniu
+   ŻARŁOK — dziennik zmian per wersja, wzorowany na sprawdzonym rozwiązaniu
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.13': Object.freeze({
+    intro: 'ŻARŁOK 1.5.13 — uporządkowany ekran Start.',
+    items: ['Wycentrowano główny nagłówek, wyszukiwarkę, nagłówki sekcji i elementy menu.', 'Skrócono publiczną nazwę aplikacji do ŻARŁOK w ekranie startowym, tytule strony, manifeście i historii zmian.', 'Zachowano rotacyjną karuzelę receptur, a skróty na iPhonie układają się w równe, czytelne karty.'],
+    footer: 'Ciemna oprawa Liquid Glass i własne ilustracje pozostają spójne.'
+  }),
+
   '1.5.12': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.12 — poprawka dopasowania mąk w magazynie.',
+    intro: 'ŻARŁOK 1.5.12 — poprawka dopasowania mąk w magazynie.',
     items: ['Poprawiono import normalizacji nazw używany przy rozpoznawaniu mąk w magazynie.'],
     footer: 'Wskazówki kalkulatora pozostają częścią wydania 1.5.11.'
   }),
 
   '1.5.11': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.11 — mądrzejsze wskazówki do pizzy.',
+    intro: 'ŻARŁOK 1.5.11 — mądrzejsze wskazówki do pizzy.',
     items: ['Kalkulator pokazuje mąki Caputo rozpoznane w magazynie, szacuje zużycie i pozwala dodać zapasową mąkę do mieszanki jednym stuknięciem.', 'Podpowiedzi tłumaczą hydrację i siłę mąki względem wybranego czasu dojrzewania.', 'Dodanie kolejnej mąki zaczyna teraz od dokładnie 20% mieszanki; ustawienia kalkulatora i podział fermentacji pozostają zachowane.'],
     footer: 'Dane magazynu pozostają na urządzeniu i nie są wysyłane do sieci.'
   }),
 
   '1.5.10': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.10 — poprawka składni galerii PREGO!.',
+    intro: 'ŻARŁOK 1.5.10 — poprawka składni galerii PREGO!.',
     items: ['Poprawiono zapis apostrofu w nazwie Penne all’Arrabbiata, aby moduł ilustracji przechodził kontrolę składni.', 'Zachowano komplet 37 lokalnych ilustracji PREGO! oraz istniejące mapowanie do przepisów.'],
     footer: 'Galeria pozostaje dostępna pod dotychczasowym adresem.'
   }),
 
   '1.5.9': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.9 — komplet ilustracji karty PREGO!.',
+    intro: 'ŻARŁOK 1.5.9 — komplet ilustracji karty PREGO!.',
     items: ['Dodano siedem ostatnich rysunków: Penne al Pomodoro, Penne all\'Arrabbiata, Cacio e Pepe, Carbonara, Bolognese, Zimowa herbata King of Ceylon i Pasta Boscaiola.', 'W galerii jest komplet 37 z 37 pozycji PREGO!, każda z własnym plikiem ilustracji.', 'Ilustracje są dostępne lokalnie i mogą być buforowane przez Service Workera po otwarciu.'],
     footer: 'Status ilustracji w galerii pozostaje oczekujący na ocenę.'
   }),
 
   '1.5.8': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.8 — trzecia plansza ilustracji PREGO!.',
+    intro: 'ŻARŁOK 1.5.8 — trzecia plansza ilustracji PREGO!.',
     items: ['Dodano 10 pozycji z przystawek, kanapek i sałatek: Focaccia, Krem z pomidorów, Talerz włoskich specjałów, Burrata z pomidorami, Ravioli, Bruschetta, Panuozzo, Pere e Gorgonzola, Parma i Caprese.', 'Talerz włoskich specjałów narysowano według zdjęcia z restauracji: jasny półmisek i trzy osobne miseczki.', 'W galerii jest już 30 z 37 ilustracji PREGO!.'],
     footer: 'Ostatnia plansza zawiera siedem pozostałych pozycji karty.'
   }),
 
   '1.5.7': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.7 — druga plansza ilustracji PREGO!.',
+    intro: 'ŻARŁOK 1.5.7 — druga plansza ilustracji PREGO!.',
     items: ['Dodano 10 różnych ilustracji pizz Rosso i Bianca: Sole e Mare, Verde Spinachi, Tonno e Cipolla, Bosco Bianco, Pera Divina, Pancetta, Quattro Formaggi, Delicata, Liguria, Dolce.', 'W galerii jest już 20 z 37 pozycji karty PREGO!, każda ma własny plik i przypisany klucz.', 'Nowe grafiki oczekują na ocenę.'],
     footer: 'Kolejna plansza obejmie przystawki, kanapki i pierwsze sałatki.'
   }),
 
   '1.5.6': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.6 — pierwsza plansza ilustracji PREGO!.',
+    intro: 'ŻARŁOK 1.5.6 — pierwsza plansza ilustracji PREGO!.',
     items: ['Dodano 10 odrębnych, ręcznie rysowanych ilustracji pizzy z sekcji Rosso: Marinara, Margherita, Milano Classica, Capriciosa Mia, Parma, Mortadella Reale, Nduja Lava, Dolce Roso, Diavola i Siciliano.', 'Grafiki mają przezroczyste tło i są przypisane tylko do właściwych receptur PREGO!.', 'Galeria pokazuje nowe pliki jako oczekujące na ocenę.'],
     footer: 'Kolejne pozycje karty PREGO! będą dodawane partiami po 10.'
   }),
 
   '1.5.5': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.5 — pełniejsze menu PREGO! i galeria.',
+    intro: 'ŻARŁOK 1.5.5 — pełniejsze menu PREGO! i galeria.',
     items: ['Cennik dodatków do pizzy z karty jest dostępny w opisach wszystkich 20 pizz PREGO!.', 'Galeria uwzględnia także trzy ręcznie zdefiniowane klasyki: Carbonarę, Pizzę Napoletanę i sos pomidorowy.', 'Pozycje PREGO! nadal mają własne klucze ilustracji, więc nie dostają rysunku innego przepisu.'],
     footer: 'Brakujące rysunki PREGO! pozostają widoczne jako do wykonania w galerii.'
   }),
 
   '1.5.4': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.4 — pełna karta PREGO! Kamienna Góra.',
+    intro: 'ŻARŁOK 1.5.4 — pełna karta PREGO! Kamienna Góra.',
     items: ['Dodano 37 pozycji z przekazanej karty: pizze, przystawki, kanapki, sałatki, makarony i pozycje sezonowe.', 'Ceny z karty są zapisane w recepturach. Gramatury i procedury oznaczono jako robocze do sprawdzenia przez kuchnię restauracji.', 'Galeria pokazuje oddzielne pozycje PREGO! i ich brakujące ilustracje; rysunek innego przepisu nie jest podmieniany.'],
     footer: 'Każdą roboczą recepturę można edytować. Przed użyciem produkcyjnym trzeba zatwierdzić gramatury i procedury w restauracji.'
   }),
 
   '1.5.3': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.3 — przygotowanie osobnej kategorii dla PREGO! Kamienna Góra.',
+    intro: 'ŻARŁOK 1.5.3 — przygotowanie osobnej kategorii dla PREGO! Kamienna Góra.',
     items: ['Dodano kategorię PREGO! z własnym rysowanym znakiem.', 'Istniejące instalacje otrzymują kategorię bez usuwania własnych kategorii i receptur.'],
     footer: 'Kolekcja dań z karty została dodana w wersji 1.5.4.'
   }),
 
   '1.5.2': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.2 — równe, wycentrowane znaki kuchni i kategorii.',
+    intro: 'ŻARŁOK 1.5.2 — równe, wycentrowane znaki kuchni i kategorii.',
     items: ['Przesunąłem flagi do optycznego środka okrągłych odznak.', 'Dopasowałem wielkość znaków krajów i kategorii do wspólnego rozmiaru.', 'Ustawiłem rysunki kategorii osobno, aby ich różne kształty były równo wyważone.'],
     footer: 'Znaki nadal są lokalnymi rysunkami SVG, dostępne także offline.'
   }),
 
   '1.5.1': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.1 — rysunki składników towarzyszą przygotowaniu i gotowaniu.',
+    intro: 'ŻARŁOK 1.5.1 — rysunki składników towarzyszą przygotowaniu i gotowaniu.',
     items: ['Własne ilustracje 84 składników pojawiają się również na liście w „Gotuję” i w przygotowaniu „Prowadź mnie”.', 'Składniki rozpoznane dla poszczególnych kroków mają małe rysunki w kapsułkach.', 'Grafiki są lokalne, ładowane leniwie i dostępne offline zgodnie z pakietem ikon.'],
     footer: 'Mapowanie 567 nazw składników do lokalnych ikon pozostaje bez zmian.'
   }),
 
   '1.5.0': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.5.0 — dopracowany dolny dock i wygodne przewijanie na iPhonie.',
+    intro: 'ŻARŁOK 1.5.0 — dopracowany dolny dock i wygodne przewijanie na iPhonie.',
     items: ['Ostatnie karty przewijają się w całości nad pływającym paskiem nawigacji.', 'Wysokość i odsunięcie doku korzystają z safe area; w niskim trybie poziomym ikony i podpisy układają się w jednym rzędzie.', 'Zmiana zakładki otrzymała krótką animację, która respektuje ustawienie ograniczenia ruchu.'],
     footer: 'Wszystkie pięć własnych ikon i skrótów nawigacji pozostaje dostępnych.'
   }),
 
   '1.4.99': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.99 — spójny, uczciwy wygląd własnych przepisów.',
+    intro: 'ŻARŁOK 1.4.99 — spójny, uczciwy wygląd własnych przepisów.',
     items: ['W „Gotuję” brak ilustracji własnego przepisu pokazuje teraz neutralny komunikat zamiast ogólnego rysunku kategorii.', 'Karty i szczegóły przepisu używają takiego samego komunikatu o braku przypisanej ilustracji.', 'Zdjęcia dodane przez użytkownika i przypisane ilustracje potraw pozostają bez zmian.'],
     footer: 'Lokalne rysunki są przypisane tylko do właściwych receptur.'
   }),
 
   '1.4.98': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.98 — szybsze odświeżanie statycznych plików i lekki start PWA.',
+    intro: 'ŻARŁOK 1.4.98 — szybsze odświeżanie statycznych plików i lekki start PWA.',
     items: ['Pliki JavaScript i CSS korzystają z cache od razu, a nowa kopia pobiera się w tle.', 'Pierwsza instalacja nie ściąga już całej biblioteki 228 ilustracji dań.', 'W Ustawieniach można pobrać cały pakiet offline, śledzić postęp i bezpiecznie przerwać.'],
     footer: 'Lokalne ilustracje, kopie zapasowe i dane użytkownika są zachowane.'
   }),
 
   '1.4.97': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.97 — szybszy start i pełna biblioteka rysunków offline na życzenie.',
+    intro: 'ŻARŁOK 1.4.97 — szybszy start i pełna biblioteka rysunków offline na życzenie.',
     items: ['Nowa instalacja zapisuje najpierw powłokę aplikacji, a rysunki dań buforuje podczas oglądania przepisów.', 'W Ustawieniach można pobrać wszystkie 228 ilustracji offline, sprawdzić postęp i przerwać pobieranie.', 'Aktualizacja zachowuje wcześniej zapisane ilustracje i udostępnia je nowej wersji bez ponownego transferu.'],
     footer: 'Dane użytkownika i wszystkie przepisy pozostają bez zmian.'
   }),
 
   '1.4.96': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.96 — wyrównane menu i spokojniejsze ilustracje kategorii.',
+    intro: 'ŻARŁOK 1.4.96 — wyrównane menu i spokojniejsze ilustracje kategorii.',
     items: ['Nagłówek po przewinięciu zakrywa karty równą, ciemną taflą szkła, a pasek przewijania nie odciąga uwagi od treści.', 'Kuchnie świata i kategorie mają prostsze, spójne obramowania oraz większe, wyśrodkowane własne rysunki.', 'Ilustracje dań w karuzeli są powiększone i wycentrowane; dolne zakładki mają równe pola i podpisy.'],
     footer: 'Zachowano dotychczasowe przepisy, funkcje i własne ilustracje.'
   }),
 
   '1.4.95': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.95 — uporządkowane menu i spójne ekrany.',
+    intro: 'ŻARŁOK 1.4.95 — uporządkowane menu i spójne ekrany.',
     items: ['Skróty na ekranie Start zostały podzielone na Gotowanie, Twoją bibliotekę, Zapasy i zakupy oraz Odkrywaj.', 'Przyciski, karty, pola i nagłówki dostały wspólną grafitowo-miedzianą oprawę z ręcznie kreskowanymi detalami.', 'Dolny pasek ma równy układ pięciu zakładek i wycentrowane podpisy na iPhonie.'],
     footer: 'Wszystkie dotychczasowe funkcje, receptury i dane użytkownika pozostają zachowane.'
   }),
 
   '1.4.94': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.94 — mieszanki mąk i dwustopniowa fermentacja pizzy.',
+    intro: 'ŻARŁOK 1.4.94 — mieszanki mąk i dwustopniowa fermentacja pizzy.',
     items: ['Kalkulator pozwala łączyć mąki Caputo w dowolnych proporcjach części, pokazuje przeliczone udziały oraz średnie ważone W, białka i hydracji.', 'Dodano fermentację w dwóch etapach: wybierz 6, 7 lub 8 godzin w temperaturze pokojowej, a następnie 48 godzin w lodówce; podpowiedź drożdży uwzględnia oba etapy.', 'Zapis receptury i lista zakupów zachowują wybrane mąki oraz ich proporcje.'],
     footer: 'Dotychczasowe ustawienia kalkulatora i dane użytkownika pozostają zachowane.'
   }),
   '1.4.93': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.93 — autorskie rysunki i odświeżony szklany dok.',
+    intro: 'ŻARŁOK 1.4.93 — autorskie rysunki i odświeżony szklany dok.',
     items: ['Dolna nawigacja została wycentrowana i otrzymała pięć ręcznie narysowanych znaków oraz wielowarstwową powierzchnię Liquid Glass.', 'Kuchnie świata i kategorie korzystają teraz z własnych wektorowych rysunków w grafitowej, kremowej i miedzianej palecie.', 'Ozdobne emoji usunięto z widocznych części aplikacji; stare ikony zapisane przy kategoriach pozostają zgodne i wyświetlają nowy rysunek.'],
     footer: 'Przepisy, ilustracje, ustawienia i dane w IndexedDB pozostają bez zmian.'
   }),
   '1.4.92': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.92 — spójne nazwy aplikacji.',
-    items: ['Komunikat aktualizacji Service Workera, źródło przykładowych receptur i eksport listy zakupów używają teraz nazwy ŻARŁOK / Kuchnik.', 'Starsze receptury ze źródłem „Kucharzyna” są wyświetlane pod nową nazwą.'],
+    intro: 'ŻARŁOK 1.4.92 — spójne nazwy aplikacji.',
+    items: ['Komunikat aktualizacji Service Workera, źródło przykładowych receptur i eksport listy zakupów używają teraz nazwy ŻARŁOK.', 'Starsze receptury ze źródłem „Kucharzyna” są wyświetlane pod nową nazwą.'],
     footer: 'Dotychczasowe kopie zapasowe pozostają zgodne.'
   }),
   '1.4.91': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.91 — spokojne, grafitowe tło.',
+    intro: 'ŻARŁOK 1.4.91 — spokojne, grafitowe tło.',
     items: ['Usunięto starą rasterową teksturę z tła ekranu, która przykrywała treść kreskami.', 'Pozostawiono subtelną miedzianą poświatę i delikatny własny wzór na przyciskach.'],
     footer: 'Nowe menu i ekran Start z 1.4.90 pozostają bez zmian.'
   }),
   '1.4.90': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.90 — nowe menu i spokojniejszy ekran startowy.',
-    items: ['Przebudowano dolny pasek: wyśrodkowana szklana kapsuła, własne piktogramy i wyraźny aktywny widok.', 'Ekran Start dostał widoczny znak ŻARŁOK / Kuchnik, przycisk losowania i czytelniejszą sekcję skrótów; karuzela dań została zachowana.', 'Ustawienia mają teraz spójne nagłówki z ikonami i nie pokazują pustej informacji o motywie.', 'Przyciszono fakturę kreskową tła, zachowując ją jako subtelny akcent na przyciskach.'],
+    intro: 'ŻARŁOK 1.4.90 — nowe menu i spokojniejszy ekran startowy.',
+    items: ['Przebudowano dolny pasek: wyśrodkowana szklana kapsuła, własne piktogramy i wyraźny aktywny widok.', 'Ekran Start dostał widoczny znak ŻARŁOK, przycisk losowania i czytelniejszą sekcję skrótów; karuzela dań została zachowana.', 'Ustawienia mają teraz spójne nagłówki z ikonami i nie pokazują pustej informacji o motywie.', 'Przyciszono fakturę kreskową tła, zachowując ją jako subtelny akcent na przyciskach.'],
     footer: 'Przepisy, ustawienia i zapisane dane pozostają bez zmian.'
   }),
   '1.4.89': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.89 — komplet rysunkowych ikon składników.',
+    intro: 'ŻARŁOK 1.4.89 — komplet rysunkowych ikon składników.',
     items: ['Dodano 48 nowych ilustracji kredką; biblioteka składników liczy teraz 84 lokalne grafiki.', 'Poprawiono mapowanie wszystkich 567 nazw składników z bazy 228 przepisów, w tym przypadki wcześniej kierowane do niewłaściwych kategorii.', 'Service Worker buforuje całą bibliotekę ikon do pracy offline.', 'Przyciszono powtarzającą się fakturę tła, zostawiając ciemną, spójną oprawę aplikacji.'],
     footer: 'Dane, przepisy i ustawienia użytkownika pozostają bez zmian.'
   }),
   '1.4.88': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.88 — spójna grafitowa oprawa dla całej aplikacji.',
+    intro: 'ŻARŁOK 1.4.88 — spójna grafitowa oprawa dla całej aplikacji.',
     items: ['Ujednolicono karty, przyciski, pola i pasek nawigacji w ciemnej palecie grafitu i miedzi.', 'Usunięto jasne powierzchnie kart i ograniczono widoczność faktury tła, zachowując rysunkowy charakter ilustracji.'],
     footer: 'Przepisy, ustawienia i dane użytkownika pozostają bez zmian.'
   }),
   '1.4.87': Object.freeze({
-    intro: 'ŻARŁOK / Kuchnik 1.4.87 — kreskowy interfejs i nowy kalkulator mąk do pizzy.',
+    intro: 'ŻARŁOK 1.4.87 — kreskowy interfejs i nowy kalkulator mąk do pizzy.',
     items: ['Nowy ciemny wygląd, wyśrodkowane ilustracje i odświeżony dolny pasek.', 'Dodano kredkowe ilustracje składników oraz ikonę ŻARŁOK.', 'Kalkulator ciasta uwzględnia cztery mąki Caputo, suwaki i podpowiedzi o hydracji oraz fermentacji.', 'Ustawienia interfejsu uproszczono do stałego ciemnego stylu.'],
     footer: 'Dotychczasowe przepisy i ich ilustracje pozostają na miejscu.'
   }),
   '1.4.86': Object.freeze({
-    intro: 'Kuchnik 1.4.86 — uzupełnienie ilustracji widocznych na stronie.',
+    intro: 'ŻARŁOK 1.4.86 — uzupełnienie ilustracji widocznych na stronie.',
     items: ['Dodano rysunki kredką dla Carbonary, Pizza Napoletana i sosu pomidorowego.', 'Baza aplikacji obejmuje teraz 228 mapowań i osobnych grafik.'],
     footer: 'Galeria: 228 ilustracji, 0 brakujących.'
   }),
   '1.4.85': Object.freeze({
-    intro: 'Kuchnik 1.4.85 — komplet ilustracji dla wszystkich 225 przepisów.',
+    intro: 'ŻARŁOK 1.4.85 — komplet ilustracji dla wszystkich 225 przepisów.',
     items: ['Dodano ostatnie siedem rysunków: Whisky sour, Gin tonic, Caipirinha, Bloody Mary, Hugo, Grzaniec i Lemonada domowa.', 'Każdy przepis w bazie ma teraz własny plik PNG oraz mapowanie; lista braków jest pusta.'],
     footer: 'Galeria: 225 ilustracji w repo, 0 przepisów do wykonania.'
   }),
   '1.4.84': Object.freeze({
-    intro: 'Kuchnik 1.4.84 — partia 26 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.84 — partia 26 ilustracji kredkowych.',
     items: ['Dodano ciasto na pierogi, zakwas żytni, marynatę do kurczaka, nachos z serem, frytki z piekarnika, kanapkę club, Cosmopolitan, Daiquiri, Moscow Mule i Piña coladę.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 218 ilustracji w repo, 7 przepisów do wykonania.'
   }),
   '1.4.83': Object.freeze({
-    intro: 'Kuchnik 1.4.83 — partia 25 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.83 — partia 25 ilustracji kredkowych.',
     items: ['Dodano mus czekoladowy, sernik nowojorski, tartę cytrynową, ciasto czekoladowe bez mąki, biszkopt, bulion warzywny, sos BBQ, sos czosnkowy, dżem truskawkowy i kruche ciasto.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 208 ilustracji w repo, 17 przepisów do wykonania.'
   }),
   '1.4.82': Object.freeze({
-    intro: 'Kuchnik 1.4.82 — partia 24 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.82 — partia 24 ilustracji kredkowych.',
     items: ['Dodano placuszki bananowe, curry z ciecierzycy, kotlety z soczewicy, burgera wegańskiego, tofu z warzywami, krem z brokułów, zapiekankę makaronową, muffinki, ciastka owsiane i lody waniliowe.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 198 ilustracji w repo, 27 przepisów do wykonania.'
   }),
   '1.4.81': Object.freeze({
-    intro: 'Kuchnik 1.4.81 — partia 23 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.81 — partia 23 ilustracji kredkowych.',
     items: ['Dodano langosz, boeuf Stroganow, chaczapuri, tagine z kurczakiem, Shepherd’s pie, owsiankę, tosty francuskie, granolę, tost z awokado i smoothie bowl.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 188 ilustracji w repo, 37 przepisów do wykonania.'
   }),
   '1.4.80': Object.freeze({
-    intro: 'Kuchnik 1.4.80 — partia 22 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.80 — partia 22 ilustracji kredkowych.',
     items: ['Dodano satay, dal, biryani, tabbouleh, baba ganoush, koftę, shawarmę, käsespätzle, currywurst i leczo.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 178 ilustracji w repo, 47 przepisów do wykonania.'
   }),
   '1.4.79': Object.freeze({
-    intro: 'Kuchnik 1.4.79 — partia 21 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.79 — partia 21 ilustracji kredkowych.',
     items: ['Dodano skrzydełka buffalo, sałatkę Cobb, sushi maki z ogórkiem i łososiem, zielone curry, kurczaka teriyaki, smażony ryż z jajkiem, pho bo, gyoza, kung pao i zupę miso.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 168 ilustracji w repo, 57 przepisów do wykonania.'
   }),
   '1.4.78': Object.freeze({
-    intro: 'Kuchnik 1.4.78 — partia 20 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.78 — partia 20 ilustracji kredkowych.',
     items: ['Dodano mussakę, souvlaki, spanakopitę, quesadillę z kurczakiem, enchiladas, pico de gallo, burrito bowl, mac and cheese, BBQ ribs i pulled pork.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 158 ilustracji w repo, 67 przepisów do wykonania.'
   }),
   '1.4.77': Object.freeze({
-    intro: 'Kuchnik 1.4.77 — aktualizacja kontroli ilustracji.',
+    intro: 'ŻARŁOK 1.4.77 — aktualizacja kontroli ilustracji.',
     items: ['Zaktualizowano sprawdzenie regresji: Minestrone ma teraz własną grafikę, a brak grafiki sprawdzany jest niezależnie.'],
     footer: 'Galeria: 148 ilustracji w repo, 77 przepisów do wykonania.'
   }),
   '1.4.76': Object.freeze({
-    intro: 'Kuchnik 1.4.76 — partia 19 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.76 — partia 19 ilustracji kredkowych.',
     items: ['Dodano parmigianę, zupę cebulową, boeuf bourguignon, croque monsieur, moules marinières, sałatkę niçoise, tartę tatin, crêpes, patatas bravas i albóndigas.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 148 ilustracji w repo, 77 przepisów do wykonania.'
   }),
   '1.4.75': Object.freeze({
-    intro: 'Kuchnik 1.4.75 — partia 18 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.75 — partia 18 ilustracji kredkowych.',
     items: ['Dodano risotto alla milanese, gnocchi z masłem szałwiowym, spaghetti alla puttanesca i all’amatriciana, ragù alla bolognese, penne all’arrabbiata, fettuccine Alfredo, minestrone, panzanellę i saltimbocca alla romana.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 138 ilustracji w repo, 87 przepisów do wykonania.'
   }),
   '1.4.74': Object.freeze({
-    intro: 'Kuchnik 1.4.74 — partia 17 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.74 — partia 17 ilustracji kredkowych.',
     items: ['Dodano faworki, kisiel żurawinowy, ciasto marchewkowe, placek drożdżowy ze śliwkami, kutię, pierniczki, śledzie w śmietanie, pastę jajeczną, smalec ze skwarkami i uszka do barszczu.', 'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'],
     footer: 'Galeria: 128 ilustracji w repo, 97 przepisów do wykonania.'
   }),
   '1.4.73': Object.freeze({
-    intro: 'Kuchnik 1.4.73 — partia 16 ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.73 — partia 16 ilustracji kredkowych.',
     items: [
       'Dodano łazanki z kapustą, kapustę zasmażaną, buraczki, ogórki kiszone, fasolkę z bułką tartą, sernik na zimno, drożdżówkę z serem, babkę piaskową, mazurek kajmakowy i pączki.',
       'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'
@@ -225,7 +231,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Galeria: 118 ilustracji w repo, 107 przepisów do wykonania.'
   }),
   '1.4.72': Object.freeze({
-    intro: 'Kuchnik 1.4.72 — dziesięć kolejnych ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.72 — dziesięć kolejnych ilustracji kredkowych.',
     items: [
       'Dodano zupę koperkową, flaki, chłodnik litewski, zupę szczawiową, grochówkę, zupę fasolową, zrazy, wątróbkę z cebulą, żeberka w miodzie i schab pieczony.',
       'Każdy przepis ma własny plik PNG, osobne mapowanie i status pending.'
@@ -233,7 +239,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Galeria: 108 ilustracji w repo, 117 przepisów do wykonania.'
   }),
   '1.4.71': Object.freeze({
-    intro: 'Kuchnik 1.4.71 — dziesięć kolejnych rysunków kredkowych.',
+    intro: 'ŻARŁOK 1.4.71 — dziesięć kolejnych rysunków kredkowych.',
     items: [
       'Dodano ilustracje pancakes amerykańskich, dwóch rodzajów chleba, pięciu koktajli i krupniku.',
       'Każdy przepis otrzymał osobny lokalny plik i dokładne mapowanie.',
@@ -242,7 +248,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Galeria: 98 ilustracji w repo, 127 przepisów do wykonania.'
   }),
   '1.4.70': Object.freeze({
-    intro: 'Kuchnik 1.4.70 — kolejna partia ilustracji i aktualizacja regresji.',
+    intro: 'ŻARŁOK 1.4.70 — kolejna partia ilustracji i aktualizacja regresji.',
     items: [
       'Dodano rysunki sosu beszamelowego, sosu holenderskiego, majonezu, vinaigrette, bulionu drobiowego, masła ziołowego, karmelizowanej cebuli, marynowanej czerwonej cebuli, gambas al ajillo i crème brûlée.',
       'Każdy przepis ma własny plik PNG; rejestr ma 88 zaznaczonych receptur i 137 pozostałych.',
@@ -251,7 +257,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe rysunki oczekują na ocenę stylu.'
   }),
   '1.4.69': Object.freeze({
-    intro: 'Kuchnik 1.4.69 — 10 kolejnych ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.69 — 10 kolejnych ilustracji kredkowych.',
     items: [
       'Dodano osobne ilustracje Wiener Schnitzel, kurczaka tikka masala, coq au vin, naleśników, spaghetti aglio e olio, cacio e pepe, pad thai, pesto genovese, guacamole i tzatziki.',
       'Każde danie zostało sprawdzone w kolejce przed generowaniem i ma dokładnie jeden plik PNG.',
@@ -260,7 +266,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Czarne naczynia z miedzianym rantem, osobna ilustracja dla każdej receptury.'
   }),
   '1.4.68': Object.freeze({
-    intro: 'Kuchnik 1.4.68 — kolejna partia ilustracji kredkowych.',
+    intro: 'ŻARŁOK 1.4.68 — kolejna partia ilustracji kredkowych.',
     items: [
       'Dodano 10 osobnych rysunków: zupa ogórkowa, pieczeń rzymska, kluski śląskie, karp smażony, szarlotka, tiramisu, paella z owocami morza, tacos al pastor, ramen shoyu i bibimbap.',
       'Każdy plik jest przypisany do jednego przepisu; plansza zawiera wyłącznie nowe pozycje z kolejki.',
@@ -269,7 +275,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Galeria: 68 rysunków oczekuje na ocenę, 157 przepisów w kolejce.'
   }),
   '1.4.67': Object.freeze({
-    intro: 'Kuchnik 1.4.67 — wersje testów regresji zsynchronizowane.',
+    intro: 'ŻARŁOK 1.4.67 — wersje testów regresji zsynchronizowane.',
     items: [
       'Wersje aplikacji, Service Workera, README i testu ilustracji są zgodne.',
       'Testy rozróżniają stare SVG, nowe rysunki kredkowe i prywatne zdjęcia.'
@@ -277,7 +283,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Galeria: 58 rysunków oczekuje na ocenę, 167 przepisów w kolejce.'
   }),
   '1.4.66': Object.freeze({
-    intro: 'Kuchnik 1.4.66 — wersje i testy regresji są zsynchronizowane.',
+    intro: 'ŻARŁOK 1.4.66 — wersje i testy regresji są zsynchronizowane.',
     items: [
       'Testy rozróżniają stare mapowania SVG od nowych rysunków kredkowych przypisanych do przepisów.',
       'Własne zdjęcia i nowe grafiki pozostają dostępne; brakujące rysunki pokazują neutralny komunikat.'
@@ -285,7 +291,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Galeria: 58 nowych ilustracji, 167 przepisów w kolejce.'
   }),
   '1.4.65': Object.freeze({
-    intro: 'Kuchnik 1.4.65 — testy uwzględniają wymianę ilustracji.',
+    intro: 'ŻARŁOK 1.4.65 — testy uwzględniają wymianę ilustracji.',
     items: [
       'Testy regresji potwierdzają, że stare SVG nie zastępują brakującego rysunku kredkowego.',
       'Nowe lokalne ilustracje i prywatne zdjęcia nadal są widoczne.'
@@ -293,7 +299,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Galeria: 58 ilustracji oczekuje na ocenę, 167 przepisów pozostaje w kolejce.'
   }),
   '1.4.64': Object.freeze({
-    intro: 'Kuchnik 1.4.64 — walidacja podmiany ilustracji poprawiona.',
+    intro: 'ŻARŁOK 1.4.64 — walidacja podmiany ilustracji poprawiona.',
     items: [
       'Testy sprawdzają, że stare SVG nie są już fallbackiem, a nowe grafiki kredkowe i własne zdjęcia pozostają widoczne.',
       'Galeria prowadzi wymianę 225 ilustracji: 58 oczekuje na ocenę, 167 pozostaje do wykonania.'
@@ -301,7 +307,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Stare SVG nie są używane jako ilustracje przepisów.'
   }),
   '1.4.63': Object.freeze({
-    intro: 'Kuchnik 1.4.63 — stare ilustracje nie są już pokazywane jako zastępstwo.',
+    intro: 'ŻARŁOK 1.4.63 — stare ilustracje nie są już pokazywane jako zastępstwo.',
     items: [
       'Karty przepisów używają własnego zdjęcia użytkownika lub rysunku kredkowego przypisanego do konkretnego dania.',
       'Przepisy bez nowej ilustracji pokazują status „Rysunek w przygotowaniu”; stare SVG nie udają wykonanej podmiany.',
@@ -310,7 +316,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Własne zdjęcia i dane użytkownika pozostają zachowane.'
   }),
   '1.4.62': Object.freeze({
-    intro: 'Kuchnik 1.4.62 — kolejna dziesiątka rysunków kredką.',
+    intro: 'ŻARŁOK 1.4.62 — kolejna dziesiątka rysunków kredką.',
     items: [
       'Dodano rysunki jajecznicy, jajek w koszulkach, racuchów z jabłkami, knedli ze śliwkami, makowca, sernika, brownie, fish and chips, śledzia w oleju i hummusu.',
       'Każda ilustracja jest osobnym lokalnym plikiem na czarnym naczyniu z miedzianym rantem.',
@@ -319,7 +325,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
   }),
   '1.4.61': Object.freeze({
-    intro: 'Kuchnik 1.4.61 — kolejna partia 10 rysunków kredką.',
+    intro: 'ŻARŁOK 1.4.61 — kolejna partia 10 rysunków kredką.',
     items: [
       'Dodano rysunki pierogów z kapustą i grzybami, z jagodami, pierogów leniwych, ryby po grecku, kurczaka, pstrąga z migdałami, karkówki, pulpetów koperkowych, sałatki jarzynowej i surówki marchewkowo-jabłkowej.',
       'Czarne naczynia mają cienki miedziany rant; grafiki są lokalne i mają dokładne mapowanie.',
@@ -328,7 +334,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
   }),
   '1.4.60': Object.freeze({
-    intro: 'Kuchnik 1.4.60 — partia 10 ilustracji na czarnych talerzach.',
+    intro: 'ŻARŁOK 1.4.60 — partia 10 ilustracji na czarnych talerzach.',
     items: [
       'Dodano 10 osobnych rysunków kredką: lasagne, bruschettę, quiche, focaccię, calzone, pizzę quattro formaggi, kopytka, tortillę española, falafel i ratatouille.',
       'Matowe czarne talerze mają cienki miedziany rant. Każda ilustracja ma około 396 × 396 px źródłowej rozdzielczości.',
@@ -337,7 +343,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
   }),
   '1.4.60': Object.freeze({
-    intro: 'Kuchnik 1.4.60 — partia 10 ilustracji na czarnych talerzach.',
+    intro: 'ŻARŁOK 1.4.60 — partia 10 ilustracji na czarnych talerzach.',
     items: [
       'Dodano 10 osobnych rysunków kredką: lasagne, bruschettę, quiche, focaccię, calzone, pizzę quattro formaggi, kopytka, tortillę española, falafel i ratatouille.',
       'Czarne matowe talerze mają cienki miedziany rant. Każdy kadr ma około 396 × 396 px przed przygotowaniem miniatury.',
@@ -346,7 +352,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
   }),
   '1.4.59': Object.freeze({
-    intro: 'Kuchnik 1.4.59 — siódma partia rysunków kredką.',
+    intro: 'ŻARŁOK 1.4.59 — siódma partia rysunków kredką.',
     items: [
       'Dodano rysunki: kaczki pieczonej z jabłkami, łososia z cytryną, pizzy pepperoni i panna cotty z truskawkami.',
       'Galeria obejmuje 225 receptur; 28 ilustracji oczekuje na ocenę, a 197 pozostało do wykonania.',
@@ -355,7 +361,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
   }),
   '1.4.58': Object.freeze({
-    intro: 'Kuchnik 1.4.58 — szósta partia rysunków kredką.',
+    intro: 'ŻARŁOK 1.4.58 — szósta partia rysunków kredką.',
     items: [
       'Dodano Tom yum z krewetkami, gazpacho, chili con carne i burgera domowego.',
       'Galeria obejmuje 225 receptur; 24 ilustracje oczekują na ocenę, a 201 pozostało do wykonania.',
@@ -364,7 +370,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
   }),
   '1.4.57': Object.freeze({
-    intro: 'Kuchnik 1.4.57 — piąta partia rysunków kredką.',
+    intro: 'ŻARŁOK 1.4.57 — piąta partia rysunków kredką.',
     items: [
       'Dodano rysunki: kotleta mielonego, naleśników z serem, placków ziemniaczanych i zupy grzybowej.',
       'Galeria obejmuje 225 receptur; 20 ilustracji oczekuje na ocenę, a 205 pozostało do wykonania.',
@@ -373,7 +379,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
   }),
   '1.4.56': Object.freeze({
-    intro: 'Kuchnik 1.4.56 — czwarta partia rysunków kredką.',
+    intro: 'ŻARŁOK 1.4.56 — czwarta partia rysunków kredką.',
     items: [
       'Dodano cztery osobne rysunki sałatek: greckiej, caprese, Cezar i mizerii.',
       'Galeria obejmuje 225 receptur; 16 ilustracji oczekuje na ocenę, a 209 pozostało do wykonania.',
@@ -382,7 +388,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
   }),
   '1.4.55': Object.freeze({
-    intro: 'Kuchnik 1.4.55 — trzecia partia rysunków kredką.',
+    intro: 'ŻARŁOK 1.4.55 — trzecia partia rysunków kredką.',
     items: [
       'Dodano cztery różne ilustracje: bigos staropolski, gołąbki w sosie pomidorowym, gulasz węgierski i szakszukę.',
       'Galeria obejmuje 225 receptur; 12 rysunków czeka na ocenę, a 213 pozostało do wykonania.',
@@ -391,7 +397,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Nowe ilustracje pozostają oczekujące na ocenę stylu.'
   }),
   '1.4.54': Object.freeze({
-    intro: 'Kuchnik 1.4.54 — druga partia rysunków kredką.',
+    intro: 'ŻARŁOK 1.4.54 — druga partia rysunków kredką.',
     items: [
       'Dodano cztery nowe ilustracje zup: żurku, barszczu czerwonego, kremu z dyni i kapuśniaku.',
       'Galeria obejmuje 225 receptur; 8 rysunków czeka na ocenę, a 217 pozostało do wykonania.',
@@ -400,7 +406,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Zestaw nadal jest w trakcie ujednolicania i nie jest oznaczony jako zatwierdzony.'
   }),
   '1.4.53': Object.freeze({
-    intro: 'Kuchnik 1.4.53 — start wymiany zdjęć na rysunki kredką.',
+    intro: 'ŻARŁOK 1.4.53 — start wymiany zdjęć na rysunki kredką.',
     items: [
       'Dodano pierwszą partię czterech osobnych, rysowanych ilustracji: rosół z kury, kotlet schabowy, pierogi ruskie i zupę pomidorową.',
       'Nowa galeria pokazuje status ilustracji dla wszystkich 225 przepisów; cztery pliki czekają na ocenę, a pozostałe pozycje są w kolejce.',
@@ -409,7 +415,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Pliki są lokalne i uwzględnione w cache offline.'
   }),
   '1.4.52': Object.freeze({
-    intro: 'Kuchnik 1.4.52 — centralna galeria ilustracji repozytorium.',
+    intro: 'ŻARŁOK 1.4.52 — centralna galeria ilustracji repozytorium.',
     items: [
       'Podgląd pokazuje lokalne pliki ilustracji, zdjęcia, przypisane receptury, numer partii i status zatwierdzenia.',
       'Lista brakujących grafik powstaje bezpośrednio z aktualnej bazy 225 receptur i reguł mapowania.',
@@ -419,7 +425,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Galeria czyta lokalne pliki repozytorium i nie pobiera grafik z zewnętrznych źródeł.'
   }),
   '1.4.51': Object.freeze({
-    intro: 'Kuchnik 1.4.51 — cztery nowe ilustracje SVG w malarskim kierunku grafitowo-miedzianym.',
+    intro: 'ŻARŁOK 1.4.51 — cztery nowe ilustracje SVG w malarskim kierunku grafitowo-miedzianym.',
     items: [
       'Dodano dedykowane ilustracje Spaghetti all’amatriciana, Panzanella, Saltimbocca alla romana i Spanakopita.',
       'Każda potrawa ma precyzyjne mapowanie SVG; nie dodano ogólnych reguł przechwytujących inne dania.',
@@ -429,7 +435,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Cztery nowe ilustracje są lokalne, opisane i objęte testami regresyjnymi.'
   }),
   '1.4.50': Object.freeze({
-    intro: 'Kuchnik 1.4.50 — cztery nowe ilustracje SVG w malarskim kierunku grafitowo-miedzianym.',
+    intro: 'ŻARŁOK 1.4.50 — cztery nowe ilustracje SVG w malarskim kierunku grafitowo-miedzianym.',
     items: [
       'Dodano dedykowane ilustracje Pad Thai z krewetkami, Spaghetti aglio e olio, Biryani z kurczakiem i Falafela.',
       'Każda receptura ma precyzyjne dopasowanie SVG; nie dodano ogólnych reguł przechwytujących inne dania.',
@@ -439,7 +445,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Cztery nowe ilustracje są lokalne, opisane i objęte testami regresyjnymi.'
   }),
   '1.4.49': Object.freeze({
-    intro: 'Kuchnik 1.4.49 — cztery nowe, szczegółowe ilustracje SVG w grafitowo-miedzianym kierunku Żarłoka.',
+    intro: 'ŻARŁOK 1.4.49 — cztery nowe, szczegółowe ilustracje SVG w grafitowo-miedzianym kierunku Żarłoka.',
     items: [
       'Dodano dedykowane ilustracje spaghetti alla puttanesca, minestrone, moules marinières i quiche Lorraine.',
       'Minestrone ma własne mapowanie SVG zamiast generycznego zdjęcia zupy; pozostałe trzy potrawy również korzystają z precyzyjnych nazw.',
@@ -449,7 +455,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Cztery nowe ilustracje są lokalne, opisane i objęte testami regresyjnymi.'
   }),
   '1.4.48': Object.freeze({
-    intro: 'Kuchnik 1.4.48 — cztery nowe, szczegółowe ilustracje SVG w grafitowo-miedzianym kierunku Żarłoka.',
+    intro: 'ŻARŁOK 1.4.48 — cztery nowe, szczegółowe ilustracje SVG w grafitowo-miedzianym kierunku Żarłoka.',
     items: [
       'Dodano ilustracje Gnocchi z masłem szałwiowym, Tarte Tatin, Mussaka i Ramen shoyu.',
       'Poprawiono mapowanie gnocchi: wariant szałwiowy ma własną grafikę, a generyczne gnocchi nie przechwytuje receptur o innym sosie.',
@@ -459,7 +465,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Cztery nowe ilustracje są lokalne, szczegółowe i gotowe do cache offline.'
   }),
   '1.4.47': Object.freeze({
-    intro: 'Kuchnik 1.4.47 — cztery nowe ilustracje SVG w malarskim kierunku kulinarnym.',
+    intro: 'ŻARŁOK 1.4.47 — cztery nowe ilustracje SVG w malarskim kierunku kulinarnym.',
     items: [
       'Dodano dedykowane ilustracje Cacio e pepe, Fish and chips, gulaszu węgierskiego i Gambas al ajillo.',
       'Grafiki mają kwadratowy viewBox, opisy title/desc, ponad 200 ścieżek każda i brak zewnętrznych zasobów.',
@@ -469,7 +475,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Cztery nowe ilustracje są lokalne, opisane i gotowe do cache offline.'
   }),
   '1.4.46': Object.freeze({
-    intro: 'Kuchnik 1.4.46 — cztery nowe, szczegółowe ilustracje SVG.',
+    intro: 'ŻARŁOK 1.4.46 — cztery nowe, szczegółowe ilustracje SVG.',
     items: [
       'Dodano lokalne ilustracje Coq au vin, Tom yum goong, Ratatouille niçoise i Crème brûlée.',
       'Każda grafika ma kwadratowy viewBox, opis dostępności i ponad 200 ścieżek wektorowych; pliki pozostają lekkie i samodzielne.',
@@ -479,7 +485,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Cztery nowe ilustracje są lokalne, opisane i gotowe do użycia offline.'
   }),
   '1.4.45': Object.freeze({
-    intro: 'Kuchnik 1.4.45 — korekta kadrów ilustracji SVG.',
+    intro: 'ŻARŁOK 1.4.45 — korekta kadrów ilustracji SVG.',
     items: [
       'Poprawiono kwadratowe kadrowanie ramen tonkotsu, sushi maki i panna cotty; usunięto puste pasy tła bez przycinania potraw.',
       'Ponownie zwektoryzowano i zoptymalizowano ścieżki SVG do rozmiaru odpowiedniego dla kart mobilnych.',
@@ -489,7 +495,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Kadry są kwadratowe, grafiki lokalne i dostępne offline.'
   }),
   '1.4.44': Object.freeze({
-    intro: 'Kuchnik 1.4.44 — cztery nowe, szczegółowe ilustracje SVG.',
+    intro: 'ŻARŁOK 1.4.44 — cztery nowe, szczegółowe ilustracje SVG.',
     items: [
       'Dodano lokalne ilustracje dla Boeuf bourguignon, Paella de marisco, Parmigiana di melanzane i francuskiej zupy cebulowej.',
       'Grafiki wygenerowano w Adobe Firefly, zwektoryzowano i zoptymalizowano przez SVGO; każdy plik ma viewBox oraz opis dostępności.',
@@ -499,7 +505,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Cztery nowe ilustracje są zintegrowane z biblioteką receptur i cache offline.'
   }),
   '1.4.43': Object.freeze({
-    intro: 'Kuchnik 1.4.43 — cztery nowe, szczegółowe ilustracje potraw.',
+    intro: 'ŻARŁOK 1.4.43 — cztery nowe, szczegółowe ilustracje potraw.',
     items: [
       'Dodano nowe ilustracje SVG dla ramen tonkotsu, sushi maki, sałatki Caesar i panna cotty.',
       'Grafiki wygenerowano w Adobe Firefly, zwektoryzowano i zoptymalizowano pod kątem czytelności na ekranie telefonu.',
@@ -509,22 +515,22 @@ export const CHANGELOG = Object.freeze({
     footer: 'Cztery nowe ilustracje są lokalne, opisane i gotowe do użycia offline.'
   }),
   '1.4.42': Object.freeze({
-    intro: 'Kuchnik 1.4.42 — zaakceptowany wzorzec ilustracji potraw.',
+    intro: 'ŻARŁOK 1.4.42 — zaakceptowany wzorzec ilustracji potraw.',
     items: ['Podmieniono ilustracje Carbonary i Bruschetty na pliki SVG przekazane i zatwierdzone przez użytkownika.','Te dwa obrazy wyznaczają docelowy kierunek wizualny dla kolejnych ilustracji.','Odrzucono dalsze wdrażanie paczki ilustracji w poprzednim, uproszczonym stylu.','Zachowano lokalne pliki, cache offline i pierwszeństwo własnych zdjęć użytkownika.'],
     footer: 'Nowe ilustracje mają być dopasowane do zatwierdzonego wzorca.'
   }),
   '1.4.42': Object.freeze({
-    intro: 'Kuchnik 1.4.42 — ilustracje w zatwierdzonym, szczegółowym stylu.',
+    intro: 'ŻARŁOK 1.4.42 — ilustracje w zatwierdzonym, szczegółowym stylu.',
     items: ['Podmieniono ilustracje carbonary i bruschetty na dwa dostarczone wzorce: dopracowane wektorowe potrawy na ceramicznych talerzach z realistycznym światłem i cieniowaniem.','Zdefiniowano wspólny kierunek dla kolejnych ilustracji: bez płaskich piktogramów, prostych ikonek i uproszczonych emoji.','Zoptymalizowano SVG bez zastępowania ich bitmapami; zachowano własne zdjęcia użytkownika jako priorytet.','Bez migracji bazy, zmian magazynu ani usuwania danych użytkownika.'],
     footer: 'Przyszłe ilustracje mają trzymać się wzorca carbonary i bruschetty.'
   }),
   '1.4.41': Object.freeze({
-    intro: 'Kuchnik 1.4.41 — pakiet 20 nowych ilustracji SVG.',
+    intro: 'ŻARŁOK 1.4.41 — pakiet 20 nowych ilustracji SVG.',
     items: ['Dodano 20 lokalnych ilustracji potraw w spójnym kierunku graficznym ciemnej porcelany i ciepłych akcentów.','Rozszerzono mapowanie nazw receptur i cache offline.','Pliki SVG są samodzielne, opisane i bez zewnętrznych zależności.','Bez migracji bazy, zmian magazynu i usuwania danych użytkownika.'],
     footer: 'Ilustracje pozostają lekkimi, skalowalnymi plikami lokalnymi.'
   }),
   '1.4.40': Object.freeze({
-    intro: 'Kuchnik 1.4.40 — trzy nowe ilustracje SVG działające offline.',
+    intro: 'ŻARŁOK 1.4.40 — trzy nowe ilustracje SVG działające offline.',
     items: [
       'Dodano autorskie ilustracje ramen tonkotsu, sushi maki i croissanta w spójnym stylu ciemnej porcelany.',
       'Rozszerzono precyzyjne dopasowanie ilustracji do nazw receptur.',
@@ -534,7 +540,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Ilustracje są lekkie, wektorowe i skalują się na ekranach Retina.'
   }),
   '1.4.39': Object.freeze({
-    intro: 'Kuchnik 1.4.39 — pojedyncze zapisy w trybie awaryjnym nie publikują zmian, których localStorage nie utrwalił.',
+    intro: 'ŻARŁOK 1.4.39 — pojedyncze zapisy w trybie awaryjnym nie publikują zmian, których localStorage nie utrwalił.',
     items: [
       'Operacje put, putMany, delete i clear przygotowują nowy stan na osobnej mapie.',
       'Błąd zapisu odrzuca operację i zachowuje poprzedni stan pamięci oraz zapisany klucz.',
@@ -544,7 +550,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Po błędzie zapisu sprawdź stan pamięci w Ustawieniach i wykonaj kopię danych.'
   }),
   '1.4.38': Object.freeze({
-    intro: 'Kuchnik 1.4.38 — transakcje magazynowe w trybie awaryjnym nie pozostawiają częściowych zmian.',
+    intro: 'ŻARŁOK 1.4.38 — transakcje magazynowe w trybie awaryjnym nie pozostawiają częściowych zmian.',
     items: [
       'Operacje wielomagazynowe są najpierw przygotowywane na odłączonych kopiach danych.',
       'Błąd callbacku nie zmienia pamięci ani localStorage.',
@@ -554,7 +560,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Dane istniejące przed transakcją pozostają zachowane.'
   }),
   '1.4.37': Object.freeze({
-    intro: 'Kuchnik 1.4.37 — usuwanie produktu magazynowego nie rozjeżdża stanu pamięci.',
+    intro: 'ŻARŁOK 1.4.37 — usuwanie produktu magazynowego nie rozjeżdża stanu pamięci.',
     items: [
       'Produkt znika z bieżącego widoku dopiero po potwierdzonym usunięciu z IndexedDB.',
       'Błąd zapisu nie powoduje zniknięcia produktu, który nadal istnieje w bazie.',
@@ -563,7 +569,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Bez migracji bazy danych i bez kasowania historii magazynowej.'
   }),
   '1.4.36': Object.freeze({
-    intro: 'Kuchnik 1.4.36 — zapis produktu magazynowego jest odporniejszy na błędy.',
+    intro: 'ŻARŁOK 1.4.36 — zapis produktu magazynowego jest odporniejszy na błędy.',
     items: [
       'Nieudany zapis produktu nie publikuje niezapisanej zmiany w pamięci aplikacji.',
       'Jeśli edycja produktu zapisuje również ruch magazynowy, oba wpisy trafiają do jednej transakcji IndexedDB.',
@@ -572,7 +578,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Bez migracji bazy danych i bez usuwania istniejących danych.'
   }),
   '1.4.35': Object.freeze({
-    intro: 'Kuchnik 1.4.35 — bezpieczniejsze przyjmowanie zakupów i odczyt magazynu.',
+    intro: 'ŻARŁOK 1.4.35 — bezpieczniejsze przyjmowanie zakupów i odczyt magazynu.',
     items: [
       'Równoległe przyjęcie tej samej pozycji z listy zakupów nie nalicza drugi raz stanu ani historii ruchów.',
       'Błąd odczytu magazynu nie czyści ostatniego poprawnego widoku w pamięci; rozruch przechodzi do diagnostyki zamiast udawać pusty magazyn.',
@@ -581,7 +587,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Bez migracji bazy danych. Istniejące receptury, stany i historia pozostają zachowane.'
   }),
   '1.4.34': Object.freeze({
-    intro: 'Kuchnik 1.4.34 — kalkulator pizzy z aktywnym zakwasem 1:1:2.',
+    intro: 'ŻARŁOK 1.4.34 — kalkulator pizzy z aktywnym zakwasem 1:1:2.',
     items: [
       'Tryby „Mam mąkę” i „Na kulki” obsługują teraz również aktywny zakwas.',
       'Mąka i woda z zakwasu są wliczane do docelowej hydracji i masy ciasta; zakwas macierzysty jest ograniczony do 1% całkowitej mąki.',
@@ -591,7 +597,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Zachowano dotychczasowe ustawienia kalkulatora. Nie zmieniono ani nie usunięto danych receptur i magazynu.'
   }),
   '1.4.33': Object.freeze({
-    intro: 'Kuchnik 1.4.33 — bezpieczniejsze operacje magazynowe.',
+    intro: 'ŻARŁOK 1.4.33 — bezpieczniejsze operacje magazynowe.',
     items: [
       'Zmiana stanu i wpis historii są zapisywane w jednej transakcji.',
       'Odjęcie składników całej receptury odbywa się jako jedna operacja; awaria nie zostawia częściowo odjętych stanów.',
@@ -600,7 +606,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Brak migracji bazy. Receptury, ustawienia i istniejąca historia magazynu pozostają zachowane.'
   }),
   '1.4.32': Object.freeze({
-    intro: 'Kuchnik 1.4.32 — dedykowana ilustracja tagliatelle al ragù.',
+    intro: 'ŻARŁOK 1.4.32 — dedykowana ilustracja tagliatelle al ragù.',
     items: [
       'Dodano lekką, lokalną ilustrację SVG tagliatelle al ragù (około 3,6 KB), przeniesioną ze sprawdzonego wariantu hybrydowego Żarłoka.',
       'Dopasowanie obejmuje konkretne nazwy tagliatelle z ragù lub sosem bolognese; nie przypisuje ilustracji przypadkowym daniom makaronowym.',
@@ -609,7 +615,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Zdjęcia dodane przez użytkownika nadal mają pierwszeństwo. Nie zmieniono receptur ani danych magazynowych.'
   }),
   '1.4.31': Object.freeze({
-    intro: 'Kuchnik 1.4.31 — cztery nowe ilustracje potraw.',
+    intro: 'ŻARŁOK 1.4.31 — cztery nowe ilustracje potraw.',
     items: [
       'Dodano lokalne ilustracje lasagne, gnocchi al pomodoro, bruschetty i panna cotty przeniesione z Żarłoka.',
       'Dopasowanie ilustracji opiera się na konkretnych nazwach potraw; zdjęcia dodane przez użytkownika nadal mają pierwszeństwo.',
@@ -618,7 +624,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Dodano pliki graficzne i reguły dopasowania; dane użytkownika pozostają bez zmian.'
   }),
   '1.4.30': Object.freeze({
-    intro: 'Kuchnik 1.4.30 — odporniejsza instalacja service workera.',
+    intro: 'ŻARŁOK 1.4.30 — odporniejsza instalacja service workera.',
     items: [
       'Brak opcjonalnej ilustracji, ikony lub fontu nie blokuje instalacji aktualizacji.',
       'Wymagane pliki aplikacji nadal muszą zostać poprawnie zapisane w cache.',
@@ -627,7 +633,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Zmiana dotyczy wyłącznie cache plików. Receptury, ustawienia i historia magazynu pozostają bez zmian.'
   }),
   '1.4.29': Object.freeze({
-    intro: 'Kuchnik 1.4.29 — ograniczenie czasu oczekiwania service workera.',
+    intro: 'ŻARŁOK 1.4.29 — ograniczenie czasu oczekiwania service workera.',
     items: [
       'Nawigacja nie czeka bez końca na sieć, jeśli odpowiedź nie istnieje jeszcze w cache.',
       'Przy dostępnej kopii aplikacja wraca do cache po krótkim limicie sieciowym.',
@@ -636,7 +642,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Zmiana dotyczy wyłącznie pobierania zasobów; receptury, magazyn i historia pozostają bez zmian.'
   }),
   '1.4.28': Object.freeze({
-    intro: 'Kuchnik 1.4.28 — test trwałości ulubionych.',
+    intro: 'ŻARŁOK 1.4.28 — test trwałości ulubionych.',
     items: [
       'Dodano test przeglądarkowy sprawdzający, czy zmiana ulubionej receptury przetrwa pełne przeładowanie aplikacji.',
       'Test przywraca początkowy stan ulubionej receptury i działa na odizolowanym profilu testowym.',
@@ -645,7 +651,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Testy nie usuwają ani nie modyfikują danych z Twojego urządzenia.'
   }),
   '1.4.27': Object.freeze({
-    intro: 'Kuchnik 1.4.27 — anulowanie skanera jest bezpieczniejsze.',
+    intro: 'ŻARŁOK 1.4.27 — anulowanie skanera jest bezpieczniejsze.',
     items: [
       'Wynik dekodowania kodu EAN jest ignorowany, jeśli skaner został zamknięty w trakcie odczytu.',
       'Dodano test przeglądarkowy, który symuluje opóźniony odczyt kamery i sprawdza, czy po zamknięciu skanera nie otwiera się formularz produktu.',
@@ -654,7 +660,7 @@ export const CHANGELOG = Object.freeze({
     footer: 'Skaner można bezpiecznie zamknąć również wtedy, gdy dekoder właśnie analizuje klatkę.'
   }),
   '1.4.26': Object.freeze({
-    intro: 'Kuchnik 1.4.26 — bezpieczniejsze zakończenie rozruchu.',
+    intro: 'ŻARŁOK 1.4.26 — bezpieczniejsze zakończenie rozruchu.',
     items: [
       'Jeśli globalny limit startu zostanie przekroczony, spóźnione operacje nie zamontują później interfejsu nad ekranem błędu.',
       'Dodano test regresyjny symulujący opóźnione wczytanie magazynu.',
