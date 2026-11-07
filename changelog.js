@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.11': Object.freeze({
+    intro: 'ŻARŁOK / Kuchnik 1.5.11 — mądrzejsze wskazówki do pizzy.',
+    items: ['Kalkulator pokazuje mąki Caputo rozpoznane w magazynie, szacuje zużycie i pozwala dodać zapasową mąkę do mieszanki jednym stuknięciem.', 'Podpowiedzi tłumaczą hydrację i siłę mąki względem wybranego czasu dojrzewania.', 'Dodanie kolejnej mąki zaczyna teraz od dokładnie 20% mieszanki; ustawienia kalkulatora i podział fermentacji pozostają zachowane.'],
+    footer: 'Dane magazynu pozostają na urządzeniu i nie są wysyłane do sieci.'
+  }),
+
   '1.5.10': Object.freeze({
     intro: 'ŻARŁOK / Kuchnik 1.5.10 — poprawka składni galerii PREGO!.',
     items: ['Poprawiono zapis apostrofu w nazwie Penne all’Arrabbiata, aby moduł ilustracji przechodził kontrolę składni.', 'Zachowano komplet 37 lokalnych ilustracji PREGO! oraz istniejące mapowanie do przepisów.'],

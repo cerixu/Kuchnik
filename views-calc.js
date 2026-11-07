@@ -14,6 +14,7 @@ import {
   pizzaCalc, pizzaCalcFromFlour, yeastSuggestion, YEAST_TYPES, scaleRecipe, factorFromServings, factorFromYield, factorFromIngredient, effectiveYield, recipeCost, priceForFoodCost,
 } from './calculator.js';
 import { fmtAmount, fmtNum, fmtMoney, debounce } from './util.js';
+import { inventoryItems, inventoryLoaded } from './inventory.js';
 import { qtyParts } from './components.js';
 import { addItems, openAddToShopping } from './shopping.js';
 import { calcScreen, memo, col, result } from './calc-kit.js';
@@ -120,6 +121,107 @@ function pizzaCalculator() {
     };
   }
 
+  function flourStockKey(item) {
+    const name = norm([item.name, ...(item.aliases || [])].join(' ')).replace(/[^a-z0-9]+/g, ' ').trim();
+    if (name.includes('nuvola super') || name.includes('super nuvola')) return 'nuvola-super';
+    if (name.includes('saccorosso') || name.includes('00 red') || name.includes('caputo red')) return 'saccorosso';
+    if (name.includes('nuvola')) return 'nuvola';
+    if (name.includes('00 blue') || name.includes('caputo blue') ||
+        name.includes('pizzeria caputo') || name.includes('caputo pizzeria')) return 'pizzeria-blue';
+    return '';
+  }
+
+  function gramsLabel(value) {
+    const grams = Math.max(0, Number(value) || 0);
+    return grams >= 1000 ? fmtNum(grams / 1000, 2) + ' kg' : fmtNum(grams, 0) + ' g';
+  }
+
+  function flourStockAdvice(profile, flourAmount) {
+    if (!inventoryLoaded()) return null;
+    const stock = new Map();
+    let ambiguous00 = false;
+    inventoryItems().filter((item) => item.stock > 0 && item.unit === 'g').forEach((item) => {
+      const type = flourStockKey(item);
+      if (type) {
+        if (!stock.has(type)) stock.set(type, []);
+        stock.get(type).push(item);
+      } else {
+        const name = norm(item.name).toLowerCase();
+        if (name.includes('maka') && name.includes('00')) ambiguous00 = true;
+      }
+    });
+    const known = [...stock.entries()];
+    if (!known.length) {
+      return h('p', { class: 'muted small' }, ambiguous00
+        ? 'W magazynie jest mąka „00”, ale bez marki lub typu nie da się dobrać jej siły. Dopisz np. Caputo Pizzeria, Saccorosso albo Nuvola.'
+        : 'Nie widzę rozpoznanej mąki do pizzy w magazynie. Dodaj ją pod nazwą z marką i typem, aby zobaczyć zapas i przewidywane zużycie.');
+    }
+    const partsTotal = profile.blend.reduce((sum, row) => sum + row.parts, 0);
+    return h('div', { class: 'stack flour-stock-advice' },
+      h('strong', null, 'Mąki z Twojego magazynu'),
+      ...known.map(([type, items]) => {
+        const flour = PIZZA_FLOURS[type];
+        const amount = items.reduce((sum, item) => sum + item.stock, 0);
+        const current = profile.blend.find((row) => row.type === type);
+        const names = items.map((item) => item.name).join(', ');
+        if (current) {
+          const needed = flourAmount * current.pct / 100;
+          const difference = amount - needed;
+          return h('p', { class: 'muted small' }, flour.short + ': na stanie ' + gramsLabel(amount) +
+            ' (' + names + '). Mieszanka zużyje ok. ' + gramsLabel(needed) +
+            (difference >= 0
+              ? '; zostanie ok. ' + gramsLabel(difference) + '.'
+              : '; brakuje ok. ' + gramsLabel(-difference) + '.'));
+        }
+        const pct = Math.min(20, flourAmount > 0 ? amount / flourAmount * 100 : 20);
+        const minimumShare = 100 / (partsTotal + 1);
+        const canAdd = pct >= minimumShare;
+        const share = canAdd ? pct : minimumShare;
+        const newParts = partsTotal * share / (100 - share);
+        return h('div', { class: 'stack' },
+          h('p', { class: 'muted small' }, 'Masz ' + flour.short + ': ' + gramsLabel(amount) +
+            ' (' + names + '). ' + (canAdd
+              ? 'Możesz wykorzystać ją jako ' + fmtNum(share, 1) + '% mieszanki.'
+              : 'To za mały zapas, by dodać go w obecnych proporcjach mieszanki.')),
+          canAdd ? button('Dodaj do mieszanki · ' + fmtNum(share, 1) + '%', { sm: true, kind: 'ghost', onClick: () => {
+            const next = normalizedBlend().map(({ type: key, parts }) => ({ type: key, parts }));
+            if (next.some((row) => row.type === type)) return;
+            next.push({ type, parts: newParts });
+            st.flourBlend = next;
+            st.flourType = next[0].type;
+            save(); build(); paintOut();
+          } }) : null);
+      }));
+  }
+
+  function processAdvice(profile) {
+    const hydration = Number(st.hydration) || 0;
+    const hydrationText = hydration < profile.hMin
+      ? 'Hydracja ' + fmtNum(hydration, 1) + '% jest poniżej orientacyjnego zakresu ' +
+        fmtNum(profile.hMin, 1) + '–' + fmtNum(profile.hMax, 1) +
+        '%. Ciasto będzie sztywniejsze i łatwiejsze do formowania; wodę możesz zwiększać stopniowo.'
+      : hydration > profile.hMax
+        ? 'Hydracja ' + fmtNum(hydration, 1) + '% przekracza orientacyjny zakres ' +
+          fmtNum(profile.hMin, 1) + '–' + fmtNum(profile.hMax, 1) +
+          '%. Dodawaj wodę etapami i oceń, czy mąka ją wchłania, zanim dolejesz całość.'
+        : 'Hydracja ' + fmtNum(hydration, 1) + '% mieści się w orientacyjnym zakresie ' +
+          fmtNum(profile.hMin, 1) + '–' + fmtNum(profile.hMax, 1) +
+          '% dla tej mieszanki. Wyższa hydracja daje luźniejsze ciasto, ale chłonność zależy też od partii i wyrabiania.';
+    const hours = fermentationHours();
+    let fermentationText;
+    if (st.fermentationMode === 'split' || hours >= 36) {
+      fermentationText = profile.wMax < 300
+        ? 'Przy długim dojrzewaniu obecna mieszanka ma umiarkowaną siłę (W ok. ' +
+          Math.round(profile.wMin) + '–' + Math.round(profile.wMax) +
+          '). Obserwuj napięcie ciasta; jeśli słabnie, zwiększ udział Saccorosso lub Nuvola Super albo skróć etap w cieple.'
+        : 'Mocniejsza mieszanka (W ok. ' + Math.round(profile.wMin) + '–' + Math.round(profile.wMax) +
+          ') daje większy margines przy długim dojrzewaniu. Tempo nadal zależy od temperatury ciasta i ilości drożdży.';
+    } else {
+      fermentationText = 'Dobór czasu i drożdży kontroluje tempo fermentacji; sama zawartość białka nie wyznacza czasu dojrzewania. W jest wskazówką siły, a hydracja opisuje udział wody.';
+    }
+    return [hydrationText, fermentationText];
+  }
+
   function fermentationSummary() {
     if (st.fermentationMode === 'split') {
       return fmtNum(st.roomHours, 1) + ' h wstępnie w ' + fmtNum(st.roomTemp, 1) + ' °C + 48 h w lodówce (ok. ' + fmtNum(st.fridgeTemp, 1) + ' °C)';
@@ -199,6 +301,8 @@ function pizzaCalculator() {
           } })
           : null,
         h('p', { class: 'muted small' }, profile.why),
+        ...processAdvice(profile).map((text) => h('p', { class: 'muted small' }, text)),
+        flourStockAdvice(profile, r.flour),
         h('p', { class: 'muted small' }, 'Udział w mące: ' + flourParts),
         ...profile.blend.map((row) => h('a', {
           href: PIZZA_FLOURS[row.type].url, target: '_blank', rel: 'noopener noreferrer',
@@ -379,9 +483,10 @@ function pizzaCalculator() {
       h('h2', { class: 'card-title' }, icon('pizza', 20), 'Mieszanka mąk'),
       h('p', { class: 'muted small' }, 'Dodaj różne mąki i ustaw ich części, np. 70 części Pizzeria + 30 części Nuvola. Kalkulator przelicza proporcje na udział procentowy.'),
       rowsHost,
-      unused ? button('Dodaj kolejną mąkę', { icon: 'plus', kind: 'ghost', onClick: () => {
+      unused ? button('Dodaj kolejną mąkę · 20% na start', { icon: 'plus', kind: 'ghost', onClick: () => {
         const next = normalizedBlend().map(({ type, parts }) => ({ type, parts }));
-        next.push({ type: unused, parts: 20 });
+        const partsTotal = next.reduce((sum, row) => sum + row.parts, 0);
+        next.push({ type: unused, parts: partsTotal / 4 });
         st.flourBlend = next;
         st.flourType = next[0].type;
         save(); build(); paintOut();

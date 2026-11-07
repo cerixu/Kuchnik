@@ -1,6 +1,6 @@
 # ŻARŁOK — Kuchnik
 
-> **Aktualna wersja aplikacji: 1.5.10**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
+> **Aktualna wersja aplikacji: 1.5.11**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
@@ -28,6 +28,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur bazowyc
 - **Start i diagnostyka:** jeśli ładowanie modułów albo bazy się zawiesi, aplikacja pokaże ekran diagnostyczny z przyciskiem odświeżenia zamiast bez końca wyświetlać animację startową. Limit czasu rozruchu wykrywa problem z bazą.
 - **Magazyn:** osobny ekran dostępny ze Startu; wyszukiwanie, filtrowanie po lokalizacji, dodawanie i edycja produktów, szybkie zwiększanie stanów, zapisywanie strat i podgląd ich kosztu. Po pełnym zakończeniu trybu GOTUJĘ aplikacja może po potwierdzeniu odjąć dostępne składniki od stanu magazynu, zgodnie z przeliczoną liczbą porcji. Skaner EAN uruchamia kamerę, automatycznie wykrywa kod i opcjonalnie pobiera nazwę produktu z Open Food Facts. Testy kamery na fizycznym iPhonie pozostają do wykonania.
 - **Narzędzia kuchenne** (zakładka Kalkulatory): pizza/ciasto z procentami piekarskimi — obliczanie od liczby i masy kulek albo bezpośrednio od ilości mąki (np. 7,5 kg), mieszanie mąk w różnych proporcjach, hydrację oraz fermentację jednoetapową lub podzieloną na 6/7/8 h w temperaturze pokojowej + 48 h w lodówce, procenty, przeliczanie receptury, koszt i food cost, sól i solanki, zakwas, forma do pieczenia, przelicznik jednostek (także g ↔ ml), temperatury mięs, czasy gotowania z minutnikiem, zamienniki, „Co mam w lodówce?”, „Co dziś gotujemy?”.
+- **Podpowiedzi pizzy (1.5.11):** kalkulator odczytuje rozpoznane mąki Caputo z lokalnego magazynu, pokazuje ilość potrzebną do obecnej receptury i stan po użyciu, a mąkę spoza mieszanki można dodać jako udział dopasowany do dostępnego zapasu. Wskazówki wyjaśniają zakres hydracji i dobór siły mąki do długiej fermentacji.
 - **Przelicz**, **procenty piekarskie**, **food cost**, **zakupy** (z alejkami), **import z tekstu**, **historia zmian** z przywracaniem wersji, **kopia zapasowa JSON** — jak w poprzednich wersjach.
 
 ## Struktura plików
