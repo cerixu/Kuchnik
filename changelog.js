@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.19': Object.freeze({
+    intro: 'Kuchnik 1.5.19 — katalog podglądu ikon i powierzchni UI.',
+    items: ['Dodano osobną, responsywną stronę podglądu wszystkich 64 ikon interfejsu.', 'Katalog pokazuje także warianty przycisków, przyciski ikonowe i dolną nawigację na rzeczywistych stylach CSS aplikacji.', 'Strona jest lokalna i dodana do cache Service Workera; można ją otworzyć pod adresem ui-icons-preview.html również po wcześniejszym zapisaniu offline.', 'Nie zmieniono ilustracji potraw, ikon składników ani danych aplikacji.'],
+    footer: 'To narzędzie wizualnego przeglądu biblioteki UI.'
+  }),
+
   '1.5.18': Object.freeze({
     intro: 'ŻARŁOK 1.5.18 — pełny zestaw ikon UI w stylu kredkowym.',
     items: ['Dopracowano indywidualne, lekko nieregularne rysunki dla pozostałych ikon: narzędzi, akcji, ustawień, nawigacji i informacji.', 'Wszystkie 64 nazwy ikon wykorzystywane w interfejsie mają teraz własny wariant kredkowy; test regresyjny pilnuje pełnego pokrycia.', 'Zachowano istniejące etykiety, rozmiary, kolorystykę, zachowanie kontrolek i tekstury przycisków.', 'Nie zmieniono ilustracji przepisów ani ikon składników.'],
