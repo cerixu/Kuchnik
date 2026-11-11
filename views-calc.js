@@ -808,7 +808,7 @@ function pizzaCalculator() {
             col(field('Rodzaj drożdży', selectEl(Object.entries(YEAST_TYPES).map(([key, value]) => [key, value.label]), st.yeastType, (value) => {
               st.yeastType = value; syncAutoParameters(); save(); build(); paintOut(); paintSuggestion();
             }))),
-            col(field('Drożdże %', yeastInput)))),
+            col(field('Drożdże %', yeastInput))),
         suggestionHost,
         h('p', { class: 'muted small' }, 'Wskazówka ilości drożdży jest orientacyjna — mąka, temperatura ciasta i proces zmieniają tempo dojrzewania.')));
     paintSuggestion();
