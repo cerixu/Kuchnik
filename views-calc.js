@@ -95,7 +95,7 @@ function pizzaCalculator() {
   const form = h('div', { class: 'stack' });
   st.flourType = PIZZA_FLOURS[st.flourType] ? st.flourType : 'pizzeria-blue';
   st.style = PIZZA_STYLES[st.style] ? st.style : 'neapolitan';
-  st.calcMode = st.calcMode === 'manual' ? 'manual' : 'hybrid';
+  st.calcMode = ['auto', 'manual'].includes(st.calcMode) ? st.calcMode : 'hybrid';
   st.fermentationMode = st.fermentationMode === 'split' ? 'split' : 'single';
   const s = calcScreen('Pizza i ciasto', form, out);
   let suggestionHost = null;
@@ -251,12 +251,17 @@ function pizzaCalculator() {
     return { hydration, salt: style.salt, oil: style.oil, yeast, style };
   }
 
-  function applyAutoParameters() {
+  function syncAutoParameters() {
+    if (st.calcMode !== 'auto') return;
     const p = autoParameters();
     st.hydration = p.hydration;
     st.salt = p.salt;
     st.oil = p.oil;
     if (st.leavenType !== 'starter') st.yeast = Math.round(p.yeast * 100) / 100;
+  }
+
+  function applyAutoParameters() {
+    syncAutoParameters();
     save(); build(); paintOut(); paintSuggestion();
   }
 
@@ -605,16 +610,16 @@ function pizzaCalculator() {
       h('section', { class: 'card stack' },
         h('h2', { class: 'card-title' }, icon('thermo', 20), 'Drożdże i fermentacja'),
         segmented([['single', 'Jeden etap'], ['split', 'Wstępna + zimna']], st.fermentationMode, (value) => {
-          st.fermentationMode = value; save(); build(); paintOut(); paintSuggestion();
+          st.fermentationMode = value; syncAutoParameters(); save(); build(); paintOut(); paintSuggestion();
         }, { label: 'Schemat fermentacji' }),
         st.fermentationMode === 'split'
           ? h('div', { class: 'stack' },
             h('div', { class: 'row gap' },
               col(field('Wstępna (godz.)', numInput({ value: st.roomHours, label: 'Fermentacja wstępna w godzinach', dec: 1, onInput: (value) => {
-                st.roomHours = value; save(); paintOut(); paintSuggestion();
+                st.roomHours = value; syncAutoParameters(); save(); paintOut(); paintSuggestion();
               } }))),
               col(field('Temperatura pokoju (°C)', numInput({ value: st.roomTemp, label: 'Temperatura fermentacji wstępnej', dec: 1, onInput: (value) => {
-                st.roomTemp = value; save(); paintOut(); paintSuggestion();
+                st.roomTemp = value; syncAutoParameters(); save(); paintOut(); paintSuggestion();
               } })))),
             chips('roomHours', [6, 7, 8], ' h'),
             h('div', { class: 'fermentation-track card' },
@@ -623,13 +628,13 @@ function pizzaCalculator() {
             h('p', { class: 'muted small' }, 'Punkty startowe: 6, 7 lub 8 godzin w temperaturze pokojowej, potem 48 godzin w lodówce. Rzeczywiste tempo zależy od temperatury ciasta, ilości drożdży i mąki.'))
           : h('div', { class: 'row gap' },
             col(field('Temperatura (°C)', numInput({ value: st.temp, label: 'Temperatura fermentacji', dec: 1, onInput: (value) => {
-              st.temp = value; save(); paintOut(); paintSuggestion();
+              st.temp = value; syncAutoParameters(); save(); paintOut(); paintSuggestion();
             } }))),
             col(field('Czas (godz.)', numInput({ value: st.hours, label: 'Czas fermentacji w godzinach', dec: 1, onInput: (value) => {
-              st.hours = value; save(); paintOut(); paintSuggestion();
+              st.hours = value; syncAutoParameters(); save(); paintOut(); paintSuggestion();
             } })))),
         field('Rodzaj zaczynu', selectEl([['yeast', 'Drożdże'], ['starter', 'Aktywny zakwas 1:1:2']], st.leavenType, (value) => {
-          st.leavenType = value; save(); build(); paintOut(); paintSuggestion();
+          st.leavenType = value; syncAutoParameters(); save(); build(); paintOut(); paintSuggestion();
         })),
         st.leavenType === 'starter'
           ? h('div', { class: 'stack' },
@@ -640,7 +645,7 @@ function pizzaCalculator() {
             h('p', { class: 'muted small' }, 'Proporcja zakwas : mąka : woda = 1:1:2. Wpisujesz wodę, którą fizycznie dodasz do zakwasu. Kalkulator wylicza zakwas macierzysty i mąkę do dokarmienia, a ich wodę i mąkę wlicza do hydracji całej receptury.'))
           : h('div', { class: 'row gap' },
             col(field('Rodzaj drożdży', selectEl(Object.entries(YEAST_TYPES).map(([key, value]) => [key, value.label]), st.yeastType, (value) => {
-              st.yeastType = value; save(); build(); paintOut(); paintSuggestion();
+              st.yeastType = value; syncAutoParameters(); save(); build(); paintOut(); paintSuggestion();
             }))),
             col(field('Drożdże %', numInput({ value: st.yeast, label: 'Drożdże procent', dec: 2, onInput: upd('yeast') })))),
         suggestionHost,
