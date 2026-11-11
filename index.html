@@ -68,13 +68,22 @@
         boot.append(title, detail, retry, help);
       }
       window.addEventListener('error', function (e) {
+        // Błędy obrazów/fontów nie oznaczają awarii modułów aplikacji.
+        // Duże moduły mogą ładować się dłużej niż dekoracyjna grafika startowa.
+        if (e.target && e.target !== window && e.target.tagName &&
+            e.target.tagName.toLowerCase() !== 'script') return;
         if (document.getElementById('boot') && !window.__kuchnikBootStarted) {
-          showBootError(e.message || 'Nie udało się załadować modułów aplikacji.');
+          var details = [];
+          if (e.message) details.push(e.message);
+          if (e.filename) details.push(e.filename + (e.lineno ? ':' + e.lineno : '') + (e.colno ? ':' + e.colno : ''));
+          if (e.target && e.target.src) details.push('Nie udało się załadować: ' + e.target.src);
+          showBootError(details.join(' · ') || 'Nie udało się załadować modułów aplikacji. Sprawdź konsolę Safari.');
         }
       }, true);
       window.addEventListener('unhandledrejection', function (e) {
         if (document.getElementById('boot') && !window.__kuchnikBootStarted) {
-          showBootError(e.reason && e.reason.message ? e.reason.message : 'Błąd podczas ładowania modułów aplikacji.');
+          var reason = e.reason;
+          showBootError(reason && (reason.stack || reason.message) ? (reason.stack || reason.message) : 'Błąd podczas ładowania modułów aplikacji.');
         }
       });
       // Szybka diagnostyka tylko wtedy, gdy moduł app.js w ogóle nie wystartował.

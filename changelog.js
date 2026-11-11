@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.16': Object.freeze({
+    intro: 'ŻARŁOK 1.5.16 — receptura pizzy aktualizuje się na żywo.',
+    items: ['Każda zmiana gramatury, hydracji, soli, oliwy, mąki, proporcji mieszanki i fermentacji natychmiast przelicza pełny podgląd receptury.', 'Tryb Automatyczny dobiera parametry na bieżąco; tryb hybrydowy automatycznie aktualizuje niezmienione ręcznie parametry, a ręczne korekty blokuje do czasu ich odblokowania.', 'Dodano automatyczne dozowanie mieszanek według stylu pizzy i długości fermentacji, osobną gramaturę każdej mąki oraz krótkie wskazówki udziału startowego i limitów dla mąk dodatkowych.', 'Rozszerzono bibliotekę o Caputo Aria, Cuoco, Manitoba Oro, Gusto Bello 00 i semolę rimacinata. Dla pizzy na blasze automat wybiera Aria; nieopublikowane parametry W pozostają oznaczone jako brak danych.', 'Poprawiono przeliczanie wody do zakwasu również przy obliczaniu od liczby i masy kulek.'],
+    footer: 'Dozowanie mąk i hydracja są rekomendacją startową; ostateczną chłonność potwierdza konkretna partia mąki i próba ciasta.'
+  }),
+
   '1.5.15': Object.freeze({
     intro: 'ŻARŁOK 1.5.15 — kalkulator technologiczny pizzy.',
     items: ['Dodano profile pizzy neapolitańskiej, klasycznej, rzymskiej tonda i pizzy na blasze (teglia).', 'Połączono automat dobierający parametry z ręczną korektą hydracji, soli, oliwy i drożdży.', 'Bilans zakwasu 1:1:2 uwzględnia osobno składniki do ciasta i do dokarmienia oraz wkład mąki i wody z zakwasu macierzystego.', 'Zapis receptury rozdziela mąkę i wodę zakwasu macierzystego, aby procenty piekarskie zachowały pełny bilans.'],
