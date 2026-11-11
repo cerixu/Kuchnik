@@ -29,3 +29,15 @@ test('button texture is local and precached for offline use', () => {
   assert.match(css, /assets\/ui-pencil-hatch\.svg/);
   assert.match(sw, /assets\/ui-pencil-hatch\.svg/);
 });
+
+
+test('all 64 UI symbols use a dedicated pencil drawing', () => {
+  const source = ui.match(/const ICONS = \{([\s\S]*?)\n\};/);
+  const pencil = ui.match(/const PENCIL_ICONS = \{([\s\S]*?)\n\};/);
+  assert.ok(source && pencil, 'both icon maps must exist');
+  const names = [...source[1].matchAll(/^\s{2}([a-zA-Z0-9_-]+):/gm)].map((m) => m[1]);
+  const pencilNames = [...pencil[1].matchAll(/^\s{2}([a-zA-Z0-9_-]+):/gm)].map((m) => m[1]);
+  assert.equal(new Set(names).size, 64, 'icon API should contain 64 unique symbols');
+  assert.deepEqual(names.filter((name) => !pencilNames.includes(name)), [],
+    'no standard icon fallback should remain');
+});
