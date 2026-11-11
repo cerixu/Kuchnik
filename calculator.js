@@ -137,7 +137,15 @@ const nonNegativeNumber = (value) => {
  * do docelowej hydracji i całkowitej masy ciasta.
  * starter = procent masy zakwasu macierzystego względem całkowitej mąki (maks. 1%).
  */
-export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, yeast = 0, starter = 0, ballWeight = 250 }) {
+/**
+ * Pełny bilans piekarski. flour/water oznaczają wartości CAŁKOWITE receptury,
+ * łącznie z mąką i wodą wniesioną przez zakwas macierzysty oraz dokarmienie.
+ * starterWater oznacza świeżą wodę do dokarmienia 1:1:2.
+ * Dla zakwasu macierzystego 100% hydracji: seed = feedWater/2,
+ * feedFlour = seed, feedWater = 2*seed; wkład łączny = 1.5*seed mąki
+ * i 2.5*seed wody.
+ */
+export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, yeast = 0, starter = 0, starterWater: starterWaterInput = null, ballWeight = 250 }) {
   const f = nonNegativeNumber(flour);
   const h = nonNegativeNumber(hydration);
   const s = nonNegativeNumber(salt);
@@ -148,37 +156,40 @@ export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, ye
   const saltAmount = f * s / 100;
   const oilAmount = f * o / 100;
   const yeastAmount = f * y / 100;
-  const starterSeed = f * seedPct / 100;
-
-  // Zakwas macierzysty 100% hydracji: połowa masy to mąka, połowa woda.
-  // Dokarmienie 1:1:2 dodaje seedPct mąki i 2× seedPct wody.
+  const starterWater = starterWaterInput != null && Number.isFinite(Number(starterWaterInput))
+    ? nonNegativeNumber(starterWaterInput)
+    : f * seedPct / 100 * 2;
+  const starterSeed = starterWater / 2;
   const starterFlour = starterSeed;
-  const starterWater = starterSeed * 2;
   const starterTotal = starterSeed * 4;
-  const doughFlour = f - starterSeed * 1.5;
-  const doughWater = water - starterSeed * 2.5;
-  const total = doughFlour + doughWater + saltAmount + oilAmount + yeastAmount + starterTotal;
-  const pctSum = 100 + h + s + o + y; // zakwas jest częścią mąki/wody, nie dodatkowym procentem
+  const starterFlourContribution = starterSeed * 1.5;
+  const starterWaterContribution = starterSeed * 2.5;
+  const doughFlour = f - starterFlourContribution;
+  const doughWater = water - starterWaterContribution;
+  const total = f + water + saltAmount + oilAmount + yeastAmount;
+  const pctSum = 100 + h + s + o + y;
   const weight = nonNegativeNumber(ballWeight);
   const ballCount = weight > 0 ? Math.floor((total + 1e-8) / weight) : 0;
   const remainder = weight > 0 ? Math.max(0, total - ballCount * weight) : total;
-
   return {
     flour: f, water, salt: saltAmount, oil: oilAmount, yeast: yeastAmount, total, pctSum,
     ballCount, remainder, starterSeed, starterFlour, starterWater, starter: starterTotal,
-    doughFlour, doughWater,
+    starterFlourContribution, starterWaterContribution, doughFlour, doughWater,
     starterValid: doughFlour >= -1e-9 && doughWater >= -1e-9,
+    hydrationActual: f > 0 ? water / f * 100 : 0,
+    massBalanceValid: Math.abs(doughFlour + starterFlourContribution - f) < 1e-7 &&
+      Math.abs(doughWater + starterWaterContribution - water) < 1e-7,
   };
 }
 
 /** Tryb kulek zachowuje dotychczasowy wynik; opcjonalnie obsługuje też aktywny zakwas. */
-export function pizzaCalc({ balls, ballWeight, hydration, salt, oil, yeast, starter = 0 }) {
+export function pizzaCalc({ balls, ballWeight, hydration, salt, oil, yeast, starter = 0, starterWater = null }) {
   const count = nonNegativeNumber(balls);
   const weight = nonNegativeNumber(ballWeight);
   const total = count * weight;
   const pctSum = 100 + nonNegativeNumber(hydration) + nonNegativeNumber(salt) + nonNegativeNumber(oil) + nonNegativeNumber(yeast);
   const flour = pctSum > 0 ? total / (pctSum / 100) : 0;
-  const r = pizzaCalcFromFlour({ flour, hydration, salt, oil, yeast, starter, ballWeight: weight });
+  const r = pizzaCalcFromFlour({ flour, hydration, salt, oil, yeast, starter, starterWater, ballWeight: weight });
   return { ...r, flour, total, pctSum, ballCount: Math.floor(count), remainder: 0 };
 }
 
