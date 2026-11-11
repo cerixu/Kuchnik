@@ -102,16 +102,72 @@ const ICONS = {
   sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',
 };
 
+/* ---------- Rysowane ikony UI: podwójny ślad kredki ---------- */
+const PENCIL_ICONS = {
+  left: '<path d="M15.4 5.1 C13.1 7.3 10.3 9.7 7.7 12.1 C10.3 14.4 12.9 16.7 15.3 18.9"/>',
+  right: '<path d="M8.6 5.1 C10.9 7.3 13.7 9.7 16.3 12.1 C13.7 14.4 11.1 16.7 8.7 18.9"/>',
+  down: '<path d="M5.1 9.1 C7.3 11.3 9.7 13.8 12 16.1 C14.3 13.8 16.7 11.3 18.9 9.1"/>',
+  up: '<path d="M5.1 14.9 C7.3 12.7 9.7 10.2 12 7.9 C14.3 10.2 16.7 12.7 18.9 14.9"/>',
+  x: '<path d="M6.2 6.1 C9.2 9.2 14.9 14.8 17.9 17.9"/><path d="M17.8 6.2 C14.7 9.2 9.2 14.8 6.1 17.9"/>',
+  check: '<path d="M4.7 12.7 C6.3 14.2 7.8 15.8 9.4 17.2 C12.4 13.7 15.9 9.7 19.4 6.8"/>',
+  plus: '<path d="M12.1 5.1 C11.8 8 12.2 10.1 12 12.1 C11.8 14.6 12.2 17 12 18.9"/><path d="M5.1 12.1 C7.8 11.8 10 12.2 12 12 C14.5 11.8 16.9 12.2 18.9 12"/>',
+  minus: '<path d="M5.1 12.1 C8 11.8 10 12.2 12 12 C14.5 11.8 17 12.2 18.9 12"/>',
+  search: '<path d="M15.7 4.8 C19.1 7.1 19.1 12.5 16.1 15.5 C13.1 18.5 7.8 18.2 5.1 15 C2.6 12 3.4 7.2 6.4 5.1 C9.1 3.1 13 3 15.7 4.8Z"/><path d="M15.3 15.2 C17.1 17 18.8 18.7 20.3 20.1"/>',
+  home2: '<path d="M3.6 11.3 C6.4 8.9 9.4 6.3 12.1 4.1 C14.9 6.5 17.8 8.8 20.4 11.4"/><path d="M5.4 10.2 L5.4 19 C5.4 19.7 5.9 20 6.6 20 L10.1 20 L10.1 14.8 C10.1 14.4 10.4 14.1 10.8 14.1 L13.4 14.1 C13.8 14.1 14.1 14.4 14.1 14.8 L14.1 20 L17.5 20 C18.2 20 18.7 19.6 18.7 18.9 L18.7 10.2"/>',
+  home: '<path d="M3.2 11.2 C6.2 8.6 9.4 5.7 12 3.3 C14.9 5.8 18 8.5 20.8 11.2"/><path d="M5.1 10.2 L5.1 20 L10.1 20 L10.1 14.2 L14 14.2 L14 20 L18.9 20 L18.9 10.2"/>',
+  chef: '<path d="M6.2 14.1 C3.9 13.1 3.5 10.4 5.1 8.4 C6.1 7.1 7.6 6.8 8.8 7.2 C9.2 4.9 11 3.5 13 3.7 C15 3.9 16.3 5.2 16.6 7.2 C18.6 6.6 20.4 8.1 20.3 10.4 C20.2 12.3 18.8 13.6 17.2 14.1"/><path d="M6.3 13.5 L6.3 20 L17.7 20 L17.7 13.5"/><path d="M6.4 17.2 C9.6 17.5 14.6 17.5 17.6 17.2"/>',
+  pot: '<path d="M4 10.2 C8.1 9.9 15.8 10 20 10.2 L19 16.2 C18.7 18.3 17.2 19.6 15.1 19.6 L8.8 19.6 C6.5 19.6 5.2 18.4 4.9 16.2Z"/><path d="M2.4 10.2 C8.5 10 15.7 10 21.5 10.2"/><path d="M8.1 6.2 C7.3 5.1 8.7 4.2 8.1 3.1 M12 6 C11.2 4.8 12.8 4.1 12.1 2.8 M15.8 6.2 C15.1 5.1 16.4 4.2 15.8 3.1"/>',
+  book: '<path d="M4.1 5.1 C7.7 3.5 11 4 12.1 5.2 C13.5 4 17 3.6 19.8 5.1 L19.8 19.7 C16.5 18.5 13.5 18.8 12 20 C10.4 18.8 7.2 18.5 4.1 19.7Z"/><path d="M12 5.2 L12 19.8"/><path d="M6.8 8 C8.2 7.6 9.4 7.8 10.2 8.2 M13.9 8.1 C15.3 7.7 16.5 7.8 17.3 8.2"/>',
+  basket: '<path d="M3 9.1 C8.1 8.8 15.9 8.9 21 9.1 L19.2 18 C19 19.2 18.1 20 16.8 20 L7.1 20 C5.8 20 5 19.2 4.8 18Z"/><path d="M7.7 9.1 C8.7 6.9 10 5.2 11 4.2 M16.2 9.1 C15.3 6.8 14 5.2 13 4.2"/><path d="M8.2 12.1 L8.7 16.5 M12 12 L12 16.7 M15.8 12.1 L15.3 16.5"/>',
+  grid: '<rect x="3.1" y="3.2" width="7.4" height="7.2" rx="2.1"/><rect x="13.5" y="3.1" width="7.3" height="7.4" rx="2.2"/><rect x="3.2" y="13.5" width="7.3" height="7.3" rx="2.1"/><rect x="13.5" y="13.5" width="7.3" height="7.3" rx="2.2"/>',
+  calc: '<rect x="5.1" y="3.1" width="13.8" height="17.8" rx="2.5"/><path d="M8 7.3 C10 7.1 14.2 7.1 16.1 7.3"/><path d="M8.1 12.1 l.1 0 M12 12.1 l.1 0 M15.8 12.1 l.1 0 M8.1 16.2 l.1 0 M12 16.2 l.1 0 M15.8 16.2 l.1 0"/>',
+  timer: '<circle cx="12" cy="13" r="8.1"/><path d="M12 8.5 C11.8 10.2 12.1 11.6 12 13.1 L14.8 15"/><path d="M9.2 2.4 C11 2.2 13.2 2.2 14.9 2.4"/>',
+  clock: '<path d="M12.1 3.1 C17.1 3.1 20.9 7.2 20.9 12.1 C20.9 17.1 17 20.9 12 20.9 C7.1 20.9 3.2 17 3.2 12 C3.2 7 7.1 3.2 12.1 3.1Z"/><path d="M12 7.1 C11.8 9 12.1 10.6 12 12.2 L15.1 14.1"/>',
+  star: '<path d="M12.1 3.1 L14.8 8.7 L20.8 9.6 L16.4 13.8 L17.5 20 L12 17.1 L6.5 20 L7.6 13.8 L3.2 9.6 L9.3 8.7Z"/>',
+  heart: '<path d="M12 20.8 C10.2 19.2 4.2 14.6 3.1 10.5 C2.3 7.3 4.1 4.6 7.2 4.5 C9.2 4.4 10.9 5.5 12 7 C13.4 5.3 15.1 4.4 17.1 4.6 C20.4 4.8 21.8 7.9 20.8 10.8 C19.7 14.6 14.6 19 12 20.8Z"/>',
+};
+const ICON_PENCIL_DETAILS = {
+  check: '<path class="ico-pencil-accent" stroke="#9fb39a" d="M5.1 12.9 C6.5 14.2 7.8 15.5 9.1 16.7"/>',
+  star: '<path class="ico-pencil-accent" stroke="#cdb27e" d="M9.6 8.8 L12.1 3.8 L14.2 8.8"/>',
+  heart: '<path class="ico-pencil-accent" stroke="#d6a19a" d="M5.3 8.1 C6.1 6.3 8 5.9 9.5 6.7"/>',
+  timer: '<path class="ico-pencil-accent" stroke="#a8b6b6" d="M12 9.1 L12 12.8 L14.2 14.2"/>',
+  chef: '<path class="ico-pencil-accent" stroke="#d9c2a8" d="M7.2 14.3 C10 15 14.2 15 16.8 14.3"/>',
+  pizza: '<path class="ico-pencil-accent" stroke="#d6aa7d" d="M8.2 9.1 L9 9.2 M14.8 10.1 L15.4 10.2 M11 14.8 L11.6 15"/>',
+};
+
 export function icon(name, size = 22) {
-  const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  s.setAttribute('viewBox', '0 0 24 24');
-  s.setAttribute('width', size); s.setAttribute('height', size);
-  s.setAttribute('fill', 'none'); s.setAttribute('stroke', 'currentColor');
-  s.setAttribute('stroke-width', '1.9'); s.setAttribute('stroke-linecap', 'round'); s.setAttribute('stroke-linejoin', 'round');
-  s.setAttribute('aria-hidden', 'true'); s.setAttribute('focusable', 'false');
-  s.classList.add('ico');
-  s.innerHTML = ICONS[name] || '';
-  return s;
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('width', size);
+  svg.setAttribute('height', size);
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '1.8');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('focusable', 'false');
+  svg.setAttribute('data-icon', name);
+  svg.classList.add('ico', 'ico-pencil');
+
+  const artwork = PENCIL_ICONS[name] || ICONS[name] || '';
+  const makeGroup = (className, transform = '') => {
+    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    group.setAttribute('class', className);
+    if (transform) group.setAttribute('transform', transform);
+    group.innerHTML = artwork;
+    return group;
+  };
+  const shadow = makeGroup('ico-pencil-shadow', 'translate(.24 .18)');
+  const main = makeGroup('ico-pencil-main');
+  svg.append(shadow, main);
+  if (ICON_PENCIL_DETAILS[name]) {
+    const details = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    details.setAttribute('class', 'ico-pencil-details');
+    details.innerHTML = ICON_PENCIL_DETAILS[name];
+    svg.appendChild(details);
+  }
+  return svg;
 }
 
 /* ---------- Przyciski ---------- */

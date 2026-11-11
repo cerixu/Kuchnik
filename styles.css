@@ -2776,3 +2776,51 @@ body:not(.no-tabs):not(.kb-open) #toasts {
   .recipes .searchbar > .iconbtn,
   .recipes .rgrid .rtile { transition: none !important; }
 }
+
+
+/* ==========================================================================
+   Kuchnik 1.5.17 — delikatny rysunek kredką dla ikon i przycisków UI.
+   Nie zmienia geometrii kontrolek, ich rozmiarów ani kontrastu tekstu.
+   ========================================================================== */
+.ico-pencil { overflow: visible; }
+.ico-pencil-shadow {
+  fill: none;
+  stroke: #c49a83;
+  stroke-width: 2.65;
+  stroke-dasharray: 1.35 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .25;
+}
+.ico-pencil-main {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.62;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ico-pencil-details .ico-pencil-accent {
+  fill: none;
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .92;
+}
+.btn:not(.ghost), .iconbtn:not(.txt) { isolation: isolate; position: relative; }
+.btn:not(.ghost)::after, .iconbtn:not(.txt)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("assets/ui-pencil-hatch.svg");
+  background-size: 160px 160px;
+  background-repeat: repeat;
+  opacity: .52;
+  mix-blend-mode: screen;
+}
+.btn:not(.ghost) > *, .iconbtn:not(.txt) > * { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .btn:not(.ghost)::after, .iconbtn:not(.txt)::after { transition: none; }
+}

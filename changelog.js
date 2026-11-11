@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.17': Object.freeze({
+    intro: 'ŻARŁOK 1.5.17 — rysowana oprawa ikon interfejsu.',
+    items: ['Ujednolicono ikony UI: otrzymały podwójny, lekko nieregularny ślad przypominający kredkę, z delikatnymi akcentami w przygaszonych kolorach.', 'Najczęściej używane znaki nawigacji i akcji mają ręcznie dopracowane kontury; zachowano dotychczasowe nazwy ikon, rozmiary i zachowanie przycisków.', 'Dodano subtelną, lokalną teksturę kredek na powierzchniach przycisków i ikonowych kontrolek. Nie zmieniono ilustracji receptur ani ikon składników.', 'Tekstura jest zapisywana w cache Service Workera i pozostaje dostępna offline.'],
+    footer: 'To kosmetyczna aktualizacja warstwy UI — bez migracji i bez zmian danych użytkownika.'
+  }),
+
   '1.5.16': Object.freeze({
     intro: 'ŻARŁOK 1.5.16 — receptura pizzy aktualizuje się na żywo.',
     items: ['Każda zmiana gramatury, hydracji, soli, oliwy, mąki, proporcji mieszanki i fermentacji natychmiast przelicza pełny podgląd receptury.', 'Tryb Automatyczny dobiera parametry na bieżąco; tryb hybrydowy automatycznie aktualizuje niezmienione ręcznie parametry, a ręczne korekty blokuje do czasu ich odblokowania.', 'Dodano automatyczne dozowanie mieszanek według stylu pizzy i długości fermentacji, osobną gramaturę każdej mąki oraz krótkie wskazówki udziału startowego i limitów dla mąk dodatkowych.', 'Rozszerzono bibliotekę o Caputo Aria, Cuoco, Manitoba Oro, Gusto Bello 00 i semolę rimacinata. Dla pizzy na blasze automat wybiera Aria; nieopublikowane parametry W pozostają oznaczone jako brak danych.', 'Poprawiono przeliczanie wody do zakwasu również przy obliczaniu od liczby i masy kulek.'],
