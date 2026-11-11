@@ -113,6 +113,7 @@ function pizzaCalculator() {
   const parameterControls = {};
   let modeHost = h('div');
   let refreshFlourBlendEditor = null;
+  let fermentationTrackHost = null;
 
   function recommendedBlend() {
     const hours = fermentationHours();
@@ -354,6 +355,7 @@ function pizzaCalculator() {
     if (options.manualBlend) st.blendMode = 'manual';
     syncAutoParameters();
     if (refreshFlourBlendEditor) refreshFlourBlendEditor();
+    paintFermentationTrack();
     save(); syncParameterControls(); paintOut(); paintSuggestion();
   }
 
@@ -391,6 +393,20 @@ function pizzaCalculator() {
     return st.fermentationMode === 'split'
       ? Math.max(0, Number(st.roomHours) || 0) + 48
       : Math.max(0, Number(st.hours) || 0);
+  }
+
+  function paintFermentationTrack() {
+    if (!fermentationTrackHost) return;
+    fermentationTrackHost.replaceChildren(
+      h('strong', null, 'WSTĘPNA · ' + fmtNum(st.roomHours, 1) + ' h · ' + fmtNum(st.roomTemp, 1) + ' °C'),
+      h('span', { class: 'muted small' }, 'Następnie: ZIMNA · 48 h w lodówce · około ' + fmtNum(st.fridgeTemp, 1) + ' °C'),
+    );
+  }
+
+  function fermentationTrackView() {
+    fermentationTrackHost = h('div', { class: 'fermentation-track card' });
+    paintFermentationTrack();
+    return fermentationTrackHost;
   }
 
   function compute() {
@@ -751,6 +767,7 @@ function pizzaCalculator() {
 
   function build() {
     const upd = (key) => (value) => setSourceValue(key, value);
+    fermentationTrackHost = null;
     const chips = (key, values, suffix = '') => h('div', { class: 'chips wrap' }, values.map((value) => h('button', {
       type: 'button', class: 'chip' + (st[key] === value ? ' on' : ''),
       onClick: () => { if (key === 'hydration') setParameterValue(key, value); else setSourceValue(key, value); build(); paintOut(); paintSuggestion(); },
@@ -824,9 +841,7 @@ function pizzaCalculator() {
                 setSourceValue('roomTemp', value);
               } })))),
             chips('roomHours', [6, 7, 8], ' h'),
-            h('div', { class: 'fermentation-track card' },
-              h('strong', null, 'WSTĘPNA · ' + fmtNum(st.roomHours, 1) + ' h · ' + fmtNum(st.roomTemp, 1) + ' °C'),
-              h('span', { class: 'muted small' }, 'Następnie: ZIMNA · 48 h w lodówce · około ' + fmtNum(st.fridgeTemp, 1) + ' °C')),
+            fermentationTrackView(),
             h('p', { class: 'muted small' }, 'Punkty startowe: 6, 7 lub 8 godzin w temperaturze pokojowej, potem 48 godzin w lodówce. Rzeczywiste tempo zależy od temperatury ciasta, ilości drożdży i mąki.'))
           : h('div', { class: 'row gap' },
             col(field('Temperatura (°C)', numInput({ value: st.temp, label: 'Temperatura fermentacji', dec: 1, onInput: (value) => {
