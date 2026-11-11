@@ -55,6 +55,17 @@ try {
   await page.locator('a[href="#/calc/pizza"]').click();
   await page.locator('.flour-blend-editor').waitFor({ timeout: 10000 });
 
+  const defaultFlourAdvice = await page.locator('.flour-advice').innerText();
+  if (!defaultFlourAdvice.includes('Nuvola 100%')) {
+    throw new Error('The 24-hour Neapolitan profile should recommend Nuvola: ' + defaultFlourAdvice);
+  }
+  await page.getByLabel('Czas fermentacji w godzinach').fill('8');
+  const shortFermentationAdvice = await page.locator('.flour-advice').innerText();
+  if (!shortFermentationAdvice.includes('Pizzeria 100%')) {
+    throw new Error('Changing fermentation time did not refresh the flour recommendation: ' + shortFermentationAdvice);
+  }
+  await page.getByLabel('Czas fermentacji w godzinach').fill('24');
+
   // Każda zmiana wejściowa musi aktualizować gotową listę składników, nie tylko panel sugestii.
   const liveRecipe = page.locator('.live-recipe');
   const initialFlourRow = await liveRecipe.locator('.ing-list .ing').first().innerText();
