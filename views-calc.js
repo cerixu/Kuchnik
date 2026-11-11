@@ -233,8 +233,7 @@ function pizzaCalculator() {
 
   function autoParameters(profile = blendProfile()) {
     const style = PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan;
-    const hydration = Math.max(profile.hMin, Math.min(profile.hMax,
-      Math.max(style.hydrationMin, Math.min(style.hydrationMax, style.hydration))));
+    const hydration = Math.max(0, Math.min(style.hydration, profile.hMax));
     let yeast = Number(st.yeast) || 0;
     if (st.leavenType !== 'starter') {
       let hours = Math.max(1, Number(st.hours) || 24);
@@ -312,7 +311,7 @@ function pizzaCalculator() {
     const flourParts = profile.blend.map((row) =>
       PIZZA_FLOURS[row.type].short + ' ' + fmtNum(row.pct, 1) + '% (' +
       fmtAmount((sourdough ? r.doughFlour : r.flour) * row.pct / 100) + ' g)').join(' · ');
-    const hydrationHint = fmtNum(profile.hydration, 1);
+    const hydrationHint = fmtNum(autoParameters(profile).hydration, 1);
     out.replaceChildren(
       h('div', { class: 'results-grid' },
         result(sourdough ? 'Mąka do ciasta' : 'Mąka', fmtAmount(sourdough ? r.doughFlour : r.flour), 'g', 'big'),
@@ -348,7 +347,7 @@ function pizzaCalculator() {
           fmtNum(st.hydration, 1) + '%.'),
         Math.abs(Number(st.hydration) - profile.hydration) > 0.05
           ? button('Ustaw hydrację ' + hydrationHint + '%', { sm: true, onClick: () => {
-            st.hydration = profile.hydration; save(); build(); paintOut();
+            st.hydration = autoParameters(profile).hydration; save(); build(); paintOut();
           } })
           : null,
         h('p', { class: 'muted small' }, profile.why),
