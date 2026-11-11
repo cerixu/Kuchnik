@@ -260,7 +260,11 @@ function pizzaCalculator() {
   }
 
   function applyAutoParameters() {
-    syncAutoParameters();
+    const p = autoParameters();
+    st.hydration = p.hydration;
+    st.salt = p.salt;
+    st.oil = p.oil;
+    if (st.leavenType !== 'starter') st.yeast = Math.round(p.yeast * 100) / 100;
     save(); build(); paintOut(); paintSuggestion();
   }
 
