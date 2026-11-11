@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.15': Object.freeze({
+    intro: 'ŻARŁOK 1.5.15 — kalkulator technologiczny pizzy.',
+    items: ['Dodano profile pizzy neapolitańskiej, klasycznej, rzymskiej tonda i pizzy na blasze (teglia).', 'Połączono automat dobierający parametry z ręczną korektą hydracji, soli, oliwy i drożdży.', 'Bilans zakwasu 1:1:2 uwzględnia osobno składniki do ciasta i do dokarmienia oraz wkład mąki i wody z zakwasu macierzystego.', 'Zapis receptury rozdziela mąkę i wodę zakwasu macierzystego, aby procenty piekarskie zachowały pełny bilans.'],
+    footer: 'Wszystkie obliczenia odnoszą się do całkowitej mąki i wody receptury.'
+  }),
+
   '1.5.14': Object.freeze({
     intro: 'ŻARŁOK 1.5.14 — dopracowane przeglądanie receptur.',
     items: ['Pasek wyszukiwania i filtry mają czytelniejszy, równy układ na małych ekranach.', 'Kafelki receptur wycentrowują rysunki, utrzymują stałą wysokość opisów i spokojniej prezentują kategorię lub kraj pochodzenia.'],
