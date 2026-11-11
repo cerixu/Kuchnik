@@ -42,6 +42,9 @@ jobs:
       - name: Run UI pencil icon regression test
         run: node --experimental-default-type=module --test qa/ui-pencil-icons.test.mjs
 
+      - name: Run UI icon preview regression test
+        run: node --experimental-default-type=module --test qa/ui-icon-preview.test.mjs
+
       - name: Run inventory matching regression tests
         run: node --experimental-default-type=module --test tests/*.test.mjs
 
