@@ -68,6 +68,10 @@
         boot.append(title, detail, retry, help);
       }
       window.addEventListener('error', function (e) {
+        // Błędy obrazów/fontów nie oznaczają awarii modułów aplikacji.
+        // Duże moduły mogą ładować się dłużej niż dekoracyjna grafika startowa.
+        if (e.target && e.target !== window && e.target.tagName &&
+            e.target.tagName.toLowerCase() !== 'script') return;
         if (document.getElementById('boot') && !window.__kuchnikBootStarted) {
           var details = [];
           if (e.message) details.push(e.message);
