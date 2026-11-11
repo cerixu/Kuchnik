@@ -24,5 +24,14 @@ test('UI icon preview uses local modules, current styles and offline navigation 
   assert.match(page, /from '\.\/ui\.js'/);
   assert.match(sw, /ui-icons-preview\.html/);
   assert.match(sw, /endsWith\('\/ui-icons-preview\.html'\)/);
-  assert.match(sw, /const VERSION = 'kucharzyna-1\.5\.20'/);
+  assert.match(sw, /const VERSION = 'kucharzyna-1\.5\.21'/);
+});
+
+
+test('preview uses the same button surface classes as the app', () => {
+  assert.match(page, /class: 'btn ui-preview-control'/);
+  assert.match(page, /class: 'btn primary ui-preview-control'/);
+  assert.match(page, /class: 'btn danger ui-preview-control'/);
+  assert.match(page, /class: 'btn ghost ui-preview-control'/);
+  assert.match(page, /class: 'iconbtn glassy ui-preview-icon-button'/);
 });
