@@ -72,6 +72,7 @@ try {
     throw new Error('Changing hydration did not update the live water amount.');
   }
 
+  await page.getByRole('button', { name: 'Moja mieszanka' }).click();
   await page.getByRole('button', { name: 'Dodaj kolejną mąkę' }).click();
   const flourParts = page.locator('.flour-blend-row input.num');
   await flourParts.nth(0).fill('70');
