@@ -86,8 +86,8 @@ try {
   await page.getByLabel('Rodzaj pizzy').selectOption('teglia');
   await page.getByRole('button', { name: 'Dobór automatyczny' }).click();
   const tegliaAdvice = await page.locator('.flour-advice').innerText();
-  if (!tegliaAdvice.includes('Nuvola Super 100%')) {
-    throw new Error('Teglia did not select the recommended Nuvola Super flour: ' + tegliaAdvice);
+  if (!tegliaAdvice.includes('Aria 100%')) {
+    throw new Error('Teglia did not select the dedicated Caputo Aria flour: ' + tegliaAdvice);
   }
   await page.getByRole('button', { name: 'Zastosuj parametry automatu' }).click();
   const tegliaHydration = await page.getByLabel('Hydracja (%) — wpisz lub przesuń suwak').inputValue();
