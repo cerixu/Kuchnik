@@ -233,8 +233,8 @@ function pizzaCalculator() {
 
   function autoParameters(profile = blendProfile()) {
     const style = PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan;
-    const hydration = Math.max(style.hydrationMin, Math.min(style.hydrationMax,
-      Math.max(profile.hMin, Math.min(profile.hMax, style.hydration))));
+    const hydration = Math.max(profile.hMin, Math.min(profile.hMax,
+      Math.max(style.hydrationMin, Math.min(style.hydrationMax, style.hydration))));
     let yeast = Number(st.yeast) || 0;
     if (st.leavenType !== 'starter') {
       let hours = Math.max(1, Number(st.hours) || 24);
@@ -306,7 +306,7 @@ function pizzaCalculator() {
     const profile = blendProfile();
     const flourParts = profile.blend.map((row) =>
       PIZZA_FLOURS[row.type].short + ' ' + fmtNum(row.pct, 1) + '% (' +
-      fmtAmount(r.flour * row.pct / 100) + ' g)').join(' · ');
+      fmtAmount((sourdough ? r.doughFlour : r.flour) * row.pct / 100) + ' g)').join(' · ');
     const hydrationHint = fmtNum(profile.hydration, 1);
     out.replaceChildren(
       h('div', { class: 'results-grid' },
@@ -348,8 +348,8 @@ function pizzaCalculator() {
           : null,
         h('p', { class: 'muted small' }, profile.why),
         ...processAdvice(profile).map((text) => h('p', { class: 'muted small' }, text)),
-        flourStockAdvice(profile, r.flour),
-        h('p', { class: 'muted small' }, 'Udział w mące: ' + flourParts),
+        flourStockAdvice(profile, sourdough ? r.doughFlour : r.flour),
+        h('p', { class: 'muted small' }, 'Udział w mące do ciasta: ' + flourParts),
         ...profile.blend.map((row) => h('a', {
           href: PIZZA_FLOURS[row.type].url, target: '_blank', rel: 'noopener noreferrer',
         }, 'Parametry ' + PIZZA_FLOURS[row.type].label + ' u producenta ↗'))),
@@ -397,9 +397,10 @@ function pizzaCalculator() {
     );
     if (sourdough) {
       ings.push(
-        I('Zakwas macierzysty', r1(r.starterSeed), 'g'),
-        I('Mąka pszenna do zakwasu', r1(r.starterFlour), 'g', { flour: true, percent: r.flour > 0 ? r.starterFlour / r.flour * 100 : 0 }),
-        I('Woda do zakwasu', r1(r.starterWater), 'g', { percent: r.flour > 0 ? r.starterWater / r.flour * 100 : 0 }),
+        I('Mąka z zakwasu macierzystego', r1(r.starterSeed / 2), 'g', { flour: true, percent: r.flour > 0 ? (r.starterSeed / 2) / r.flour * 100 : 0 }),
+        I('Woda z zakwasu macierzystego', r1(r.starterSeed / 2), 'g', { percent: r.flour > 0 ? (r.starterSeed / 2) / r.flour * 100 : 0 }),
+        I('Mąka do dokarmienia zakwasu', r1(r.starterFlour), 'g', { flour: true, percent: r.flour > 0 ? r.starterFlour / r.flour * 100 : 0 }),
+        I('Woda do dokarmienia zakwasu', r1(r.starterWater), 'g', { percent: r.flour > 0 ? r.starterWater / r.flour * 100 : 0 }),
       );
     }
     if (st.oil > 0) ings.push(I('Oliwa', r1(r.oil), 'g', { percent: st.oil }));
@@ -558,7 +559,7 @@ function pizzaCalculator() {
           if (st.calcMode === 'auto') applyAutoParameters();
           else { build(); paintOut(); }
         })),
-        segmented([['hybrid', 'Automat + ręcznie'], ['manual', 'Ręcznie']], st.calcMode, (value) => {
+        segmented([['auto', 'Automat'], ['hybrid', 'Automat + ręcznie'], ['manual', 'Ręcznie']], st.calcMode, (value) => {
           st.calcMode = value; save();
           if (value === 'auto') applyAutoParameters();
           else { build(); paintOut(); }
@@ -577,7 +578,7 @@ function pizzaCalculator() {
               range.addEventListener('input', () => {
                 st.flour = Number(range.value); amount.value = String(st.flour); amount.classList.remove('invalid'); save(); paintOut();
               });
-              return h('div', { class: 'flour-amount-controls' }, field('Ilość mąki (g) — wpisz lub przesuń', amount), range);
+              return h('div', { class: 'flour-amount-controls' }, field('Całkowita mąka (g) — razem z zakwasem', amount), range);
             })())
           : h('div', { class: 'stack' },
             h('div', { class: 'row gap' },
