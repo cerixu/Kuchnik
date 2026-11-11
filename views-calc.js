@@ -74,7 +74,7 @@ const PIZZA_FLOURS = Object.freeze({
   nuvola: { label: 'Caputo Nuvola', short: 'Nuvola', protein: 12.5, wMin: 270, wMax: 290, hydration: 70, hMin: 68, hMax: 75, why: 'Nuvola jest przeznaczona do lekkich, obszernych rantów i dużych pęcherzy. Wyższa hydracja jest punktem wyjścia, a nie gwarancją — technika mieszania i temperatura mają znaczenie.', url: 'https://www.mulinocaputo.it/en/products/nuvola/' },
   'nuvola-super': { label: 'Caputo Nuvola Super', short: 'Nuvola Super', protein: 13.5, wMin: 320, wMax: 340, hydration: 74, hMin: 70, hMax: 78, maxShare: 100, why: 'Mocna mąka do wysokiej hydracji, długiego dojrzewania, bigi i poolish. Zwiększa rezerwę siły mieszanki.', url: 'https://www.mulinocaputo.it/en/prodotti/nuvola-super/' },
   aria: { label: 'Caputo Aria', short: 'Aria', protein: 13, wMin: 300, wMax: 320, hydration: 75, hMin: 68, hMax: 80, maxShare: 100, dataNote: 'Producent podaje 13% białka i W 300–320. Zakres hydracji w kalkulatorze jest roboczą rekomendacją, nie deklaracją producenta.', why: 'Mąka Caputo opracowana do pizzy na blasze, alla pala i pinsy. Producent wskazuje wysoką hydrację, lekkość, chrupkość i łatwą obróbkę; 70–80% hydracji to zakres startowy kalkulatora, dopasuj go do partii mąki i techniki.', url: 'https://www.mulinocaputo.it/en/prodotti/aria-5kg/' },
-  cuoco: { label: 'Caputo Cuoco', short: 'Cuoco', protein: 13, wMin: 300, wMax: 320, hydration: 68, hMin: 64, hMax: 74, maxShare: 100, why: 'Mąka mocna do ciast wymagających długiej fermentacji. Dobra jako baza przy dłuższym dojrzewaniu lub składnik wzmacniający mieszankę.', url: 'https://b2b.kuchnieswiata.com.pl/wheat-flour-00-cuoco-1kg-10-caputo' },
+  cuoco: { label: 'Caputo Cuoco', short: 'Cuoco', protein: 13, wMin: null, wMax: null, hydration: 68, hMin: 64, hMax: 74, maxShare: 100, dataNote: 'Nie mam potwierdzonej karty producenta z parametrem W dla tej pozycji; kalkulator nie wylicza go z samego białka.', why: 'Mąka mocna do ciast wymagających długiej fermentacji. Dobra jako baza przy dłuższym dojrzewaniu lub składnik wzmacniający mieszankę.', url: 'https://b2b.kuchnieswiata.com.pl/wheat-flour-00-cuoco-1kg-10-caputo' },
   manitoba: { label: 'Caputo Manitoba Oro', short: 'Manitoba Oro', protein: 14, wMin: 360, wMax: 380, hydration: 74, hMin: 68, hMax: 82, maxShare: 20, why: 'Bardzo mocna mąka, przeznaczona głównie do bogatych i długo fermentowanych wypieków. W cieście na pizzę traktuj ją jako dodatek wzmacniający — zacznij od 5–10%, zwykle nie przekraczaj 20%.', url: 'https://www.mulinocaputo.it/en/products/manitoba-gold/' },
   'gusto-bello-00': { label: 'Gusto Bello 00 · Biedronka', short: 'Gusto Bello 00', protein: 12, wMin: null, wMax: null, hydration: 61, hMin: 57, hMax: 64, maxShare: 100, dataNote: '12% białka z etykiety; parametr W nieopublikowany. Zakres hydracji to ostrożny punkt startowy, nie deklaracja producenta.', why: 'Na opakowaniu podawane jest 12% białka, ale producent nie publikuje parametru W. Przyjmij ostrożną hydrację i dodawaj wodę stopniowo; nie zakładaj, że samo 12% białka oznacza wysoką siłę mąki.', url: 'https://cdn.biedronka.pl/newsletter/assets-glovo/_files/ingredient_list_glovo.pdf' },
   superiore: { label: 'Caputo Superiore', short: 'Superiore', protein: 12, wMin: 240, wMax: 260, hydration: 62, hMin: 58, hMax: 66, maxShare: 100, why: 'Mąka średniej siły przeznaczona do średniego czasu fermentacji. Może być bazą ciast o krótszym dojrzewaniu niż te prowadzone na Saccorosso lub Cuoco.', url: 'https://www.mulinocaputo.it/en/products/top/' },
@@ -119,13 +119,9 @@ function pizzaCalculator() {
     const short = hours <= 10;
     const long = hours >= 36;
 
-    // Nuvola jest przeznaczona m.in. do pizzy na blasze; przy długim dojrzewaniu
-    // łączymy ją z Nuvola Super, którą producent opisuje jako mąkę do mieszanek.
-    if (st.style === 'teglia') {
-      return long
-        ? [{ type: 'nuvola', parts: 70 }, { type: 'nuvola-super', parts: 30 }]
-        : [{ type: 'nuvola', parts: 100 }];
-    }
+    // Caputo Aria jest dedykowana do pizzy w teglia, alla pala i pinsy.
+    // Nuvola pozostaje alternatywą do ręcznej mieszanki dla bardziej otwartego rantu.
+    if (st.style === 'teglia') return [{ type: 'aria', parts: 100 }];
 
     if (short) {
       if (st.style === 'romana') return [{ type: 'classica', parts: 70 }, { type: 'pizzeria-blue', parts: 30 }];
@@ -134,12 +130,13 @@ function pizzaCalculator() {
 
     if (long) {
       if (st.style === 'romana') return [{ type: 'pizzeria-blue', parts: 80 }, { type: 'saccorosso', parts: 20 }];
-      if (st.style === 'classic') return [{ type: 'pizzeria-blue', parts: 75 }, { type: 'cuoco', parts: 25 }];
+      if (st.style === 'classic') return [{ type: 'pizzeria-blue', parts: 75 }, { type: 'saccorosso', parts: 25 }];
       return [{ type: 'pizzeria-blue', parts: 70 }, { type: 'saccorosso', parts: 30 }];
     }
 
-    if (hours >= 18 && st.style === 'classic') {
-      return [{ type: 'pizzeria-blue', parts: 80 }, { type: 'cuoco', parts: 20 }];
+    if (hours >= 18) {
+      if (st.style === 'classic') return [{ type: 'pizzeria-blue', parts: 80 }, { type: 'saccorosso', parts: 20 }];
+      return [{ type: 'nuvola', parts: 100 }];
     }
     return [{ type: 'pizzeria-blue', parts: 100 }];
   }
