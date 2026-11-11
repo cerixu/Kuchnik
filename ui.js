@@ -151,10 +151,15 @@ export function icon(name, size = 22) {
   svg.classList.add('ico', 'ico-pencil');
 
   const artwork = PENCIL_ICONS[name] || ICONS[name] || '';
-  const shadow = h('g', { class: 'ico-pencil-shadow', transform: 'translate(.24 .18)' });
-  shadow.innerHTML = artwork;
-  const main = h('g', { class: 'ico-pencil-main' });
-  main.innerHTML = artwork;
+  const makeGroup = (className, transform = '') => {
+    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    group.setAttribute('class', className);
+    if (transform) group.setAttribute('transform', transform);
+    group.innerHTML = artwork;
+    return group;
+  };
+  const shadow = makeGroup('ico-pencil-shadow', 'translate(.24 .18)');
+  const main = makeGroup('ico-pencil-main');
   svg.append(shadow, main);
   if (ICON_PENCIL_DETAILS[name]) {
     const details = document.createElementNS('http://www.w3.org/2000/svg', 'g');
