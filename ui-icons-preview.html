@@ -78,51 +78,12 @@
     .ui-preview-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
     .ui-preview-control {
       min-height: 46px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 0 16px;
-      border-radius: 999px;
-      color: var(--text);
-      border: 1px solid var(--glass-line);
-      background:
-        url("assets/ui-pencil-hatch.svg"),
-        linear-gradient(150deg, rgba(52,47,47,.92), rgba(33,31,33,.96));
-      box-shadow: inset 0 1px 0 rgba(255,245,236,.06), 0 5px 14px rgba(0,0,0,.16);
+      padding-inline: 16px;
       font-size: .91rem;
       font-weight: 700;
     }
-    .ui-preview-control.primary {
-      color: #fff1e6;
-      background:
-        url("assets/ui-pencil-hatch.svg"),
-        linear-gradient(150deg, #85543d, #57382f);
-      border-color: rgba(231,176,143,.36);
-    }
-    .ui-preview-control.danger {
-      color: #fff0ec;
-      background:
-        url("assets/ui-pencil-hatch.svg"),
-        linear-gradient(150deg, #78413d, #4e2929);
-      border-color: rgba(226,139,130,.26);
-    }
-    .ui-preview-control.ghost {
-      border-color: transparent;
-      background: transparent;
-      box-shadow: none;
-      color: var(--accent-text);
-    }
     .ui-preview-icon-row { display: flex; flex-wrap: wrap; gap: 10px; }
-    .ui-preview-icon-button {
-      width: 48px; height: 48px; display: grid; place-items: center;
-      border-radius: 50%; color: var(--accent-text);
-      border: 1px solid rgba(235,205,184,.15);
-      background:
-        url("assets/ui-pencil-hatch.svg"),
-        linear-gradient(150deg, rgba(53,48,48,.9), rgba(31,29,31,.96));
-      box-shadow: inset 0 1px 0 rgba(255,245,236,.07), 0 6px 15px rgba(0,0,0,.18);
-    }
+    .ui-preview-icon-button { width: 48px; height: 48px; color: var(--accent-text); }
     .ui-preview-tab-row {
       display: grid;
       grid-template-columns: repeat(4, minmax(0,1fr));
@@ -193,19 +154,19 @@
     app.content.append(
       h('section', { class: 'ui-preview-section' },
         h('h2', null, 'Tła przycisków'),
-        h('p', null, 'Podstawowy, główny, ostrzegawczy i tekstowy wariant na tej samej powierzchni.'),
+        h('p', null, 'Grafitowy, miedziany, czerwony i tekstowy wariant korzystają z tych samych klas co aplikacja.'),
         h('div', { class: 'ui-preview-controls' },
-          h('div', { class: 'ui-preview-control' }, icon('book', 18), 'Otwórz'),
-          h('div', { class: 'ui-preview-control primary' }, icon('check', 18), 'Zapisz'),
-          h('div', { class: 'ui-preview-control danger' }, icon('trash', 18), 'Usuń'),
-          h('div', { class: 'ui-preview-control ghost' }, icon('search', 18), 'Szukaj')
+          h('div', { class: 'btn ui-preview-control', role: 'img', 'aria-label': 'Przycisk Otwórz' }, icon('book', 18), 'Otwórz'),
+          h('div', { class: 'btn primary ui-preview-control', role: 'img', 'aria-label': 'Przycisk Zapisz' }, icon('check', 18), 'Zapisz'),
+          h('div', { class: 'btn danger ui-preview-control', role: 'img', 'aria-label': 'Przycisk Usuń' }, icon('trash', 18), 'Usuń'),
+          h('div', { class: 'btn ghost ui-preview-control', role: 'img', 'aria-label': 'Przycisk Szukaj' }, icon('search', 18), 'Szukaj')
         )
       ),
       h('section', { class: 'ui-preview-section' },
         h('h2', null, 'Przyciski ikonowe'),
         h('div', { class: 'ui-preview-icon-row' },
           ...['left', 'search', 'more', 'heart', 'check', 'gear'].map((name) =>
-            h('div', { class: 'ui-preview-icon-button', role: 'img', 'aria-label': 'Przycisk ' + name }, icon(name, 22)))
+            h('div', { class: 'iconbtn glassy ui-preview-icon-button', role: 'img', 'aria-label': 'Przycisk ' + name }, icon(name, 22)))
         )
       ),
       h('section', { class: 'ui-preview-section' },
@@ -215,7 +176,7 @@
             h('div', { class: 'ui-preview-tab' + (i === 0 ? ' active' : '') }, icon(name, 23), h('span', null, label)))
         )
       ),
-      h('p', { class: 'ui-preview-foot' }, 'Podgląd graficzny · Kuchnik 1.5.19')
+      h('p', { class: 'ui-preview-foot' }, 'Podgląd rzeczywistych kontrolek · Kuchnik 1.5.21')
     );
 
     document.querySelector('#view').replaceChildren(app.el);
