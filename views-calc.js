@@ -743,7 +743,7 @@ function pizzaCalculator() {
               const range = h('input', { type: 'range', min: 250, max: 10000, step: 50, value: Math.min(10000, Math.max(250, st.flour)), class: 'range', 'aria-label': 'Ilość mąki — suwak' });
               const amount = numInput({ value: st.flour, label: 'Ilość mąki (g)', dec: 0, onInput: (value) => {
                 if (value == null) return;
-                st.flour = value; range.value = String(Math.min(10000, Math.max(250, value))); syncAutoParameters(); save(); syncParameterControls(); paintOut();
+                st.flour = value; range.value = String(Math.min(10000, Math.max(250, value))); syncAutoParameters(); if (refreshFlourBlendEditor) refreshFlourBlendEditor(); save(); syncParameterControls(); paintOut();
               } });
               range.addEventListener('input', () => {
                 st.flour = Number(range.value); amount.value = String(st.flour); amount.classList.remove('invalid'); syncAutoParameters(); if (refreshFlourBlendEditor) refreshFlourBlendEditor(); save(); syncParameterControls(); paintOut();
