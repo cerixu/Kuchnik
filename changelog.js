@@ -5,7 +5,7 @@
 export const CHANGELOG = Object.freeze({
   '1.5.16': Object.freeze({
     intro: 'ŻARŁOK 1.5.16 — receptura pizzy aktualizuje się na żywo.',
-    items: ['Każda zmiana gramatury, hydracji, soli, oliwy, mąki, proporcji mieszanki i fermentacji natychmiast przelicza pełny podgląd receptury.', 'Tryb Automatyczny dobiera parametry na bieżąco; tryb hybrydowy automatycznie aktualizuje niezmienione ręcznie parametry, a ręczne korekty blokuje do czasu ich odblokowania.', 'Dodano automatyczne dozowanie mieszanek według stylu pizzy i długości fermentacji oraz osobną gramaturę każdej mąki w recepturze.', 'Rozszerzono bibliotekę o Caputo Cuoco, Manitoba Oro, Gusto Bello 00 i semolę rimacinata; brak parametru W jest jawnie oznaczany, a nie szacowany z samego białka.', 'Poprawiono przeliczanie wody do zakwasu również przy obliczaniu od liczby i masy kulek.'],
+    items: ['Każda zmiana gramatury, hydracji, soli, oliwy, mąki, proporcji mieszanki i fermentacji natychmiast przelicza pełny podgląd receptury.', 'Tryb Automatyczny dobiera parametry na bieżąco; tryb hybrydowy automatycznie aktualizuje niezmienione ręcznie parametry, a ręczne korekty blokuje do czasu ich odblokowania.', 'Dodano automatyczne dozowanie mieszanek według stylu pizzy i długości fermentacji oraz osobną gramaturę każdej mąki w recepturze.', 'Rozszerzono bibliotekę o Caputo Aria, Cuoco, Manitoba Oro, Gusto Bello 00 i semolę rimacinata. Dla pizzy na blasze automat wybiera Aria; nieopublikowane parametry W pozostają oznaczone jako brak danych.', 'Poprawiono przeliczanie wody do zakwasu również przy obliczaniu od liczby i masy kulek.'],
     footer: 'Dozowanie mąk i hydracja są rekomendacją startową; ostateczną chłonność potwierdza konkretna partia mąki i próba ciasta.'
   }),
 
