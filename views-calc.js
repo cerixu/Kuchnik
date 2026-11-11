@@ -300,7 +300,7 @@ function pizzaCalculator() {
     const r = compute();
     if (st.leavenType === 'starter' && (!r.starterValid || !r.massBalanceValid)) {
       out.replaceChildren(h('p', { class: 'muted pad' },
-        'Za mało wody w stosunku do zakwasu 1:1:2. Zwiększ hydrację albo zmniejsz procent zakwasu macierzystego.'));
+        'Zakwas wnosi więcej mąki lub wody, niż mieści się w bilansie receptury. Zmniejsz wodę do dokarmienia albo zwiększ całkowitą mąkę i hydrację.'));
       return;
     }
     const ok = r.total > 0 && Number.isFinite(r.flour);
@@ -335,6 +335,10 @@ function pizzaCalculator() {
       h('section', { class: 'card stack flour-advice' },
         h('strong', null, 'Profil: ' + (PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan).label),
         h('p', { class: 'muted small' }, (PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan).note),
+        (PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan).hydration > profile.hMax
+          ? h('p', { class: 'muted small' }, 'Uwaga: wybrana mąka ma orientacyjny górny zakres hydracji ' +
+            fmtNum(profile.hMax, 1) + '%. Automat ogranicza wodę do poziomu, który ta mieszanka powinna łatwiej utrzymać. Do typowej hydracji tego stylu dobierz mocniejszą mąkę lub mieszankę.')
+          : null,
         h('p', { class: 'muted small' }, 'Automat proponuje hydrację ' + fmtNum(autoParameters(profile).hydration, 1) +
           '%, sól ' + fmtNum(autoParameters(profile).salt, 1) + '% i oliwę ' + fmtNum(autoParameters(profile).oil, 1) +
           '%. Możesz zastosować propozycję, a potem ręcznie zmienić dowolną wartość.'),
