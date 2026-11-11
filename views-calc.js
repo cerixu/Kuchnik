@@ -715,6 +715,12 @@ function pizzaCalculator() {
       onClick: () => { if (key === 'hydration') setParameterValue(key, value); else setSourceValue(key, value); build(); paintOut(); paintSuggestion(); },
     }, String(value).replace('.', ',') + suffix)));
     suggestionHost = h('div', { class: 'suggestion-host' });
+    const saltInput = numInput({ value: st.salt, label: 'Sól', dec: 2, onInput: (value) => setParameterValue('salt', value) });
+    const oilInput = numInput({ value: st.oil, label: 'Oliwa', dec: 2, onInput: (value) => setParameterValue('oil', value) });
+    const yeastInput = numInput({ value: st.yeast, label: 'Drożdże procent', dec: 2, onInput: (value) => setParameterValue('yeast', value) });
+    parameterControls.salt = saltInput;
+    parameterControls.oil = oilInput;
+    parameterControls.yeast = yeastInput;
     paintCalcMode();
     form.replaceChildren(
       h('section', { class: 'card stack' },
@@ -759,9 +765,9 @@ function pizzaCalculator() {
             });
             return field('Hydracja %', h('div', { class: 'flour-amount-controls' }, amount, range));
           })()),
-          col(field('Sól %', (() => { const input = numInput({ value: st.salt, label: 'Sól', dec: 2, onInput: (value) => setParameterValue('salt', value) }); parameterControls.salt = input; return input; })())))),
+          col(field('Sól %', saltInput))),
         chips('hydration', [60, 62, 65, 70, 75], '%'),
-        field('Oliwa % (opcjonalnie)', (() => { const input = numInput({ value: st.oil, label: 'Oliwa', dec: 2, onInput: (value) => setParameterValue('oil', value) }); parameterControls.oil = input; return input; })())),
+        field('Oliwa % (opcjonalnie)', oilInput)),
       h('section', { class: 'card stack' },
         h('h2', { class: 'card-title' }, icon('thermo', 20), 'Drożdże i fermentacja'),
         segmented([['single', 'Jeden etap'], ['split', 'Wstępna + zimna']], st.fermentationMode, (value) => {
@@ -802,7 +808,7 @@ function pizzaCalculator() {
             col(field('Rodzaj drożdży', selectEl(Object.entries(YEAST_TYPES).map(([key, value]) => [key, value.label]), st.yeastType, (value) => {
               st.yeastType = value; syncAutoParameters(); save(); build(); paintOut(); paintSuggestion();
             }))),
-            col(field('Drożdże %', (() => { const input = numInput({ value: st.yeast, label: 'Drożdże procent', dec: 2, onInput: (value) => setParameterValue('yeast', value) }); parameterControls.yeast = input; return input; })())))),
+            col(field('Drożdże %', yeastInput)))),
         suggestionHost,
         h('p', { class: 'muted small' }, 'Wskazówka ilości drożdży jest orientacyjna — mąka, temperatura ciasta i proces zmieniają tempo dojrzewania.')));
     paintSuggestion();
