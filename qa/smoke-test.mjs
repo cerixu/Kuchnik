@@ -54,6 +54,24 @@ try {
   await page.locator('#tabbar a[data-tab="calc"]').click();
   await page.locator('a[href="#/calc/pizza"]').click();
   await page.locator('.flour-blend-editor').waitFor({ timeout: 10000 });
+
+  // Każda zmiana wejściowa musi aktualizować gotową listę składników, nie tylko panel sugestii.
+  const liveRecipe = page.locator('.live-recipe');
+  const initialFlourRow = await liveRecipe.locator('.ing').filter({ hasText: 'Pizzeria' }).first().innerText();
+  await page.getByLabel('Liczba kulek').fill('5');
+  const updatedFlourRow = await liveRecipe.locator('.ing').filter({ hasText: 'Pizzeria' }).first().innerText();
+  if (initialFlourRow === updatedFlourRow) {
+    throw new Error('Changing the number of dough balls did not update the live flour dose.');
+  }
+
+  const waterRow = liveRecipe.locator('.ing').filter({ hasText: 'Woda do ciasta' });
+  const initialWaterRow = await waterRow.innerText();
+  await page.getByLabel('Hydracja (%) — wpisz lub przesuń suwak').fill('70');
+  const updatedWaterRow = await waterRow.innerText();
+  if (initialWaterRow === updatedWaterRow) {
+    throw new Error('Changing hydration did not update the live water amount.');
+  }
+
   await page.getByRole('button', { name: 'Dodaj kolejną mąkę' }).click();
   const flourParts = page.locator('.flour-blend-row input.num');
   await flourParts.nth(0).fill('70');
@@ -61,6 +79,19 @@ try {
   const flourAdvice = await page.locator('.flour-advice').innerText();
   if (!flourAdvice.includes('Pizzeria 70%') || !flourAdvice.includes('Saccorosso 30%')) {
     throw new Error('Flour blend shares were not reflected in the calculator: ' + flourAdvice);
+  }
+
+  // Teglia automatycznie wybiera mocną mąkę i dostosowuje hydrację do jej zakresu.
+  await page.getByLabel('Rodzaj pizzy').selectOption('teglia');
+  await page.getByRole('button', { name: 'Dobór automatyczny' }).click();
+  const tegliaAdvice = await page.locator('.flour-advice').innerText();
+  if (!tegliaAdvice.includes('Nuvola Super 100%')) {
+    throw new Error('Teglia did not select the recommended Nuvola Super flour: ' + tegliaAdvice);
+  }
+  await page.getByRole('button', { name: 'Zastosuj parametry automatu' }).click();
+  const tegliaHydration = await page.getByLabel('Hydracja (%) — wpisz lub przesuń suwak').inputValue();
+  if (Number(tegliaHydration.replace(',', '.')) !== 78) {
+    throw new Error('Teglia automatic hydration should be 78%, received ' + tegliaHydration);
   }
 
   await page.getByRole('button', { name: 'Wstępna + zimna' }).click();
@@ -81,7 +112,7 @@ try {
   if (await page.locator('#boot').count()) throw new Error('Boot overlay remained after navigation.');
   if (errors.length) throw new Error('Browser errors:\n' + errors.join('\n'));
 
-  console.log('Smoke test passed: app boot, flour blending, split fermentation, recipe search, and cook view.');
+  console.log('Smoke test passed: app boot, live recipe updates, flour blending, teglia flour/hydration, split fermentation, recipe search, and cook view.');
 } finally {
   await browser.close();
 }
