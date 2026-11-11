@@ -41,3 +41,11 @@ test('all 64 UI symbols use a dedicated pencil drawing', () => {
   assert.deepEqual(names.filter((name) => !pencilNames.includes(name)), [],
     'no standard icon fallback should remain');
 });
+
+
+test('active bottom navigation uses only local pencil texture', () => {
+  assert.match(css, /#tabbar \.tab\.on \.tab-ico::before/);
+  assert.match(css, /#tabbar \.tab\.on \.tab-ico::after/);
+  assert.match(css, /assets\/ui-pencil-hatch\.svg/);
+  assert.match(css, /prefers-reduced-motion: reduce/);
+});

@@ -24,5 +24,5 @@ test('UI icon preview uses local modules, current styles and offline navigation 
   assert.match(page, /from '\.\/ui\.js'/);
   assert.match(sw, /ui-icons-preview\.html/);
   assert.match(sw, /endsWith\('\/ui-icons-preview\.html'\)/);
-  assert.match(sw, /const VERSION = 'kucharzyna-1\.5\.19'/);
+  assert.match(sw, /const VERSION = 'kucharzyna-1\.5\.20'/);
 });
