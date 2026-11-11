@@ -105,7 +105,8 @@ function pizzaCalculator() {
   st.fermentationMode = st.fermentationMode === 'split' ? 'split' : 'single';
   const s = calcScreen('Pizza i ciasto', form, out);
   let suggestionHost = null;
-  modeHost = h('div');
+  const parameterControls = {};
+  let modeHost = h('div');
 
   function recommendedBlend() {
     const long = fermentationHours() >= 36;
@@ -253,19 +254,16 @@ function pizzaCalculator() {
     let fermentationText;
     if (st.fermentationMode === 'split' || hours >= 36) {
       fermentationText = profile.wMax == null || profile.wMax < 300
-        ? 'Przy długim dojrzewaniu obecna mieszanka ma umiarkowaną siłę (W ok. ' +
-          profile.wMin == null || profile.wMax == null ? 'nieznane' : Math.round(profile.wMin) + '–' + Math.round(profile.wMax) +
-          '). Obserwuj napięcie ciasta; jeśli słabnie, zwiększ udział Saccorosso lub Nuvola Super albo skróć etap w cieple.'
-        : 'Mocniejsza mieszanka (W ok. ' + Math.round(profile.wMin) + '–' + Math.round(profile.wMax) +
+        ? 'Przy długim dojrzewaniu obecna mieszanka ma umiarkowaną siłę (W: ' +
+          (profile.wMin == null || profile.wMax == null ? 'brak pełnych danych' : Math.round(profile.wMin) + '–' + Math.round(profile.wMax)) +
+          '). Obserwuj napięcie ciasta; jeśli słabnie, zwiększ udział Saccorosso lub Cuoco albo skróć etap w cieple.'
+        : 'Mocniejsza mieszanka (W ' + Math.round(profile.wMin) + '–' + Math.round(profile.wMax) +
           ') daje większy margines przy długim dojrzewaniu. Tempo nadal zależy od temperatury ciasta i ilości drożdży.';
     } else {
       fermentationText = 'Dobór czasu i drożdży kontroluje tempo fermentacji; sama zawartość białka nie wyznacza czasu dojrzewania. W jest wskazówką siły, a hydracja opisuje udział wody.';
     }
     return [hydrationText, fermentationText];
   }
-
-  const parameterControls = {};
-  let modeHost = null;
 
   function autoParameters(profile = blendProfile()) {
     const style = PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan;
@@ -410,38 +408,45 @@ function pizzaCalculator() {
         h('span', { class: 'ing-name' }, flour.label,
           h('small', { class: 'muted sub-line' }, fmtNum(row.pct, 1) + '% mieszanki' +
             (tooMuch ? ' · przekracza zalecany udział' : ''))),
-        h('span', { class: 'ing-qty' }, h('span', { class: 'amt num' }, fmtAmount(grams)), h('span', { class: 'unit' }, 'g')));
+        h('span', { class: 'ing-qty' },
+          h('span', { class: 'amt num' }, fmtAmount(grams)),
+          h('span', { class: 'unit' }, 'g')));
     });
-    const doughRows = [
-      ...profile.blend.map((row) => ({
-        name: PIZZA_FLOURS[row.type].label,
-        grams: doughFlourAmount * row.pct / 100,
-      })),
-      { name: 'Woda do ciasta', grams: sourdough ? r.doughWater : r.water },
-      { name: 'Sól', grams: r.salt },
-      ...(r.oil > 0 ? [{ name: 'Oliwa', grams: r.oil }] : []),
-      ...(!sourdough ? [{ name: 'Drożdże ' + yeast.label, grams: r.yeast }] : []),
+    const doughIngredientItems = [
+      ...flourDoseRows,
+      ...[
+        ['Woda do ciasta', sourdough ? r.doughWater : r.water],
+        ['Sól', r.salt],
+        ...(r.oil > 0 ? [['Oliwa', r.oil]] : []),
+        ...(!sourdough ? [['Drożdże ' + yeast.label, r.yeast]] : []),
+      ].map(([name, grams]) => h('li', { class: 'ing' },
+        h('span', { class: 'ing-name' }, name),
+        h('span', { class: 'ing-qty' },
+          h('span', { class: 'amt num' }, fmtAmount(grams)),
+          h('span', { class: 'unit' }, 'g')))),
     ];
+    const starterIngredientItems = [
+      ['Zakwas macierzysty', r.starterSeed],
+      ['Mąka do dokarmienia', r.starterFlour],
+      ['Woda do dokarmienia', r.starterWater],
+    ].map(([name, grams]) => h('li', { class: 'ing' },
+      h('span', { class: 'ing-name' }, name),
+      h('span', { class: 'ing-qty' },
+        h('span', { class: 'amt num' }, fmtAmount(grams)),
+        h('span', { class: 'unit' }, 'g'))));
+
     const liveRecipe = h('section', { class: 'card stack live-recipe' },
       h('div', { class: 'row between wrap' },
         h('h2', { class: 'card-title' }, icon('calculator', 20), 'Receptura na żywo'),
         h('span', { class: 'muted small' }, 'Przeliczana automatycznie')),
       h('div', { class: 'ing-section' },
         h('div', { class: 'tape' }, 'DO GŁÓWNEGO CIASTA'),
-        h('ul', { class: 'ing-list' }, doughRows.map((item) => h('li', { class: 'ing' },
-          h('span', { class: 'ing-name' }, item.name),
-          h('span', { class: 'ing-qty' }, h('span', { class: 'amt num' }, fmtAmount(item.grams)), h('span', { class: 'unit' }, 'g')))))),
+        h('ul', { class: 'ing-list' }, ...doughIngredientItems)),
       sourdough ? h('div', { class: 'ing-section' },
         h('div', { class: 'tape' }, 'DO ZAKWASU · 1:1:2'),
-        h('ul', { class: 'ing-list' },
-          ...[
-            ['Zakwas macierzysty', r.starterSeed],
-            ['Mąka do dokarmienia', r.starterFlour],
-            ['Woda do dokarmienia', r.starterWater],
-          ].map(([name, grams]) => h('li', { class: 'ing' },
-            h('span', { class: 'ing-name' }, name),
-            h('span', { class: 'ing-qty' }, h('span', { class: 'amt num' }, fmtAmount(grams)), h('span', { class: 'unit' }, 'g'))))) : null,
-      h('p', { class: 'muted small' }, 'Zmiana liczby kulek, gramatury, stylu pizzy, składu mąki, hydracji lub fermentacji od razu aktualizuje tę listę. Zapis do książki receptur wykonasz przyciskiem poniżej.'));
+        h('ul', { class: 'ing-list' }, ...starterIngredientItems)) : null,
+      h('p', { class: 'muted small' },
+        'Zmiana liczby kulek, gramatury, stylu pizzy, składu mąki, hydracji lub fermentacji od razu aktualizuje tę listę. Zapis do książki receptur wykonasz przyciskiem poniżej.'));
     out.replaceChildren(
       h('div', { class: 'results-grid' },
         result(sourdough ? 'Mąka do ciasta' : 'Mąka', fmtAmount(sourdough ? r.doughFlour : r.flour), 'g', 'big'),
