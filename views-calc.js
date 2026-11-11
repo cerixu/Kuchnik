@@ -198,7 +198,7 @@ function pizzaCalculator() {
             next.push({ type, parts: newParts });
             st.flourBlend = next;
             st.flourType = next[0].type;
-            save(); build(); paintOut();
+            syncAutoParameters(); save(); build(); paintOut();
           } }) : null);
       }));
   }
@@ -525,7 +525,7 @@ function pizzaCalculator() {
             st.flourBlend = normalizedBlend().filter((_, removeIndex) => removeIndex !== index)
               .map(({ type, parts }) => ({ type, parts }));
             st.flourType = st.flourBlend[0].type;
-            save(); build(); paintOut();
+            syncAutoParameters(); save(); build(); paintOut();
           } }) : null);
       }));
       paintSummary();
