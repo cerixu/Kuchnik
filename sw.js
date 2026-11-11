@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.5.18';
+const VERSION = 'kucharzyna-1.5.19';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -17,7 +17,7 @@ const CORE = [
   './',
   'index.html',
   'art-preview-1-4-52.html',
-  'galeria-kredkowa.html', 'food-illustrations.js',
+  'galeria-kredkowa.html', 'ui-icons-preview.html', 'food-illustrations.js',
   'styles.css',
   'manifest.webmanifest',
   'assets/food-svg/carbonara.svg', 'assets/food-svg/margherita.svg', 'assets/food-svg/tomato-soup.svg',
@@ -315,6 +315,14 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;   // nic spoza własnej domeny
 
   if (req.mode === 'navigate') {
+    if (url.pathname.endsWith('/ui-icons-preview.html')) {
+      const preview = scopeUrl('ui-icons-preview.html');
+      event.respondWith(networkFirst(event, preview, preview).catch(async () => {
+        const cache = await caches.open(VERSION);
+        return (await cache.match(preview)) || Response.error();
+      }));
+      return;
+    }
     // The standalone artwork gallery is a real HTML page, not an SPA route.
     if (url.pathname.endsWith('/galeria-kredkowa.html')) {
       const gallery = scopeUrl('galeria-kredkowa.html');
