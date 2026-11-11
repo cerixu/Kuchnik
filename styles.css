@@ -2864,3 +2864,44 @@ body:not(.no-tabs):not(.kb-open) #toasts {
 @media (prefers-reduced-motion: reduce) {
   #tabbar .tab, #tabbar .tab-ico { transition: none !important; }
 }
+
+
+/* ==========================================================================
+   Kuchnik 1.5.21 — spójne, kredkowe powierzchnie kontrolek.
+   Kolory i faktury są zgodne z katalogiem ui-icons-preview.html.
+   ========================================================================== */
+.btn {
+  color: var(--text);
+  background: linear-gradient(150deg, rgba(52,47,47,.92), rgba(33,31,33,.96));
+  border: 1px solid rgba(235,205,184,.16);
+  box-shadow: inset 0 1px 0 rgba(255,245,236,.07), 0 5px 14px rgba(0,0,0,.16);
+}
+.btn.primary {
+  color: #fff1e6;
+  background: linear-gradient(150deg, #85543d, #57382f);
+  border-color: rgba(231,176,143,.36);
+  box-shadow: inset 0 1px 0 rgba(255,245,236,.12), 0 7px 18px rgba(87,56,47,.28);
+}
+.btn.danger {
+  color: #fff0ec;
+  background: linear-gradient(150deg, #78413d, #4e2929);
+  border-color: rgba(226,139,130,.28);
+  box-shadow: inset 0 1px 0 rgba(255,240,236,.09), 0 7px 18px rgba(78,41,41,.24);
+}
+.btn.ghost {
+  color: var(--accent-text);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.btn:active { transform: translateY(1px) scale(.985); }
+.btn:focus-visible, .iconbtn:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--copper) 78%, white);
+  outline-offset: 3px;
+}
+.iconbtn.glassy {
+  background: linear-gradient(150deg, rgba(53,48,48,.9), rgba(31,29,31,.96));
+  border: 1px solid rgba(235,205,184,.15);
+  box-shadow: inset 0 1px 0 rgba(255,245,236,.07), 0 6px 15px rgba(0,0,0,.18);
+}
+.iconbtn.glassy:active { background: linear-gradient(150deg, rgba(74,60,55,.96), rgba(42,34,34,.98)); }
