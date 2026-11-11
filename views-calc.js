@@ -873,7 +873,15 @@ function pizzaCalculator() {
     paintSuggestion();
   }
 
-  ready.then(() => {
+  ready.then(async () => {
+    const persisted = await legacySavedState;
+    if (persisted && persisted.calcMode === 'hybrid' &&
+        !Object.prototype.hasOwnProperty.call(persisted, 'autoOverrides')) {
+      // Starsze wydanie hybrydy zapisywało parametry jako ręczne.
+      // Nie nadpisuj ich pierwszą automatyczną sugestią po aktualizacji.
+      st.autoOverrides = { hydration: true, salt: true, oil: true, yeast: true };
+      save();
+    }
     if (st.blendMode === 'manual' && (!Array.isArray(st.flourBlend) || !st.flourBlend.length)) {
       st.flourBlend = [{ type: PIZZA_FLOURS[st.flourType] ? st.flourType : 'pizzeria-blue', parts: 100 }];
     }
