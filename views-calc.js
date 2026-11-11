@@ -75,7 +75,9 @@ const PIZZA_FLOURS = Object.freeze({
   'nuvola-super': { label: 'Caputo Nuvola Super', short: 'Nuvola Super', protein: 13.5, wMin: 320, wMax: 340, hydration: 74, hMin: 70, hMax: 78, maxShare: 100, why: 'Mocna mąka do wysokiej hydracji, długiego dojrzewania, bigi i poolish. Zwiększa rezerwę siły mieszanki.', url: 'https://www.mulinocaputo.it/en/prodotti/nuvola-super/' },
   cuoco: { label: 'Caputo Cuoco', short: 'Cuoco', protein: 13, wMin: 300, wMax: 320, hydration: 68, hMin: 64, hMax: 74, maxShare: 100, why: 'Mąka mocna do ciast wymagających długiej fermentacji. Dobra jako baza przy dłuższym dojrzewaniu lub składnik wzmacniający mieszankę.', url: 'https://b2b.kuchnieswiata.com.pl/wheat-flour-00-cuoco-1kg-10-caputo' },
   manitoba: { label: 'Caputo Manitoba Oro', short: 'Manitoba Oro', protein: 14, wMin: 360, wMax: 380, hydration: 74, hMin: 68, hMax: 82, maxShare: 20, why: 'Bardzo mocna mąka, przeznaczona głównie do bogatych i długo fermentowanych wypieków. W cieście na pizzę traktuj ją jako dodatek wzmacniający — zacznij od 5–10%, zwykle nie przekraczaj 20%.', url: 'https://www.mulinocaputo.it/en/products/manitoba-gold/' },
-  'gusto-bello-00': { label: 'Gusto Bello 00 · Biedronka', short: 'Gusto Bello 00', protein: 12, wMin: null, wMax: null, hydration: 61, hMin: 57, hMax: 64, maxShare: 100, why: 'Na opakowaniu podawane jest 12% białka, ale producent nie publikuje parametru W. Przyjmij ostrożną hydrację i dodawaj wodę stopniowo; nie zakładaj, że samo 12% białka oznacza wysoką siłę mąki.', url: 'https://cdn.biedronka.pl/newsletter/assets-glovo/_files/ingredient_list_glovo.pdf' },
+  'gusto-bello-00': { label: 'Gusto Bello 00 · Biedronka', short: 'Gusto Bello 00', protein: 12, wMin: null, wMax: null, hydration: 61, hMin: 57, hMax: 64, maxShare: 100, dataNote: '12% białka z etykiety; parametr W nieopublikowany. Zakres hydracji to ostrożny punkt startowy, nie deklaracja producenta.', why: 'Na opakowaniu podawane jest 12% białka, ale producent nie publikuje parametru W. Przyjmij ostrożną hydrację i dodawaj wodę stopniowo; nie zakładaj, że samo 12% białka oznacza wysoką siłę mąki.', url: 'https://cdn.biedronka.pl/newsletter/assets-glovo/_files/ingredient_list_glovo.pdf' },
+  superiore: { label: 'Caputo Superiore', short: 'Superiore', protein: 12, wMin: 240, wMax: 260, hydration: 62, hMin: 58, hMax: 66, maxShare: 100, why: 'Mąka średniej siły przeznaczona do średniego czasu fermentacji. Może być bazą ciast o krótszym dojrzewaniu niż te prowadzone na Saccorosso lub Cuoco.', url: 'https://www.mulinocaputo.it/en/products/top/' },
+  classica: { label: 'Caputo Classica', short: 'Classica', protein: 12, wMin: 220, wMax: 240, hydration: 60, hMin: 55, hMax: 64, maxShare: 100, why: 'Mąka o niższej sile, przeznaczona do krótkiego dojrzewania i lekkiego pieczywa. W pizzy wybieraj ją do krótkiego procesu, nie do wielodniowej fermentacji.', url: 'https://www.mulinocaputo.it/en/products/classic/' },
   semola: { label: 'Semola rimacinata · durum', short: 'Semola', protein: 13, wMin: 230, wMax: 230, hydration: 62, hMin: 58, hMax: 67, maxShare: 15, why: 'Mąka z pszenicy durum. W pizzy używaj jej jako niewielkiego dodatku dla koloru i charakteru; Caputo wskazuje ją przede wszystkim do makaronu, pieczywa z pszenicy durum i podsypywania blatu.', url: 'https://www.mulinocaputo.it/en/products/durum-wheat-semolina-5kg/' },
 });
 
@@ -102,6 +104,7 @@ function pizzaCalculator() {
   st.calcMode = ['auto', 'hybrid', 'manual'].includes(st.calcMode) ? st.calcMode : 'hybrid';
   st.autoOverrides = st.autoOverrides && typeof st.autoOverrides === 'object' ? st.autoOverrides : {};
   st.blendMode = st.blendMode === 'manual' ? 'manual' : 'auto';
+  if (st.blendMode === 'auto' && Array.isArray(st.flourBlend) && st.flourBlend.length) st.blendMode = 'manual';
   st.fermentationMode = st.fermentationMode === 'split' ? 'split' : 'single';
   const s = calcScreen('Pizza i ciasto', form, out);
   let suggestionHost = null;
@@ -110,17 +113,24 @@ function pizzaCalculator() {
   let refreshFlourBlendEditor = null;
 
   function recommendedBlend() {
-    const long = fermentationHours() >= 36;
+    const hours = fermentationHours();
+    const short = hours <= 10;
+    const long = hours >= 36;
     if (st.style === 'teglia') {
       return long
         ? [{ type: 'nuvola', parts: 70 }, { type: 'nuvola-super', parts: 30 }]
         : [{ type: 'nuvola', parts: 100 }];
+    }
+    if (short) {
+      if (st.style === 'romana') return [{ type: 'classica', parts: 70 }, { type: 'pizzeria-blue', parts: 30 }];
+      return [{ type: 'classica', parts: 100 }];
     }
     if (long) {
       if (st.style === 'romana') return [{ type: 'pizzeria-blue', parts: 80 }, { type: 'saccorosso', parts: 20 }];
       if (st.style === 'classic') return [{ type: 'pizzeria-blue', parts: 75 }, { type: 'cuoco', parts: 25 }];
       return [{ type: 'pizzeria-blue', parts: 70 }, { type: 'saccorosso', parts: 30 }];
     }
+    if (hours >= 18) return [{ type: 'pizzeria-blue', parts: 85 }, { type: 'superiore', parts: 15 }];
     return [{ type: 'pizzeria-blue', parts: 100 }];
   }
 
@@ -168,6 +178,8 @@ function pizzaCalculator() {
     if (name.includes('gusto bello') || name.includes('gustobello')) return 'gusto-bello-00';
     if (name.includes('semola') || name.includes('semolina rimacinata')) return 'semola';
     if (name.includes('cuoco')) return 'cuoco';
+    if (name.includes('superiore')) return 'superiore';
+    if (name.includes('classica') || name.includes('farina classica')) return 'classica';
     if (name.includes('saccorosso') || name.includes('00 red') || name.includes('caputo red')) return 'saccorosso';
     if (name.includes('nuvola')) return 'nuvola';
     if (name.includes('00 blue') || name.includes('caputo blue') ||
@@ -821,7 +833,7 @@ function pizzaCalculator() {
   }
 
   ready.then(() => {
-    if (!Array.isArray(st.flourBlend) || !st.flourBlend.length) {
+    if (st.blendMode === 'manual' && (!Array.isArray(st.flourBlend) || !st.flourBlend.length)) {
       st.flourBlend = [{ type: PIZZA_FLOURS[st.flourType] ? st.flourType : 'pizzeria-blue', parts: 100 }];
     }
     syncAutoParameters(); build(); paintOut();
