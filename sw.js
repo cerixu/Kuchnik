@@ -9,7 +9,7 @@
    ZMIANA WERSJI: podbij VERSION (i APP_VERSION w util.js) przy każdej
    aktualizacji plików, żeby urządzenia wykryły nową wersję.
    ========================================================================== */
-const VERSION = 'kucharzyna-1.5.16';
+const VERSION = 'kucharzyna-1.5.17';
 const MEDIA_CACHE = 'kucharzyna-media-v1';
 const NETWORK_TIMEOUT = 3500;
 
@@ -78,7 +78,7 @@ const CORE = [
   'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png',
   'bg-texture.png', 'poppins-300.woff', 'poppins-400.woff', 'poppins-500.woff', 'poppins-700.woff',
   'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png',
-  'assets/zarlock-hatch.svg',
+  'assets/zarlock-hatch.svg', 'assets/ui-pencil-hatch.svg',
   'assets/ingredient-illustrations/egg.png',
   'assets/ingredient-illustrations/bacon.png',
   'assets/ingredient-illustrations/sausage.png',
