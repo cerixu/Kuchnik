@@ -118,9 +118,13 @@ function pizzaCalculator() {
     const short = hours <= 10;
     const long = hours >= 36;
 
-    // Teglia wymaga mocnej mąki, która utrzyma wysoką hydrację.
-    // Nuvola Super ma opublikowany zakres W 320–340 i zakres hydracji 70–78%.
-    if (st.style === 'teglia') return [{ type: 'nuvola-super', parts: 100 }];
+    // Nuvola jest przeznaczona m.in. do pizzy na blasze; przy długim dojrzewaniu
+    // łączymy ją z Nuvola Super, którą producent opisuje jako mąkę do mieszanek.
+    if (st.style === 'teglia') {
+      return long
+        ? [{ type: 'nuvola', parts: 70 }, { type: 'nuvola-super', parts: 30 }]
+        : [{ type: 'nuvola', parts: 100 }];
+    }
 
     if (short) {
       if (st.style === 'romana') return [{ type: 'classica', parts: 70 }, { type: 'pizzeria-blue', parts: 30 }];
