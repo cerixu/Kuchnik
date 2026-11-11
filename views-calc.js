@@ -130,7 +130,6 @@ function pizzaCalculator() {
       if (st.style === 'classic') return [{ type: 'pizzeria-blue', parts: 75 }, { type: 'cuoco', parts: 25 }];
       return [{ type: 'pizzeria-blue', parts: 70 }, { type: 'saccorosso', parts: 30 }];
     }
-    if (hours >= 18) return [{ type: 'pizzeria-blue', parts: 85 }, { type: 'superiore', parts: 15 }];
     return [{ type: 'pizzeria-blue', parts: 100 }];
   }
 
@@ -229,7 +228,8 @@ function pizzaCalculator() {
               ? '; zostanie ok. ' + gramsLabel(difference) + '.'
               : '; brakuje ok. ' + gramsLabel(-difference) + '.'));
         }
-        const pct = Math.min(20, flourAmount > 0 ? amount / flourAmount * 100 : 20);
+        const maxShare = Number.isFinite(flour.maxShare) ? flour.maxShare : 20;
+        const pct = Math.min(maxShare, flourAmount > 0 ? amount / flourAmount * 100 : maxShare);
         const minimumShare = 100 / (partsTotal + 1);
         const canAdd = pct >= minimumShare;
         const share = canAdd ? pct : minimumShare;
@@ -427,6 +427,7 @@ function pizzaCalculator() {
       return h('li', { class: 'ing' },
         h('span', { class: 'ing-name' }, flour.label,
           h('small', { class: 'muted sub-line' }, fmtNum(row.pct, 1) + '% mieszanki' +
+            (Number.isFinite(flour.wMin) && Number.isFinite(flour.wMax) ? ' · W ' + flour.wMin + '–' + flour.wMax : ' · W nieopublikowane') +
             (tooMuch ? ' · przekracza zalecany udział' : ''))),
         h('span', { class: 'ing-qty' },
           h('span', { class: 'amt num' }, fmtAmount(grams)),
@@ -501,7 +502,7 @@ function pizzaCalculator() {
             ' · białko ' + fmtNum(profile.protein, 1) + '%')),
         h('p', { class: 'muted small' }, (profile.wMin == null || profile.wMax == null
           ? 'Co najmniej jedna mąka w mieszance nie ma opublikowanej wartości W; nie wyliczam jej na podstawie samego białka. '
-          : 'W ' + Math.round(profile.wMin) + '–' + Math.round(profile.wMax) + ' to średnia ważona mieszanki. ') +
+          : 'Orientacyjny wskaźnik W z udziałów wynosi ' + Math.round(profile.wMin) + '–' + Math.round(profile.wMax) + '; to nie jest pomiar laboratoryjny gotowej mieszanki. ') +
           'Białko mieszanki: ' + fmtNum(profile.protein, 1) + '%.'),
         h('p', { class: 'muted small' }, 'Propozycja startowa: ' + hydrationHint + '% hydracji (zakres orientacyjny ' +
           fmtNum(profile.hMin, 1) + '–' + fmtNum(profile.hMax, 1) + '%). Twoje ustawienie: ' +
@@ -700,7 +701,6 @@ function pizzaCalculator() {
       paintSummary();
     };
     refreshFlourBlendEditor = rebuildRows;
-    const unused = Object.keys(PIZZA_FLOURS).find((key) => !normalizedBlend().some((row) => row.type === key));
     holder.append(
       h('h2', { class: 'card-title' }, icon('pizza', 20), 'Mieszanka i dozowanie mąk'),
       h('p', { class: 'muted small' }, 'Proporcje określają, ile gramów każdej mąki wsypujesz do głównego ciasta. Mąka i woda wniesione przez zakwas są liczone osobno w bilansie — nie są ponownie dzielone na mieszankę.'),
@@ -714,13 +714,16 @@ function pizzaCalculator() {
       st.blendMode === 'auto'
         ? h('p', { class: 'muted small' }, 'Automat dobiera mieszankę według stylu pizzy i długości fermentacji. Dla długiego dojrzewania zwiększa udział silniejszej mąki; dla teglia bazuje na Nuvola.')
         : h('p', { class: 'muted small' }, 'W trybie własnym zmieniaj części. Kalkulator natychmiast przelicza udział procentowy i gramaturę każdego rodzaju mąki.'),
-      unused ? button('Dodaj kolejną mąkę', { icon: 'plus', kind: 'ghost', onClick: () => {
-        const next = normalizedBlend().map(({ type, parts }) => ({ type, parts }));
-        const partsTotal = next.reduce((sum, row) => sum + row.parts, 0);
-        next.push({ type: unused, parts: Math.max(1, partsTotal / 4) });
-        st.flourBlend = next; st.blendMode = 'manual'; st.flourType = next[0].type;
-        syncAutoParameters(); save(); build(); paintOut();
-      } }) : null,
+      st.blendMode === 'manual' && Object.keys(PIZZA_FLOURS).some((key) => !normalizedBlend().some((row) => row.type === key))
+        ? button('Dodaj kolejną mąkę', { icon: 'plus', kind: 'ghost', onClick: () => {
+          const next = normalizedBlend().map(({ type, parts }) => ({ type, parts }));
+          const unusedNow = Object.keys(PIZZA_FLOURS).find((key) => !next.some((row) => row.type === key));
+          if (!unusedNow) return;
+          const partsTotal = next.reduce((sum, row) => sum + row.parts, 0);
+          next.push({ type: unusedNow, parts: Math.max(1, partsTotal / 4) });
+          st.flourBlend = next; st.blendMode = 'manual'; st.flourType = next[0].type;
+          syncAutoParameters(); save(); build(); paintOut();
+        } }) : null,
       summary);
     rebuildRows();
     return holder;
