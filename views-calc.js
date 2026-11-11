@@ -107,6 +107,7 @@ function pizzaCalculator() {
   let suggestionHost = null;
   const parameterControls = {};
   let modeHost = h('div');
+  let refreshFlourBlendEditor = null;
 
   function recommendedBlend() {
     const long = fermentationHours() >= 36;
@@ -231,6 +232,7 @@ function pizzaCalculator() {
             if (next.some((row) => row.type === type)) return;
             next.push({ type, parts: newParts });
             st.flourBlend = next;
+            st.blendMode = 'manual';
             st.flourType = next[0].type;
             syncAutoParameters(); save(); build(); paintOut();
           } }) : null);
@@ -326,6 +328,7 @@ function pizzaCalculator() {
     st[key] = value;
     if (options.manualBlend) st.blendMode = 'manual';
     syncAutoParameters();
+    if (refreshFlourBlendEditor) refreshFlourBlendEditor();
     save(); syncParameterControls(); paintOut(); paintSuggestion();
   }
 
@@ -334,6 +337,7 @@ function pizzaCalculator() {
     if (st.calcMode === 'auto') st.calcMode = 'hybrid';
     if (st.calcMode === 'hybrid') st.autoOverrides[key] = true;
     syncAutoParameters();
+    if (refreshFlourBlendEditor) refreshFlourBlendEditor();
     save(); syncParameterControls(); paintCalcMode(); paintOut(); paintSuggestion();
   }
 
@@ -682,6 +686,7 @@ function pizzaCalculator() {
       }));
       paintSummary();
     };
+    refreshFlourBlendEditor = rebuildRows;
     const unused = Object.keys(PIZZA_FLOURS).find((key) => !normalizedBlend().some((row) => row.type === key));
     holder.append(
       h('h2', { class: 'card-title' }, icon('pizza', 20), 'Mieszanka i dozowanie mąk'),
@@ -740,7 +745,7 @@ function pizzaCalculator() {
                 st.flour = value; range.value = String(Math.min(10000, Math.max(250, value))); syncAutoParameters(); save(); syncParameterControls(); paintOut();
               } });
               range.addEventListener('input', () => {
-                st.flour = Number(range.value); amount.value = String(st.flour); amount.classList.remove('invalid'); syncAutoParameters(); save(); syncParameterControls(); paintOut();
+                st.flour = Number(range.value); amount.value = String(st.flour); amount.classList.remove('invalid'); syncAutoParameters(); if (refreshFlourBlendEditor) refreshFlourBlendEditor(); save(); syncParameterControls(); paintOut();
               });
               return h('div', { class: 'flour-amount-controls' }, field('Całkowita mąka (g) — razem z zakwasem', amount), range);
             })())
@@ -801,7 +806,7 @@ function pizzaCalculator() {
           ? h('div', { class: 'stack' },
             field('Woda do dokarmienia zakwasu (g)', numInput({ value: st.starterWaterGrams == null ? compute().starterWater : st.starterWaterGrams, label: 'Woda do zakwasu w gramach', dec: 1, onInput: (value) => {
               st.starterWaterGrams = Math.max(0, Number(value) || 0);
-              save(); paintOut();
+              if (refreshFlourBlendEditor) refreshFlourBlendEditor(); save(); paintOut();
             } })),
             h('p', { class: 'muted small' }, 'Proporcja zakwas : mąka : woda = 1:1:2. Wpisujesz wodę, którą fizycznie dodasz do zakwasu. Kalkulator wylicza zakwas macierzysty i mąkę do dokarmienia, a ich wodę i mąkę wlicza do hydracji całej receptury.'))
           : h('div', { class: 'row gap' },
