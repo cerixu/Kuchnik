@@ -460,6 +460,16 @@ function pizzaCalculator() {
       h('div', { class: 'row between wrap' },
         h('h2', { class: 'card-title' }, icon('calculator', 20), 'Receptura na żywo'),
         h('span', { class: 'muted small' }, 'Przeliczana automatycznie')),
+      h('p', { class: 'muted small' },
+        (PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan).label +
+        ' · hydracja całkowita ' + fmtNum(r.flour > 0 ? r.water / r.flour * 100 : 0, 1) +
+        '% · sól ' + fmtNum(st.salt, 2) + '%' +
+        (st.oil > 0 ? ' · oliwa ' + fmtNum(st.oil, 2) + '%' : '') +
+        (sourdough ? ' · zakwas 1:1:2' : ' · drożdże ' + fmtNum(st.yeast, 2) + '%') +
+        ' · fermentacja: ' + fermentationSummary()),
+      h('p', { class: 'muted small' },
+        'Bilans łączny: ' + gramsLabel(r.flour) + ' mąki + ' + gramsLabel(r.water) +
+        ' wody = ' + fmtNum(r.flour > 0 ? r.water / r.flour * 100 : 0, 1) + '% hydracji.'),
       h('div', { class: 'ing-section' },
         h('div', { class: 'tape' }, 'DO GŁÓWNEGO CIASTA'),
         h('ul', { class: 'ing-list' }, ...doughIngredientItems)),
