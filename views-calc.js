@@ -269,7 +269,11 @@ function pizzaCalculator() {
 
   function autoParameters(profile = blendProfile()) {
     const style = PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan;
-    const targetHydration = Math.max(profile.hMin, Math.min(profile.hMax, style.hydration));
+    const minHydration = Math.max(profile.hMin, style.hydrationMin);
+    const maxHydration = Math.min(profile.hMax, style.hydrationMax);
+    const targetHydration = minHydration <= maxHydration
+      ? Math.max(minHydration, Math.min(maxHydration, style.hydration))
+      : Math.max(profile.hMin, Math.min(profile.hMax, style.hydration));
     let yeast = Number(st.yeast) || 0;
     if (st.leavenType !== 'starter') {
       let hours = Math.max(1, Number(st.hours) || 24);
@@ -630,8 +634,7 @@ function pizzaCalculator() {
     suggestionHost.replaceChildren(h('div', { class: 'suggest' },
       h('span', null, label, h('strong', { class: 'num' }, fmtNum(sug * yeast.f, 2) + '%'), ' (' + yeast.label + ')'),
       button('Użyj', { sm: true, onClick: () => {
-        st.yeast = Math.round(sug * yeast.f * 100) / 100;
-        save(); paintOut(); paintSuggestion();
+        setParameterValue('yeast', Math.round(sug * yeast.f * 100) / 100);
       } })));
   }
 
@@ -675,8 +678,6 @@ function pizzaCalculator() {
           h('div', { class: 'row gap' },
             col(field('Mąka ' + (index + 1), flourSelect)),
             col(field('Udział · części', partsInput))),
-          h('p', { class: 'muted small' }, fmtNum(row.pct, 1) + '% mieszanki · ok. ' +
-            gramsLabel((st.leavenType === 'starter' ? compute().doughFlour : compute().flour) * row.pct / 100)),
           rows.length > 1 ? button('Usuń tę mąkę', { sm: true, kind: 'ghost', onClick: () => {
             st.flourBlend = normalizedBlend().filter((_, removeIndex) => removeIndex !== index)
               .map(({ type, parts }) => ({ type, parts }));
