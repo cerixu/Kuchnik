@@ -2824,3 +2824,39 @@ body:not(.no-tabs):not(.kb-open) #toasts {
 @media (prefers-reduced-motion: reduce) {
   .btn:not(.ghost)::after, .iconbtn:not(.txt)::after { transition: none; }
 }
+
+
+/* ==========================================================================
+   Kuchnik 1.5.19 — kredkowy akcent aktywnej ikony dolnej nawigacji.
+   Zostawia szklaną kapsułę tabbara i dotychczasowy wskaźnik aktywnej zakładki.
+   ========================================================================== */
+#tabbar .tab-ico { isolation: isolate; }
+#tabbar .tab-ico > svg,
+#tabbar .tab-ico > .badge { position: relative; z-index: 1; }
+#tabbar .tab.on .tab-ico::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -7px -10px;
+  border: 1.25px solid color-mix(in srgb, var(--copper) 62%, transparent);
+  border-radius: 47% 53% 49% 51% / 54% 45% 55% 46%;
+  transform: rotate(-6deg);
+  background: url("assets/ui-pencil-hatch.svg") center / 120px 120px repeat;
+  opacity: .62;
+  pointer-events: none;
+}
+#tabbar .tab.on .tab-ico::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -5px -12px;
+  border: .8px dashed color-mix(in srgb, var(--copper) 48%, transparent);
+  border-radius: 53% 47% 52% 48% / 46% 54% 45% 55%;
+  transform: rotate(4deg);
+  opacity: .48;
+  pointer-events: none;
+}
+#tabbar .tab.on .tab-ico > svg { filter: drop-shadow(0 1px 1px rgba(0,0,0,.12)); }
+@media (prefers-reduced-motion: reduce) {
+  #tabbar .tab, #tabbar .tab-ico { transition: none !important; }
+}
