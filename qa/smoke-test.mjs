@@ -57,9 +57,9 @@ try {
 
   // Każda zmiana wejściowa musi aktualizować gotową listę składników, nie tylko panel sugestii.
   const liveRecipe = page.locator('.live-recipe');
-  const initialFlourRow = await liveRecipe.locator('.ing').filter({ hasText: 'Pizzeria' }).first().innerText();
+  const initialFlourRow = await liveRecipe.locator('.ing').first().innerText();
   await page.getByLabel('Liczba kulek').fill('5');
-  const updatedFlourRow = await liveRecipe.locator('.ing').filter({ hasText: 'Pizzeria' }).first().innerText();
+  const updatedFlourRow = await liveRecipe.locator('.ing').first().innerText();
   if (initialFlourRow === updatedFlourRow) {
     throw new Error('Changing the number of dough balls did not update the live flour dose.');
   }
@@ -73,6 +73,7 @@ try {
   }
 
   await page.getByRole('button', { name: 'Moja mieszanka' }).click();
+  await page.getByLabel('Rodzaj mąki 1').selectOption('pizzeria-blue');
   await page.getByRole('button', { name: 'Dodaj kolejną mąkę' }).click();
   const flourParts = page.locator('.flour-blend-row input.num');
   await flourParts.nth(0).fill('70');
