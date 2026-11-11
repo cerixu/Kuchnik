@@ -2824,3 +2824,7 @@ body:not(.no-tabs):not(.kb-open) #toasts {
 @media (prefers-reduced-motion: reduce) {
   .btn:not(.ghost)::after, .iconbtn:not(.txt)::after { transition: none; }
 }
+
+
+/* Kuchnik 1.5.19 — strona podglądu biblioteki ikon UI. */
+.ui-icons-preview .scroll { padding-top: var(--top-h, 62px); padding-bottom: 26px; }

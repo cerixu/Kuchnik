@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pl" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#171719">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Kuchnik — katalog ikon UI</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .ui-icons-preview .scroll {
+      padding-top: var(--top-h, 62px);
+      padding-bottom: max(26px, env(safe-area-inset-bottom, 0px));
+    }
+    .ui-icons-preview .content {
+      width: min(100%, 820px);
+      margin-inline: auto;
+      padding: 16px clamp(13px, 3.8vw, 24px) 34px;
+      gap: 19px;
+    }
+    .ui-preview-hero {
+      display: grid;
+      gap: 8px;
+      padding: 19px;
+      border: 1px solid rgba(226,162,124,.19);
+      border-radius: 22px;
+      background:
+        url("assets/zarlock-hatch.svg"),
+        radial-gradient(100% 120% at 0 0, rgba(189,112,74,.17), transparent 70%),
+        linear-gradient(150deg, rgba(48,43,43,.96), rgba(27,26,28,.98));
+      box-shadow: inset 0 1px 0 rgba(255,245,236,.06), 0 12px 28px rgba(0,0,0,.18);
+    }
+    .ui-preview-hero .eyebrow {
+      display: block;
+      color: var(--accent-text);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+    }
+    .ui-preview-hero h1 { font-size: 1.45rem; line-height: 1.15; letter-spacing: -.025em; }
+    .ui-preview-hero p { color: var(--muted); font-size: .9rem; line-height: 1.45; }
+    .ui-preview-section { display: grid; gap: 10px; }
+    .ui-preview-section h2 { font-size: 1rem; font-weight: 750; letter-spacing: -.015em; }
+    .ui-preview-section > p { margin-top: -5px; color: var(--muted); font-size: .8rem; }
+    .ui-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .ui-preview-icon {
+      min-width: 0;
+      min-height: 78px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 8px 3px;
+      border: 1px solid rgba(235,205,184,.12);
+      border-radius: 17px;
+      color: var(--accent-text);
+      background:
+        repeating-linear-gradient(132deg, rgba(255,237,224,.014) 0 1px, transparent 1px 9px),
+        linear-gradient(150deg, rgba(48,44,45,.88), rgba(29,28,30,.94));
+      box-shadow: inset 0 1px 0 rgba(255,245,236,.045), 0 5px 14px rgba(0,0,0,.12);
+    }
+    .ui-preview-icon .ico { width: 29px; height: 29px; stroke-width: 1.65; }
+    .ui-preview-icon span {
+      max-width: 100%;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: .64rem;
+      font-weight: 650;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .ui-preview-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+    .ui-preview-control {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      border-radius: 999px;
+      color: var(--text);
+      border: 1px solid var(--glass-line);
+      background:
+        url("assets/ui-pencil-hatch.svg"),
+        linear-gradient(150deg, rgba(52,47,47,.92), rgba(33,31,33,.96));
+      box-shadow: inset 0 1px 0 rgba(255,245,236,.06), 0 5px 14px rgba(0,0,0,.16);
+      font-size: .91rem;
+      font-weight: 700;
+    }
+    .ui-preview-control.primary {
+      color: #fff1e6;
+      background:
+        url("assets/ui-pencil-hatch.svg"),
+        linear-gradient(150deg, #85543d, #57382f);
+      border-color: rgba(231,176,143,.36);
+    }
+    .ui-preview-control.danger {
+      color: #fff0ec;
+      background:
+        url("assets/ui-pencil-hatch.svg"),
+        linear-gradient(150deg, #78413d, #4e2929);
+      border-color: rgba(226,139,130,.26);
+    }
+    .ui-preview-control.ghost {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+      color: var(--accent-text);
+    }
+    .ui-preview-icon-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .ui-preview-icon-button {
+      width: 48px; height: 48px; display: grid; place-items: center;
+      border-radius: 50%; color: var(--accent-text);
+      border: 1px solid rgba(235,205,184,.15);
+      background:
+        url("assets/ui-pencil-hatch.svg"),
+        linear-gradient(150deg, rgba(53,48,48,.9), rgba(31,29,31,.96));
+      box-shadow: inset 0 1px 0 rgba(255,245,236,.07), 0 6px 15px rgba(0,0,0,.18);
+    }
+    .ui-preview-tab-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      padding: 7px;
+      gap: 4px;
+      border: 1px solid rgba(235,205,184,.13);
+      border-radius: 24px;
+      background: rgba(28,27,29,.94);
+    }
+    .ui-preview-tab {
+      min-width: 0; min-height: 68px; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; gap: 5px;
+      border-radius: 18px; color: var(--muted); font-size: .68rem; font-weight: 650;
+    }
+    .ui-preview-tab.active { color: var(--on-accent); background: var(--accent); }
+    .ui-preview-tab .ico { width: 23px; height: 23px; }
+    .ui-preview-foot {
+      color: var(--muted);
+      font-size: .75rem;
+      text-align: center;
+      line-height: 1.45;
+    }
+    @media (max-width: 360px) {
+      .ui-preview-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .ui-preview-control { padding-inline: 12px; font-size: .84rem; }
+    }
+  </style>
+</head>
+<body class="no-tabs">
+  <div id="app">
+    <main id="view" aria-live="polite"></main>
+  </div>
+  <script type="module">
+    import { h, icon, iconBtn, screen } from './ui.js';
+
+    const groups = [
+      { title: 'Nawigacja', names: ['left', 'right', 'down', 'up', 'chev', 'home', 'home2', 'grid'] },
+      { title: 'Kuchnia i narzędzia', names: ['chef', 'pot', 'pizza', 'fire', 'flame', 'drop', 'thermo', 'fridge', 'ruler', 'scale', 'timer', 'clock', 'bulb', 'wave', 'cart', 'basket', 'calc', 'book', 'list', 'sliders', 'shuffle', 'users', 'gear', 'key', 'swap', 'globe', 'volume', 'mute', 'coins', 'percent', 'sun', 'moon'] },
+      { title: 'Akcje i informacje', names: ['plus', 'minus', 'check', 'x', 'trash', 'edit', 'search', 'filter', 'sort', 'refresh', 'copy', 'share', 'download', 'upload', 'more', 'image', 'link', 'history', 'tag', 'info', 'eye', 'sparkle', 'star', 'heart'] },
+    ];
+
+    const app = screen({
+      title: 'Podgląd ikon UI',
+      left: iconBtn('left', 'Wróć do Kuchnika', () => { window.location.href = './'; }),
+      cls: 'ui-icons-preview',
+      large: false,
+    });
+
+    app.content.append(
+      h('section', { class: 'ui-preview-hero' },
+        h('span', { class: 'eyebrow' }, 'KUCHNIK · BIBLIOTEKA UI'),
+        h('h1', null, 'Kredkowy zestaw ikon'),
+        h('p', null, '64 własne znaki interfejsu. Lekko nierówna kreska, przygaszone kolory i ciemne powierzchnie Liquid Glass.'),
+        h('p', { class: 'small' }, 'Podgląd nie zmienia receptur, ilustracji potraw ani ikon składników.')
+      )
+    );
+
+    for (const group of groups) {
+      const grid = h('div', { class: 'ui-preview-grid' });
+      for (const name of group.names) {
+        grid.append(h('div', { class: 'ui-preview-icon', role: 'img', 'aria-label': 'Ikona ' + name },
+          icon(name, 29), h('span', null, name)));
+      }
+      app.content.append(h('section', { class: 'ui-preview-section', 'data-icons': group.names.join(' ') },
+        h('h2', null, group.title), grid));
+    }
+
+    app.content.append(
+      h('section', { class: 'ui-preview-section' },
+        h('h2', null, 'Tła przycisków'),
+        h('p', null, 'Podstawowy, główny, ostrzegawczy i tekstowy wariant na tej samej powierzchni.'),
+        h('div', { class: 'ui-preview-controls' },
+          h('div', { class: 'ui-preview-control' }, icon('book', 18), 'Otwórz'),
+          h('div', { class: 'ui-preview-control primary' }, icon('check', 18), 'Zapisz'),
+          h('div', { class: 'ui-preview-control danger' }, icon('trash', 18), 'Usuń'),
+          h('div', { class: 'ui-preview-control ghost' }, icon('search', 18), 'Szukaj')
+        )
+      ),
+      h('section', { class: 'ui-preview-section' },
+        h('h2', null, 'Przyciski ikonowe'),
+        h('div', { class: 'ui-preview-icon-row' },
+          ...['left', 'search', 'more', 'heart', 'check', 'gear'].map((name) =>
+            h('div', { class: 'ui-preview-icon-button', role: 'img', 'aria-label': 'Przycisk ' + name }, icon(name, 22)))
+        )
+      ),
+      h('section', { class: 'ui-preview-section' },
+        h('h2', null, 'Nawigacja dolna'),
+        h('div', { class: 'ui-preview-tab-row' },
+          ...[['Start', 'home2'], ['Receptury', 'book'], ['Kalkulatory', 'calc'], ['Gotuję', 'chef']].map(([label, name], i) =>
+            h('div', { class: 'ui-preview-tab' + (i === 0 ? ' active' : '') }, icon(name, 23), h('span', null, label)))
+        )
+      ),
+      h('p', { class: 'ui-preview-foot' }, 'Podgląd graficzny · Kuchnik 1.5.19')
+    );
+
+    document.querySelector('#view').replaceChildren(app.el);
+  </script>
+</body>
+</html>
