@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.21': Object.freeze({
+    intro: 'ŻARŁOK 1.5.21 — spójne tła przycisków i kontrolek.',
+    items: ['Ujednolicono prawdziwe przyciski aplikacji z katalogiem UI: grafitowy wariant bazowy, miedziany główny, przygaszony czerwony i przezroczysty tekstowy.', 'Przyciski ikonowe w wariancie glassy korzystają z tej samej ciemnej, fakturowanej powierzchni.', 'Galeria ikon prezentuje teraz rzeczywiste klasy CSS aplikacji, więc podgląd odpowiada kontrolkom używanym na ekranach.', 'Dodano wyraźny focus-visible dla obsługi klawiaturą; zachowano rozmiary dotykowe, działanie przycisków i tryb offline.'],
+    footer: 'Aktualizacja dotyczy wyłącznie warstwy wizualnej kontrolek.'
+  }),
+
   '1.5.20': Object.freeze({
     intro: 'ŻARŁOK 1.5.20 — kredkowy akcent dolnej nawigacji.',
     items: ['Aktywna ikona dolnego paska otrzymała ręcznie rysowany, podwójny kontur w przygaszonym miedzianym odcieniu.', 'Zachowano szklaną kapsułę, rozmiary zakładek, wskaźnik aktywnej strony i dotychczasowe zachowanie nawigacji.', 'Dekoracyjny wzór korzysta z lokalnej tekstury SVG, bez zewnętrznych zasobów i bez wpływu na działanie offline.', 'Nie zmieniono ilustracji przepisów ani ikon składników.'],
