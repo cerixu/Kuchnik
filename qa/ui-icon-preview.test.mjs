@@ -9,9 +9,11 @@ const sw = read('../sw.js');
 
 test('UI icon preview includes every public icon exactly once', () => {
   const source = ui.match(/const ICONS = \{([\s\S]*?)\n\};/);
-  assert.ok(source, 'public icon map exists');
+  const groups = page.match(/const groups = \[([\s\S]*?)\n    \];/);
+  assert.ok(source && groups, 'icon map and preview groups must exist');
   const expected = [...source[1].matchAll(/^\s{2}([a-zA-Z0-9_-]+):/gm)].map((m) => m[1]);
-  const actual = [...page.matchAll(/data-icons="([^"]+)"/g)].flatMap((m) => m[1].split(/\s+/));
+  const actual = [...groups[1].matchAll(/names:\s*\[([^\]]+)\]/g)]
+    .flatMap((m) => [...m[1].matchAll(/'([^']+)'/g)].map((x) => x[1]));
   assert.equal(new Set(expected).size, 64);
   assert.equal(actual.length, 64);
   assert.deepEqual([...actual].sort(), [...expected].sort());
