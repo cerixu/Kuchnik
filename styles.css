@@ -2905,3 +2905,44 @@ body:not(.no-tabs):not(.kb-open) #toasts {
   box-shadow: inset 0 1px 0 rgba(255,245,236,.07), 0 6px 15px rgba(0,0,0,.18);
 }
 .iconbtn.glassy:active { background: linear-gradient(150deg, rgba(74,60,55,.96), rgba(42,34,34,.98)); }
+
+
+/* ==========================================================================
+   Kuchnik 1.5.22 — delikatna faktura dla aktywnych wyborów i filtrów.
+   Zachowuje istniejące miedziane kolory, geometrię i wysokość dotykową.
+   ========================================================================== */
+.chip:not(.ghost),
+.seg button.on,
+.ctab.on {
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+}
+.chip:not(.ghost)::after,
+.seg button.on::after,
+.ctab.on::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: url("assets/ui-pencil-hatch.svg") center / 128px 128px repeat;
+  opacity: .38;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.chip:not(.ghost) > *,
+.seg button.on > *,
+.ctab.on > * {
+  position: relative;
+  z-index: 1;
+}
+.chip:focus-visible,
+.seg button:focus-visible,
+.ctab:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--copper) 78%, white);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chip, .seg button, .ctab { transition: none !important; }
+}

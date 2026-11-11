@@ -58,3 +58,12 @@ test('real buttons use the muted graphite, copper and danger surfaces', () => {
   assert.match(css, /\.iconbtn\.glassy\s*\{[\s\S]*rgba\(53,48,48/);
   assert.match(css, /:focus-visible/);
 });
+
+
+test('selected chips and segmented controls use the local pencil texture', () => {
+  assert.match(css, /\.chip:not\(\.ghost\)::after/);
+  assert.match(css, /\.seg button\.on::after/);
+  assert.match(css, /\.ctab\.on::after/);
+  assert.match(css, /assets\/ui-pencil-hatch\.svg/);
+  assert.match(css, /\.chip:focus-visible/);
+});

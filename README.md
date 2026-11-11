@@ -1,6 +1,6 @@
 # ŻARŁOK
 
-> **Aktualna wersja aplikacji: 1.5.21**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
+> **Aktualna wersja aplikacji: 1.5.22**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
@@ -11,7 +11,7 @@ Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur bazowyc
 - **Kalkulator pizzy (1.5.15):** profile neapolitańska, klasyczna, rzymska tonda i pizza na blasze (teglia); automat proponuje parametry na podstawie stylu, mąki i fermentacji, a tryb hybrydowy pozwala ręcznie poprawić każdy parametr. Zakwas 1:1:2 ma osobne porcje do ciasta i dokarmienia, z pełnym bilansem mąki i wody.
 - **Przeglądanie receptur (1.5.14):** wygodniejszy pasek wyszukiwania i filtrów na telefonie, równe kafelki z wycentrowanymi ilustracjami oraz czytelniejsze oznaczenia pochodzenia.
 
-- **Warstwa UI (1.5.18):** wszystkie 64 ikony nawigacji i akcji mają własny, lekko kredkowy rysunek; aktywna ikona dolnego paska ma podwójny kontur; warianty przycisków mają spójne grafitowe, miedziane i czerwone powierzchnie, a przyciski subtelną lokalną teksturę. Ilustracje potraw i mapowania ikon składników pozostają bez zmian.
+- **Warstwa UI (1.5.18):** wszystkie 64 ikony nawigacji i akcji mają własny, lekko kredkowy rysunek; aktywna ikona dolnego paska ma podwójny kontur; warianty przycisków mają spójne grafitowe, miedziane i czerwone powierzchnie; aktywne filtry i wybory mają subtelną fakturę kredki, a przyciski subtelną lokalną teksturę. Ilustracje potraw i mapowania ikon składników pozostają bez zmian.
 
 - **Podgląd ikon UI (1.5.19):** osobna strona `ui-icons-preview.html` prezentuje wszystkie 64 znaki, warianty przycisków i dolną nawigację w stylach aplikacji.
 
