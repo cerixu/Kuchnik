@@ -79,7 +79,7 @@ const PIZZA_FLOURS = Object.freeze({
   'gusto-bello-00': { label: 'Gusto Bello 00 · Biedronka', short: 'Gusto Bello 00', protein: 12, wMin: null, wMax: null, hydration: 61, hMin: 57, hMax: 64, maxShare: 100, doseHint: 'Może być 100% bazy przy krótszym procesie; wodę dodawaj ostrożnie i etapami.', dataNote: '12% białka z etykiety; parametr W nieopublikowany. Zakres hydracji to ostrożny punkt startowy, nie deklaracja producenta.', why: 'Na opakowaniu podawane jest 12% białka, ale producent nie publikuje parametru W. Przyjmij ostrożną hydrację i dodawaj wodę stopniowo; nie zakładaj, że samo 12% białka oznacza wysoką siłę mąki.', url: 'https://cdn.biedronka.pl/newsletter/assets-glovo/_files/ingredient_list_glovo.pdf' },
   superiore: { label: 'Caputo Superiore', short: 'Superiore', protein: 12, wMin: 240, wMax: 260, hydration: 62, hMin: 58, hMax: 66, maxShare: 100, doseHint: 'Do krótszego i średniego dojrzewania; może być 100% bazy.', why: 'Mąka średniej siły przeznaczona do średniego czasu fermentacji. Może być bazą ciast o krótszym dojrzewaniu niż te prowadzone na Saccorosso lub Cuoco.', url: 'https://www.mulinocaputo.it/en/products/top/' },
   classica: { label: 'Caputo Classica', short: 'Classica', protein: 12, wMin: 220, wMax: 240, hydration: 60, hMin: 55, hMax: 64, maxShare: 100, doseHint: 'Do krótkiej fermentacji: może stanowić 100% bazy.', why: 'Mąka o niższej sile, przeznaczona do krótkiego dojrzewania i lekkiego pieczywa. W pizzy wybieraj ją do krótkiego procesu, nie do wielodniowej fermentacji.', url: 'https://www.mulinocaputo.it/en/products/classic/' },
-  semola: { label: 'Semola rimacinata · durum', short: 'Semola', protein: 13, wMin: 230, wMax: 230, hydration: 62, hMin: 58, hMax: 67, maxShare: 15, doseHint: 'Dodatek smakowo-kolorystyczny: zacznij od 5–10%; limit startowy 15%.', why: 'Mąka z pszenicy durum. W pizzy używaj jej jako niewielkiego dodatku dla koloru i charakteru; Caputo wskazuje ją przede wszystkim do makaronu, pieczywa z pszenicy durum i podsypywania blatu.', url: 'https://www.mulinocaputo.it/en/products/durum-wheat-semolina-5kg/' },
+  semola: { label: 'Semola rimacinata · durum', short: 'Semola', protein: 13, wMin: 230, wMax: 230, hydration: 62, hMin: 58, hMax: 67, maxShare: 15, doseHint: 'Dodatek smakowo-kolorystyczny: zacznij od 5–10%; limit startowy 15%.', why: 'Mąka z pszenicy durum. W pizzy używaj jej jako niewielkiego dodatku dla koloru i charakteru; Caputo wskazuje ją przede wszystkim do makaronu, pieczywa z pszenicy durum i podsypywania blatu.', url: 'https://www.mulinocaputo.it/en/prodotti/semola/' },
 });
 
 const PIZZA_STYLES = Object.freeze({
@@ -126,7 +126,8 @@ function pizzaCalculator() {
 
     if (short) {
       if (st.style === 'romana') return [{ type: 'classica', parts: 70 }, { type: 'pizzeria-blue', parts: 30 }];
-      return [{ type: 'classica', parts: 100 }];
+      if (st.style === 'classic') return [{ type: 'classica', parts: 100 }];
+      return [{ type: 'pizzeria-blue', parts: 100 }];
     }
 
     if (long) {
@@ -136,7 +137,9 @@ function pizzaCalculator() {
     }
 
     if (hours >= 18) {
-      if (st.style === 'classic') return [{ type: 'pizzeria-blue', parts: 80 }, { type: 'saccorosso', parts: 20 }];
+      if (st.style === 'romana' || st.style === 'classic') {
+        return [{ type: 'pizzeria-blue', parts: 80 }, { type: 'saccorosso', parts: 20 }];
+      }
       return [{ type: 'nuvola', parts: 100 }];
     }
     return [{ type: 'pizzeria-blue', parts: 100 }];
