@@ -28,7 +28,7 @@ try {
   const result = await page.evaluate(() => ({
     pageTitle: document.title,
     iconSvgCount: document.querySelectorAll('.ui-preview-icon svg.ico-pencil').length,
-    hatchBackground: getComputedStyle(document.querySelector('.ui-preview-control.primary')).backgroundImage,
+    hatchBackground: getComputedStyle(document.querySelector('.ui-preview-control.primary'), '::after').backgroundImage,
     horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth,
     viewport: document.querySelector('meta[name="viewport"]')?.content || '',
   }));
