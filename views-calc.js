@@ -564,7 +564,7 @@ function pizzaCalculator() {
           else { build(); paintOut(); }
         })),
         segmented([['auto', 'Automat'], ['hybrid', 'Automat + ręcznie'], ['manual', 'Ręcznie']], st.calcMode, (value) => {
-          st.calcMode = value; save();
+          st.calcMode = value; if (value === 'auto') syncAutoParameters(); save();
           if (value === 'auto') applyAutoParameters();
           else { build(); paintOut(); }
         }, { label: 'Sposób doboru parametrów' }),
