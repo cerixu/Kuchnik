@@ -91,6 +91,7 @@ const PIZZA_STYLES = Object.freeze({
 function pizzaCalculator() {
   // Zachowujemy dotychczasowe klucze calc:pizza (flour, flourType, balls,
   // ballWeight itd.), aby aktualizacja nie resetowała ustawień na urządzeniu.
+  const legacySavedState = kv.get('calc:pizza').catch(() => null);
   const { st, save, ready } = memo('pizza', {
     mode: 'balls', flour: 7500, flourType: 'pizzeria-blue', flourBlend: null,
     balls: 4, ballWeight: 250, hydration: 65, salt: 3, oil: 0, yeast: 0.2,
@@ -116,19 +117,24 @@ function pizzaCalculator() {
     const hours = fermentationHours();
     const short = hours <= 10;
     const long = hours >= 36;
-    if (st.style === 'teglia') {
-      return long
-        ? [{ type: 'nuvola', parts: 70 }, { type: 'nuvola-super', parts: 30 }]
-        : [{ type: 'nuvola', parts: 100 }];
-    }
+
+    // Teglia wymaga mocnej mąki, która utrzyma wysoką hydrację.
+    // Nuvola Super ma opublikowany zakres W 320–340 i zakres hydracji 70–78%.
+    if (st.style === 'teglia') return [{ type: 'nuvola-super', parts: 100 }];
+
     if (short) {
       if (st.style === 'romana') return [{ type: 'classica', parts: 70 }, { type: 'pizzeria-blue', parts: 30 }];
       return [{ type: 'classica', parts: 100 }];
     }
+
     if (long) {
       if (st.style === 'romana') return [{ type: 'pizzeria-blue', parts: 80 }, { type: 'saccorosso', parts: 20 }];
       if (st.style === 'classic') return [{ type: 'pizzeria-blue', parts: 75 }, { type: 'cuoco', parts: 25 }];
       return [{ type: 'pizzeria-blue', parts: 70 }, { type: 'saccorosso', parts: 30 }];
+    }
+
+    if (hours >= 18 && st.style === 'classic') {
+      return [{ type: 'pizzeria-blue', parts: 80 }, { type: 'cuoco', parts: 20 }];
     }
     return [{ type: 'pizzeria-blue', parts: 100 }];
   }
