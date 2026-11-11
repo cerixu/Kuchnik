@@ -75,18 +75,27 @@ const PIZZA_FLOURS = Object.freeze({
   'nuvola-super': { label: 'Caputo Nuvola Super', short: 'Nuvola Super', protein: 13.5, wMin: 320, wMax: 340, hydration: 74, hMin: 70, hMax: 78, why: 'Mocna mąka daje większy margines przy długim dojrzewaniu i wyższej hydracji, ale wysokie W nie wymaga automatycznie większej ilości wody.', url: 'https://www.mulinocaputo.it/en/products/super-cloud/' },
 });
 
+const PIZZA_STYLES = Object.freeze({
+  neapolitan: { label: 'Neapolitańska', hydration: 63, hydrationMin: 60, hydrationMax: 67, salt: 2.8, oil: 0, note: 'Miękkie ciasto, lekkie ranty, krótki wypiek w bardzo wysokiej temperaturze.' },
+  classic: { label: 'Klasyczna', hydration: 64, hydrationMin: 58, hydrationMax: 68, salt: 2.7, oil: 1, note: 'Bardziej zwarte i łatwe w obróbce ciasto; parametry zależą od stylu i temperatury pieca.' },
+  romana: { label: 'Rzymska · tonda', hydration: 67, hydrationMin: 62, hydrationMax: 72, salt: 2.8, oil: 2, note: 'Cienki, kruchy spód; umiarkowana hydracja i niewielki dodatek oliwy.' },
+  teglia: { label: 'Na blasze · teglia', hydration: 78, hydrationMin: 70, hydrationMax: 85, salt: 2.5, oil: 3, note: 'Wysoka hydracja, mocna mąka, dłuższe dojrzewanie i wypiek na dobrze natłuszczonej blasze.' },
+});
+
 function pizzaCalculator() {
   // Zachowujemy dotychczasowe klucze calc:pizza (flour, flourType, balls,
   // ballWeight itd.), aby aktualizacja nie resetowała ustawień na urządzeniu.
   const { st, save, ready } = memo('pizza', {
     mode: 'balls', flour: 7500, flourType: 'pizzeria-blue', flourBlend: null,
     balls: 4, ballWeight: 250, hydration: 65, salt: 3, oil: 0, yeast: 0.2,
-    yeastType: 'fresh', leavenType: 'yeast', starterPct: 0.65, temp: 20, hours: 24,
+    yeastType: 'fresh', leavenType: 'yeast', starterPct: 0.65, starterWaterGrams: null, style: 'neapolitan', calcMode: 'hybrid', temp: 20, hours: 24,
     fermentationMode: 'single', roomHours: 7, roomTemp: 20, fridgeTemp: 4,
   });
   const out = h('div', { class: 'results' });
   const form = h('div', { class: 'stack' });
   st.flourType = PIZZA_FLOURS[st.flourType] ? st.flourType : 'pizzeria-blue';
+  st.style = PIZZA_STYLES[st.style] ? st.style : 'neapolitan';
+  st.calcMode = st.calcMode === 'manual' ? 'manual' : 'hybrid';
   st.fermentationMode = st.fermentationMode === 'split' ? 'split' : 'single';
   const s = calcScreen('Pizza i ciasto', form, out);
   let suggestionHost = null;
@@ -222,6 +231,35 @@ function pizzaCalculator() {
     return [hydrationText, fermentationText];
   }
 
+  function autoParameters(profile = blendProfile()) {
+    const style = PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan;
+    const hydration = Math.max(style.hydrationMin, Math.min(style.hydrationMax,
+      Math.max(profile.hMin, Math.min(profile.hMax, style.hydration))));
+    let yeast = Number(st.yeast) || 0;
+    if (st.leavenType !== 'starter') {
+      let hours = Math.max(1, Number(st.hours) || 24);
+      let temp = Number(st.temp) || 20;
+      if (st.fermentationMode === 'split') {
+        const equivalent = Math.max(1,
+          (Number(st.roomHours) || 0) * Math.pow(2, ((Number(st.roomTemp) || 20) - 20) / 10) +
+          48 * Math.pow(2, ((Number(st.fridgeTemp) || 4) - 20) / 10));
+        hours = equivalent; temp = 20;
+      }
+      const base = yeastSuggestion(temp, hours);
+      yeast = base == null ? yeast : base * (YEAST_TYPES[st.yeastType] || YEAST_TYPES.fresh).f;
+    }
+    return { hydration, salt: style.salt, oil: style.oil, yeast, style };
+  }
+
+  function applyAutoParameters() {
+    const p = autoParameters();
+    st.hydration = p.hydration;
+    st.salt = p.salt;
+    st.oil = p.oil;
+    if (st.leavenType !== 'starter') st.yeast = Math.round(p.yeast * 100) / 100;
+    save(); build(); paintOut(); paintSuggestion();
+  }
+
   function fermentationSummary() {
     if (st.fermentationMode === 'split') {
       return fmtNum(st.roomHours, 1) + ' h wstępnie w ' + fmtNum(st.roomTemp, 1) + ' °C + 48 h w lodówce (ok. ' + fmtNum(st.fridgeTemp, 1) + ' °C)';
@@ -243,6 +281,7 @@ function pizzaCalculator() {
       oil: st.oil,
       yeast: sourdough ? 0 : st.yeast,
       starter: sourdough ? Math.min(1, Math.max(0, Number(st.starterPct) || 0)) : 0,
+      starterWater: sourdough && st.starterWaterGrams != null ? Math.max(0, Number(st.starterWaterGrams) || 0) : null,
     };
     return st.mode === 'flour'
       ? pizzaCalcFromFlour({ flour: st.flour || 0, ...opts, ballWeight: st.ballWeight || 0 })
@@ -251,7 +290,7 @@ function pizzaCalculator() {
 
   function paintOut() {
     const r = compute();
-    if (st.leavenType === 'starter' && !r.starterValid) {
+    if (st.leavenType === 'starter' && (!r.starterValid || !r.massBalanceValid)) {
       out.replaceChildren(h('p', { class: 'muted pad' },
         'Za mało wody w stosunku do zakwasu 1:1:2. Zwiększ hydrację albo zmniejsz procent zakwasu macierzystego.'));
       return;
@@ -286,6 +325,13 @@ function pizzaCalculator() {
           ' · suma procentów ' + fmtNum(r.pctSum, 2) + '% (mąka = 100%)'
         : st.balls + ' × ' + fmtAmount(st.ballWeight) + ' g · suma procentów ' + fmtNum(r.pctSum, 2) + '% (mąka = 100%)'),
       h('section', { class: 'card stack flour-advice' },
+        h('strong', null, 'Profil: ' + (PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan).label),
+        h('p', { class: 'muted small' }, (PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan).note),
+        h('p', { class: 'muted small' }, 'Automat proponuje hydrację ' + fmtNum(autoParameters(profile).hydration, 1) +
+          '%, sól ' + fmtNum(autoParameters(profile).salt, 1) + '% i oliwę ' + fmtNum(autoParameters(profile).oil, 1) +
+          '%. Możesz zastosować propozycję, a potem ręcznie zmienić dowolną wartość.'),
+        button('Zastosuj parametry automatu', { sm: true, kind: 'ghost', onClick: applyAutoParameters }),
+
         h('div', { class: 'row between wrap' },
           h('strong', null, profile.label),
           h('span', { class: 'muted small' }, 'W ' + Math.round(profile.wMin) + '–' + Math.round(profile.wMax) +
@@ -309,8 +355,10 @@ function pizzaCalculator() {
         }, 'Parametry ' + PIZZA_FLOURS[row.type].label + ' u producenta ↗'))),
       sourdough ? h('p', { class: 'muted small' },
         fmtAmount(r.starterSeed) + ' g zakwasu macierzystego + ' + fmtAmount(r.starterFlour) +
-        ' g mąki + ' + fmtAmount(r.starterWater) + ' g wody = ' + fmtAmount(r.starter) +
-        ' g aktywnego zakwasu (1:1:2).') : null,
+        ' g świeżej mąki + ' + fmtAmount(r.starterWater) + ' g świeżej wody = ' + fmtAmount(r.starter) +
+        ' g aktywnego zakwasu (1:1:2). W bilansie uwzględniono też ' +
+        fmtAmount(r.starterFlourContribution) + ' g całkowitej mąki i ' +
+        fmtAmount(r.starterWaterContribution) + ' g całkowitej wody z zakwasu.') : null,
       h('div', { class: 'row wrap gap' },
         button('Zapisz jako recepturę', { icon: 'plus', kind: 'primary', onClick: () => saveAsRecipe(r) }),
         button('Do zakupów', { icon: 'cart', onClick: async () => {
@@ -505,6 +553,16 @@ function pizzaCalculator() {
     suggestionHost = h('div', { class: 'suggestion-host' });
     form.replaceChildren(
       h('section', { class: 'card stack' },
+        field('Rodzaj pizzy', selectEl(Object.entries(PIZZA_STYLES).map(([key, item]) => [key, item.label]), st.style, (value) => {
+          st.style = value; save();
+          if (st.calcMode === 'auto') applyAutoParameters();
+          else { build(); paintOut(); }
+        })),
+        segmented([['hybrid', 'Automat + ręcznie'], ['manual', 'Ręcznie']], st.calcMode, (value) => {
+          st.calcMode = value; save();
+          if (value === 'auto') applyAutoParameters();
+          else { build(); paintOut(); }
+        }, { label: 'Sposób doboru parametrów' }),
         segmented([['balls', 'Na kulki'], ['flour', 'Mam mąkę']], st.mode, (value) => {
           st.mode = value; save(); build(); paintOut();
         }, { label: 'Sposób obliczania' }),
@@ -574,12 +632,11 @@ function pizzaCalculator() {
         })),
         st.leavenType === 'starter'
           ? h('div', { class: 'stack' },
-            field('Zakwas macierzysty (% mąki)', numInput({ value: st.starterPct, label: 'Zakwas macierzysty procent mąki', dec: 3, onInput: (value, el) => {
-              st.starterPct = Math.min(1, Math.max(0, Number(value) || 0));
-              if (Number(value) > 1 && el) el.value = '1';
+            field('Woda do dokarmienia zakwasu (g)', numInput({ value: st.starterWaterGrams == null ? compute().starterWater : st.starterWaterGrams, label: 'Woda do zakwasu w gramach', dec: 1, onInput: (value) => {
+              st.starterWaterGrams = Math.max(0, Number(value) || 0);
               save(); paintOut();
             } })),
-            h('p', { class: 'muted small' }, 'Zakwas macierzysty ma 100% hydracji. Dokarmienie 1:1:2; używaj maksymalnie 1% mąki. Mąka i woda zakwasu wliczają się do hydracji ciasta.'))
+            h('p', { class: 'muted small' }, 'Proporcja zakwas : mąka : woda = 1:1:2. Wpisujesz wodę, którą fizycznie dodasz do zakwasu. Kalkulator wylicza zakwas macierzysty i mąkę do dokarmienia, a ich wodę i mąkę wlicza do hydracji całej receptury.'))
           : h('div', { class: 'row gap' },
             col(field('Rodzaj drożdży', selectEl(Object.entries(YEAST_TYPES).map(([key, value]) => [key, value.label]), st.yeastType, (value) => {
               st.yeastType = value; save(); build(); paintOut(); paintSuggestion();
