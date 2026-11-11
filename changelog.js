@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.19': Object.freeze({
+    intro: 'ŻARŁOK 1.5.19 — kredkowy akcent dolnej nawigacji.',
+    items: ['Aktywna ikona dolnego paska otrzymała ręcznie rysowany, podwójny kontur w przygaszonym miedzianym odcieniu.', 'Zachowano szklaną kapsułę, rozmiary zakładek, wskaźnik aktywnej strony i dotychczasowe zachowanie nawigacji.', 'Dekoracyjny wzór korzysta z lokalnej tekstury SVG, bez zewnętrznych zasobów i bez wpływu na działanie offline.', 'Nie zmieniono ilustracji przepisów ani ikon składników.'],
+    footer: 'Mała poprawka wizualna dolnej nawigacji.'
+  }),
+
   '1.5.18': Object.freeze({
     intro: 'ŻARŁOK 1.5.18 — pełny zestaw ikon UI w stylu kredkowym.',
     items: ['Dopracowano indywidualne, lekko nieregularne rysunki dla pozostałych ikon: narzędzi, akcji, ustawień, nawigacji i informacji.', 'Wszystkie 64 nazwy ikon wykorzystywane w interfejsie mają teraz własny wariant kredkowy; test regresyjny pilnuje pełnego pokrycia.', 'Zachowano istniejące etykiety, rozmiary, kolorystykę, zachowanie kontrolek i tekstury przycisków.', 'Nie zmieniono ilustracji przepisów ani ikon składników.'],
