@@ -49,3 +49,12 @@ test('active bottom navigation uses only local pencil texture', () => {
   assert.match(css, /assets\/ui-pencil-hatch\.svg/);
   assert.match(css, /prefers-reduced-motion: reduce/);
 });
+
+
+test('real buttons use the muted graphite, copper and danger surfaces', () => {
+  assert.match(css, /\.btn\.primary\s*\{[\s\S]*#85543d[\s\S]*#57382f/);
+  assert.match(css, /\.btn\.danger\s*\{[\s\S]*#78413d[\s\S]*#4e2929/);
+  assert.match(css, /\.btn\.ghost\s*\{[\s\S]*background: transparent/);
+  assert.match(css, /\.iconbtn\.glassy\s*\{[\s\S]*rgba\(53,48,48/);
+  assert.match(css, /:focus-visible/);
+});
