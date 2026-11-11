@@ -11,6 +11,8 @@ Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur bazowyc
 - **Kalkulator pizzy (1.5.15):** profile neapolitańska, klasyczna, rzymska tonda i pizza na blasze (teglia); automat proponuje parametry na podstawie stylu, mąki i fermentacji, a tryb hybrydowy pozwala ręcznie poprawić każdy parametr. Zakwas 1:1:2 ma osobne porcje do ciasta i dokarmienia, z pełnym bilansem mąki i wody.
 - **Przeglądanie receptur (1.5.14):** wygodniejszy pasek wyszukiwania i filtrów na telefonie, równe kafelki z wycentrowanymi ilustracjami oraz czytelniejsze oznaczenia pochodzenia.
 
+- **Warstwa UI (1.5.17):** ikony nawigacji i akcji mają własny, lekko kredkowy kontur, a przyciski subtelną lokalną teksturę. Ilustracje potraw i mapowania ikon składników pozostają bez zmian.
+
 ## Co potrafi
 
 - **Safari (1.3):** baza danych ma ponawianie, limit czasu otwarcia, naprawę magazynów i **tryb awaryjny** (localStorage), więc aplikacja otwiera się nawet gdy iOS zablokuje IndexedDB (tryb prywatny, Lockdown, zawieszenie). Przy awarii pokazuje prawdziwy komunikat błędu, przyciski „Spróbuj ponownie” i „Tryb awaryjny”; stan magazynu widać w Ustawieniach.
