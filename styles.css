@@ -2924,7 +2924,7 @@ body:not(.no-tabs):not(.kb-open) #toasts {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   border-radius: inherit;
   background: url("assets/ui-pencil-hatch.svg") center / 128px 128px repeat;
   opacity: .38;
