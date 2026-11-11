@@ -73,6 +73,7 @@ const PIZZA_FLOURS = Object.freeze({
   'saccorosso': { label: 'Caputo 00 Red · Saccorosso', short: 'Saccorosso', protein: 13, wMin: 300, wMax: 320, hydration: 66, hMin: 64, hMax: 70, why: 'Mocniejsza mąka lepiej znosi dłuższe dojrzewanie. Nie zwiększaj wody tylko z powodu wyższego W — obserwuj, jak konkretna partia ją wchłania.', url: 'https://www.mulinocaputo.it/en/products/saccorosso-5kg/' },
   nuvola: { label: 'Caputo Nuvola', short: 'Nuvola', protein: 12.5, wMin: 270, wMax: 290, hydration: 70, hMin: 68, hMax: 75, why: 'Nuvola jest przeznaczona do lekkich, obszernych rantów i dużych pęcherzy. Wyższa hydracja jest punktem wyjścia, a nie gwarancją — technika mieszania i temperatura mają znaczenie.', url: 'https://www.mulinocaputo.it/en/products/nuvola/' },
   'nuvola-super': { label: 'Caputo Nuvola Super', short: 'Nuvola Super', protein: 13.5, wMin: 320, wMax: 340, hydration: 74, hMin: 70, hMax: 78, maxShare: 100, why: 'Mocna mąka do wysokiej hydracji, długiego dojrzewania, bigi i poolish. Zwiększa rezerwę siły mieszanki.', url: 'https://www.mulinocaputo.it/en/prodotti/nuvola-super/' },
+  aria: { label: 'Caputo Aria', short: 'Aria', protein: 13, wMin: 300, wMax: 320, hydration: 75, hMin: 68, hMax: 80, maxShare: 100, dataNote: 'Producent podaje 13% białka i W 300–320. Zakres hydracji w kalkulatorze jest roboczą rekomendacją, nie deklaracją producenta.', why: 'Mąka Caputo opracowana do pizzy na blasze, alla pala i pinsy. Producent wskazuje wysoką hydrację, lekkość, chrupkość i łatwą obróbkę; 70–80% hydracji to zakres startowy kalkulatora, dopasuj go do partii mąki i techniki.', url: 'https://www.mulinocaputo.it/en/prodotti/aria-5kg/' },
   cuoco: { label: 'Caputo Cuoco', short: 'Cuoco', protein: 13, wMin: 300, wMax: 320, hydration: 68, hMin: 64, hMax: 74, maxShare: 100, why: 'Mąka mocna do ciast wymagających długiej fermentacji. Dobra jako baza przy dłuższym dojrzewaniu lub składnik wzmacniający mieszankę.', url: 'https://b2b.kuchnieswiata.com.pl/wheat-flour-00-cuoco-1kg-10-caputo' },
   manitoba: { label: 'Caputo Manitoba Oro', short: 'Manitoba Oro', protein: 14, wMin: 360, wMax: 380, hydration: 74, hMin: 68, hMax: 82, maxShare: 20, why: 'Bardzo mocna mąka, przeznaczona głównie do bogatych i długo fermentowanych wypieków. W cieście na pizzę traktuj ją jako dodatek wzmacniający — zacznij od 5–10%, zwykle nie przekraczaj 20%.', url: 'https://www.mulinocaputo.it/en/products/manitoba-gold/' },
   'gusto-bello-00': { label: 'Gusto Bello 00 · Biedronka', short: 'Gusto Bello 00', protein: 12, wMin: null, wMax: null, hydration: 61, hMin: 57, hMax: 64, maxShare: 100, dataNote: '12% białka z etykiety; parametr W nieopublikowany. Zakres hydracji to ostrożny punkt startowy, nie deklaracja producenta.', why: 'Na opakowaniu podawane jest 12% białka, ale producent nie publikuje parametru W. Przyjmij ostrożną hydrację i dodawaj wodę stopniowo; nie zakładaj, że samo 12% białka oznacza wysoką siłę mąki.', url: 'https://cdn.biedronka.pl/newsletter/assets-glovo/_files/ingredient_list_glovo.pdf' },
@@ -182,6 +183,7 @@ function pizzaCalculator() {
 
   function flourStockKey(item) {
     const name = norm([item.name, ...(item.aliases || [])].join(' ')).replace(/[^a-z0-9]+/g, ' ').trim();
+    if (name.includes('caputo aria') || name === 'aria' || name.includes('farina aria')) return 'aria';
     if (name.includes('nuvola super') || name.includes('super nuvola')) return 'nuvola-super';
     if (name.includes('manitoba oro') || name.includes('caputo manitoba')) return 'manitoba';
     if (name.includes('gusto bello') || name.includes('gustobello')) return 'gusto-bello-00';
@@ -732,7 +734,7 @@ function pizzaCalculator() {
       }, { label: 'Sposób doboru mieszanki mąk' }),
       rowsHost,
       st.blendMode === 'auto'
-        ? h('p', { class: 'muted small' }, 'Automat dobiera mieszankę według stylu pizzy i długości fermentacji. Dla długiego dojrzewania zwiększa udział silniejszej mąki; dla teglia bazuje na Nuvola.')
+        ? h('p', { class: 'muted small' }, 'Automat dobiera mieszankę według stylu pizzy i długości fermentacji. Dla długiego dojrzewania zwiększa udział silniejszej mąki; dla teglia wybiera Caputo Aria, zaprojektowaną do pizzy na blasze, alla pala i pinsy.')
         : h('p', { class: 'muted small' }, 'W trybie własnym zmieniaj części. Kalkulator natychmiast przelicza udział procentowy i gramaturę każdego rodzaju mąki.'),
       st.blendMode === 'manual' && Object.keys(PIZZA_FLOURS).some((key) => !normalizedBlend().some((row) => row.type === key))
         ? button('Dodaj kolejną mąkę', { icon: 'plus', kind: 'ghost', onClick: () => {
