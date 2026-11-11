@@ -102,6 +102,11 @@ try {
   if (!fermentation.includes('8 h') || !fermentation.includes('48 h w lodówce')) {
     throw new Error('Two-stage fermentation was not reflected in the calculator: ' + fermentation);
   }
+  await page.getByLabel('Fermentacja wstępna w godzinach').fill('9');
+  const updatedFermentation = await page.locator('.fermentation-track').innerText();
+  if (!updatedFermentation.includes('9 h')) {
+    throw new Error('Editing fermentation hours did not refresh the visible fermentation timeline: ' + updatedFermentation);
+  }
   await page.locator('#tabbar a[data-tab="start"]').click();
 
   await page.locator('.qa[aria-label="Gotuję"]').click();
