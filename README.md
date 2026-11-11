@@ -1,12 +1,13 @@
 # ŻARŁOK
 
-> **Aktualna wersja aplikacji: 1.5.14**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
+> **Aktualna wersja aplikacji: 1.5.15**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
 Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur bazowych ma lokalny rysunek kredką z matowym czarnym naczyniem i cienkim miedzianym rantem. Własne zdjęcia pozostają bez zmian; status akceptacji ilustracji jest osobno oznaczany w rejestrze. 37 szkiców PREGO! ma osobną kolejkę ilustracji i nie używa rysunków innych potraw.
 
 - **Ekran Start (1.5.13):** wycentrowany układ, równe karty skrótów i krótsza, publiczna nazwa ŻARŁOK.
+- **Kalkulator pizzy (1.5.15):** profile neapolitańska, klasyczna, rzymska tonda i pizza na blasze (teglia); automat proponuje parametry na podstawie stylu, mąki i fermentacji, a tryb hybrydowy pozwala ręcznie poprawić każdy parametr. Zakwas 1:1:2 ma osobne porcje do ciasta i dokarmienia, z pełnym bilansem mąki i wody.
 - **Przeglądanie receptur (1.5.14):** wygodniejszy pasek wyszukiwania i filtrów na telefonie, równe kafelki z wycentrowanymi ilustracjami oraz czytelniejsze oznaczenia pochodzenia.
 
 ## Co potrafi
