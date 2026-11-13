@@ -1,0 +1,26 @@
+name: Kuchnik
+options:
+  bundleIdPrefix: pl.cerixu
+  deploymentTarget:
+    iOS: "16.4"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "16.4"
+    PRODUCT_BUNDLE_IDENTIFIER: pl.cerixu.kuchnik
+    INFOPLIST_KEY_CFBundleDisplayName: "ŻARŁOK"
+    INFOPLIST_KEY_UILaunchScreen_Generation: YES
+    INFOPLIST_KEY_UIStatusBarStyle: UIStatusBarStyleLightContent
+    INFOPLIST_KEY_UISupportedInterfaceOrientations: "UIInterfaceOrientationPortrait"
+    GENERATE_INFOPLIST_FILE: YES
+targets:
+  Kuchnik:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    settings:
+      base:
+        PRODUCT_NAME: Kuchnik
+        INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsArbitraryLoads: NO
