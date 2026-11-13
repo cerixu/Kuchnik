@@ -9,17 +9,20 @@ settings:
     TARGETED_DEVICE_FAMILY: "1"
     IPHONEOS_DEPLOYMENT_TARGET: "16.4"
     PRODUCT_BUNDLE_IDENTIFIER: pl.cerixu.kuchnik
-    INFOPLIST_KEY_CFBundleDisplayName: "ŻARŁOK"
+    INFOPLIST_KEY_CFBundleDisplayName: "Kuchnik"
     INFOPLIST_KEY_UILaunchScreen_Generation: YES
-    INFOPLIST_KEY_UIStatusBarStyle: UIStatusBarStyleLightContent
-    INFOPLIST_KEY_UISupportedInterfaceOrientations: "UIInterfaceOrientationPortrait"
+    INFOPLIST_KEY_UIUserInterfaceStyle: Dark
+    INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "Dodawanie zdjęć potraw do receptur."
+    INFOPLIST_KEY_NSCameraUsageDescription: "Skanowanie kodów i fotografowanie produktów."
     GENERATE_INFOPLIST_FILE: YES
 targets:
   Kuchnik:
     type: application
     platform: iOS
     sources:
-      - path: Sources
+      - path: Kuchnik
+    resources:
+      - path: www
     settings:
       base:
         PRODUCT_NAME: Kuchnik
