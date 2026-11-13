@@ -1,0 +1,25 @@
+name: Kuchnik
+options:
+  bundleIdPrefix: pl.cerixu
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  Kuchnik:
+    type: application
+    platform: iOS
+    sources:
+      - path: ios/Kuchnik
+      - path: build/www
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: pl.cerixu.kuchnik
+        PRODUCT_NAME: Kuchnik
+        INFOPLIST_KEY_CFBundleDisplayName: Kuchnik
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIUserInterfaceStyle: Dark
+        INFOPLIST_KEY_NSPhotoLibraryUsageDescription: Aplikacja umożliwia dodawanie zdjęć potraw.
+        INFOPLIST_KEY_NSCameraUsageDescription: Aplikacja może używać aparatu do skanowania.
+        SWIFT_VERSION: 5.0
+        TARGETED_DEVICE_FAMILY: "1,2"
+        IPHONEOS_DEPLOYMENT_TARGET: "16.0"
