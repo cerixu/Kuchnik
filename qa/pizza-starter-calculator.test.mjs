@@ -15,8 +15,12 @@ test('mąka-first: zakwas 1:1:2 mieści się w zadanej hydracji i masie całkowi
   assert.equal(r.starterFlour, 12.1875);
   assert.equal(r.starterWater, 24.375);
   assert.equal(r.starter, 48.75);
+  assert.equal(r.starterMotherFlour, 6.09375);
+  assert.equal(r.starterMotherWater, 6.09375);
   assert.equal(r.starterFlourContribution, 18.28125);
   assert.equal(r.starterWaterContribution, 30.46875);
+  assert.equal(r.doughFlour + r.starterFlour + r.starterMotherFlour, r.flour);
+  assert.equal(r.doughWater + r.starterWater + r.starterMotherWater, r.water);
   assert.equal(r.doughFlour, 7481.71875);
   assert.equal(r.doughWater, 4844.53125);
   assert.equal(r.pctSum, 168, 'starter is included in formula flour/water, not added as an extra percentage');
@@ -37,6 +41,8 @@ test('procent oznacza masę aktywnego zakwasu 1:1:2 względem całkowitej mąki'
   assert.ok(Math.abs(r.starter / r.flour * 100 - 15.65) < 1e-10);
   assert.ok(Math.abs(r.starterSeed + r.starterFlour + r.starterWater - r.starter) < 1e-10);
   assert.ok(Math.abs(r.starterWater / r.starterFlour - 2) < 1e-10);
+  assert.ok(Math.abs(r.doughFlour + r.starterFlour + r.starterMotherFlour - r.flour) < 1e-10);
+  assert.ok(Math.abs(r.doughWater + r.starterWater + r.starterMotherWater - r.water) < 1e-10);
   assert.ok(Math.abs(r.doughFlour + r.starterFlourContribution - r.flour) < 1e-10);
   assert.ok(Math.abs(r.doughWater + r.starterWaterContribution - r.water) < 1e-10);
   assert.equal(r.massBalanceValid, true);
