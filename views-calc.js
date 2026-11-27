@@ -874,9 +874,7 @@ function pizzaCalculator() {
         })),
         st.leavenType === 'starter'
           ? h('div', { class: 'stack' },
-            field('Aktywny zakwas (% całkowitej mąki)', numInput({ value: st.starterPct, label: 'Aktywny zakwas w procentach mąki', dec: 1, onInput: (value) => {
-              setParameterValue('starterPct', value);
-            } })),
+            field('Aktywny zakwas (% całkowitej mąki)', starterPctInput),
             field('Woda do dokarmienia zakwasu (g)', numInput({ value: st.starterWaterGrams == null ? compute().starterWater : st.starterWaterGrams, label: 'Woda do zakwasu w gramach', dec: 1, onInput: (value) => {
               st.starterWaterGrams = Math.max(0, Number(value) || 0);
               st.autoOverrides = { ...st.autoOverrides, starterPct: true };
