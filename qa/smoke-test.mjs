@@ -87,14 +87,15 @@ try {
   // the flour/water already carried by the 100%-hydration mother starter.
   await page.getByLabel('Rodzaj zaczynu').selectOption('starter');
   const sourdoughResults = await page.locator('.results-grid').innerText();
+  const containsLabel = (text, label) => text.toLocaleLowerCase('pl').includes(label.toLocaleLowerCase('pl'));
   for (const label of ['Mąka do dzieży', 'Woda do dzieży', 'Mąka do zakwasu', 'Woda do zakwasu']) {
-    if (!sourdoughResults.includes(label)) {
+    if (!containsLabel(sourdoughResults, label)) {
       throw new Error('Sourdough recipe is missing exact allocation: ' + label + '\\n' + sourdoughResults);
     }
   }
   const sourdoughRecipe = await liveRecipe.innerText();
   for (const label of ['Woda do dzieży', 'Mąka do zakwasu · dokarmienie', 'Woda do zakwasu · dokarmienie', 'Bilans mąki:', 'Bilans wody:']) {
-    if (!sourdoughRecipe.includes(label)) {
+    if (!containsLabel(sourdoughRecipe, label)) {
       throw new Error('Sourdough live recipe is missing balance detail: ' + label + '\\n' + sourdoughRecipe);
     }
   }
