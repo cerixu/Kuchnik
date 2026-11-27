@@ -390,8 +390,8 @@ export function textArea({ value = '', placeholder = '', onInput, label, rows = 
 }
 
 /** Pole liczbowe z przecinkiem dziesiętnym (klawiatura numeryczna iOS). */
-export function numInput({ value = null, onInput, placeholder = '', label, dec = 3, cls = '' } = {}) {
-  const el = h('input', { class: 'input num ' + cls, type: 'text', inputmode: 'decimal', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false',
+export function numInput({ value = null, onInput, placeholder = '', label, dec = 3, cls = '', inputmode = 'decimal' } = {}) {
+  const el = h('input', { class: 'input num ' + cls, type: 'text', inputmode, autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false',
     'aria-label': label, placeholder, value: value == null ? '' : fmtNum(value, dec), enterkeyhint: 'done' });
   el.addEventListener('input', () => {
     const n = parseNum(el.value);
