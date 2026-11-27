@@ -3,6 +3,12 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.23': Object.freeze({
+    intro: 'ŻARŁOK 1.5.23 — precyzyjniejszy kalkulator ciasta i zakwasu.',
+    items: ['Automatyczna mieszanka mąk dobiera udział słabszej i mocniejszej mąki do docelowego W wynikającego ze stylu oraz czasu i temperatury fermentacji.', 'Podgląd receptury pokazuje dokładne gramatury każdej mąki, a hydracja jest dobierana z profilu mieszanki i zakresu stylu.', 'Aktywny zakwas 1:1:2 jest liczony jako procent całkowitej mąki; automat szacuje dawkę na podstawie czasu i temperatury fermentacji.', 'Mąka i woda wniesione przez zakwas są uwzględniane w bilansie całkowitej hydracji, a ręczne nadpisanie wody do dokarmienia pozostaje dostępne.', 'Wartość W mieszanki jest estymacją z udziałów, a nie pomiarem laboratoryjnym.'],
+    footer: 'Korekta technologii obliczeń pizzy; pozostałe receptury i ilustracje bez zmian.'
+  }),
+
   '1.5.22': Object.freeze({
     intro: 'ŻARŁOK 1.5.22 — kredkowa faktura filtrów i aktywnych wyborów.',
     items: ['Dodano subtelną lokalną fakturę do chipów filtrów oraz aktywnych opcji segmentowanych i zakładek gotowania.', 'Zachowano istniejące miedziane odcienie, obrysy, zaokrąglenia, wysokości dotykowe i działanie wyborów.', 'Dodano widoczny focus dla obsługi klawiaturą i zachowano ograniczenie animacji dla prefers-reduced-motion.', 'Wzór jest lokalnym SVG, dostępny offline.'],

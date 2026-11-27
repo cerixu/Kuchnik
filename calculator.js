@@ -135,7 +135,9 @@ const nonNegativeNumber = (value) => {
  * Obliczenia od ilości mąki. Zakwas macierzysty (100% hydracji) jest
  * dokarmiany w proporcji wagowej 1:1:2; jego mąka i woda wliczają się
  * do docelowej hydracji i całkowitej masy ciasta.
- * starter = procent masy zakwasu macierzystego względem całkowitej mąki (maks. 1%).
+ * starter = procent AKTYWNEGO zakwasu 1:1:2 względem całkowitej mąki.
+ * Przy zakwasie macierzystym 100% hydracji i dokarmieniu 1:1:2:
+ * aktywny zakwas ma 166,7% hydracji; jego mąka i woda są bilansowane osobno.
  */
 /**
  * Pełny bilans piekarski. flour/water oznaczają wartości CAŁKOWITE receptury,
@@ -151,21 +153,27 @@ export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, ye
   const s = nonNegativeNumber(salt);
   const o = nonNegativeNumber(oil);
   const y = nonNegativeNumber(yeast);
-  const seedPct = Math.min(1, nonNegativeNumber(starter));
+  // starter oznacza procent gotowego, aktywnego zakwasu 1:1:2 względem
+  // całkowitej mąki. Zakwas: mąka: woda = 1:1:2, więc masa levainu = 2 × feedWater.
+  const starterPct = Math.min(40, nonNegativeNumber(starter));
   const water = f * h / 100;
   const saltAmount = f * s / 100;
   const oilAmount = f * o / 100;
   const yeastAmount = f * y / 100;
   const starterWater = starterWaterInput != null && Number.isFinite(Number(starterWaterInput))
     ? nonNegativeNumber(starterWaterInput)
-    : f * seedPct / 100 * 2;
+    : f * starterPct / 100 / 2;
+  // Starter macierzysty ma 100% hydracji, więc jego masa wnosi po połowie
+  // mąki i wody. Dokarmienie ma proporcję starter:mąka:woda = 1:1:2.
   const starterSeed = starterWater / 2;
   const starterFlour = starterSeed;
+  const starterMotherFlour = starterSeed / 2;
+  const starterMotherWater = starterSeed / 2;
   const starterTotal = starterSeed * 4;
-  const starterFlourContribution = starterSeed * 1.5;
-  const starterWaterContribution = starterSeed * 2.5;
-  const doughFlour = f - starterFlourContribution;
-  const doughWater = water - starterWaterContribution;
+  const starterFlourContribution = starterFlour + starterMotherFlour;
+  const starterWaterContribution = starterWater + starterMotherWater;
+  const doughFlour = f - starterFlour - starterMotherFlour;
+  const doughWater = water - starterWater - starterMotherWater;
   const total = f + water + saltAmount + oilAmount + yeastAmount;
   const pctSum = 100 + h + s + o + y;
   const weight = nonNegativeNumber(ballWeight);
@@ -174,6 +182,7 @@ export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, ye
   return {
     flour: f, water, salt: saltAmount, oil: oilAmount, yeast: yeastAmount, total, pctSum,
     ballCount, remainder, starterSeed, starterFlour, starterWater, starter: starterTotal,
+    starterMotherFlour, starterMotherWater,
     starterFlourContribution, starterWaterContribution, doughFlour, doughWater,
     starterValid: doughFlour >= -1e-9 && doughWater >= -1e-9,
     hydrationActual: f > 0 ? water / f * 100 : 0,
