@@ -102,10 +102,18 @@ try {
 
   // Manual sourdough dose must retain hundredths; both decimal separators work.
   const starterDoseInput = page.getByLabel('Aktywny zakwas procent');
+  if (await starterDoseInput.getAttribute('inputmode') !== 'text') {
+    throw new Error('Sourdough percentage must expose a text keyboard so the dot key is available on iOS.');
+  }
+  await starterDoseInput.fill('0.65');
+  const dotDoseValue = Number(await starterDoseInput.inputValue());
+  if (dotDoseValue !== 0.65) {
+    throw new Error('Sourdough percentage must accept a decimal point, received ' + await starterDoseInput.inputValue());
+  }
   await starterDoseInput.fill('0,65');
-  const starterDoseValue = Number((await starterDoseInput.inputValue()).replace(',', '.'));
-  if (starterDoseValue !== 0.65) {
-    throw new Error('Sourdough percentage must retain 0.65%, received ' + await starterDoseInput.inputValue());
+  const commaDoseValue = Number((await starterDoseInput.inputValue()).replace(',', '.'));
+  if (commaDoseValue !== 0.65) {
+    throw new Error('Sourdough percentage must retain comma decimals too, received ' + await starterDoseInput.inputValue());
   }
 
   await page.getByRole('button', { name: 'Moja mieszanka' }).click();
