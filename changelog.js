@@ -3,6 +3,11 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.24': Object.freeze({
+    intro: 'ŻARŁOK 1.5.24 — precyzyjne dawki zakwasu.',
+    items: ['Pole aktywnego zakwasu obsługuje dwie cyfry po przecinku, np. 0,65%.', 'Wpisywanie działa z separatorem dziesiętnym kropka lub przecinek.', 'Automatyczna rekomendacja zakwasu zachowuje dokładność do 0,01%, a ręczna wartość nie jest zaokrąglana do pełnych procentów.'],
+    footer: 'Poprawiono precyzję dozowania zakwasu bez zmiany bilansu mąki i wody.'
+  }),
   '1.5.23': Object.freeze({
     intro: 'ŻARŁOK 1.5.23 — precyzyjniejszy kalkulator ciasta i zakwasu.',
     items: ['Automatyczna mieszanka mąk dobiera udział słabszej i mocniejszej mąki do docelowego W wynikającego ze stylu oraz czasu i temperatury fermentacji.', 'Podgląd receptury pokazuje dokładne gramatury każdej mąki, a hydracja jest dobierana z profilu mieszanki i zakresu stylu.', 'Aktywny zakwas 1:1:2 jest liczony jako procent całkowitej mąki; automat szacuje dawkę na podstawie czasu i temperatury fermentacji.', 'Mąka i woda wniesione przez zakwas są uwzględniane w bilansie całkowitej hydracji, a ręczne nadpisanie wody do dokarmienia pozostaje dostępne.', 'Wartość W mieszanki jest estymacją z udziałów, a nie pomiarem laboratoryjnym.'],
