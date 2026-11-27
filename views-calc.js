@@ -819,7 +819,7 @@ function pizzaCalculator() {
     const saltInput = numInput({ value: st.salt, label: 'Sól', dec: 2, onInput: (value) => setParameterValue('salt', value) });
     const oilInput = numInput({ value: st.oil, label: 'Oliwa', dec: 2, onInput: (value) => setParameterValue('oil', value) });
     const yeastInput = numInput({ value: st.yeast, label: 'Drożdże procent', dec: 2, onInput: (value) => setParameterValue('yeast', value) });
-    const starterPctInput = numInput({ value: st.starterPct, label: 'Aktywny zakwas procent', dec: 2, onInput: (value) => setParameterValue('starterPct', value) });
+    const starterPctInput = numInput({ value: st.starterPct, label: 'Aktywny zakwas procent', placeholder: 'np. 0.65', dec: 2, inputmode: 'text', onInput: (value) => setParameterValue('starterPct', value) });
     parameterControls.starterPct = starterPctInput;
     parameterControls.salt = saltInput;
     parameterControls.oil = oilInput;
