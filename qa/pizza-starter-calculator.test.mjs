@@ -29,6 +29,20 @@ test('mąka-first: zakwas 1:1:2 mieści się w zadanej hydracji i masie całkowi
   assert.ok(Math.abs(components - r.total) < 1e-8, 'component mass must equal total dough mass');
 });
 
+test('procent oznacza masę aktywnego zakwasu 1:1:2 względem całkowitej mąki', () => {
+  const r = pizzaCalcFromFlour({
+    flour: 7500, hydration: 63.5, salt: 2.8, oil: 0, yeast: 0, starter: 15.65,
+  });
+
+  assert.ok(Math.abs(r.starter / r.flour * 100 - 15.65) < 1e-10);
+  assert.ok(Math.abs(r.starterSeed + r.starterFlour + r.starterWater - r.starter) < 1e-10);
+  assert.ok(Math.abs(r.starterWater / r.starterFlour - 2) < 1e-10);
+  assert.ok(Math.abs(r.doughFlour + r.starterFlourContribution - r.flour) < 1e-10);
+  assert.ok(Math.abs(r.doughWater + r.starterWaterContribution - r.water) < 1e-10);
+  assert.equal(r.massBalanceValid, true);
+  assert.equal(r.starterValid, true);
+});
+
 test('tryb kulek zachowuje docelową masę także przy zakwasie', () => {
   const r = pizzaCalc({
     balls: 4, ballWeight: 250, hydration: 65, salt: 3, oil: 0, yeast: 0, starter: 0.65,
