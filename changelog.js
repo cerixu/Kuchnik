@@ -3,6 +3,11 @@
    z Zaruok-App. Każde wydanie powinno mieć własny wpis.
    ========================================================================== */
 export const CHANGELOG = Object.freeze({
+  '1.5.25': Object.freeze({
+    intro: 'ŻARŁOK 1.5.25 — klawiatura dziesiętna iOS.',
+    items: ['Pole procentu aktywnego zakwasu otwiera pełną klawiaturę tekstową, aby kropka była dostępna także w polskim układzie iOS.', 'Pozostałe pola liczbowe zachowują klawiaturę dziesiętną.'],
+    footer: 'Można wpisać np. 0.65 lub 0,65 bez zmiany sposobu obliczeń.'
+  }),
   '1.5.24': Object.freeze({
     intro: 'ŻARŁOK 1.5.24 — precyzyjne dawki zakwasu.',
     items: ['Pole aktywnego zakwasu obsługuje dwie cyfry po przecinku, np. 0,65%.', 'Wpisywanie działa z separatorem dziesiętnym kropka lub przecinek.', 'Automatyczna rekomendacja zakwasu zachowuje dokładność do 0,01%, a ręczna wartość nie jest zaokrąglana do pełnych procentów.'],
