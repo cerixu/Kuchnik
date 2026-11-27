@@ -100,6 +100,14 @@ try {
     }
   }
 
+  // Manual sourdough dose must retain hundredths; both decimal separators work.
+  const starterDoseInput = page.getByLabel('Aktywny zakwas procent');
+  await starterDoseInput.fill('0,65');
+  const starterDoseValue = Number((await starterDoseInput.inputValue()).replace(',', '.'));
+  if (starterDoseValue !== 0.65) {
+    throw new Error('Sourdough percentage must retain 0.65%, received ' + await starterDoseInput.inputValue());
+  }
+
   await page.getByRole('button', { name: 'Moja mieszanka' }).click();
   await page.getByLabel('Rodzaj mąki 1').selectOption('pizzeria-blue');
   await page.getByRole('button', { name: 'Dodaj kolejną mąkę' }).click();
