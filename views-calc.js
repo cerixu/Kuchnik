@@ -96,7 +96,7 @@ function pizzaCalculator() {
   const { st, save, ready } = memo('pizza', {
     mode: 'balls', flour: 7500, flourType: 'pizzeria-blue', flourBlend: null,
     balls: 4, ballWeight: 250, hydration: 65, salt: 3, oil: 0, yeast: 0.2,
-    yeastType: 'fresh', leavenType: 'yeast', starterPct: 15, starterWaterGrams: null, style: 'neapolitan', calcMode: 'hybrid', autoOverrides: {}, blendMode: 'auto', temp: 20, hours: 24,
+    yeastType: 'fresh', leavenType: 'yeast', starterPct: 15, starterPctModel: 'active', starterWaterGrams: null, style: 'neapolitan', calcMode: 'hybrid', autoOverrides: {}, blendMode: 'auto', temp: 20, hours: 24,
     fermentationMode: 'single', roomHours: 7, roomTemp: 20, fridgeTemp: 4,
   });
   const out = h('div', { class: 'results' });
@@ -478,7 +478,7 @@ function pizzaCalculator() {
     const doughIngredientItems = [
       ...flourDoseRows,
       ...[
-        ['Woda do ciasta', sourdough ? r.doughWater : r.water],
+        [sourdough ? 'Woda do dzieży' : 'Woda', sourdough ? r.doughWater : r.water],
         ['Sól', r.salt],
         ...(r.oil > 0 ? [['Oliwa', r.oil]] : []),
         ...(!sourdough ? [['Drożdże ' + yeast.label, r.yeast]] : []),
@@ -489,14 +489,26 @@ function pizzaCalculator() {
           h('span', { class: 'unit' }, 'g')))),
     ];
     const starterIngredientItems = [
-      ['Zakwas macierzysty', r.starterSeed],
-      ['Mąka do dokarmienia', r.starterFlour],
-      ['Woda do dokarmienia', r.starterWater],
+      ['Zakwas macierzysty (100% hydracji)', r.starterSeed],
+      ['Mąka do zakwasu · dokarmienie', r.starterFlour],
+      ['Woda do zakwasu · dokarmienie', r.starterWater],
     ].map(([name, grams]) => h('li', { class: 'ing' },
       h('span', { class: 'ing-name' }, name),
       h('span', { class: 'ing-qty' },
         h('span', { class: 'amt num' }, fmtAmount(grams)),
         h('span', { class: 'unit' }, 'g'))));
+    const starterContributionNote = sourdough
+      ? h('p', { class: 'muted small' },
+        'Zakwas macierzysty wnosi już do receptury ' + gramsLabel(r.starterMotherFlour) +
+        ' mąki i ' + gramsLabel(r.starterMotherWater) +
+        ' wody. Te ilości są odjęte od składników do dzieży. Bilans mąki: ' +
+        gramsLabel(r.doughFlour) + ' do dzieży + ' + gramsLabel(r.starterFlour) +
+        ' do dokarmienia + ' + gramsLabel(r.starterMotherFlour) +
+        ' z zakwasu macierzystego = ' + gramsLabel(r.flour) + '. Bilans wody: ' +
+        gramsLabel(r.doughWater) + ' do dzieży + ' + gramsLabel(r.starterWater) +
+        ' do zakwasu + ' + gramsLabel(r.starterMotherWater) +
+        ' z zakwasu macierzystego = ' + gramsLabel(r.water) + '.')
+      : null;
 
     const liveRecipe = h('section', { class: 'card stack live-recipe' },
       h('div', { class: 'row between wrap' },
@@ -512,6 +524,7 @@ function pizzaCalculator() {
       h('p', { class: 'muted small' },
         'Bilans łączny: ' + gramsLabel(r.flour) + ' mąki + ' + gramsLabel(r.water) +
         ' wody = ' + fmtNum(r.flour > 0 ? r.water / r.flour * 100 : 0, 1) + '% hydracji.'),
+      starterContributionNote,
       h('div', { class: 'ing-section' },
         h('div', { class: 'tape' }, 'DO GŁÓWNEGO CIASTA'),
         h('ul', { class: 'ing-list' }, ...doughIngredientItems)),
@@ -522,13 +535,15 @@ function pizzaCalculator() {
         'Zmiana liczby kulek, gramatury, stylu pizzy, składu mąki, hydracji lub fermentacji od razu aktualizuje tę listę. Zapis do książki receptur wykonasz przyciskiem poniżej.'));
     out.replaceChildren(
       h('div', { class: 'results-grid' },
-        result(sourdough ? 'Mąka do ciasta' : 'Mąka', fmtAmount(sourdough ? r.doughFlour : r.flour), 'g', 'big'),
-        result(sourdough ? 'Woda do ciasta' : 'Woda', fmtAmount(sourdough ? r.doughWater : r.water), 'g', 'big'),
+        result(sourdough ? 'Mąka do dzieży' : 'Mąka', fmtAmount(sourdough ? r.doughFlour : r.flour), 'g', 'big'),
+        result(sourdough ? 'Woda do dzieży' : 'Woda', fmtAmount(sourdough ? r.doughWater : r.water), 'g', 'big'),
+        sourdough ? result('Mąka do zakwasu', fmtAmount(r.starterFlour), 'g', 'big') : null,
+        sourdough ? result('Woda do zakwasu', fmtAmount(r.starterWater), 'g', 'big') : null,
+        sourdough ? result('Mąka wniesiona przez zakwas macierzysty', fmtAmount(r.starterMotherFlour), 'g') : null,
+        sourdough ? result('Woda wniesiona przez zakwas macierzysty', fmtAmount(r.starterMotherWater), 'g') : null,
         result('Sól', fmtAmount(r.salt), 'g'),
-        sourdough ? result('Zakwas macierzysty', fmtAmount(r.starterSeed), 'g') : result('Drożdże ' + yeast.label, fmtNum(r.yeast, 2), 'g'),
-        sourdough ? result('Mąka do zakwasu', fmtAmount(r.starterFlour), 'g') : null,
-        sourdough ? result('Woda do zakwasu', fmtAmount(r.starterWater), 'g') : null,
-        sourdough ? result('Aktywny zakwas łącznie', fmtAmount(r.starter), 'g') : null,
+        sourdough ? result('Zakwas macierzysty · masa do pobrania', fmtAmount(r.starterSeed), 'g') : result('Drożdże ' + yeast.label, fmtNum(r.yeast, 2), 'g'),
+        sourdough ? result('Aktywny zakwas · gotowy', fmtAmount(r.starter), 'g') : null,
         st.oil > 0 ? result('Oliwa', fmtAmount(r.oil), 'g') : null,
         result('Masa całkowita', fmtAmount(r.total), 'g', 'total')),
       h('p', { class: 'muted small' }, st.mode === 'flour'
@@ -896,6 +911,17 @@ function pizzaCalculator() {
 
   ready.then(async () => {
     const persisted = await legacySavedState;
+    if (persisted && !persisted.starterPctModel && Number.isFinite(Number(persisted.starterPct))) {
+      // W poprzednim modelu procent oznaczał ilość zakwasu macierzystego,
+      // a teraz oznacza gotowy, aktywny levain 1:1:2 (masa = 4 × dawny seed).
+      st.starterPct = Math.min(35, Math.max(0, Number(persisted.starterPct) * 4));
+      st.starterPctModel = 'active';
+      if (st.starterWaterGrams != null) {
+        const current = compute();
+        if (current.flour > 0) st.starterPct = current.starter / current.flour * 100;
+      }
+      save();
+    }
     if (persisted && persisted.calcMode === 'hybrid' &&
         !Object.prototype.hasOwnProperty.call(persisted, 'autoOverrides')) {
       // Starsze wydanie hybrydy zapisywało parametry jako ręczne.
