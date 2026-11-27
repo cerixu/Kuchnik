@@ -370,7 +370,7 @@ function pizzaCalculator() {
       if (key === 'yeast' && st.leavenType === 'starter') return;
       if (key === 'starterPct' && st.leavenType !== 'starter') return;
       if (st.calcMode === 'auto' || !st.autoOverrides[key]) {
-        st[key] = key === 'yeast' ? Math.round(p[key] * 100) / 100 : Math.round(p[key] * 10) / 10;
+        st[key] = (key === 'yeast' || key === 'starterPct') ? Math.round(p[key] * 100) / 100 : Math.round(p[key] * 10) / 10;
         if (key === 'starterPct') st.starterWaterGrams = null;
       }
     });
@@ -819,7 +819,7 @@ function pizzaCalculator() {
     const saltInput = numInput({ value: st.salt, label: 'Sól', dec: 2, onInput: (value) => setParameterValue('salt', value) });
     const oilInput = numInput({ value: st.oil, label: 'Oliwa', dec: 2, onInput: (value) => setParameterValue('oil', value) });
     const yeastInput = numInput({ value: st.yeast, label: 'Drożdże procent', dec: 2, onInput: (value) => setParameterValue('yeast', value) });
-    const starterPctInput = numInput({ value: st.starterPct, label: 'Aktywny zakwas procent', dec: 1, onInput: (value) => setParameterValue('starterPct', value) });
+    const starterPctInput = numInput({ value: st.starterPct, label: 'Aktywny zakwas procent', dec: 2, onInput: (value) => setParameterValue('starterPct', value) });
     parameterControls.starterPct = starterPctInput;
     parameterControls.salt = saltInput;
     parameterControls.oil = oilInput;

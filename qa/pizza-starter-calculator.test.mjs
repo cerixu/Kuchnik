@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { pizzaCalc, pizzaCalcFromFlour } from '../calculator.js';
+import { parseNum } from '../util.js';
 
 test('mąka-first: zakwas 1:1:2 mieści się w zadanej hydracji i masie całkowitej', () => {
   const r = pizzaCalcFromFlour({
@@ -82,4 +83,13 @@ test('niepoprawne liczby nie propagują NaN ani Infinity do wyniku', () => {
   for (const key of ['flour', 'water', 'salt', 'oil', 'yeast', 'total', 'pctSum', 'doughFlour', 'doughWater']) {
     assert.ok(Number.isFinite(r[key]), key + ' must remain finite');
   }
+});
+
+
+test('procent zakwasu przyjmuje dokładność 0,01% i separator kropka lub przecinek', () => {
+  assert.equal(parseNum('0.65'), 0.65);
+  assert.equal(parseNum('0,65'), 0.65);
+  const r = pizzaCalcFromFlour({ flour: 7500, hydration: 65, salt: 3, starter: parseNum('0,65') });
+  assert.equal(r.starter, 48.75);
+  assert.equal(r.starterValid, true);
 });
