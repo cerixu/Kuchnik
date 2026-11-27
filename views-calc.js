@@ -142,6 +142,10 @@ function pizzaCalculator() {
     if (st.style === 'neapolitan' && targetW >= nuvola.wMin && targetW <= nuvola.wMax) {
       return [{ type: 'nuvola', parts: 100 }];
     }
+    const aria = PIZZA_FLOURS.aria;
+    if (st.style === 'teglia' && targetW >= aria.wMin && targetW <= aria.wMax) {
+      return [{ type: 'aria', parts: 100 }];
+    }
     const pair = st.style === 'teglia'
       ? ['aria', 'nuvola-super']
       : st.style === 'classic' || st.style === 'romana'
