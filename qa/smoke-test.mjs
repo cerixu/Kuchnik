@@ -75,12 +75,28 @@ try {
     throw new Error('Changing the number of dough balls did not update the live flour dose.');
   }
 
-  const waterRow = liveRecipe.locator('.ing').filter({ hasText: 'Woda do ciasta' });
+  const waterRow = liveRecipe.locator('.ing').filter({ hasText: 'Woda do dzieży' });
   const initialWaterRow = await waterRow.innerText();
   await page.getByLabel('Hydracja (%) — wpisz lub przesuń suwak').fill('70');
   const updatedWaterRow = await waterRow.innerText();
   if (initialWaterRow === updatedWaterRow) {
     throw new Error('Changing hydration did not update the live water amount.');
+  }
+
+  // Sourdough workflow must expose the four physical additions and balance
+  // the flour/water already carried by the 100%-hydration mother starter.
+  await page.getByLabel('Rodzaj zaczynu').selectOption('starter');
+  const sourdoughResults = await page.locator('.results-grid').innerText();
+  for (const label of ['Mąka do dzieży', 'Woda do dzieży', 'Mąka do zakwasu', 'Woda do zakwasu']) {
+    if (!sourdoughResults.includes(label)) {
+      throw new Error('Sourdough recipe is missing exact allocation: ' + label + '\\n' + sourdoughResults);
+    }
+  }
+  const sourdoughRecipe = await liveRecipe.innerText();
+  for (const label of ['Woda do dzieży', 'Mąka do zakwasu · dokarmienie', 'Woda do zakwasu · dokarmienie', 'Bilans mąki:', 'Bilans wody:']) {
+    if (!sourdoughRecipe.includes(label)) {
+      throw new Error('Sourdough live recipe is missing balance detail: ' + label + '\\n' + sourdoughRecipe);
+    }
   }
 
   await page.getByRole('button', { name: 'Moja mieszanka' }).click();
