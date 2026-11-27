@@ -879,6 +879,10 @@ function pizzaCalculator() {
             } })),
             field('Woda do dokarmienia zakwasu (g)', numInput({ value: st.starterWaterGrams == null ? compute().starterWater : st.starterWaterGrams, label: 'Woda do zakwasu w gramach', dec: 1, onInput: (value) => {
               st.starterWaterGrams = Math.max(0, Number(value) || 0);
+              st.autoOverrides = { ...st.autoOverrides, starterPct: true };
+              const current = compute();
+              if (current.flour > 0) st.starterPct = current.starter / current.flour * 100;
+              if (parameterControls.starterPct) parameterControls.starterPct.value = String(st.starterPct);
               if (refreshFlourBlendEditor) refreshFlourBlendEditor(); save(); paintOut();
             } })),
             h('p', { class: 'muted small' }, 'Automat dobiera ilość aktywnego zakwasu z czasu i temperatury fermentacji. Proporcja dokarmienia: zakwas macierzysty : świeża mąka : woda = 1:1:2. Wartość procentowa oznacza masę gotowego, aktywnego zakwasu względem całkowitej mąki. Ręczna zmiana wody do dokarmienia nadpisuje tę sugestię. Mąka i woda wniesione przez zakwas są odejmowane od porcji do głównego ciasta.'))
