@@ -1,12 +1,13 @@
 # ŻARŁOK
 
-> **Aktualna wersja aplikacji: 1.5.22**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
+> **Aktualna wersja aplikacji: 1.5.23**. Wszystkie 567 unikalnych nazw składników w bazie mają zweryfikowane mapowanie do 84 lokalnych rysunków kredką, dostępnych offline.
 
 Prywatny notatnik szefa kuchni na iPhone'a (działa też na innych telefonach i komputerze).
 Instalowalna aplikacja PWA, **działa bez internetu**, bez kont, reklam, śledzenia i płatnych API.
 Wszystkie dane są w pamięci Twojego urządzenia. Każda z 228 receptur bazowych ma lokalny rysunek kredką z matowym czarnym naczyniem i cienkim miedzianym rantem. Własne zdjęcia pozostają bez zmian; status akceptacji ilustracji jest osobno oznaczany w rejestrze. 37 szkiców PREGO! ma osobną kolejkę ilustracji i nie używa rysunków innych potraw.
 
 - **Ekran Start (1.5.13):** wycentrowany układ, równe karty skrótów i krótsza, publiczna nazwa ŻARŁOK.
+- **Kalkulator pizzy (1.5.23):** mieszanka automatyczna dobiera udziały mąk do docelowego W zależnego od stylu oraz czasu i temperatury fermentacji; wyświetla dokładne gramy każdej mąki. Hydracja jest wyznaczana z profilu chłonności mieszanki i ograniczeń stylu, a nie wyłącznie ze stałej wartości. Dawka aktywnego zakwasu 1:1:2 jest proponowana procentowo względem całkowitej mąki na podstawie czasu i temperatury; osobno pokazuje zakwas macierzysty, mąkę i wodę do dokarmienia oraz bilans mąki i wody w cieście. Ręczne ustawienia pozostają możliwe. Parametr W mieszanki jest oznaczony jako estymacja, nie pomiar laboratoryjny. Biblioteka obejmuje Caputo Pizzeria, Saccorosso, Nuvola, Nuvola Super, Aria, Cuoco, Manitoba Oro, Gusto Bello 00 oraz semolę rimacinata; nieznane parametry W są oznaczane jako brak danych.
 - **Kalkulator pizzy (1.5.16):** pełny podgląd receptury aktualizuje się po każdej zmianie. Automat przelicza parametry na podstawie stylu, mąki i fermentacji; w trybie hybrydowym ręcznie zmienione wartości są blokowane, a pozostałe nadal dostosowują się automatycznie. Automatyczna mieszanka dobiera udziały mąk do stylu i czasu dojrzewania, pokazuje gramy każdej mąki, zalecane udziały startowe i limity dodatków oraz oddzielne porcje do ciasta i zakwasu. Biblioteka obejmuje Caputo Pizzeria, Saccorosso, Nuvola, Nuvola Super, Aria, Cuoco, Manitoba Oro, Gusto Bello 00 oraz semolę rimacinata; nieznane parametry W są oznaczane jako brak danych.
 - **Kalkulator pizzy (1.5.15):** profile neapolitańska, klasyczna, rzymska tonda i pizza na blasze (teglia); automat proponuje parametry na podstawie stylu, mąki i fermentacji, a tryb hybrydowy pozwala ręcznie poprawić każdy parametr. Zakwas 1:1:2 ma osobne porcje do ciasta i dokarmienia, z pełnym bilansem mąki i wody.
 - **Przeglądanie receptur (1.5.14):** wygodniejszy pasek wyszukiwania i filtrów na telefonie, równe kafelki z wycentrowanymi ilustracjami oraz czytelniejsze oznaczenia pochodzenia.
