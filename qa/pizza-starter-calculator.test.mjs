@@ -72,7 +72,7 @@ test('tryb drożdżowy bez zakwasu zachowuje dotychczasowe procenty', () => {
 });
 
 test('nieprawidłowo niska hydracja sygnalizuje, że nie da się odjąć wody do zakwasu', () => {
-  const r = pizzaCalcFromFlour({ flour: 1000, hydration: 1, salt: 2, starter: 1 });
+  const r = pizzaCalcFromFlour({ flour: 1000, hydration: 1, salt: 2, starter: 2 });
   assert.equal(r.starterValid, false);
   assert.ok(r.doughWater < 0);
 });
