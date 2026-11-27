@@ -321,10 +321,11 @@ function pizzaCalculator() {
     const style = PIZZA_STYLES[st.style] || PIZZA_STYLES.neapolitan;
     const minHydration = Math.max(profile.hMin, style.hydrationMin);
     const maxHydration = Math.min(profile.hMax, style.hydrationMax);
-    const flourHydration = Number.isFinite(profile.hydration) ? profile.hydration : style.hydration;
+    // Najpierw cel stylu, następnie ograniczenie do zakresu chłonności mieszanki.
+    // Profil mąk zmienia dostępne granice, ale nie przesuwa sam z siebie
+    // klasycznej hydracji stylu w dół (np. teglia 78% na Caputo Aria).
     const targetHydration = minHydration <= maxHydration
-      ? Math.max(minHydration, Math.min(maxHydration,
-          style.hydration + (flourHydration - style.hydration) * 0.7))
+      ? Math.max(minHydration, Math.min(maxHydration, style.hydration))
       : Math.max(profile.hMin, Math.min(profile.hMax, style.hydration));
     const equivalentHours = Math.max(1, equivalentFermentationHours());
     const starterPct = Math.max(8, Math.min(35, 360 / equivalentHours));
