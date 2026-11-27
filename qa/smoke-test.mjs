@@ -75,7 +75,7 @@ try {
     throw new Error('Changing the number of dough balls did not update the live flour dose.');
   }
 
-  const waterRow = liveRecipe.locator('.ing').filter({ hasText: 'Woda do dzieży' });
+  const waterRow = liveRecipe.locator('.ing').filter({ hasText: 'Woda' });
   const initialWaterRow = await waterRow.innerText();
   await page.getByLabel('Hydracja (%) — wpisz lub przesuń suwak').fill('70');
   const updatedWaterRow = await waterRow.innerText();
