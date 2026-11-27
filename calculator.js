@@ -135,7 +135,9 @@ const nonNegativeNumber = (value) => {
  * Obliczenia od ilości mąki. Zakwas macierzysty (100% hydracji) jest
  * dokarmiany w proporcji wagowej 1:1:2; jego mąka i woda wliczają się
  * do docelowej hydracji i całkowitej masy ciasta.
- * starter = procent masy zakwasu macierzystego względem całkowitej mąki (maks. 1%).
+ * starter = procent AKTYWNEGO zakwasu 1:1:2 względem całkowitej mąki.
+ * Przy zakwasie macierzystym 100% hydracji i dokarmieniu 1:1:2:
+ * aktywny zakwas ma 166,7% hydracji; jego mąka i woda są bilansowane osobno.
  */
 /**
  * Pełny bilans piekarski. flour/water oznaczają wartości CAŁKOWITE receptury,
@@ -151,14 +153,16 @@ export function pizzaCalcFromFlour({ flour, hydration = 0, salt = 0, oil = 0, ye
   const s = nonNegativeNumber(salt);
   const o = nonNegativeNumber(oil);
   const y = nonNegativeNumber(yeast);
-  const seedPct = Math.min(1, nonNegativeNumber(starter));
+  // starter oznacza procent gotowego, aktywnego zakwasu 1:1:2 względem
+  // całkowitej mąki. Zakwas: mąka: woda = 1:1:2, więc masa levainu = 2 × feedWater.
+  const starterPct = Math.min(40, nonNegativeNumber(starter));
   const water = f * h / 100;
   const saltAmount = f * s / 100;
   const oilAmount = f * o / 100;
   const yeastAmount = f * y / 100;
   const starterWater = starterWaterInput != null && Number.isFinite(Number(starterWaterInput))
     ? nonNegativeNumber(starterWaterInput)
-    : f * seedPct / 100 * 2;
+    : f * starterPct / 100 / 2;
   const starterSeed = starterWater / 2;
   const starterFlour = starterSeed;
   const starterTotal = starterSeed * 4;
