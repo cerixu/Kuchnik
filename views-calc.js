@@ -136,6 +136,12 @@ function pizzaCalculator() {
       teglia: 305 + progress * 25,
     };
     const targetW = targets[st.style] || targets.neapolitan;
+    // Dla średniej fermentacji neapolitańskiej Nuvola jest dedykowaną bazą;
+    // wybierz ją samodzielnie, gdy deklarowany zakres W obejmuje cel.
+    const nuvola = PIZZA_FLOURS.nuvola;
+    if (st.style === 'neapolitan' && targetW >= nuvola.wMin && targetW <= nuvola.wMax) {
+      return [{ type: 'nuvola', parts: 100 }];
+    }
     const pair = st.style === 'teglia'
       ? ['aria', 'nuvola-super']
       : st.style === 'classic' || st.style === 'romana'
